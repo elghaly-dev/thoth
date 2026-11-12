@@ -1,0 +1,6 @@
+{
+  "name": "Thoth - Free Voice Assistant for Indian Exporters",
+  "description": "Voice assistant by elghaly helping Indian exporters connect with US buyers, craft honest pitches, translate live, and understand US import rules.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
