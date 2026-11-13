@@ -43,6 +43,104 @@ const ai: GoogleGenAI | null = HAS_API_KEY
     })
   : null;
 
+// ---- Proxy protection: rate limit + auth gate ----
+// The model routes are a proxy for a paid key. Three layers:
+// 1. Per-IP rate limit on /api/* (60 requests per minute).
+// 2. Same-origin check on /api/*: a request carrying an Origin header
+//    from another site is refused, so other sites cannot use this
+//    server as an open relay.
+// 3. Optional shared secret (THOTH_PROXY_SECRET, env only, name in
+//    .env.example): when set, /api/* requests must present it as the
+//    `x-thoth-proxy-secret` header, an `Authorization: Bearer` token,
+//    or the HttpOnly cookie the server sets on page loads. The secret
+//    never appears in client source or the bundle. When unset, the
+//    gate is off and the server logs a warning; the rate limit and
+//    same-origin check still apply.
+
+const THOTH_PROXY_SECRET = process.env.THOTH_PROXY_SECRET || '';
+const HAS_PROXY_SECRET = THOTH_PROXY_SECRET.length > 0;
+if (!HAS_PROXY_SECRET) {
+  console.warn(
+    'THOTH_PROXY_SECRET is not set. The proxy auth gate is off; /api/* relies on the per-IP rate limit and same-origin check. Set THOTH_PROXY_SECRET in the server environment to require it.'
+  );
+}
+
+const PROXY_RATE_LIMIT_PER_MINUTE = 60;
+const PROXY_RATE_LIMIT_WINDOW_MS = 60_000;
+const proxyHits = new Map<string, number[]>();
+
+function proxyRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const hits = (proxyHits.get(ip) || []).filter((t) => now - t < PROXY_RATE_LIMIT_WINDOW_MS);
+  hits.push(now);
+  proxyHits.set(ip, hits);
+  return hits.length > PROXY_RATE_LIMIT_PER_MINUTE;
+}
+
+function readCookie(req: Request, name: string): string | null {
+  const header = req.headers.cookie || '';
+  for (const part of header.split(';')) {
+    const [key, ...rest] = part.trim().split('=');
+    if (key === name) return decodeURIComponent(rest.join('='));
+  }
+  return null;
+}
+
+/** True when the request may proceed; false after answering an error. */
+function proxyGate(req: Request, res: Response): boolean {
+  const ip = req.ip || req.socket.remoteAddress || 'unknown';
+  if (proxyRateLimited(ip)) {
+    res.setHeader('Retry-After', '60');
+    res.status(429).json({ error: 'Too many requests. Try again shortly.' });
+    return false;
+  }
+
+  const origin = req.headers.origin;
+  if (typeof origin === 'string' && origin.length > 0) {
+    try {
+      const originUrl = new URL(origin);
+      const host = req.headers.host || '';
+      if (originUrl.host !== host) {
+        res.status(403).json({ error: 'Cross-origin requests are not allowed.' });
+        return false;
+      }
+    } catch {
+      res.status(403).json({ error: 'Cross-origin requests are not allowed.' });
+      return false;
+    }
+  }
+
+  if (HAS_PROXY_SECRET) {
+    const headerSecret = req.headers['x-thoth-proxy-secret'];
+    const authHeader = req.headers.authorization;
+    const bearer =
+      typeof authHeader === 'string' && authHeader.startsWith('Bearer ')
+        ? authHeader.slice('Bearer '.length)
+        : null;
+    const cookieSecret = readCookie(req, 'thoth-proxy');
+    const presented = typeof headerSecret === 'string' ? headerSecret : bearer ?? cookieSecret;
+    if (presented !== THOTH_PROXY_SECRET) {
+      res.status(401).json({ error: 'Proxy authentication required.' });
+      return false;
+    }
+  }
+  return true;
+}
+
+// Issue the proxy cookie on page loads (non-API GETs) so the served UI
+// can call /api/* when the secret gate is on. HttpOnly + SameSite=Strict:
+// the browser sends it automatically, client code never sees the value.
+app.use((req, res, next) => {
+  if (HAS_PROXY_SECRET && req.method === 'GET' && !req.path.startsWith('/api/')) {
+    res.cookie('thoth-proxy', THOTH_PROXY_SECRET, { httpOnly: true, sameSite: 'strict', path: '/' });
+  }
+  next();
+});
+
+app.use('/api/', (req, res, next) => {
+  if (proxyGate(req, res)) next();
+});
+
 // ---- Provider auth errors: stop, never retry, never fake a reply ----
 
 /** True when an error is a provider 401/403 (bad, missing, or revoked key). */
@@ -116,7 +214,9 @@ CRITICAL RULES & INTEGRITY CHARTER:
 
 // Generator with one fallback model for transient failures (e.g. 503
 // high demand). Auth failures (401/403) stop immediately: no retry,
-// no second model, no canned reply.
+// no second model, no canned reply. Any other failure is thrown to the
+// route handler, which returns a clearly labelled error — never a
+// canned line that sounds like a real Faithful Servant reply.
 async function generateWithFallback(params: {
   contents: ContentListUnion;
   systemInstruction?: string;
@@ -164,29 +264,6 @@ async function generateWithFallback(params: {
   throw lastError || new Error('Failed to generate response');
 }
 
-// Smart fallback responses when models experience temporary high demand
-function getFallbackChatReply(userMessage: string, langName: string): string {
-  const lower = (userMessage || '').toLowerCase();
-  const isChinese = langName?.toLowerCase().includes('chinese') || /[\u4e00-\u9fa5]/.test(userMessage);
-  const isHindi = langName?.toLowerCase().includes('hindi') || /[\u0900-\u097F]/.test(userMessage);
-
-  if (isChinese) {
-    if (lower.includes('moq') || lower.includes('数量') || lower.includes('价格') || lower.includes('件')) {
-      return "太好了！我已经记下了您的数量与规格。请问您预计从哪个港口出货（例如：Nhava Sheva、Mundra 或国内港口）？我们将为您生成标准的美国买家推介信。（提示：最终关税与清关请咨询持牌报关行）";
-    }
-    return "您好！我是 Thoth，由 elghaly 打造的免费语音助手。很高兴协助您对接美国买家！请问您的最小起订量（MOQ）、预计单价以及出运港口是什么？我们将一步步帮您打造买家信。（请注意：涉及关税及清关决定请务必咨询持牌报关行）";
-  }
-
-  if (isHindi) {
-    if (lower.includes('moq') || lower.includes('कीमत') || lower.includes('price') || lower.includes('रुपये') || lower.includes('$')) {
-      return "बहुत बढ़िया! मैंने आपका विवरण नोट कर लिया है। आप किस बंदरगाह (जैसे न्हावा शेवा / मुंद्रा / चेन्नई) से शिपमेंट भेजते हैं? मैं अमेरिकी खरीदार के लिए आपकी ईमानदार पिच तैयार करूँगा। (ध्यान रहे: आयात और टैरिफ के अंतिम निर्णय के लिए लाइसेंस प्राप्त कस्टम ब्रोकर से परामर्श लें।)";
-    }
-    return "नमस्ते! मैं थोथ (Thoth) हूँ। अमेरिकी खरीदारों तक पहुँचने के लिए कृपया बताएं कि आपकी न्यूनतम ऑर्डर मात्रा (MOQ) क्या है और अनुमानित मूल्य क्या रहेगा? हम एक-एक कदम आगे बढ़ेंगे। (सीमा शुल्क नियमों के लिए हमेशा लाइसेंस प्राप्त कस्टम ब्रोकर से जांच करें।)";
-  }
-
-  return "Thank you! I noted your details. To prepare an honest, high-impact pitch for buyers, what is your minimum order quantity (MOQ), target price, and shipping port? (Always check with a licensed customs broker for final decisions.)";
-}
-
 // Conversational Chat Endpoint
 app.post('/api/chat', async (req: Request, res: Response) => {
   try {
@@ -212,19 +289,25 @@ Remember: Keep answers short, friendly, and address one step at a time!`;
         systemInstruction: systemPromptWithLang,
       });
 
-      const reply = text || getFallbackChatReply(messages[messages.length - 1]?.content || '', userLanguage);
-      res.json({ reply });
+      // A model failure is never answered with a canned line that sounds
+      // like a real Faithful Servant reply. An empty model response is a
+      // failure too: return a clearly labelled error instead.
+      if (!text) {
+        res.status(502).json({ error: 'The model call failed — try again.' });
+        return;
+      }
+      res.json({ reply: text });
     } catch (modelErr: unknown) {
-      // Auth failures stop with their status and a clear error. Never a
-      // canned fallback, never a 200 that pretends the model answered.
+      // Auth failures stop with their status and a clear error. Any other
+      // model failure is a clearly labelled error (502), never a 200 that
+      // pretends the model answered.
       const authStatus = authStatusOf(modelErr);
       if (authStatus) {
         res.status(authStatus).json(providerAuthErrorBody(authStatus));
         return;
       }
-      console.warn('Using graceful fallback chat responder due to model spike:', modelErr);
-      const reply = getFallbackChatReply(messages[messages.length - 1]?.content || '', userLanguage);
-      res.json({ reply });
+      console.warn('Model call failed; returning a labelled error:', modelErr);
+      res.status(502).json({ error: 'The model call failed — try again.' });
     }
   } catch (error: unknown) {
     console.error('Chat error:', error);
@@ -451,7 +534,7 @@ app.post('/api/tts', async (req: Request, res: Response) => {
             {
               text: cleanText,
               speechMetadata: {
-                style: 'Warm, clear, and reassuring assistant for an exporter',
+                style: 'Warm, clear, and reassuring voice for an exporter',
               },
             },
           ],
