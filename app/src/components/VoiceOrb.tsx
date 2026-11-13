@@ -1,5 +1,7 @@
 import React from 'react';
 import { Mic, MicOff, Loader2, Volume2, Square } from 'lucide-react';
+import type { LanguageCode } from '../types';
+import { tx } from '../i18n';
 
 interface VoiceOrbProps {
   isListening: boolean;
@@ -8,6 +10,8 @@ interface VoiceOrbProps {
   onToggleListen: () => void;
   onStopSpeech?: () => void;
   langLabel: string;
+  lang: LanguageCode;
+  disabled?: boolean;
 }
 
 export const VoiceOrb: React.FC<VoiceOrbProps> = ({
@@ -17,6 +21,8 @@ export const VoiceOrb: React.FC<VoiceOrbProps> = ({
   onToggleListen,
   onStopSpeech,
   langLabel,
+  lang,
+  disabled = false,
 }) => {
   return (
     <div className="flex flex-col items-center justify-center py-4 select-none">
@@ -45,15 +51,20 @@ export const VoiceOrb: React.FC<VoiceOrbProps> = ({
         {/* Main interactive button */}
         <button
           onClick={isSpeaking && onStopSpeech ? onStopSpeech : onToggleListen}
+          disabled={disabled && !isListening && !isSpeaking}
           title={
-            isListening
-              ? 'Click to stop listening'
+            disabled
+              ? tx(lang, 'consent.micHint')
+              : isListening
+              ? tx(lang, 'orb.titleStopListening')
               : isSpeaking
-              ? 'Click to stop speaking'
-              : `Click to speak with Thoth in ${langLabel}`
+              ? tx(lang, 'orb.titleStopSpeaking')
+              : tx(lang, 'orb.titleSpeak', { lang: langLabel })
           }
           className={`relative z-10 w-24 h-24 rounded-full flex flex-col items-center justify-center shadow-2xl transition-all duration-300 cursor-pointer transform active:scale-95 ${
-            isListening
+            disabled && !isListening && !isSpeaking
+              ? 'bg-gradient-to-br from-slate-800 to-slate-900 text-slate-500 shadow-slate-950/80 border border-slate-700/80 opacity-60 cursor-not-allowed'
+              : isListening
               ? 'bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-emerald-500/50 ring-4 ring-emerald-400/50 scale-105'
               : isThinking
               ? 'bg-gradient-to-br from-amber-500 to-orange-700 text-white shadow-amber-500/50 ring-4 ring-amber-400/40'
@@ -69,7 +80,7 @@ export const VoiceOrb: React.FC<VoiceOrbProps> = ({
           ) : isSpeaking ? (
             <div className="flex flex-col items-center">
               <Square className="w-6 h-6 fill-current mb-1" />
-              <span className="text-[10px] font-bold uppercase tracking-wider">Stop</span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">{tx(lang, 'orb.stop')}</span>
             </div>
           ) : (
             <Mic className="w-8 h-8 text-emerald-400" />
@@ -94,22 +105,22 @@ export const VoiceOrb: React.FC<VoiceOrbProps> = ({
           {isListening ? (
             <>
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span className="text-emerald-400 font-semibold">Listening in {langLabel}... (Speak now)</span>
+              <span className="text-emerald-400 font-semibold">{tx(lang, 'orb.listening', { lang: langLabel })}</span>
             </>
           ) : isThinking ? (
             <>
               <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-              <span className="text-amber-400">Thoth is thinking...</span>
+              <span className="text-amber-400">{tx(lang, 'orb.thinking')}</span>
             </>
           ) : isSpeaking ? (
             <>
               <Volume2 className="w-3.5 h-3.5 text-cyan-400 animate-bounce" />
-              <span className="text-cyan-400 font-semibold">Speaking response... (Tap to stop)</span>
+              <span className="text-cyan-400 font-semibold">{tx(lang, 'orb.speaking')}</span>
             </>
           ) : (
             <>
               <span className="w-2 h-2 rounded-full bg-slate-600" />
-              <span>Tap microphone to talk in {langLabel}</span>
+              <span>{tx(lang, 'orb.tapToTalk', { lang: langLabel })}</span>
             </>
           )}
         </div>
