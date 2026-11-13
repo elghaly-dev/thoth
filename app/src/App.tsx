@@ -6,6 +6,7 @@ import { PitchStudioTab } from './components/PitchStudioTab';
 import { LiveTranslatorTab } from './components/LiveTranslatorTab';
 import { ImportGuideTab } from './components/ImportGuideTab';
 import { SafetyModal } from './components/SafetyModal';
+import { tx } from './i18n';
 import {
   Mic,
   Sparkles,
@@ -48,6 +49,8 @@ export default function App() {
     setActiveTab('pitch');
   };
 
+  const lang = currentLang.code;
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-emerald-500/30 selection:text-white">
       {/* Top Header */}
@@ -64,7 +67,7 @@ export default function App() {
         {/* Navigation Tabs Bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div className="flex flex-wrap items-center gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800">
-            {/* Tab 1: Voice Assistant */}
+            {/* Tab 1: Talk with Thoth */}
             <button
               onClick={() => setActiveTab('assistant')}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
@@ -74,10 +77,10 @@ export default function App() {
               }`}
             >
               <Mic className="w-4 h-4 text-emerald-300" />
-              <span>Talk with Thoth (वॉइस)</span>
+              <span>{tx(lang, 'app.tabAssistant')}</span>
             </button>
 
-            {/* Tab 2: US Pitch Maker */}
+            {/* Tab 2: Pitch Studio */}
             <button
               onClick={() => setActiveTab('pitch')}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
@@ -87,7 +90,7 @@ export default function App() {
               }`}
             >
               <Sparkles className="w-4 h-4 text-amber-300" />
-              <span>US Pitch Studio</span>
+              <span>{tx(lang, 'app.tabPitch')}</span>
             </button>
 
             {/* Tab 3: Live Translator */}
@@ -100,10 +103,10 @@ export default function App() {
               }`}
             >
               <ArrowRightLeft className="w-4 h-4 text-cyan-300" />
-              <span>Live Trade Translator</span>
+              <span>{tx(lang, 'app.tabTranslate')}</span>
             </button>
 
-            {/* Tab 4: US Customs & Import Steps */}
+            {/* Tab 4: Import Guide */}
             <button
               onClick={() => setActiveTab('guide')}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
@@ -113,7 +116,7 @@ export default function App() {
               }`}
             >
               <BookOpen className="w-4 h-4 text-indigo-300" />
-              <span>US Import Basics</span>
+              <span>{tx(lang, 'app.tabGuide')}</span>
             </button>
           </div>
 
@@ -121,7 +124,7 @@ export default function App() {
           <div className="hidden md:flex items-center gap-2 text-xs text-slate-400 bg-slate-900/60 px-3 py-1.5 rounded-xl border border-slate-800">
             <Globe className="w-3.5 h-3.5 text-slate-400" />
             <span>
-              Speaking in <strong className="text-white">{currentLang.nativeName}</strong> ({currentLang.name})
+              {tx(lang, 'app.speakingIn', { native: currentLang.nativeName, name: currentLang.name })}
             </span>
           </div>
         </div>
@@ -158,16 +161,16 @@ export default function App() {
             <div className="flex items-center gap-1.5 font-bold text-slate-200">
               <span className="text-emerald-400 font-black">Θ</span> Thoth
               <span className="text-slate-500 font-normal">•</span>
-              <span className="text-slate-300">Free Faithful Servant by elghaly for Indian exporters</span>
+              <span className="text-slate-300">{tx(lang, 'app.footerTagline')}</span>
             </div>
             <span className="text-slate-500 hidden sm:inline">•</span>
-            <span className="text-emerald-400 font-medium">Free for all exporters, small & large</span>
+            <span className="text-emerald-400 font-medium">{tx(lang, 'app.footerFree')}</span>
           </div>
 
           {/* Prominent broker disclaimer */}
           <div className="flex items-center gap-2 text-amber-300 bg-amber-950/20 border border-amber-900/30 px-3 py-1.5 rounded-lg text-center">
             <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0" />
-            <span>Always check with a licensed customs broker for final decisions.</span>
+            <span>{tx(lang, 'app.footerBroker')}</span>
           </div>
 
           <div className="flex items-center gap-3">
@@ -175,10 +178,10 @@ export default function App() {
               onClick={() => setIsSafetyModalOpen(true)}
               className="hover:text-white transition-colors cursor-pointer text-xs"
             >
-              Privacy & Trust Policy
+              {tx(lang, 'app.footerPrivacy')}
             </button>
             <span className="text-slate-600">|</span>
-            <span>No passwords or bank details ever requested</span>
+            <span>{tx(lang, 'app.footerNoPasswords')}</span>
           </div>
         </div>
       </footer>
@@ -187,6 +190,7 @@ export default function App() {
       <SafetyModal
         isOpen={isSafetyModalOpen}
         onClose={() => setIsSafetyModalOpen(false)}
+        lang={lang}
       />
     </div>
   );

@@ -15,19 +15,18 @@ export interface SupportedLanguage {
   nativeName: string;
   speechCode: string; // for Web Speech API recognition & synthesis
   voiceName?: string;
-  flag: string;
 }
 
 export const SUPPORTED_LANGUAGES: SupportedLanguage[] = [
-  { code: 'hi', name: 'Hindi', nativeName: 'हिंदी', speechCode: 'hi-IN', flag: '🇮🇳' },
-  { code: 'en', name: 'English', nativeName: 'English (US/India)', speechCode: 'en-US', flag: '🇺🇸' },
-  { code: 'zh', name: 'Chinese (Mandarin)', nativeName: '中文 (普通话)', speechCode: 'zh-CN', flag: '🇨🇳' },
-  { code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી', speechCode: 'gu-IN', flag: '🇮🇳' },
-  { code: 'mr', name: 'Marathi', nativeName: 'मराठी', speechCode: 'mr-IN', flag: '🇮🇳' },
-  { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', speechCode: 'ta-IN', flag: '🇮🇳' },
-  { code: 'bn', name: 'Bengali', nativeName: 'বাংলা', speechCode: 'bn-IN', flag: '🇮🇳' },
-  { code: 'te', name: 'Telugu', nativeName: 'తెలుగు', speechCode: 'te-IN', flag: '🇮🇳' },
-  { code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ', speechCode: 'pa-IN', flag: '🇮🇳' },
+  { code: 'hi', name: 'Hindi', nativeName: 'हिंदी', speechCode: 'hi-IN' },
+  { code: 'en', name: 'English', nativeName: 'English', speechCode: 'en-US' },
+  { code: 'zh', name: 'Chinese (Mandarin)', nativeName: '中文 (普通话)', speechCode: 'zh-CN' },
+  { code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી', speechCode: 'gu-IN' },
+  { code: 'mr', name: 'Marathi', nativeName: 'मराठी', speechCode: 'mr-IN' },
+  { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', speechCode: 'ta-IN' },
+  { code: 'bn', name: 'Bengali', nativeName: 'বাংলা', speechCode: 'bn-IN' },
+  { code: 'te', name: 'Telugu', nativeName: 'తెలుగు', speechCode: 'te-IN' },
+  { code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ', speechCode: 'pa-IN' },
 ];
 
 export interface ChatMessage {
@@ -35,7 +34,6 @@ export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
-  audioData?: string;
   detectedLang?: string;
   isStreaming?: boolean;
 }
@@ -63,6 +61,10 @@ export interface ConfirmationReadback {
   currency?: string; // USD or INR
   units?: string;
   incoterm?: string; // FOB, CIF, etc.
+  // Original amount as spoken, verbatim (e.g. "₹5,00,000 (5 lakh)").
+  // Never converted: a USD figure appears only if the speaker stated one.
+  originalAmount?: string | null;
+  originalCurrency?: string | null;
   readbackStatement: string; // Precise confirmation sentence for read-back
 }
 
@@ -76,5 +78,4 @@ export interface TranslationRecord {
   keyTerms?: string[];
   confirmationReadback?: ConfirmationReadback;
   timestamp: Date;
-  audioData?: string;
 }

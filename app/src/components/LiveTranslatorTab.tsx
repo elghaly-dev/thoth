@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { SupportedLanguage, TranslationRecord } from '../types';
+import { SupportedLanguage, TranslationRecord, ConfirmationReadback } from '../types';
 import {
   Mic,
   Send,
@@ -14,7 +14,6 @@ import {
   Loader2,
   Square,
   Sparkles,
-  ShieldCheck,
   Trash2,
   CheckCircle,
   FileCheck2,
@@ -26,34 +25,38 @@ import {
   createSpeechRecognizer,
   isSpeechRecognitionSupported,
 } from '../utils/audio';
+import { ConsentGate } from './ConsentGate';
+import { postJson } from '../utils/api';
+import { tx } from '../i18n';
 
 interface LiveTranslatorTabProps {
   currentLang: SupportedLanguage;
 }
 
 export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLang }) => {
+  const lang = currentLang.code;
   const [history, setHistory] = useState<TranslationRecord[]>([
     {
       id: 'tx-1',
       speaker: 'exporter',
       originalText: 'हम 500 पीस 4.50 डॉलर प्रति पीस के हिसाब से न्हावा शेवा पोर्ट से 30 दिन में भेज सकते हैं।',
       translatedText:
-        'We can dispatch 500 pieces at $4.50 per piece from Nhava Sheva Port within 30 days.',
+        'We can dispatch 500 pieces at $4.50 per piece from our origin port within 30 days.',
       sourceLang: 'Hindi',
-      targetLang: 'US English',
-      keyTerms: ['500 pieces', '$4.50 / piece', 'Nhava Sheva Port', '30 days lead time'],
+      targetLang: 'English',
+      keyTerms: ['500 pieces', '$4.50 / piece', 'Origin port', '30 days lead time'],
       timestamp: new Date(),
     },
     {
       id: 'tx-2',
       speaker: 'buyer',
       originalText:
-        'Could you confirm if the cartons will be palletized with ISPM-15 heat-treated pallets for US customs?',
+        'Could you confirm if the cartons will be palletized with ISPM-15 heat-treated pallets for customs clearance?',
       translatedText:
         'क्या आप पुष्टि कर सकते हैं कि कार्टन अमेरिकी सीमा शुल्क के लिए ISPM-15 हीट-ट्रीटेड पैलेट पर रखे जाएंगे?',
-      sourceLang: 'US English',
+      sourceLang: 'English',
       targetLang: 'Hindi',
-      keyTerms: ['ISPM-15 heat-treated pallets', 'US customs clearance'],
+      keyTerms: ['ISPM-15 heat-treated pallets', 'customs clearance'],
       timestamp: new Date(),
     },
   ]);
@@ -64,8 +67,13 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
   const [isListening, setIsListening] = useState(false);
   const [isPlayingId, setIsPlayingId] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [hasConsented, setHasConsented] = useState(true);
+  // Real consent gate: mic stays disabled until both parties agree.
+  const [hasConsented, setHasConsented] = useState(false);
   const [confirmedIds, setConfirmedIds] = useState<Record<string, boolean>>({});
+  // In-app errors (replace alert()): speech-recognition problems and
+  // translation failures (401/403 shows the server's clear stop message).
+  const [speechError, setSpeechError] = useState<string | null>(null);
+  const [translateError, setTranslateError] = useState<string | null>(null);
 
   const recognitionRef = useRef<any>(null);
 
@@ -76,11 +84,16 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       return;
     }
 
-    if (!isSpeechRecognitionSupported()) {
-      alert('Speech recognition is not supported in this browser. Please use Chrome/Edge or type your message.');
+    if (!hasConsented) {
       return;
     }
 
+    if (!isSpeechRecognitionSupported()) {
+      setSpeechError(tx(lang, 'common.speechNotSupported'));
+      return;
+    }
+
+    setSpeechError(null);
     stopAudio();
     setIsPlayingId(null);
 
@@ -123,24 +136,22 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
     stopAudio();
     setIsPlayingId(null);
     setIsTranslating(true);
+    setTranslateError(null);
 
-    const sourceLang = activeSpeaker === 'exporter' ? currentLang.name : 'US English';
-    const targetLang = activeSpeaker === 'exporter' ? 'US English' : currentLang.name;
+    const sourceLang = activeSpeaker === 'exporter' ? currentLang.name : 'English';
+    const targetLang = activeSpeaker === 'exporter' ? 'English' : currentLang.name;
 
     try {
-      const res = await fetch('/api/translate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text,
-          sourceLang,
-          targetLang,
-          speakerRole: activeSpeaker === 'exporter' ? 'Indian Exporter' : 'US Buyer',
-        }),
+      const data = await postJson<{
+        translatedText?: string;
+        keyTerms?: string[];
+        confirmationReadback?: ConfirmationReadback;
+      }>('/api/translate', {
+        text,
+        sourceLang,
+        targetLang,
+        speakerRole: activeSpeaker === 'exporter' ? 'Exporter' : 'Buyer',
       });
-
-      if (!res.ok) throw new Error('Translation failed');
-      const data = await res.json();
 
       const newRecord: TranslationRecord = {
         id: `tx-${Date.now()}`,
@@ -159,17 +170,19 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       // Play audio of translated text in target language
       const targetLangConfig: SupportedLanguage =
         activeSpeaker === 'exporter'
-          ? { code: 'en', name: 'English', nativeName: 'US English', speechCode: 'en-US', flag: '🇺🇸' }
+          ? { code: 'en', name: 'English', nativeName: 'English', speechCode: 'en-US' }
           : currentLang;
 
       playTextToSpeech(
         newRecord.translatedText,
         targetLangConfig,
         () => setIsPlayingId(newRecord.id),
-        () => setIsPlayingId(null)
+        () => setIsPlayingId(null),
+        (err) => setTranslateError(err.message)
       );
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Translation error:', err);
+      setTranslateError(err instanceof Error ? err.message : 'Could not translate. Please try again.');
     } finally {
       setIsTranslating(false);
     }
@@ -181,14 +194,15 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       setIsPlayingId(null);
     } else {
       const langConfig: SupportedLanguage = isEnglish
-        ? { code: 'en', name: 'English', nativeName: 'US English', speechCode: 'en-US', flag: '🇺🇸' }
+        ? { code: 'en', name: 'English', nativeName: 'English', speechCode: 'en-US' }
         : currentLang;
 
       playTextToSpeech(
         text,
         langConfig,
         () => setIsPlayingId(record.id),
-        () => setIsPlayingId(null)
+        () => setIsPlayingId(null),
+        (err) => setTranslateError(err.message)
       );
     }
   };
@@ -199,45 +213,92 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  // Read-back helpers: show the original amount (INR / lakh / crore,
+  // verbatim) next to the USD figure when both were stated. Never invent
+  // a conversion; unknown values read "To confirm", never a guessed default.
+  const readbackPrice = (record: TranslationRecord): React.ReactNode => {
+    const rb = record.confirmationReadback;
+    const orig = rb?.originalAmount;
+    const price = rb?.price;
+    const keyPrice = record.keyTerms?.find(
+      (t) => t.includes('$') || t.includes('₹') || t.includes('USD') || t.includes('INR')
+    );
+    if (orig && price && orig !== price) {
+      return (
+        <span className="block">
+          <span className="block">{orig}</span>
+          <span className="block text-slate-400">{price}</span>
+        </span>
+      );
+    }
+    return orig || price || keyPrice || tx(lang, 'trans.verifyPrice');
+  };
+
+  const readbackCurrency = (record: TranslationRecord): string => {
+    const rb = record.confirmationReadback;
+    const origCur = rb?.originalCurrency;
+    const cur = rb?.currency;
+    if (origCur && cur && origCur !== cur) return `${origCur} · ${cur}`;
+    if (cur) return cur;
+    if (origCur) return origCur;
+    if (record.originalText.includes('₹') || record.translatedText.includes('₹')) return 'INR (₹)';
+    return tx(lang, 'trans.toConfirm');
+  };
+
+  const readbackIncoterm = (record: TranslationRecord): string => {
+    const rb = record.confirmationReadback;
+    if (rb?.incoterm) return rb.incoterm;
+    const upper = `${record.originalText} ${record.translatedText}`.toUpperCase();
+    if (upper.includes('FOB')) return 'FOB';
+    if (upper.includes('CIF')) return 'CIF';
+    return tx(lang, 'trans.toConfirm');
+  };
+
   return (
     <div className="space-y-6">
-      {/* Bilateral Consent & Zero-Storage Notice (Fix 6) */}
-      <div className="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-4 shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-        <div className="flex items-start gap-2.5">
-          <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-          <div className="text-slate-300 leading-relaxed">
-            <strong className="text-white">Bilateral Consent & Zero-Storage Notice:</strong> Both parties consent to live speech-to-text processing for translation. Transcripts and audio are strictly ephemeral in this active browser session and are <span className="text-emerald-400 font-semibold">NEVER stored, recorded, or saved</span> on any server.
-          </div>
-        </div>
-        <div className="flex items-center gap-2 shrink-0">
+      {/* Consent gate: mic stays disabled until both parties agree */}
+      <ConsentGate lang={lang} accepted={hasConsented} onAccept={() => setHasConsented(true)} />
+
+      {/* In-app errors (replace alert(); translation failures show here) */}
+      {speechError && (
+        <div className="bg-rose-950/40 border border-rose-800/50 rounded-2xl p-4 text-xs text-rose-200 flex items-start justify-between gap-3">
+          <span>{speechError}</span>
           <button
-            onClick={() => {
-              stopAudio();
-              setHistory([]);
-            }}
-            className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-rose-950/40 text-slate-300 hover:text-rose-300 border border-slate-700 hover:border-rose-800/40 flex items-center gap-1 transition-colors cursor-pointer text-xs"
-            title="Wipe in-memory session transcripts"
+            onClick={() => setSpeechError(null)}
+            className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
+            aria-label="Dismiss"
           >
-            <Trash2 className="w-3.5 h-3.5 text-rose-400" />
-            <span>Clear Session</span>
+            ✕
           </button>
         </div>
-      </div>
+      )}
+      {translateError && (
+        <div className="bg-rose-950/40 border border-rose-800/50 rounded-2xl p-4 text-xs text-rose-200 flex items-start justify-between gap-3">
+          <span>{translateError}</span>
+          <button
+            onClick={() => setTranslateError(null)}
+            className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
+            aria-label="Dismiss"
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-slate-900 via-slate-900/90 to-cyan-950/40 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-              Live Trade Translation
+              {tx(lang, 'trans.badge')}
             </span>
-            <span className="text-xs text-slate-400">Strictly Faithful • Non-Negotiating</span>
+            <span className="text-xs text-slate-400">{tx(lang, 'trans.faithful')}</span>
           </div>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            Exporter 🇮🇳 <ArrowRightLeft className="w-4 h-4 text-emerald-400" /> US Buyer 🇺🇸
+            {tx(lang, 'trans.titleExporter')} <ArrowRightLeft className="w-4 h-4 text-emerald-400" /> {tx(lang, 'trans.titleBuyer')}
           </h2>
           <p className="text-xs text-slate-400 max-w-xl mt-0.5">
-            Use during Zoom calls or phone negotiations. Thoth translates faithfully without adding commitments or negotiating. Read-backs confirm all price and Incoterm details.
+            {tx(lang, 'trans.subtitle')}
           </p>
         </div>
 
@@ -245,7 +306,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         <div className="bg-slate-950/70 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-300 flex items-start gap-2 max-w-xs shrink-0">
           <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
           <div className="text-[11px] leading-snug">
-            <strong>Rule:</strong> Tariffs are candidates, verify. Always check with a licensed customs broker for final decisions.
+            <strong>{tx(lang, 'trans.ruleTitle')}</strong> {tx(lang, 'trans.ruleBody')}
           </div>
         </div>
       </div>
@@ -255,7 +316,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         {/* Speaker Selector Toggle & Live Mode Indicator (Fix 5) */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-slate-300">Active Speaker:</span>
+            <span className="text-xs font-semibold text-slate-300">{tx(lang, 'trans.activeSpeaker')}</span>
             <span
               className={`px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 ${
                 activeSpeaker === 'exporter'
@@ -265,8 +326,8 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
             >
               <span className="w-2 h-2 rounded-full bg-current animate-ping" />
               {activeSpeaker === 'exporter'
-                ? `🇮🇳 Indian Exporter (${currentLang.name}) Speaking`
-                : '🇺🇸 US Buyer Speaking'}
+                ? tx(lang, 'trans.exporterSpeaking', { lang: currentLang.name })
+                : tx(lang, 'trans.buyerSpeaking')}
             </span>
           </div>
 
@@ -283,7 +344,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
               }`}
             >
               <UserCheck className="w-3.5 h-3.5" />
-              <span>Indian Exporter</span>
+              <span>{tx(lang, 'trans.exporterBtn')}</span>
             </button>
 
             <button
@@ -298,7 +359,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
               }`}
             >
               <Building2 className="w-3.5 h-3.5" />
-              <span>US Buyer</span>
+              <span>{tx(lang, 'trans.buyerBtn')}</span>
             </button>
           </div>
         </div>
@@ -308,7 +369,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
           <div className="bg-cyan-950/30 border border-cyan-800/40 rounded-xl p-2.5 text-[11px] text-cyan-300 flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-cyan-400 shrink-0" />
             <span>
-              <strong>Safety Guard:</strong> Buyer speech is treated as dialogue data, not binding instructions. Thoth translates faithfully without accepting unauthorized commitments.
+              <strong>{tx(lang, 'trans.safetyGuardTitle')}</strong> {tx(lang, 'trans.safetyGuardBody')}
             </span>
           </div>
         )}
@@ -328,8 +389,8 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
               }}
               placeholder={
                 activeSpeaker === 'exporter'
-                  ? `Speak or type in ${currentLang.nativeName} (${currentLang.name}) e.g. हम 1,000 यूनिट $3.20 FOB पर दे सकते हैं...`
-                  : 'Speak or type in US English e.g. Can you supply 2,000 units with FOB terms by August 15th?'
+                  ? tx(lang, 'trans.phExporter', { native: currentLang.nativeName, name: currentLang.name })
+                  : tx(lang, 'trans.phBuyer')
               }
               className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 pr-12"
             />
@@ -345,22 +406,23 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
             {/* Mic Button */}
             <button
               onClick={handleToggleListen}
+              disabled={!hasConsented && !isListening}
               className={`px-4 py-3 rounded-xl border flex items-center gap-2 text-xs font-semibold transition-all cursor-pointer ${
                 isListening
                   ? 'bg-rose-500/20 border-rose-500 text-rose-400 animate-pulse'
                   : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700'
-              }`}
-              title="Click to speak through microphone"
+              } ${!hasConsented && !isListening ? 'opacity-50 cursor-not-allowed' : ''}`}
+              title={hasConsented ? tx(lang, 'trans.micTitle') : tx(lang, 'consent.micHint')}
             >
               {isListening ? (
                 <>
                   <Square className="w-4 h-4 fill-current" />
-                  <span>Stop Mic</span>
+                  <span>{tx(lang, 'trans.stopMic')}</span>
                 </>
               ) : (
                 <>
                   <Mic className="w-4 h-4 text-emerald-400" />
-                  <span>Speak</span>
+                  <span>{tx(lang, 'trans.speak')}</span>
                 </>
               )}
             </button>
@@ -374,12 +436,12 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
               {isTranslating ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Translating...</span>
+                  <span>{tx(lang, 'trans.translating')}</span>
                 </>
               ) : (
                 <>
                   <Send className="w-4 h-4" />
-                  <span>Translate & Voice</span>
+                  <span>{tx(lang, 'trans.translateVoice')}</span>
                 </>
               )}
             </button>
@@ -391,11 +453,24 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-            Live Conversation Log ({history.length} exchanges)
+            {tx(lang, 'trans.logTitle', { n: history.length })}
           </h3>
-          <span className="text-[11px] text-slate-500">
-            Prices, units, and dates strictly synchronized
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="text-[11px] text-slate-500">
+              {tx(lang, 'trans.logNote')}
+            </span>
+            <button
+              onClick={() => {
+                stopAudio();
+                setHistory([]);
+              }}
+              className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-rose-950/40 text-slate-300 hover:text-rose-300 border border-slate-700 hover:border-rose-800/40 flex items-center gap-1 transition-colors cursor-pointer text-xs"
+              title={tx(lang, 'trans.clearTitle')}
+            >
+              <Trash2 className="w-3.5 h-3.5 text-rose-400" />
+              <span>{tx(lang, 'trans.clearSession')}</span>
+            </button>
+          </div>
         </div>
 
         {history.map((record) => {
@@ -419,7 +494,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                         : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
                     }`}
                   >
-                    {isExporter ? '🇮🇳 Indian Exporter' : '🇺🇸 US Buyer'}
+                    {isExporter ? tx(lang, 'trans.exporterLabel') : tx(lang, 'trans.buyerLabel')}
                   </span>
                   <span className="text-[11px] text-slate-400">
                     {record.sourceLang} ➔ {record.targetLang}
@@ -436,7 +511,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                 <div className="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800/80 flex flex-col justify-between">
                   <div>
                     <div className="text-[10px] text-slate-500 uppercase font-semibold mb-1">
-                      Original Spoken ({record.sourceLang}):
+                      {tx(lang, 'trans.originalSpoken', { lang: record.sourceLang })}
                     </div>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
                       {record.originalText}
@@ -446,10 +521,10 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                     <button
                       onClick={() => handlePlayVoice(record, record.originalText, isExporter ? false : true)}
                       className="text-slate-400 hover:text-white flex items-center gap-1 cursor-pointer"
-                      title="Listen to original"
+                      title={tx(lang, 'trans.listenOriginal')}
                     >
                       <Volume2 className="w-3.5 h-3.5" />
-                      <span>Listen</span>
+                      <span>{tx(lang, 'trans.listen')}</span>
                     </button>
                     <button
                       onClick={() => handleCopy(`orig-${record.id}`, record.originalText)}
@@ -474,7 +549,10 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                 >
                   <div>
                     <div className="text-[10px] uppercase font-semibold mb-1 text-slate-400">
-                      Translated for {isExporter ? 'US Buyer' : 'Exporter'} ({record.targetLang}):
+                      {tx(lang, 'trans.translatedFor', {
+                        who: isExporter ? tx(lang, 'trans.usBuyerShort') : tx(lang, 'trans.exporterShort'),
+                        lang: record.targetLang,
+                      })}
                     </div>
                     <p className="text-xs sm:text-sm text-white font-medium leading-relaxed font-sans">
                       {record.translatedText}
@@ -483,16 +561,16 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                   <div className="mt-2 pt-2 border-t border-slate-800/60 flex items-center justify-between gap-2 text-[11px]">
                     <span className="text-[10px] text-emerald-400 flex items-center gap-1">
                       <Sparkles className="w-3 h-3" />
-                      Trade verified
+                      {confirmedIds[record.id] ? tx(lang, 'trans.confirmedBtn') : tx(lang, 'trans.translatedBadge')}
                     </span>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => handlePlayVoice(record, record.translatedText, isExporter ? true : false)}
                         className="text-emerald-300 hover:text-white flex items-center gap-1 cursor-pointer font-medium"
-                        title="Hear translation spoken"
+                        title={tx(lang, 'trans.hearTranslationTitle')}
                       >
                         <Volume2 className="w-3.5 h-3.5" />
-                        <span>Hear Translation</span>
+                        <span>{tx(lang, 'trans.hearTranslation')}</span>
                       </button>
                       <button
                         onClick={() => handleCopy(`trans-${record.id}`, record.translatedText)}
@@ -514,7 +592,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                 <div className="mt-3 pt-2.5 border-t border-slate-800/60 flex flex-wrap items-center gap-2 text-xs">
                   <span className="text-[11px] text-slate-400 flex items-center gap-1">
                     <Tag className="w-3 h-3 text-amber-400" />
-                    Exact Extracted Terms:
+                    {tx(lang, 'trans.exactTerms')}
                   </span>
                   {record.keyTerms.map((term, i) => (
                     <span
@@ -532,7 +610,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-bold text-amber-300 flex items-center gap-1.5 text-xs">
                     <FileCheck2 className="w-3.5 h-3.5 text-amber-400" />
-                    Trade Terms Read-Back (Faithful & Non-Negotiating):
+                    {tx(lang, 'trans.readbackTitle')}
                   </span>
                   <button
                     onClick={() => setConfirmedIds((prev) => ({ ...prev, [record.id]: !prev[record.id] }))}
@@ -545,52 +623,52 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                     {confirmedIds[record.id] ? (
                       <>
                         <CheckCircle className="w-3.5 h-3.5 text-emerald-200" />
-                        <span>Terms Confirmed</span>
+                        <span>{tx(lang, 'trans.confirmedBtn')}</span>
                       </>
                     ) : (
-                      <span>Click to Confirm Read-Back</span>
+                      <span>{tx(lang, 'trans.confirmBtn')}</span>
                     )}
                   </button>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2 text-[11px]">
                   <div className="bg-slate-900 p-2 rounded-lg border border-slate-800">
-                    <span className="text-slate-500 block text-[10px] uppercase">Price</span>
+                    <span className="text-slate-500 block text-[10px] uppercase">{tx(lang, 'trans.price')}</span>
                     <span className="font-semibold text-emerald-400">
-                      {record.confirmationReadback?.price || record.keyTerms?.find(t => t.includes('$') || t.includes('₹') || t.includes('USD') || t.includes('INR')) || 'Verify price'}
+                      {readbackPrice(record)}
                     </span>
                   </div>
                   <div className="bg-slate-900 p-2 rounded-lg border border-slate-800">
-                    <span className="text-slate-500 block text-[10px] uppercase">Currency</span>
+                    <span className="text-slate-500 block text-[10px] uppercase">{tx(lang, 'trans.currency')}</span>
                     <span className="font-semibold text-cyan-400">
-                      {record.confirmationReadback?.currency || (record.originalText.includes('₹') || record.translatedText.includes('₹') ? 'INR (₹)' : 'USD ($)')}
+                      {readbackCurrency(record)}
                     </span>
                   </div>
                   <div className="bg-slate-900 p-2 rounded-lg border border-slate-800">
-                    <span className="text-slate-500 block text-[10px] uppercase">Units / Qty</span>
+                    <span className="text-slate-500 block text-[10px] uppercase">{tx(lang, 'trans.units')}</span>
                     <span className="font-semibold text-amber-300">
-                      {record.confirmationReadback?.units || record.keyTerms?.find(t => t.toLowerCase().includes('pcs') || t.toLowerCase().includes('piece') || t.toLowerCase().includes('kg') || t.toLowerCase().includes('ton') || t.toLowerCase().includes('pallet')) || 'Verify units'}
+                      {record.confirmationReadback?.units || record.keyTerms?.find(t => t.toLowerCase().includes('pcs') || t.toLowerCase().includes('piece') || t.toLowerCase().includes('kg') || t.toLowerCase().includes('ton') || t.toLowerCase().includes('pallet')) || tx(lang, 'trans.verifyUnits')}
                     </span>
                   </div>
                   <div className="bg-slate-900 p-2 rounded-lg border border-slate-800">
-                    <span className="text-slate-500 block text-[10px] uppercase">Incoterm</span>
+                    <span className="text-slate-500 block text-[10px] uppercase">{tx(lang, 'trans.incoterm')}</span>
                     <span className="font-semibold text-purple-300">
-                      {record.confirmationReadback?.incoterm || (record.originalText.toUpperCase().includes('FOB') || record.translatedText.toUpperCase().includes('FOB') ? 'FOB' : record.originalText.toUpperCase().includes('CIF') ? 'CIF' : 'To confirm (e.g. FOB)')}
+                      {readbackIncoterm(record)}
                     </span>
                   </div>
                 </div>
 
                 <div className="text-[11px] text-slate-300 bg-slate-900/60 p-2 rounded-lg border border-slate-800 flex items-center justify-between gap-2">
                   <span className="italic">
-                    "{record.confirmationReadback?.readbackStatement || `Read-back verification: Price, currency, quantity units, and Incoterm must be verified before agreement.`}"
+                    &quot;{record.confirmationReadback?.readbackStatement || tx(lang, 'trans.readbackFallback')}&quot;
                   </span>
                   <button
-                    onClick={() => handlePlayVoice(record, record.confirmationReadback?.readbackStatement || `Confirmation read-back: ${record.keyTerms?.join(', ') || 'verify all terms before agreeing'}`, true)}
+                    onClick={() => handlePlayVoice(record, record.confirmationReadback?.readbackStatement || `${tx(lang, 'trans.confirmTtsPrefix')}${record.keyTerms?.join(', ') || tx(lang, 'trans.confirmTtsFallback')}`, true)}
                     className="text-[10px] px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1 shrink-0 cursor-pointer"
-                    title="Hear verification read aloud"
+                    title={tx(lang, 'trans.hearReadbackTitle')}
                   >
                     <Volume2 className="w-3 h-3 text-cyan-400" />
-                    <span>Hear Read-Back</span>
+                    <span>{tx(lang, 'trans.hearReadback')}</span>
                   </button>
                 </div>
               </div>

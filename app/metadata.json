@@ -1,6 +1,6 @@
 {
-  "name": "Thoth - Free Faithful Servant for Indian Exporters",
-  "description": "Faithful Servant by elghaly helping Indian exporters connect with US buyers, craft honest pitches, translate live, and understand US import rules.",
+  "name": "Thoth - Free Faithful Servant for Exporters",
+  "description": "Faithful Servant by elghaly helping exporters connect with buyers, craft honest pitches, translate live, and understand import rules.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

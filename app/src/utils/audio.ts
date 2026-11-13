@@ -1,15 +1,19 @@
 import { SupportedLanguage } from '../types';
+import { postJson, ApiError, isAuthErrorStatus } from './api';
 
 let currentAudio: HTMLAudioElement | null = null;
 
 /**
- * Play audio from base64 WAV or fallback to browser Web Speech API
+ * Play audio from base64 WAV or fallback to browser Web Speech API.
+ * On a provider auth failure (401/403) the error is surfaced via onError
+ * and NOT hidden behind the browser fallback — the model did not answer.
  */
 export async function playTextToSpeech(
   text: string,
   lang: SupportedLanguage,
   onStart?: () => void,
-  onEnd?: () => void
+  onEnd?: () => void,
+  onError?: (err: Error) => void
 ): Promise<void> {
   // Stop existing audio
   stopAudio();
@@ -18,32 +22,32 @@ export async function playTextToSpeech(
 
   try {
     // 1. Try Gemini TTS backend first
-    const res = await fetch('/api/tts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        text: text.slice(0, 450), // keep within single utterance
-        voiceName: lang.code === 'en' ? 'Puck' : 'Kore',
-      }),
+    const data = await postJson<{ audioData?: string }>('/api/tts', {
+      text: text.slice(0, 450), // keep within single utterance
+      voiceName: lang.code === 'en' ? 'Puck' : 'Kore',
     });
 
-    if (res.ok) {
-      const data = await res.json();
-      if (data.audioData) {
-        const audio = new Audio(`data:audio/wav;base64,${data.audioData}`);
-        currentAudio = audio;
-        audio.onended = () => {
-          currentAudio = null;
-          onEnd?.();
-        };
-        audio.onerror = () => {
-          fallbackSpeechSynthesis(text, lang, onEnd);
-        };
-        await audio.play();
-        return;
-      }
+    if (data.audioData) {
+      const audio = new Audio(`data:audio/wav;base64,${data.audioData}`);
+      currentAudio = audio;
+      audio.onended = () => {
+        currentAudio = null;
+        onEnd?.();
+      };
+      audio.onerror = () => {
+        fallbackSpeechSynthesis(text, lang, onEnd);
+      };
+      await audio.play();
+      return;
     }
   } catch (err) {
+    // Auth failure: surface it visibly instead of silently falling back
+    // to local speech and pretending the provider answered.
+    if (err instanceof ApiError && isAuthErrorStatus(err.status)) {
+      onError?.(err);
+      onEnd?.();
+      return;
+    }
     console.warn('Backend TTS failed, using browser synthesis', err);
   }
 
