@@ -35,7 +35,6 @@ export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
-  audioData?: string;
   detectedLang?: string;
   isStreaming?: boolean;
 }
@@ -63,6 +62,10 @@ export interface ConfirmationReadback {
   currency?: string; // USD or INR
   units?: string;
   incoterm?: string; // FOB, CIF, etc.
+  // Original amount as spoken, verbatim (e.g. "₹5,00,000 (5 lakh)").
+  // Never converted: a USD figure appears only if the speaker stated one.
+  originalAmount?: string | null;
+  originalCurrency?: string | null;
   readbackStatement: string; // Precise confirmation sentence for read-back
 }
 
@@ -76,5 +79,4 @@ export interface TranslationRecord {
   keyTerms?: string[];
   confirmationReadback?: ConfirmationReadback;
   timestamp: Date;
-  audioData?: string;
 }

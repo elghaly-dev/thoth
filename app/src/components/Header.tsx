@@ -1,6 +1,7 @@
 import React from 'react';
 import { SupportedLanguage, SUPPORTED_LANGUAGES } from '../types';
 import { Volume2, VolumeX, ShieldCheck, Sparkles, Globe, Heart } from 'lucide-react';
+import { tx } from '../i18n';
 
 interface HeaderProps {
   currentLang: SupportedLanguage;
@@ -17,17 +18,19 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleMute,
   onOpenSafetyModal,
 }) => {
+  const lang = currentLang.code;
+
   return (
     <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40">
       {/* Top micro-bar: 100% Free Guarantee & Trust */}
       <div className="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-amber-950/60 border-b border-slate-800/80 px-4 py-1.5 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-semibold text-emerald-400">100% Free Forever</span>
+          <span className="font-semibold text-emerald-400">{tx(lang, 'header.freeForever')}</span>
           <span className="text-slate-500">•</span>
-          <span>By <strong className="text-white">elghaly</strong> for Indian Exporters</span>
+          <span>{tx(lang, 'header.byElghaly')}</span>
           <span className="text-slate-500">•</span>
-          <span className="text-slate-400 hidden sm:inline">Reach & talk to US Buyers</span>
+          <span className="text-slate-400 hidden sm:inline">{tx(lang, 'header.reachBuyers')}</span>
         </div>
 
         <div className="flex items-center gap-3">
@@ -36,11 +39,11 @@ export const Header: React.FC<HeaderProps> = ({
             className="flex items-center gap-1.5 text-amber-300 hover:text-amber-200 transition-colors text-xs font-medium cursor-pointer"
           >
             <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-            <span>Safety & Trust Policy</span>
+            <span>{tx(lang, 'header.safetyPolicy')}</span>
           </button>
           <span className="text-slate-600">|</span>
           <span className="text-slate-400 text-[11px] flex items-center gap-1">
-            Made with <Heart className="w-3 h-3 text-rose-500 inline fill-rose-500" /> for India's Makers
+            {tx(lang, 'header.madeWith')} <Heart className="w-3 h-3 text-rose-500 inline fill-rose-500" /> {tx(lang, 'header.forMakers')}
           </span>
         </div>
       </div>
@@ -61,12 +64,12 @@ export const Header: React.FC<HeaderProps> = ({
               <h1 className="text-lg font-bold tracking-tight text-white flex items-center gap-2">
                 Thoth
                 <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  Voice Assistant
+                  {tx(lang, 'header.voiceAssistant')}
                 </span>
               </h1>
             </div>
             <p className="text-xs text-slate-400">
-              India 🇮🇳 ⇄ United States 🇺🇸 Export Bridge
+              {tx(lang, 'header.bridge')}
             </p>
           </div>
         </div>
@@ -77,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative flex items-center bg-slate-900 border border-slate-700/80 rounded-xl px-2.5 py-1.5 text-xs shadow-inner">
             <Globe className="w-3.5 h-3.5 text-slate-400 mr-2 shrink-0" />
             <select
-              aria-label="Select preferred language"
+              aria-label={tx(lang, 'header.selectLanguage')}
               value={currentLang.code}
               onChange={(e) => {
                 const found = SUPPORTED_LANGUAGES.find((l) => l.code === e.target.value);
@@ -96,7 +99,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Sound toggle */}
           <button
             onClick={onToggleMute}
-            title={isMuted ? 'Voice muted (click to unmute)' : 'Voice active (click to mute)'}
+            title={isMuted ? tx(lang, 'header.mutedTitle') : tx(lang, 'header.voiceOnTitle')}
             className={`p-2 rounded-xl border text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
               isMuted
                 ? 'bg-slate-900 border-slate-700 text-slate-400 hover:text-white'
@@ -104,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-            <span className="hidden md:inline">{isMuted ? 'Muted' : 'Voice On'}</span>
+            <span className="hidden md:inline">{isMuted ? tx(lang, 'header.muted') : tx(lang, 'header.voiceOn')}</span>
           </button>
 
           {/* Safe Export guarantee */}
@@ -113,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs text-slate-300 hover:border-slate-600 transition-colors cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>elghaly Free Tool</span>
+            <span>{tx(lang, 'header.freeTool')}</span>
           </button>
         </div>
       </div>

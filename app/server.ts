@@ -6,6 +6,14 @@ import { GoogleGenAI } from '@google/genai';
 
 dotenv.config();
 
+// Fail fast at startup: the Gemini key is server-side only and the app
+// cannot answer without it. Never fall through to runtime 401s.
+if (!process.env.GEMINI_API_KEY) {
+  throw new Error(
+    'GEMINI_API_KEY is not set. Add it to the server environment (.env) — it must stay server-side only, never in client code or the repo.'
+  );
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -235,16 +243,19 @@ Task: Real-time bilateral trade translation between an Indian Exporter and a Uni
 STRICT RULES:
 1. Translate faithfully without embellishment. NEVER add commitments, guarantees, discounts, concessions, or negotiations. Do NOT negotiate on behalf of either party.
 2. Keep all prices (USD $, INR ₹, cents, per-unit costs), quantities (kg, lbs, metric tons, pieces, containers, boxes), and dates 100% exact.
-3. If translating to US English for the buyer, ensure tone is natural, polite, and standard American commercial English.
-4. If translating to an Indian language for the exporter, use clear, respectful spoken language.
-5. If customs, tariffs, or HS codes are mentioned, state: "Candidates only, verify with a licensed customs broker".
-6. Extract read-back confirmation terms:
+3. Indian amounts: lakh = 100,000 and crore = 10,000,000. Keep the original amount VERBATIM in the read-back (e.g. "₹5,00,000 (5 lakh)"). NEVER convert an INR amount to USD and NEVER invent an exchange rate — show a USD figure only if the speaker actually stated one.
+4. If translating to US English for the buyer, ensure tone is natural, polite, and standard American commercial English.
+5. If translating to an Indian language for the exporter, use clear, respectful spoken language.
+6. If customs, tariffs, or HS codes are mentioned, state: "Candidates only, verify with a licensed customs broker".
+7. Extract read-back confirmation terms:
    - price (e.g. "$4.50 / unit" or "₹380")
    - currency ("USD", "INR", or other)
    - units (e.g. "500 pieces", "1 ton")
    - incoterm ("FOB", "CIF", "DDP", etc. or null)
-   - readbackStatement: a clear 1-sentence read-back of price, currency, units, and incoterm for explicit confirmation before agreement.
-7. Output JSON with:
+   - originalAmount: the price EXACTLY as the speaker stated it, verbatim (e.g. "₹5,00,000 (5 lakh)" or "$4.50 / unit" or null if no price was stated)
+   - originalCurrency: the currency of the original amount ("INR", "USD", or other, or null)
+   - readbackStatement: a clear 1-sentence read-back of price, currency, units, and incoterm for explicit confirmation before agreement. When the original amount is in INR, state it verbatim first, then the USD figure only if one was stated.
+8. Output JSON with:
    - "translatedText": string
    - "detectedSourceLang": string
    - "keyTerms": array of string
@@ -253,6 +264,8 @@ STRICT RULES:
        "currency": string | null,
        "units": string | null,
        "incoterm": string | null,
+       "originalAmount": string | null,
+       "originalCurrency": string | null,
        "readbackStatement": string
      }
 `;
@@ -275,6 +288,8 @@ STRICT RULES:
           currency: null,
           units: null,
           incoterm: null,
+          originalAmount: null,
+          originalCurrency: null,
           readbackStatement: 'Please review and confirm price, currency, units, and Incoterm before agreeing.'
         }
       };

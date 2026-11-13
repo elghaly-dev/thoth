@@ -1,12 +1,15 @@
 import React from 'react';
 import { X, ShieldCheck, Lock, DollarSign, Award, AlertTriangle, Heart } from 'lucide-react';
+import type { LanguageCode } from '../types';
+import { tx } from '../i18n';
 
 interface SafetyModalProps {
   isOpen: boolean;
   onClose: () => void;
+  lang: LanguageCode;
 }
 
-export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose }) => {
+export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose, lang }) => {
   if (!isOpen) return null;
 
   return (
@@ -25,10 +28,10 @@ export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose }) => 
           </div>
           <div>
             <h3 className="text-base font-bold text-white">
-              Thoth's Trust & Ethics Charter
+              {tx(lang, 'safety.title')}
             </h3>
             <p className="text-xs text-slate-400">
-              Built by elghaly with love for Indian exporters
+              {tx(lang, 'safety.subtitle')}
             </p>
           </div>
         </div>
@@ -37,62 +40,62 @@ export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose }) => 
           <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 flex items-start gap-3">
             <Award className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
             <div>
-              <strong className="text-white">1. 100% Free for Everyone:</strong> Thoth is a free initiative by elghaly to empower Indian manufacturers, MSMEs, artisans, and exporters. We never ask for payment, subscription, credit cards, or fees.
+              <strong className="text-white">{tx(lang, 'safety.item1Title')}</strong> {tx(lang, 'safety.item1Body')}
             </div>
           </div>
 
           <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 flex items-start gap-3">
             <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
             <div>
-              <strong className="text-white">2. No Invented Claims or Certifications:</strong> We never invent certifications (FDA, FSSAI, Organic, ISO) or capacity. Every pitch includes a mandatory "Claims to Verify" checklist to ensure absolute trade honesty.
+              <strong className="text-white">{tx(lang, 'safety.item2Title')}</strong> {tx(lang, 'safety.item2Body')}
             </div>
           </div>
 
           <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 flex items-start gap-3">
             <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
             <div>
-              <strong className="text-white">3. HS Codes & Tariffs are Candidates:</strong> All HS codes and duty rates are <em>"candidates, verify"</em>. We never state tariffs as fact. Always check with a licensed customs broker for final classification.
+              <strong className="text-white">{tx(lang, 'safety.item3Title')}</strong> {tx(lang, 'safety.item3Body')}
             </div>
           </div>
 
           <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 flex items-start gap-3">
             <Lock className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
             <div>
-              <strong className="text-white">4. Faithful Translation & Term Read-Back:</strong> Thoth translates faithfully without adding commitments or negotiating. We read back price, currency (USD/INR), units, and Incoterm for explicit confirmation.
+              <strong className="text-white">{tx(lang, 'safety.item4Title')}</strong> {tx(lang, 'safety.item4Body')}
             </div>
           </div>
 
           <div className="p-3 rounded-xl bg-rose-950/30 border border-rose-800/40 flex items-start gap-3 text-rose-200">
-            <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+            <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
             <div>
-              <strong className="text-rose-300">5. Scam Defense:</strong> We warn against fake-buyer scams, advance inspection fee fraud, and overpayment checks. Never wire upfront fees to third-party inspectors.
+              <strong className="text-rose-300">{tx(lang, 'safety.item5Title')}</strong> {tx(lang, 'safety.item5Body')}
             </div>
           </div>
 
           <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 flex items-start gap-3">
             <Lock className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
             <div>
-              <strong className="text-white">6. Buyer Speech is Data, Not Instructions:</strong> Buyer messages are processed as dialogue content only. They can never alter AI instructions or create unauthorized commitments.
+              <strong className="text-white">{tx(lang, 'safety.item6Title')}</strong> {tx(lang, 'safety.item6Body')}
             </div>
           </div>
 
           <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 flex items-start gap-3">
             <ShieldCheck className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
             <div>
-              <strong className="text-white">7. Zero-Storage & Server-Only Security:</strong> We do not store audio or transcripts on servers. Both sides operate with mutual consent. All API keys remain strictly server-side, never exposed to client browsers.
+              <strong className="text-white">{tx(lang, 'safety.item7Title')}</strong> {tx(lang, 'safety.item7Body')}
             </div>
           </div>
         </div>
 
         <div className="mt-5 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
           <span className="flex items-center gap-1">
-            Made with <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500" /> by elghaly
+            {tx(lang, 'safety.madeWith')} <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500" /> {tx(lang, 'safety.byElghaly')}
           </span>
           <button
             onClick={onClose}
             className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition-colors cursor-pointer"
           >
-            Understood & Close
+            {tx(lang, 'safety.close')}
           </button>
         </div>
       </div>
