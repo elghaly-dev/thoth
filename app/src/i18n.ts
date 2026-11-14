@@ -169,15 +169,15 @@ const EN_PITCH = {
   'pitch.pricePh': 'e.g. $6.50 / piece FOB or ₹550 / pc',
   'pitch.shipFrom': 'Where do you ship from? (Port / City)',
   'pitch.shipFromPh': 'e.g. your origin port',
-  'pitch.writing': 'Thoth is writing honest US pitch...',
+  'pitch.writing': 'Thoth is writing an honest overseas pitch...',
   'pitch.create': 'Create Buyer Pitch (Free)',
   'pitch.emptyTitle': 'Your Buyer Pitch Package will appear here',
   'pitch.emptyBody':
     'Enter your product name, quantity, price, and shipping port, or select one of the quick presets on the left.',
-  'pitch.generatingTitle': 'Crafting honest, professional US pitch...',
-  'pitch.generatingBody': 'Formatting specs, FOB pricing, and concise US English wording.',
+  'pitch.generatingTitle': 'Crafting an honest, professional overseas pitch...',
+  'pitch.generatingBody': 'Formatting specs, FOB pricing, and concise overseas English wording.',
   'pitch.ready': 'Buyer Pitch Package Ready',
-  'pitch.hearVoice': 'Hear US Voice',
+  'pitch.hearVoice': 'Hear Overseas Voice',
   'pitch.stopVoice': 'Stop Voice',
   'pitch.hearTitle': 'Listen to how this sounds to a buyer',
   'pitch.downloadTxt': 'Download TXT',
@@ -216,7 +216,7 @@ const EN_PITCH = {
 } as const;
 
 const EN_TRANS = {
-  // ---- Live translator tab ----
+  // ---- Translator tab ----
   'trans.clearSession': 'Clear Session',
   'trans.clearTitle': 'Wipe in-memory session transcripts',
   'trans.badge': 'Trade Translation',
@@ -347,6 +347,8 @@ const EN_GUIDE = {
     'Look up the buyer on official business registries. Verify that corporate email domains match official business websites, not free webmail.',
 } as const;
 
+// Locales: the 9 languages are listed as SUPPORTED_LANGUAGES in src/types/index.ts.
+// Only EN and ZH have string tables here; the other 7 locales fall back to EN_ALL in tx().
 const EN_ALL = { ...EN, ...EN_VOICE, ...EN_PITCH, ...EN_TRANS, ...EN_GUIDE };
 export type StringKey = keyof typeof EN_ALL;
 
@@ -357,7 +359,7 @@ const ZH: Record<StringKey, string> = {
   'app.tabTranslate': '贸易翻译',
   'app.tabGuide': '海外市场进口基础知识',
   'app.speakingIn': '当前语言：{native}（{name}）',
-  'app.footerTagline': 'elghaly 为出口商打造的Faithful Servant（免费）',
+  'app.footerTagline': 'elghaly 为出口商打造的 Faithful Servant（免费）',
   'app.footerFree': '面向所有出口商，大小企业均免费',
   'app.footerBroker': '最终决定请务必咨询持牌报关行。',
   'app.footerPrivacy': '隐私与信任政策',
@@ -446,7 +448,7 @@ const ZH: Record<StringKey, string> = {
   'voice.step3Title': '目标价格（₹ 或 $）',
   'voice.step3Hint': '单价（本币或 FOB 美元）',
   'voice.step4Title': '发货地点',
-  'voice.step4Hint': '例如：Nhava Sheva（孟买）、Mundra、Chennai',
+  'voice.step4Hint': '例如：您的始发港',
   'voice.generatePitch': '生成海外买家推介与规格表',
   'voice.quickExamples': '出口商示例（点击提问）：',
   'voice.dialogueStream': '对话记录（{lang}）',
@@ -455,7 +457,7 @@ const ZH: Record<StringKey, string> = {
   'voice.safetyRule':
     '安全规则：最终进口/关税决定请咨询持牌报关行。Thoth 绝不索取密码或银行信息。',
   'voice.youExporter': '您（出口商）',
-  'voice.thothFree': 'Thoth（Faithful Servant（免费））',
+  'voice.thothFree': 'Thoth（Faithful Servant，免费）',
   'voice.thinking': 'Thoth 正在准备简短友好的回复……',
   'voice.listen': '收听',
   'voice.copyTitle': '复制文本',
@@ -466,17 +468,17 @@ const ZH: Record<StringKey, string> = {
   'voice.oneStep': '一步一步来',
   'voice.connectionError':
     '抱歉，连接出现短暂问题。最终决定请咨询持牌报关行。请再说一遍好吗？',
-  'voice.sampleBrassLabel': '黄铜装饰品（Moradabad）',
-  'voice.sampleBrassText': '我在 Moradabad 生产手工黄铜家居装饰品，最小起订量 500 件。',
-  'voice.sampleRugsLabel': '手工编织地毯（Jaipur）',
-  'voice.sampleRugsText': '我们在 Jaipur 编织棉质 durries 地毯，FOB 孟买港。',
-  'voice.sampleTurmericLabel': '姜黄（Cochin）',
+  'voice.sampleBrassLabel': '黄铜装饰品',
+  'voice.sampleBrassText': '我生产手工黄铜家居装饰品，最小起订量 500 件。',
+  'voice.sampleRugsLabel': '手工编织地毯',
+  'voice.sampleRugsText': '我们编织棉质 durries 地毯，FOB 始发港。',
+  'voice.sampleTurmericLabel': '姜黄',
   'voice.sampleTurmericText':
-    '示例：我们生产 Lakadong 姜黄粉——宣称前请先核实等级和证书。',
-  'voice.sampleLeatherLabel': '皮夹（Chennai）',
-  'voice.sampleLeatherText': '我们在 Chennai 生产皮夹和卡包，每件 5 美元。',
-  'voice.sampleFobLabel': 'FOB 与 CIF（至纽约）',
-  'voice.sampleFobText': '请用简单的话解释一下 FOB Nhava Sheva 和 CIF 纽约的区别。',
+    '示例：我们生产姜黄粉——宣称前请先核实等级和证书。',
+  'voice.sampleLeatherLabel': '皮夹',
+  'voice.sampleLeatherText': '我们生产皮夹和卡包，每件 5 美元。',
+  'voice.sampleFobLabel': 'FOB 与 CIF',
+  'voice.sampleFobText': '请用简单的话解释一下 FOB 与 CIF 的区别。',
 
   // ---- Pitch studio tab ----
   'pitch.badge': '诚实的海外买家推介工作室',
@@ -489,10 +491,10 @@ const ZH: Record<StringKey, string> = {
   'pitch.productDetails': '产品详情',
   'pitch.stepByStep': '逐步填写',
   'pitch.quickFill': '快速填写示例',
-  'pitch.presetBrass': '黄铜装饰品（Moradabad）· 示例',
-  'pitch.presetTurmeric': '香料 / 姜黄（Cochin）· 示例',
-  'pitch.presetCotton': '棉质 Durries 地毯（Jaipur）· 示例',
-  'pitch.presetLeather': '皮具（Chennai）· 示例',
+  'pitch.presetBrass': '黄铜装饰品 · 示例',
+  'pitch.presetTurmeric': '香料 / 姜黄 · 示例',
+  'pitch.presetCotton': '棉质 Durries 地毯 · 示例',
+  'pitch.presetLeather': '皮具 · 示例',
   'pitch.whatSell': '您销售 / 生产什么产品？*',
   'pitch.whatSellPh': '例如：手工黄铜花盆与碗',
   'pitch.quantity': '数量 / 最小起订量（MOQ）',
@@ -500,7 +502,7 @@ const ZH: Record<StringKey, string> = {
   'pitch.price': '价格（每单位本币或美元）',
   'pitch.pricePh': '例如：$6.50 / 件 FOB 或 ₹550 / 件',
   'pitch.shipFrom': '从哪里发货？（港口 / 城市）',
-  'pitch.shipFromPh': '例如：Nhava Sheva（JNPT 孟买）、Mundra、Chennai',
+  'pitch.shipFromPh': '例如：您的始发港',
   'pitch.writing': 'Thoth 正在撰写诚实的海外买家推介……',
   'pitch.create': '生成海外买家推介（免费）',
   'pitch.emptyTitle': '您的海外买家推介方案将显示在这里',
@@ -544,7 +546,7 @@ const ZH: Record<StringKey, string> = {
   'pitch.importantBody':
     '切勿承诺销售结果。向海外市场发货时，关于 HTS 关税编码、进口关税和清关的最终决定，请咨询持牌报关行。',
 
-  // ---- Live translator tab ----
+  // ---- Translator tab ----
   'trans.clearSession': '清除会话',
   'trans.clearTitle': '清除内存中的会话记录',
   'trans.badge': '贸易翻译',
