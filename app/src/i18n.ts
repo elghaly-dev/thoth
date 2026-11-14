@@ -349,7 +349,7 @@ const EN_GUIDE = {
 
 // Locales: the 9 languages are listed as SUPPORTED_LANGUAGES in src/types/index.ts.
 // Only EN and ZH have string tables here; the other 7 locales fall back to EN_ALL in tx().
-const EN_ALL = { ...EN, ...EN_VOICE, ...EN_PITCH, ...EN_TRANS, ...EN_GUIDE };
+export const EN_ALL = { ...EN, ...EN_VOICE, ...EN_PITCH, ...EN_TRANS, ...EN_GUIDE };
 export type StringKey = keyof typeof EN_ALL;
 
 const ZH: Record<StringKey, string> = {
