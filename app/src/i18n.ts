@@ -11,7 +11,7 @@ const EN = {
   // ---- App shell ----
   'app.tabAssistant': 'Talk with Thoth (वॉइस)',
   'app.tabPitch': 'Buyer Pitch Studio',
-  'app.tabTranslate': 'Live Trade Translator',
+  'app.tabTranslate': 'Trade Translator',
   'app.tabGuide': 'Import Basics',
   'app.speakingIn': 'Speaking in {native} ({name})',
   'app.footerTagline': 'Free Faithful Servant by elghaly for exporters',
@@ -77,7 +77,7 @@ const EN = {
   // ---- Consent gate (copy names Gemini) ----
   'consent.title': 'Before you speak — consent (spoken and typed text is sent to Gemini)',
   'consent.body': // spoken and typed text is sent to Gemini
-    "Voice input uses live speech-to-text, and both parties agree to it. What you say — and anything you type — is sent to Gemini for processing. Thoth never stores audio or transcripts on its own servers. Note: your browser's speech recognition may send audio to your browser vendor's speech service.",
+    "Voice input uses speech-to-text, and both parties agree to it. What you say — and anything you type — is sent to Gemini for processing. Thoth never stores audio or transcripts on its own servers. Note: your browser's speech recognition may send audio to your browser vendor's speech service.",
   'consent.accept': 'Both parties agree — start speaking. Text is sent to Gemini',
   'consent.given': "Consent given — audio is never stored on Thoth's servers. Spoken and typed text is sent to Gemini",
   'consent.micHint': 'Accept the consent notice above to use the microphone. Spoken and typed text is sent to Gemini',
@@ -89,7 +89,7 @@ const EN = {
 
 const EN_VOICE = {
   // ---- Voice tab ----
-  'voice.liveEngine': 'Live Voice Engine',
+  'voice.liveEngine': 'Voice Engine',
   'voice.title': 'Voice Conversation with Thoth',
   'voice.speakNaturally': 'Speak naturally in {native} ({name})',
   'voice.mic': 'Mic:',
@@ -195,7 +195,7 @@ const EN_PITCH = {
   'pitch.claimsTitle': 'Claims to Verify Before Contacting Buyers',
   'pitch.claimsBadge': 'Never invent FDA, FSSAI, or Organic claims',
   'pitch.claimsBody':
-    'Buyers and customs authorities conduct rigorous compliance audits. Only state what you hold physical documentation for. Verify each item below:',
+    'Buyers and customs authorities conduct rigorous compliance checks. Only state what you hold physical documentation for. Verify each item below:',
   'pitch.check': 'Check {n}:',
   'pitch.claimDefault1': 'Verify product material composition and laboratory test reports',
   'pitch.claimDefault2':
@@ -212,14 +212,14 @@ const EN_PITCH = {
   'pitch.adviceIn': 'Exporter Advice in {native} ({name}):',
   'pitch.important': 'Important Notice:',
   'pitch.importantBody':
-    'Never promise guaranteed sales or profit. When shipping, check with a licensed customs broker for final decisions regarding HTS tariff codes, import duties, and entry clearance.',
+    'Never promise sales outcomes. When shipping, check with a licensed customs broker for final decisions regarding HTS tariff codes, import duties, and entry clearance.',
 } as const;
 
 const EN_TRANS = {
   // ---- Live translator tab ----
   'trans.clearSession': 'Clear Session',
   'trans.clearTitle': 'Wipe in-memory session transcripts',
-  'trans.badge': 'Live Trade Translation',
+  'trans.badge': 'Trade Translation',
   'trans.faithful': 'Strictly Faithful • Non-Negotiating',
   'trans.titleExporter': 'Exporter',
   'trans.titleBuyer': 'Buyer',
@@ -245,7 +245,7 @@ const EN_TRANS = {
   'trans.speak': 'Speak',
   'trans.translateVoice': 'Translate & Voice',
   'trans.translating': 'Translating...',
-  'trans.logTitle': 'Live Conversation Log ({n} exchanges)',
+  'trans.logTitle': 'Conversation Log ({n} exchanges)',
   'trans.logNote': 'Prices, units, and dates strictly synchronized',
   'trans.exporterLabel': 'Exporter',
   'trans.buyerLabel': 'Buyer',
@@ -354,7 +354,7 @@ const ZH: Record<StringKey, string> = {
   // ---- App shell ----
   'app.tabAssistant': '与 Thoth 对话（语音）',
   'app.tabPitch': '海外买家推介工作室',
-  'app.tabTranslate': '实时贸易翻译',
+  'app.tabTranslate': '贸易翻译',
   'app.tabGuide': '海外市场进口基础知识',
   'app.speakingIn': '当前语言：{native}（{name}）',
   'app.footerTagline': 'elghaly 为出口商打造的Faithful Servant（免费）',
@@ -420,7 +420,7 @@ const ZH: Record<StringKey, string> = {
   // ---- Consent gate (copy names Gemini) ----
   'consent.title': '开始说话前——请先确认（文字将发送给 Gemini）',
   'consent.body': // 文字将发送给 Gemini
-    '语音输入使用实时语音转文字功能，需双方同意。您说的话和输入的文字会发送给 Gemini 处理。Thoth 绝不在自己的服务器上存储音频或对话记录。注意：浏览器的语音识别可能会将音频发送给浏览器厂商的语音服务。',
+    '语音输入使用语音转文字功能，需双方同意。您说的话和输入的文字会发送给 Gemini 处理。Thoth 绝不在自己的服务器上存储音频或对话记录。注意：浏览器的语音识别可能会将音频发送给浏览器厂商的语音服务。',
   'consent.accept': '双方均同意——开始说话（文字将发送给 Gemini）',
   'consent.given': '已确认同意——音频绝不会存储在 Thoth 的服务器上。您说的话和输入的文字会发送给 Gemini 处理。',
   'consent.micHint': '请先接受上方的确认提示，再使用麦克风。您说的话和输入的文字会发送给 Gemini 处理。',
@@ -430,7 +430,7 @@ const ZH: Record<StringKey, string> = {
     '此浏览器不支持语音识别。请使用 Chrome 或 Edge，或直接输入消息。',
 
   // ---- Voice tab ----
-  'voice.liveEngine': '实时语音引擎',
+  'voice.liveEngine': '语音引擎',
   'voice.title': '与 Thoth 语音对话',
   'voice.speakNaturally': '请用{native}（{name}）自然说话',
   'voice.mic': '麦克风：',
@@ -526,7 +526,7 @@ const ZH: Record<StringKey, string> = {
   'pitch.claimsTitle': '联系海外买家前需核实的事项',
   'pitch.claimsBadge': '绝不编造 FDA、FSSAI 或有机认证宣称',
   'pitch.claimsBody':
-    '海外买家和海关会进行严格的合规审核。请只陈述您持有书面证明的内容。请逐项核实：',
+    '海外买家和海关会进行严格的合规检查。请只陈述您持有书面证明的内容。请逐项核实：',
   'pitch.check': '核实 {n}：',
   'pitch.claimDefault1': '核实产品材质成分和实验室检测报告',
   'pitch.claimDefault2': '核实 FDA、FSSAI 或有机认证（无有效证书绝不宣称）',
@@ -542,12 +542,12 @@ const ZH: Record<StringKey, string> = {
   'pitch.adviceIn': '{native}（{name}）版出口商建议：',
   'pitch.important': '重要提示：',
   'pitch.importantBody':
-    '切勿承诺保证销售或利润。向海外市场发货时，关于 HTS 关税编码、进口关税和清关的最终决定，请咨询持牌报关行。',
+    '切勿承诺销售结果。向海外市场发货时，关于 HTS 关税编码、进口关税和清关的最终决定，请咨询持牌报关行。',
 
   // ---- Live translator tab ----
   'trans.clearSession': '清除会话',
   'trans.clearTitle': '清除内存中的会话记录',
-  'trans.badge': '实时贸易翻译',
+  'trans.badge': '贸易翻译',
   'trans.faithful': '严格忠实 • 绝不谈判',
   'trans.titleExporter': '出口商',
   'trans.titleBuyer': '海外买家',
@@ -572,7 +572,7 @@ const ZH: Record<StringKey, string> = {
   'trans.speak': '说话',
   'trans.translateVoice': '翻译并播报',
   'trans.translating': '正在翻译……',
-  'trans.logTitle': '实时对话记录（{n} 条）',
+  'trans.logTitle': '对话记录（{n} 条）',
   'trans.logNote': '价格、单位和日期严格同步',
   'trans.exporterLabel': '出口商',
   'trans.buyerLabel': '海外买家',
