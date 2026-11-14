@@ -9,7 +9,8 @@
     "start": "tsx server.ts",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test:smoke": "tsx tests/smoke-locales.ts"
   },
   "dependencies": {
     "@google/genai": "^3.2.0",
