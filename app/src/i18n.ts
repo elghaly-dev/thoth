@@ -11,7 +11,7 @@ const EN = {
   // ---- App shell ----
   'app.tabAssistant': 'Talk with Thoth (वॉइस)',
   'app.tabPitch': 'Buyer Pitch Studio',
-  'app.tabTranslate': 'Live Trade Translator',
+  'app.tabTranslate': 'Real-Time Trade Translator',
   'app.tabGuide': 'Import Basics',
   'app.speakingIn': 'Speaking in {native} ({name})',
   'app.footerTagline': 'Free Faithful Servant by elghaly for exporters',
@@ -77,7 +77,7 @@ const EN = {
   // ---- Consent gate (copy names Gemini) ----
   'consent.title': 'Before you speak — consent (spoken and typed text is sent to Gemini)',
   'consent.body': // spoken and typed text is sent to Gemini
-    "Voice input uses live speech-to-text, and both parties agree to it. What you say — and anything you type — is sent to Gemini for processing. Thoth never stores audio or transcripts on its own servers. Note: your browser's speech recognition may send audio to your browser vendor's speech service.",
+    "Voice input uses real-time speech-to-text, and both parties agree to it. What you say — and anything you type — is sent to Gemini for processing. Thoth never stores audio or transcripts on its own servers. Note: your browser's speech recognition may send audio to your browser vendor's speech service.",
   'consent.accept': 'Both parties agree — start speaking. Text is sent to Gemini',
   'consent.given': "Consent given — audio is never stored on Thoth's servers. Spoken and typed text is sent to Gemini",
   'consent.micHint': 'Accept the consent notice above to use the microphone. Spoken and typed text is sent to Gemini',
@@ -89,7 +89,7 @@ const EN = {
 
 const EN_VOICE = {
   // ---- Voice tab ----
-  'voice.liveEngine': 'Live Voice Engine',
+  'voice.liveEngine': 'Real-Time Voice Engine',
   'voice.title': 'Voice Conversation with Thoth',
   'voice.speakNaturally': 'Speak naturally in {native} ({name})',
   'voice.mic': 'Mic:',
@@ -195,7 +195,7 @@ const EN_PITCH = {
   'pitch.claimsTitle': 'Claims to Verify Before Contacting Buyers',
   'pitch.claimsBadge': 'Never invent FDA, FSSAI, or Organic claims',
   'pitch.claimsBody':
-    'Buyers and customs authorities conduct rigorous compliance audits. Only state what you hold physical documentation for. Verify each item below:',
+    'Buyers and customs authorities carefully check every document. Only state what you hold physical documentation for. Verify each item below:',
   'pitch.check': 'Check {n}:',
   'pitch.claimDefault1': 'Verify product material composition and laboratory test reports',
   'pitch.claimDefault2':
@@ -212,14 +212,14 @@ const EN_PITCH = {
   'pitch.adviceIn': 'Exporter Advice in {native} ({name}):',
   'pitch.important': 'Important Notice:',
   'pitch.importantBody':
-    'Never promise guaranteed sales or profit. When shipping, check with a licensed customs broker for final decisions regarding HTS tariff codes, import duties, and entry clearance.',
+    'Never promise buyers any sales or earnings outcome. When shipping, check with a licensed customs broker for final decisions regarding HTS tariff codes, import duties, and entry clearance.',
 } as const;
 
 const EN_TRANS = {
-  // ---- Live translator tab ----
+  // ---- Real-time translator tab ----
   'trans.clearSession': 'Clear Session',
   'trans.clearTitle': 'Wipe in-memory session transcripts',
-  'trans.badge': 'Live Trade Translation',
+  'trans.badge': 'Real-Time Trade Translation',
   'trans.faithful': 'Strictly Faithful • Non-Negotiating',
   'trans.titleExporter': 'Exporter',
   'trans.titleBuyer': 'Buyer',
@@ -245,7 +245,7 @@ const EN_TRANS = {
   'trans.speak': 'Speak',
   'trans.translateVoice': 'Translate & Voice',
   'trans.translating': 'Translating...',
-  'trans.logTitle': 'Live Conversation Log ({n} exchanges)',
+  'trans.logTitle': 'Conversation Log ({n} exchanges)',
   'trans.logNote': 'Prices, units, and dates strictly synchronized',
   'trans.exporterLabel': 'Exporter',
   'trans.buyerLabel': 'Buyer',
@@ -542,9 +542,9 @@ const ZH: Record<StringKey, string> = {
   'pitch.adviceIn': '{native}（{name}）版出口商建议：',
   'pitch.important': '重要提示：',
   'pitch.importantBody':
-    '切勿承诺保证销售或利润。向海外市场发货时，关于 HTS 关税编码、进口关税和清关的最终决定，请咨询持牌报关行。',
+    '切勿向买家承诺任何销售或收益结果。向海外市场发货时，关于 HTS 关税编码、进口关税和清关的最终决定，请咨询持牌报关行。',
 
-  // ---- Live translator tab ----
+  // ---- Real-time translator tab ----
   'trans.clearSession': '清除会话',
   'trans.clearTitle': '清除内存中的会话记录',
   'trans.badge': '实时贸易翻译',
@@ -572,7 +572,7 @@ const ZH: Record<StringKey, string> = {
   'trans.speak': '说话',
   'trans.translateVoice': '翻译并播报',
   'trans.translating': '正在翻译……',
-  'trans.logTitle': '实时对话记录（{n} 条）',
+  'trans.logTitle': '对话记录（{n} 条）',
   'trans.logNote': '价格、单位和日期严格同步',
   'trans.exporterLabel': '出口商',
   'trans.buyerLabel': '海外买家',
