@@ -2,7 +2,9 @@
 
 Thoth is a free Faithful Servant by Wyndham Heaven (elghaly) that helps
 exporters reach and talk to buyers: voice help, honest buyer pitches,
-live translation, and import basics.
+translation, and import basics.
+
+> Draft: this export is under review on a draft pull request. Do not deploy it.
 
 ## Run locally
 
