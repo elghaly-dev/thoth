@@ -54,7 +54,7 @@ export const VoiceOrb: React.FC<VoiceOrbProps> = ({
           disabled={disabled && !isListening && !isSpeaking}
           title={
             disabled
-              ? tx(lang, 'consent.micHint')
+              ? tx(lang, 'consent.micHint') // micHint copy: spoken and typed text is sent to Gemini
               : isListening
               ? tx(lang, 'orb.titleStopListening')
               : isSpeaking

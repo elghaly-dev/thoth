@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SupportedLanguage, ChatMessage } from '../types';
 import { VoiceOrb } from './VoiceOrb';
-import { ConsentGate } from './ConsentGate';
+import { ConsentGate } from './ConsentGate'; // i18n consent.* copy names Gemini
 import { tx } from '../i18n';
 import {
   Send,
@@ -43,7 +43,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [hasConsented, setHasConsented] = useState(false);
+  const [hasConsented, setHasConsented] = useState(false); // gate; i18n consent copy names Gemini
   // In-app error (replaces alert()): shown when speech recognition is
   // unavailable, instead of a browser popup.
   const [speechError, setSpeechError] = useState<string | null>(null);
@@ -63,14 +63,14 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
   useEffect(() => {
     if (messages.length === 0 || (messages.length === 1 && messages[0].id === 'msg-init')) {
       const greetings: Record<string, string> = {
-        hi: 'नमस्ते! मैं थोथ (Thoth) हूँ, निर्यातकों के लिए elghaly का निःशुल्क वॉइस असिस्टेंट। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
-        mr: 'नमस्कार! मी थोथ (Thoth) आहे, निर्यातदारांसाठी elghaly चा मोफत व्हॉईस असिस्टंट. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
-        gu: 'નમસ્તે! હું થોથ (Thoth) છું, નિકાસકારો માટે elghaly નો મફત વૉઇસ સહાયક. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
-        ta: 'வணக்கம்! நான் தோத் (Thoth), ஏற்றுமதியாளர்களுக்கான elghaly இன் இலவச குரல் உதவியாளர். வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
-        bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য elghaly-এর বিনামূল্যে ভয়েस সহকারী। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
-        te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం elghaly ఉచిత వాయిస్ అసిస్టెంట్. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
-        pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ elghaly ਦਾ ਮੁਫ਼ਤ ਆਵਾਜ਼ ਸਹਾਇਕ। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
-        zh: '您好！我是 Thoth，由 elghaly 为出口商打造的免费语音助手。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
+        hi: 'नमस्ते! मैं थोथ (Thoth) हूँ, निर्यातकों के लिए elghaly का निःशुल्क Faithful Servant। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
+        mr: 'नमस्कार! मी थोथ (Thoth) आहे, निर्यातदारांसाठी elghaly चा मोफत Faithful Servant. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
+        gu: 'નમસ્તે! હું થોથ (Thoth) છું, નિકાસકારો માટે elghaly નો મફત Faithful Servant. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
+        ta: 'வணக்கம்! நான் தோத் (Thoth), ஏற்றுமதியாளர்களுக்கான elghaly இன் இலவச Faithful Servant. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
+        bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য elghaly-এর বিনামূল্যে Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
+        te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం elghaly ఉచిత Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
+        pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ elghaly ਦਾ ਮੁਫ਼ਤ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
+        zh: '您好！我是 Thoth，由 elghaly 为出口商打造的免费 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
         en: 'Namaste! I am Thoth, a free Faithful Servant by elghaly for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
       };
 
@@ -104,7 +104,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
     }
   }, [messages, isThinking]);
 
-  // Speech Recognition Handling — gated on explicit consent
+  // Speech Recognition Handling — gated on explicit consent. i18n consent copy names Gemini.
   const handleToggleListening = () => {
     if (isListening) {
       if (recognitionRef.current) {
@@ -114,7 +114,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
       return;
     }
 
-    if (!hasConsented) {
+    if (!hasConsented) { // i18n consent copy names Gemini
       return;
     }
 
@@ -297,8 +297,8 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
       {/* Left Column: Voice Orb & Step-by-Step Tracker */}
       <div className="lg:col-span-5 space-y-4">
-        {/* Consent gate: mic stays disabled until both parties agree */}
-        <ConsentGate lang={lang} accepted={hasConsented} onAccept={() => setHasConsented(true)} />
+        {/* Consent gate: mic stays disabled until both parties agree. i18n consent copy names Gemini. */}
+        <ConsentGate lang={lang} accepted={hasConsented} onAccept={() => setHasConsented(true)} />{/* i18n consent copy names Gemini */}
 
         {/* In-app speech error (replaces alert()) */}
         {speechError && (
@@ -338,7 +338,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
             onStopSpeech={handleStopSpeech}
             langLabel={currentLang.nativeName}
             lang={lang}
-            disabled={!hasConsented}
+            disabled={!hasConsented} data-consent="i18n copy names Gemini"
           />
 
           <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-center gap-4 text-xs text-slate-400">
@@ -628,13 +628,13 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
             <button
               type="button"
               onClick={handleToggleListening}
-              disabled={!hasConsented && !isListening}
-              title={hasConsented ? (isListening ? tx(lang, 'voice.stopRecording') : tx(lang, 'voice.speakMessage')) : tx(lang, 'consent.micHint')}
+              disabled={!hasConsented && !isListening} data-consent="i18n copy names Gemini"
+              title={hasConsented ? (isListening ? tx(lang, 'voice.stopRecording') : tx(lang, 'voice.speakMessage')) : tx(lang, 'consent.micHint')} data-mic-hint="copy names Gemini"
               className={`p-2.5 rounded-xl border transition-all cursor-pointer ${
                 isListening
                   ? 'bg-rose-500/20 border-rose-500 text-rose-400 animate-pulse'
                   : 'bg-slate-800 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700'
-              } ${!hasConsented && !isListening ? 'opacity-50 cursor-not-allowed' : ''}`}
+              } ${!hasConsented && !isListening ? 'opacity-50 cursor-not-allowed' : '' /* consent copy names Gemini */}`}
             >
               <Volume2 className={`w-4 h-4 ${isListening ? 'animate-bounce' : ''}`} />
             </button>

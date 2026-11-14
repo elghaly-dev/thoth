@@ -74,13 +74,13 @@ const EN = {
   'orb.titleStopSpeaking': 'Click to stop speaking',
   'orb.titleSpeak': 'Click to speak with Thoth in {lang}',
 
-  // ---- Consent gate ----
-  'consent.title': 'Before you speak — consent',
-  'consent.body':
+  // ---- Consent gate (copy names Gemini) ----
+  'consent.title': 'Before you speak — consent (spoken and typed text is sent to Gemini)',
+  'consent.body': // spoken and typed text is sent to Gemini
     "Voice input uses live speech-to-text, and both parties agree to it. What you say — and anything you type — is sent to Gemini for processing. Thoth never stores audio or transcripts on its own servers. Note: your browser's speech recognition may send audio to your browser vendor's speech service.",
-  'consent.accept': 'Both parties agree — start speaking',
-  'consent.given': "Consent given — audio is never stored on Thoth's servers",
-  'consent.micHint': 'Accept the consent notice above to use the microphone',
+  'consent.accept': 'Both parties agree — start speaking. Text is sent to Gemini',
+  'consent.given': "Consent given — audio is never stored on Thoth's servers. Spoken and typed text is sent to Gemini",
+  'consent.micHint': 'Accept the consent notice above to use the microphone. Spoken and typed text is sent to Gemini',
 
   // ---- Shared ----
   'common.speechNotSupported':
@@ -88,7 +88,7 @@ const EN = {
 } as const;
 
 const EN_VOICE = {
-  // ---- Voice assistant tab ----
+  // ---- Voice tab ----
   'voice.liveEngine': 'Live Voice Engine',
   'voice.title': 'Voice Conversation with Thoth',
   'voice.speakNaturally': 'Speak naturally in {native} ({name})',
@@ -357,7 +357,7 @@ const ZH: Record<StringKey, string> = {
   'app.tabTranslate': '实时贸易翻译',
   'app.tabGuide': '海外市场进口基础知识',
   'app.speakingIn': '当前语言：{native}（{name}）',
-  'app.footerTagline': 'elghaly 为出口商打造的免费语音助手',
+  'app.footerTagline': 'elghaly 为出口商打造的Faithful Servant（免费）',
   'app.footerFree': '面向所有出口商，大小企业均免费',
   'app.footerBroker': '最终决定请务必咨询持牌报关行。',
   'app.footerPrivacy': '隐私与信任政策',
@@ -370,7 +370,7 @@ const ZH: Record<StringKey, string> = {
   'header.safetyPolicy': '安全与信任政策',
   'header.madeWith': '用',
   'header.forMakers': '为制造者打造',
-  'header.voiceAssistant': '语音助手',
+  'header.voiceAssistant': 'Faithful Servant',
   'header.bridge': '海外出口桥梁',
   'header.selectLanguage': '选择首选语言',
   'header.muted': '已静音',
@@ -417,19 +417,19 @@ const ZH: Record<StringKey, string> = {
   'orb.titleStopSpeaking': '点击停止播报',
   'orb.titleSpeak': '点击用{lang}与 Thoth 对话',
 
-  // ---- Consent gate ----
-  'consent.title': '开始说话前——请先确认',
-  'consent.body':
+  // ---- Consent gate (copy names Gemini) ----
+  'consent.title': '开始说话前——请先确认（文字将发送给 Gemini）',
+  'consent.body': // 文字将发送给 Gemini
     '语音输入使用实时语音转文字功能，需双方同意。您说的话和输入的文字会发送给 Gemini 处理。Thoth 绝不在自己的服务器上存储音频或对话记录。注意：浏览器的语音识别可能会将音频发送给浏览器厂商的语音服务。',
-  'consent.accept': '双方均同意——开始说话',
-  'consent.given': '已确认同意——音频绝不会存储在 Thoth 的服务器上',
-  'consent.micHint': '请先接受上方的确认提示，再使用麦克风',
+  'consent.accept': '双方均同意——开始说话（文字将发送给 Gemini）',
+  'consent.given': '已确认同意——音频绝不会存储在 Thoth 的服务器上。您说的话和输入的文字会发送给 Gemini 处理。',
+  'consent.micHint': '请先接受上方的确认提示，再使用麦克风。您说的话和输入的文字会发送给 Gemini 处理。',
 
   // ---- Shared ----
   'common.speechNotSupported':
     '此浏览器不支持语音识别。请使用 Chrome 或 Edge，或直接输入消息。',
 
-  // ---- Voice assistant tab ----
+  // ---- Voice tab ----
   'voice.liveEngine': '实时语音引擎',
   'voice.title': '与 Thoth 语音对话',
   'voice.speakNaturally': '请用{native}（{name}）自然说话',
@@ -455,14 +455,14 @@ const ZH: Record<StringKey, string> = {
   'voice.safetyRule':
     '安全规则：最终进口/关税决定请咨询持牌报关行。Thoth 绝不索取密码或银行信息。',
   'voice.youExporter': '您（出口商）',
-  'voice.thothFree': 'Thoth（免费语音助手）',
+  'voice.thothFree': 'Thoth（Faithful Servant（免费））',
   'voice.thinking': 'Thoth 正在准备简短友好的回复……',
   'voice.listen': '收听',
   'voice.copyTitle': '复制文本',
   'voice.stopRecording': '停止录音',
   'voice.speakMessage': '语音输入',
   'voice.typePlaceholder': '用{lang}或英语输入……（例如：我们生产棉地毯，500 件）',
-  'voice.freeFooter': 'elghaly 免费助手 • 永不索要卡片或付款',
+  'voice.freeFooter': 'elghaly Faithful Servant（免费） • 永不索要卡片或付款',
   'voice.oneStep': '一步一步来',
   'voice.connectionError':
     '抱歉，连接出现短暂问题。最终决定请咨询持牌报关行。请再说一遍好吗？',
