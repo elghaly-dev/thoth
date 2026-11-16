@@ -29,7 +29,7 @@
       // built app at /use/. The built page sets data-mounted and stays.
       setTimeout(function () {
         var root = document.getElementById('root');
-        if (root && !root.getAttribute('data-mounted')) {
+        if (root && !root.getAttribute('data-mounted') && window.location.pathname.indexOf('/use') !== 0) {
           window.location.replace('/use/');
         }
       }, 2000);

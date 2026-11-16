@@ -12,9 +12,10 @@
     "lint": "tsc --noEmit",
     "test:smoke": "tsx tests/smoke-locales.ts",
     "build:pages": "THOTH_BASE=/use/ vite build --outDir ../use --emptyOutDir",
-    "test": "tsx tests/smoke-locales.ts && tsx tests/idle-session.ts && tsx tests/no-secrets.ts",
+    "test": "tsx tests/smoke-locales.ts && tsx tests/idle-session.ts && tsx tests/no-secrets.ts && tsx tests/pages-redirect.ts",
     "test:idle": "tsx tests/idle-session.ts",
-    "test:secrets": "tsx tests/no-secrets.ts"
+    "test:secrets": "tsx tests/no-secrets.ts",
+    "test:pages": "tsx tests/pages-redirect.ts"
   },
   "dependencies": {
     "@google/genai": "^3.2.0",
