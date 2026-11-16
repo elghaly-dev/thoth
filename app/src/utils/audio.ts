@@ -1,5 +1,6 @@
 import { SupportedLanguage } from '../types';
 import { postJson, ApiError, isAuthErrorStatus } from './api';
+import { getRuntime } from './runtime';
 
 let currentAudio: HTMLAudioElement | null = null;
 
@@ -20,7 +21,16 @@ export async function playTextToSpeech(
 
   onStart?.();
 
+  // Static / GitHub Pages mode has no TTS proxy. Use the browser voice
+  // so a missing /api/tts is not treated as a provider failure, and so
+  // a user-supplied key is never sent to a path that does not exist.
+  const rt = getRuntime();
+  const canUseServerTts = rt.mode === 'server' && rt.serverHasKey;
+
   try {
+    if (!canUseServerTts) {
+      throw new Error('server-tts-unavailable');
+    }
     // 1. Try Gemini TTS backend first
     const data = await postJson<{ audioData?: string }>('/api/tts', {
       text: text.slice(0, 450), // keep within single utterance
@@ -48,7 +58,9 @@ export async function playTextToSpeech(
       onEnd?.();
       return;
     }
-    console.warn('Backend TTS failed, using browser synthesis', err);
+    if (!(err instanceof Error && err.message === 'server-tts-unavailable')) {
+      console.warn('Backend TTS failed, using browser synthesis', err);
+    }
   }
 
   // 2. Fallback to Browser SpeechSynthesis

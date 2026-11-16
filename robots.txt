@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://thoth.elghaly.dev/sitemap.xml

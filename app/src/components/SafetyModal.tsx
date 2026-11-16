@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, ShieldCheck, Lock, DollarSign, Award, AlertTriangle, Heart } from 'lucide-react';
 import type { LanguageCode } from '../types';
 import { tx } from '../i18n';
@@ -10,14 +10,34 @@ interface SafetyModalProps {
 }
 
 export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose, lang }) => {
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
-      <div className="relative w-full max-w-lg bg-slate-900 border border-slate-700/80 rounded-2xl p-6 shadow-2xl text-slate-200">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn"
+      onClick={onClose}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="thoth-safety-title"
+        className="relative w-full max-w-lg bg-slate-900 border border-slate-700/80 rounded-2xl p-6 shadow-2xl text-slate-200"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+          aria-label={tx(lang, 'safety.close')}
+          className="absolute top-4 right-4 min-h-11 min-w-11 p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
@@ -28,7 +48,7 @@ export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose, lang 
           </div>
           <div>
             <h3 className="text-base font-bold text-white">
-              {tx(lang, 'safety.title')}
+              <span id="thoth-safety-title">{tx(lang, 'safety.title')}</span>
             </h3>
             <p className="text-xs text-slate-400">
               {tx(lang, 'safety.subtitle')}

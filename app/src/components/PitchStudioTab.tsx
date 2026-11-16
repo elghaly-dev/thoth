@@ -21,7 +21,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio } from '../utils/audio';
-import { postJson } from '../utils/api';
+import { postModel } from '../utils/api';
 import { tx } from '../i18n';
 
 interface PitchStudioTabProps {
@@ -97,7 +97,7 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
     setIsPlayingAudio(false);
 
     try {
-      const data = await postJson<PitchResult>('/api/pitch', {
+      const data = await postModel<PitchResult>('/api/pitch', {
         product,
         quantity: quantity || 'Flexible MOQ upon discussion',
         price: price || 'Competitive FOB pricing upon spec review',
@@ -143,7 +143,7 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
   const handleDownloadTxt = () => {
     if (!pitchResult) return;
     const content = `================================================
-THOTH - BUYER PITCH SPEC SHEET (Free by elghaly)
+THOTH - BUYER PITCH SPEC SHEET (Free by Wyndham Heaven (elghaly))
 Product: ${pitchResult.specCard?.productName || product}
 MOQ: ${pitchResult.specCard?.moq || quantity}
 Price: ${pitchResult.specCard?.indicativePricing || price}
@@ -251,6 +251,7 @@ ${pitchResult.customsNote || 'Check with a licensed customs broker for final dec
               </div>
             </div>
 
+            <p className="text-xs text-slate-400 leading-relaxed">{tx(lang, 'pitch.sendNotice')}</p>
             <form onSubmit={handleGeneratePitch} className="space-y-3.5">
               {/* Product */}
               <div>

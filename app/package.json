@@ -10,7 +10,11 @@
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
-    "test:smoke": "tsx tests/smoke-locales.ts"
+    "test:smoke": "tsx tests/smoke-locales.ts",
+    "build:pages": "THOTH_BASE=/use/ vite build --outDir ../use --emptyOutDir",
+    "test": "tsx tests/smoke-locales.ts && tsx tests/idle-session.ts && tsx tests/no-secrets.ts",
+    "test:idle": "tsx tests/idle-session.ts",
+    "test:secrets": "tsx tests/no-secrets.ts"
   },
   "dependencies": {
     "@google/genai": "^3.2.0",

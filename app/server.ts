@@ -26,6 +26,13 @@ const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 app.use(express.json({ limit: '10mb' }));
 
+// Liveness for the browser runtime detector. Never includes the key or
+// the proxy secret — only whether a key is configured on this server.
+app.get('/api/health', (_req: Request, res: Response) => {
+  res.json({ ok: true, proxy: true, hasKey: HAS_API_KEY });
+});
+
+
 // GEMINI_API_BASE_URL is a test-only override for the provider endpoint
 // (e.g. a local stub returning 401/403). When unset, the SDK default
 // (Google's API) is used. Never set it in production.
@@ -192,7 +199,7 @@ function modelClient(res: Response): GoogleGenAI | null {
 }
 
 const THOTH_SYSTEM_INSTRUCTION = `
-You are Thoth, a free Faithful Servant by elghaly for exporters.
+You are Thoth, a free Faithful Servant by Wyndham Heaven (elghaly) for exporters.
 Your goal is to help any exporter, small or large, reach and talk to buyers.
 
 CRITICAL RULES & INTEGRITY CHARTER:

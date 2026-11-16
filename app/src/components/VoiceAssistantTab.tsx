@@ -18,7 +18,8 @@ import {
   ShieldAlert,
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio, createSpeechRecognizer, isSpeechRecognitionSupported } from '../utils/audio';
-import { postJson, ApiError, isAuthErrorStatus } from '../utils/api';
+import { postModel, ApiError, isAuthErrorStatus } from '../utils/api';
+import { createIdleVoiceController } from '../hooks/useIdleVoiceSession';
 
 interface VoiceAssistantTabProps {
   currentLang: SupportedLanguage;
@@ -47,6 +48,21 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
   // In-app error (replaces alert()): shown when speech recognition is
   // unavailable, instead of a browser popup.
   const [speechError, setSpeechError] = useState<string | null>(null);
+  const [idleClosed, setIdleClosed] = useState(false);
+  const idleRef = useRef(createIdleVoiceController(() => {
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch { /* already ended */ }
+    }
+    stopAudio();
+    setIsListening(false);
+    setIsSpeaking(false);
+    setIdleClosed(true);
+  }));
+
+  useEffect(() => {
+    const idle = idleRef.current;
+    return () => idle.disarm();
+  }, []);
 
   // Extracted step detection from conversation
   const [details, setDetails] = useState({
@@ -63,15 +79,15 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
   useEffect(() => {
     if (messages.length === 0 || (messages.length === 1 && messages[0].id === 'msg-init')) {
       const greetings: Record<string, string> = {
-        hi: 'नमस्ते! मैं थोथ (Thoth) हूँ, निर्यातकों के लिए elghaly का निःशुल्क Faithful Servant। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
-        mr: 'नमस्कार! मी थोथ (Thoth) आहे, निर्यातदारांसाठी elghaly चा मोफत Faithful Servant. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
-        gu: 'નમસ્તે! હું થોથ (Thoth) છું, નિકાસકારો માટે elghaly નો મફત Faithful Servant. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
-        ta: 'வணக்கம்! நான் தோத் (Thoth), ஏற்றுமதியாளர்களுக்கான elghaly இன் இலவச Faithful Servant. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
-        bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য elghaly-এর বিনামূল্যে Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
-        te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం elghaly ఉచిత Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
-        pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ elghaly ਦਾ ਮੁਫ਼ਤ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
-        zh: '您好！我是 Thoth，由 elghaly 为出口商打造的免费 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
-        en: 'Namaste! I am Thoth, a free Faithful Servant by elghaly for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
+        hi: 'नमस्ते! मैं थोथ (Thoth) हूँ, निर्यातकों के लिए Wyndham Heaven (elghaly) का निःशुल्क Faithful Servant। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
+        mr: 'नमस्कार! मी थोथ (Thoth) आहे, निर्यातदारांसाठी Wyndham Heaven (elghaly) चा मोफत Faithful Servant. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
+        gu: 'નમસ્તે! હું થોથ (Thoth) છું, નિકાસકારો માટે Wyndham Heaven (elghaly) નો મફત Faithful Servant. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
+        ta: 'வணக்கம்! நான் தோத் (Thoth), ஏற்றுமதியாளர்களுக்கான Wyndham Heaven (elghaly) இன் இலவச Faithful Servant. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
+        bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য Wyndham Heaven (elghaly)-এর বিনামূল্যে Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
+        te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం Wyndham Heaven (elghaly) ఉచిత Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
+        pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ Wyndham Heaven (elghaly) ਦਾ ਮੁਫ਼ਤ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
+        zh: '您好！我是 Thoth，由 Wyndham Heaven（elghaly）为出口商打造的免费 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
+        en: 'Namaste! I am Thoth, a free Faithful Servant by Wyndham Heaven (elghaly) for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
       };
 
       const initialText =
@@ -111,8 +127,11 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         recognitionRef.current.stop();
       }
       setIsListening(false);
+      idleRef.current.ping();
       return;
     }
+    setIdleClosed(false);
+    idleRef.current.arm();
 
     if (!hasConsented) { // i18n consent copy names Gemini
       return;
@@ -165,6 +184,9 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
     const text = (textToSend || inputText).trim();
     if (!text || isThinking) return;
 
+    setIdleClosed(false);
+    idleRef.current.arm();
+    idleRef.current.ping();
     setInputText('');
     stopAudio();
     setIsSpeaking(false);
@@ -184,7 +206,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
     detectSteps(text);
 
     try {
-      const data = await postJson<{ reply?: string }>('/api/chat', {
+      const data = await postModel<{ reply?: string }>('/api/chat', {
         messages: newMessages.map((m) => ({ role: m.role, content: m.content })),
         userLanguage: currentLang.name,
       });
@@ -278,6 +300,8 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
   };
 
   const handleResetChat = () => {
+    idleRef.current.disarm();
+    setIdleClosed(false);
     stopAudio();
     setIsSpeaking(false);
     setIsListening(false);
@@ -299,6 +323,12 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
       <div className="lg:col-span-5 space-y-4">
         {/* Consent gate: mic stays disabled until both parties agree. i18n consent copy names Gemini. */}
         <ConsentGate lang={lang} accepted={hasConsented} onAccept={() => setHasConsented(true)} />{/* i18n consent copy names Gemini */}
+
+        {idleClosed && (
+          <div role="status" className="bg-amber-950/40 border border-amber-800/50 rounded-2xl p-3.5 text-xs text-amber-100">
+            {tx(lang, 'voice.idleClosed')}
+          </div>
+        )}
 
         {/* In-app speech error (replaces alert()) */}
         {speechError && (

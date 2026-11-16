@@ -14,7 +14,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio } from '../utils/audio';
-import { postJson } from '../utils/api';
+import { postModel } from '../utils/api';
 import { tx } from '../i18n';
 
 interface ImportGuideTabProps {
@@ -42,7 +42,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
     setIsPlayingAudio(false);
 
     try {
-      const data = await postJson<{ answer?: string }>('/api/import-guide', {
+      const data = await postModel<{ answer?: string }>('/api/import-guide', {
         query: q,
         userLanguage: currentLang.name,
       });
@@ -110,6 +110,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
           <span className="text-[11px] text-slate-400">{tx(lang, 'guide.plainWords')}</span>
         </div>
 
+        <p className="text-xs text-slate-400 leading-relaxed">{tx(lang, 'guide.sendNotice')}</p>
         <form onSubmit={handleAskQuestion} className="flex gap-2">
           <input
             type="text"

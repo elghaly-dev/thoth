@@ -98,7 +98,9 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Sound toggle */}
           <button
+            type="button"
             onClick={onToggleMute}
+            aria-pressed={isMuted}
             title={isMuted ? tx(lang, 'header.mutedTitle') : tx(lang, 'header.voiceOnTitle')}
             className={`p-2 rounded-xl border text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
               isMuted

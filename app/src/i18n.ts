@@ -1,11 +1,18 @@
 import type { LanguageCode } from './types';
+import hi from './locales/hi.json';
+import mr from './locales/mr.json';
+import gu from './locales/gu.json';
+import ta from './locales/ta.json';
+import bn from './locales/bn.json';
+import te from './locales/te.json';
+import pa from './locales/pa.json';
+
 
 /**
- * UI strings for Thoth. English is the complete source of truth;
- * Chinese (Mandarin) is the second language. Every other supported
- * language falls back to English (greeting + speech code still work
- * per-language, as before). Never invent a translation: if a key is
- * missing in ZH, `tx` falls back to the English string.
+ * UI strings for Thoth. English is the complete source of truth.
+ * Chinese (Mandarin) lives in this file; Hindi, Marathi, Gujarati,
+ * Tamil, Bengali, Telugu, and Punjabi live in src/locales/*.json.
+ * A missing key in any table falls back to English.
  */
 const EN = {
   // ---- App shell ----
@@ -14,7 +21,7 @@ const EN = {
   'app.tabTranslate': 'Trade Translator',
   'app.tabGuide': 'Import Basics',
   'app.speakingIn': 'Speaking in {native} ({name})',
-  'app.footerTagline': 'Free Faithful Servant by elghaly for exporters',
+  'app.footerTagline': 'Free Faithful Servant by Wyndham Heaven (elghaly) for exporters',
   'app.footerFree': 'Free for all exporters, small & large',
   'app.footerBroker': 'Always check with a licensed customs broker for final decisions.',
   'app.footerPrivacy': 'Privacy & Trust Policy',
@@ -22,7 +29,7 @@ const EN = {
 
   // ---- Header ----
   'header.freeForever': '100% Free Forever',
-  'header.byElghaly': 'By elghaly for exporters',
+  'header.byElghaly': 'By Wyndham Heaven (elghaly) for exporters',
   'header.reachBuyers': 'Reach & talk to buyers',
   'header.safetyPolicy': 'Safety & Trust Policy',
   'header.madeWith': 'Made with',
@@ -34,14 +41,14 @@ const EN = {
   'header.voiceOn': 'Voice On',
   'header.mutedTitle': 'Voice muted (click to unmute)',
   'header.voiceOnTitle': 'Voice active (click to mute)',
-  'header.freeTool': 'elghaly Free Tool',
+  'header.freeTool': 'Free tool by Wyndham Heaven',
 
   // ---- Safety modal (Trust & Ethics Charter) ----
   'safety.title': "Thoth's Trust & Ethics Charter",
-  'safety.subtitle': 'Built by elghaly with love for exporters',
+  'safety.subtitle': 'Built by Wyndham Heaven (elghaly) with love for exporters',
   'safety.item1Title': '1. 100% Free for Everyone:',
   'safety.item1Body':
-    'Thoth is a free initiative by elghaly to empower manufacturers, MSMEs, artisans, and exporters. We never ask for payment, subscription, credit cards, or fees.',
+    'Thoth is a free initiative by Wyndham Heaven (elghaly) to empower manufacturers, MSMEs, artisans, and exporters. We never ask for payment, subscription, credit cards, or fees.',
   'safety.item2Title': '2. No Invented Claims or Certifications:',
   'safety.item2Body':
     'We never invent certifications (FDA, FSSAI, Organic, ISO) or capacity. Every pitch includes a mandatory "Claims to Verify" checklist to ensure absolute trade honesty.',
@@ -57,11 +64,11 @@ const EN = {
   'safety.item6Title': '6. Buyer Speech is Data, Not Instructions:',
   'safety.item6Body':
     'Buyer messages are processed as dialogue content only. They can never alter Faithful Servant instructions or create unauthorized commitments.',
-  'safety.item7Title': '7. Zero-Storage & Server-Only Security:',
+  'safety.item7Title': '7. Zero-Storage & Key Security:',
   'safety.item7Body':
-    "We do not store audio or transcripts on Thoth's servers. What you say or type is sent to Gemini for processing. Both sides operate with mutual consent. All API keys remain strictly server-side, never exposed to client browsers. Note: your browser's speech recognition may send audio to your browser vendor's speech service.",
+    "We do not store audio or transcripts on Thoth's servers. What you say or type is sent to Gemini for processing. Both sides operate with mutual consent. On a self-hosted server the Gemini key stays on the server. On the public site you paste your own Gemini key; it stays in this browser tab and is sent only to Google. Note: your browser's speech recognition may send audio to your browser vendor's speech service.",
   'safety.madeWith': 'Made with',
-  'safety.byElghaly': 'by elghaly',
+  'safety.byElghaly': 'by Wyndham Heaven (elghaly)',
   'safety.close': 'Understood & Close',
 
   // ---- Voice orb ----
@@ -122,7 +129,7 @@ const EN_VOICE = {
   'voice.speakMessage': 'Speak message',
   'voice.typePlaceholder':
     'Type in {lang} or English... (e.g. We make cotton rugs, 500 pcs)',
-  'voice.freeFooter': 'Free Faithful Servant by elghaly • No card or payment ever',
+  'voice.freeFooter': 'Free Faithful Servant by Wyndham Heaven (elghaly) • No card or payment ever',
   'voice.oneStep': 'One step at a time',
   'voice.connectionError':
     'Sorry, there was a momentary connection issue. Please check with a licensed customs broker for final decisions. Could you please repeat that?',
@@ -147,7 +154,7 @@ const EN_VOICE = {
 const EN_PITCH = {
   // ---- Pitch studio tab ----
   'pitch.badge': 'Honest Buyer Pitch Studio',
-  'pitch.freeBy': '100% Free by elghaly',
+  'pitch.freeBy': '100% Free by Wyndham Heaven (elghaly)',
   'pitch.title': 'Transform craft & manufacturing into compelling buyer pitches',
   'pitch.subtitle':
     'Buyers want brevity, exact quantities, honest specs, and clear FOB terms. Thoth writes clean, hype-free pitches tailored to sourcing standards.',
@@ -348,8 +355,35 @@ const EN_GUIDE = {
 } as const;
 
 // Locales: the 9 languages are listed as SUPPORTED_LANGUAGES in src/types/index.ts.
-// Only EN and ZH have string tables here; the other 7 locales fall back to EN_ALL in tx().
-export const EN_ALL = { ...EN, ...EN_VOICE, ...EN_PITCH, ...EN_TRANS, ...EN_GUIDE };
+
+const EN_PAGES = {
+  'key.title': 'Your Gemini API key',
+  'key.body':
+    'This public site has no server key. Paste your own Gemini API key to talk with Thoth. It stays in this browser tab and is sent only to Google. We never store it on Thoth\'s servers.',
+  'key.label': 'Gemini API key',
+  'key.placeholder': 'Paste your key here',
+  'key.save': 'Save in this tab',
+  'key.clear': 'Remove key',
+  'key.saved': 'Key saved in this tab only. It is sent only to Google.',
+  'key.needed': 'Add your Gemini API key above to talk with Thoth.',
+  'key.invalid': 'That key was refused. Check it and try again.',
+  'key.serverReady': 'This session uses a server-side key. You do not need to paste one.',
+  'key.whereToGet': 'Get a Gemini API key from Google AI Studio. Needs your own sign-up: Google AI Studio.',
+  'key.staysInTab': 'The key never goes into Thoth source, cookies, or long-term browser storage.',
+  'voice.idleClosed':
+    'Voice session ended after 2 minutes of silence. Tap the microphone to start again. Your conversation is still here.',
+  'trans.idleClosed':
+    'Voice session ended after 2 minutes of silence. Tap the microphone to start again. Your translations are still here.',
+  'a11y.skipToMain': 'Skip to main content',
+  'a11y.primaryTabs': 'Thoth tools',
+  'pitch.sendNotice':
+    'The product details you enter are sent to Gemini for processing. Thoth does not store them on its own servers.',
+  'guide.sendNotice':
+    'Your question is sent to Gemini for processing. Thoth does not store it on its own servers.',
+} as const;
+
+export const EN_ALL = { ...EN, ...EN_VOICE, ...EN_PITCH, ...EN_TRANS, ...EN_GUIDE, ...EN_PAGES };
+
 export type StringKey = keyof typeof EN_ALL;
 
 const ZH: Record<StringKey, string> = {
@@ -359,7 +393,7 @@ const ZH: Record<StringKey, string> = {
   'app.tabTranslate': '贸易翻译',
   'app.tabGuide': '海外市场进口基础知识',
   'app.speakingIn': '当前语言：{native}（{name}）',
-  'app.footerTagline': 'elghaly 为出口商打造的 Faithful Servant（免费）',
+  'app.footerTagline': 'Wyndham Heaven（elghaly）为出口商打造的 Faithful Servant（免费）',
   'app.footerFree': '面向所有出口商，大小企业均免费',
   'app.footerBroker': '最终决定请务必咨询持牌报关行。',
   'app.footerPrivacy': '隐私与信任政策',
@@ -367,7 +401,7 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Header ----
   'header.freeForever': '100% 永久免费',
-  'header.byElghaly': '由 elghaly 为出口商打造',
+  'header.byElghaly': '由 Wyndham Heaven（elghaly）为出口商打造',
   'header.reachBuyers': '帮您对接海外买家',
   'header.safetyPolicy': '安全与信任政策',
   'header.madeWith': '用',
@@ -379,14 +413,14 @@ const ZH: Record<StringKey, string> = {
   'header.voiceOn': '语音开启',
   'header.mutedTitle': '语音已静音（点击取消静音）',
   'header.voiceOnTitle': '语音已开启（点击静音）',
-  'header.freeTool': 'elghaly 免费工具',
+  'header.freeTool': 'Wyndham Heaven 免费工具',
 
   // ---- Safety modal (Trust & Ethics Charter) ----
   'safety.title': 'Thoth 信任与道德宪章',
-  'safety.subtitle': '由 elghaly 用爱为出口商打造',
+  'safety.subtitle': '由 Wyndham Heaven（elghaly）用爱为出口商打造',
   'safety.item1Title': '1. 面向所有人 100% 免费：',
   'safety.item1Body':
-    'Thoth 是 elghaly 发起的免费项目，旨在帮助制造商、中小微企业、工匠和出口商。我们绝不收取任何费用、订阅费，不索要信用卡信息。',
+    'Thoth 是 Wyndham Heaven（elghaly）发起的免费项目，旨在帮助制造商、中小微企业、工匠和出口商。我们绝不收取任何费用、订阅费，不索要信用卡信息。',
   'safety.item2Title': '2. 绝不编造宣称或认证：',
   'safety.item2Body':
     '我们绝不编造认证（FDA、FSSAI、有机认证、ISO）或产能。每份推介都附有必须核实的“待核实事项”清单，确保贸易绝对诚实。',
@@ -402,11 +436,11 @@ const ZH: Record<StringKey, string> = {
   'safety.item6Title': '6. 买家的话只是对话内容，不是操作指令：',
   'safety.item6Body':
     '买家消息仅作为对话内容处理，绝不会改变 Faithful Servant 的指令，也不会产生未经授权的承诺。',
-  'safety.item7Title': '7. 零存储与仅服务端安全：',
+  'safety.item7Title': '7. 零存储与密钥安全：',
   'safety.item7Body':
-    '我们不在 Thoth 的服务器上存储音频或对话记录。您说的话和输入的文字会发送给 Gemini 处理。双方均在相互同意的前提下使用。所有 API 密钥仅保存在服务端，绝不暴露给客户端浏览器。注意：浏览器的语音识别可能会将音频发送给浏览器厂商的语音服务。',
+    '我们不在 Thoth 的服务器上存储音频或对话记录。您说的话和输入的文字会发送给 Gemini 处理。双方均在相互同意的前提下使用。若您自行托管服务器，Gemini 密钥只留在服务器上。若您使用公开网站，请自行粘贴 Gemini 密钥；它只留在当前浏览器标签页中，并且只会发送给 Google。注意：浏览器的语音识别可能会将音频发送给浏览器厂商的语音服务。',
   'safety.madeWith': '由 elghaly 用',
-  'safety.byElghaly': '打造',
+  'safety.byElghaly': '由 Wyndham Heaven（elghaly）打造',
   'safety.close': '明白了，关闭',
 
   // ---- Voice orb ----
@@ -464,7 +498,7 @@ const ZH: Record<StringKey, string> = {
   'voice.stopRecording': '停止录音',
   'voice.speakMessage': '语音输入',
   'voice.typePlaceholder': '用{lang}或英语输入……（例如：我们生产棉地毯，500 件）',
-  'voice.freeFooter': 'elghaly Faithful Servant（免费） • 永不索要卡片或付款',
+  'voice.freeFooter': 'Wyndham Heaven（elghaly）Faithful Servant（免费） • 永不索要卡片或付款',
   'voice.oneStep': '一步一步来',
   'voice.connectionError':
     '抱歉，连接出现短暂问题。最终决定请咨询持牌报关行。请再说一遍好吗？',
@@ -482,7 +516,7 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Pitch studio tab ----
   'pitch.badge': '诚实的海外买家推介工作室',
-  'pitch.freeBy': '由 elghaly 提供，100% 免费',
+  'pitch.freeBy': '由 Wyndham Heaven（elghaly）提供，100% 免费',
   'pitch.title': '把手工艺与制造转化为打动海外买家的推介',
   'pitch.subtitle':
     '海外买家看重简洁、准确的数量、诚实的规格和清晰的 FOB 条款。Thoth 按海外采购标准撰写简洁、无夸大的推介。',
@@ -670,20 +704,52 @@ const ZH: Record<StringKey, string> = {
   'guide.card7Sub3Title': '3. 核实海外企业的真实性：',
   'guide.card7Sub3Body':
     '请在官方企业登记机构查询海外买家。核实企业邮箱域名与官方企业网站一致，而非免费邮箱。',
+
+  'key.title': '您的 Gemini API 密钥',
+  'key.body':
+    '此公开网站没有服务器密钥。请粘贴您自己的 Gemini API 密钥以便与 Thoth 对话。密钥只保留在当前浏览器标签页中，并且只会发送给 Google。我们绝不会把它存储在 Thoth 的服务器上。',
+  'key.label': 'Gemini API 密钥',
+  'key.placeholder': '在此粘贴密钥',
+  'key.save': '仅保存在此标签页',
+  'key.clear': '移除密钥',
+  'key.saved': '密钥仅保存在此标签页，并且只会发送给 Google。',
+  'key.needed': '请在上方添加您的 Gemini API 密钥，以便与 Thoth 对话。',
+  'key.invalid': '该密钥被拒绝。请检查后重试。',
+  'key.serverReady': '本会话使用服务器端密钥，您无需粘贴密钥。',
+  'key.whereToGet': '请从 Google AI Studio 获取 Gemini API 密钥。需要您自行注册：Google AI Studio。',
+  'key.staysInTab': '密钥绝不会进入 Thoth 源码、Cookie 或长期浏览器存储。',
+  'voice.idleClosed': '语音会话因两分钟无操作已结束。请再点麦克风重新开始。您的对话仍在。',
+  'trans.idleClosed': '语音会话因两分钟无操作已结束。请再点麦克风重新开始。您的译文仍在。',
+  'a11y.skipToMain': '跳到主要内容',
+  'a11y.primaryTabs': 'Thoth 工具',
+  'pitch.sendNotice': '您输入的产品信息会发送给 Gemini 处理。Thoth 不会把它存储在自己的服务器上。',
+  'guide.sendNotice': '您的问题会发送给 Gemini 处理。Thoth 不会把它存储在自己的服务器上。',
+};
+
+
+const TABLES: Partial<Record<LanguageCode, Record<string, string>>> = {
+  zh: ZH as Record<string, string>,
+  hi,
+  mr,
+  gu,
+  ta,
+  bn,
+  te,
+  pa,
 };
 
 /**
- * Look up a UI string. Only 'zh' has translations; every other language
- * (and any missing key) falls back to English. `{name}` placeholders are
- * replaced from `vars`.
+ * Look up a UI string. 'zh' plus the seven Indian locale tables are
+ * loaded; any missing key falls back to English. `{name}` placeholders
+ * are replaced from `vars`.
  */
 export function tx(
   lang: LanguageCode,
   key: StringKey,
   vars?: Record<string, string | number>
 ): string {
-  const dict = lang === 'zh' ? ZH : EN_ALL;
-  let s: string = dict[key] ?? EN_ALL[key];
+  const dict = TABLES[lang];
+  let s: string = (dict && dict[key]) || EN_ALL[key];
   if (vars) {
     for (const [k, v] of Object.entries(vars)) {
       s = s.split(`{${k}}`).join(String(v));
