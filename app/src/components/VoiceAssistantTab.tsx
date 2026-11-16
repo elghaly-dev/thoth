@@ -131,7 +131,6 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
       return;
     }
     setIdleClosed(false);
-    idleRef.current.arm();
 
     if (!hasConsented) { // i18n consent copy names Gemini
       return;
@@ -166,6 +165,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
 
       if (recognition) {
         recognitionRef.current = recognition;
+        idleRef.current.arm();
         recognition.start();
         setIsListening(true);
       }
@@ -185,7 +185,6 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
     if (!text || isThinking) return;
 
     setIdleClosed(false);
-    idleRef.current.arm();
     idleRef.current.ping();
     setInputText('');
     stopAudio();

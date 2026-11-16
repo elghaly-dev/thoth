@@ -105,7 +105,6 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       return;
     }
     setIdleClosed(false);
-    idleRef.current.arm();
 
     if (!isSpeechRecognitionSupported()) {
       setSpeechError(tx(lang, 'common.speechNotSupported'));
@@ -138,6 +137,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
 
       if (recognition) {
         recognitionRef.current = recognition;
+        idleRef.current.arm();
         recognition.start();
         setIsListening(true);
       }
@@ -152,7 +152,6 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
     if (!text || isTranslating) return;
 
     setIdleClosed(false);
-    idleRef.current.arm();
     idleRef.current.ping();
     setInputText('');
     stopAudio();

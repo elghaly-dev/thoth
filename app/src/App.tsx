@@ -79,15 +79,13 @@ export default function App() {
         {/* Navigation Tabs Bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div
-            role="tablist"
             aria-label={tx(lang, 'a11y.primaryTabs')}
             className="flex flex-wrap items-center gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800"
           >
             {/* Tab 1: Talk with Thoth */}
             <button
               type="button"
-              role="tab"
-              aria-selected={activeTab === 'assistant'}
+              aria-current={activeTab === 'assistant' ? 'page' : undefined}
               onClick={() => setActiveTab('assistant')}
               className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'assistant'
@@ -102,8 +100,7 @@ export default function App() {
             {/* Tab 2: Pitch Studio */}
             <button
               type="button"
-              role="tab"
-              aria-selected={activeTab === 'pitch'}
+              aria-current={activeTab === 'pitch' ? 'page' : undefined}
               onClick={() => setActiveTab('pitch')}
               className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'pitch'
@@ -118,8 +115,7 @@ export default function App() {
             {/* Tab 3: Live Translator */}
             <button
               type="button"
-              role="tab"
-              aria-selected={activeTab === 'translate'}
+              aria-current={activeTab === 'translate' ? 'page' : undefined}
               onClick={() => setActiveTab('translate')}
               className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'translate'
@@ -134,8 +130,7 @@ export default function App() {
             {/* Tab 4: Import Guide */}
             <button
               type="button"
-              role="tab"
-              aria-selected={activeTab === 'guide'}
+              aria-current={activeTab === 'guide' ? 'page' : undefined}
               onClick={() => setActiveTab('guide')}
               className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'guide'

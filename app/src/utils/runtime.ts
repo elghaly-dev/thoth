@@ -12,6 +12,7 @@ export interface RuntimeState {
   mode: RuntimeMode;
   serverHasKey: boolean;
   userKeyPresent: boolean;
+  rejected: boolean;
 }
 
 const STORAGE_KEY = 'thoth.geminiKey';
@@ -32,6 +33,7 @@ let state: RuntimeState = {
   mode: 'unknown',
   serverHasKey: false,
   userKeyPresent: readUserKey().length > 0,
+  rejected: false,
 };
 
 export function getRuntime(): RuntimeState {
@@ -64,12 +66,25 @@ export function setUserKey(key: string): void {
       // Private mode can throw; the in-memory flag still updates.
     }
   }
-  state = { ...state, userKeyPresent: trimmed.length > 0 };
+  state = { ...state, userKeyPresent: trimmed.length > 0, rejected: false };
   emit();
 }
 
 export function clearUserKey(): void {
   setUserKey('');
+}
+
+/** Drop a refused key and mark the runtime so the UI can show key.invalid. */
+export function rejectUserKey(): void {
+  if (typeof sessionStorage !== 'undefined') {
+    try {
+      sessionStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // Private mode can throw; the in-memory flag still updates.
+    }
+  }
+  state = { ...state, userKeyPresent: false, rejected: true };
+  emit();
 }
 
 export function hasUsableModelAccess(): boolean {
@@ -96,6 +111,7 @@ export async function detectRuntime(): Promise<RuntimeState> {
           mode: 'server',
           serverHasKey: data.hasKey === true,
           userKeyPresent: readUserKey().length > 0,
+          rejected: state.rejected && readUserKey().length === 0,
         };
         emit();
         return state;
@@ -108,6 +124,7 @@ export async function detectRuntime(): Promise<RuntimeState> {
     mode: 'static',
     serverHasKey: false,
     userKeyPresent: readUserKey().length > 0,
+    rejected: state.rejected && readUserKey().length === 0,
   };
   emit();
   return state;

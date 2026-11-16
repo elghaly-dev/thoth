@@ -1,5 +1,6 @@
 import { readFileSync, existsSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 
 function assert(cond: unknown, msg: string): void {
   if (!cond) {
@@ -8,46 +9,64 @@ function assert(cond: unknown, msg: string): void {
   }
 }
 
-const appRoot = resolve(new URL('..', import.meta.url).pathname);
-const sourcePath = resolve(appRoot, 'index.html');
-const builtPath = resolve(appRoot, '..', 'use', 'index.html');
-
+const APP = dirname(fileURLToPath(import.meta.url)).replace(/\/tests$/, '');
+const REPO = join(APP, '..');
+const sourcePath = join(APP, 'index.html');
+const builtPath = join(REPO, 'use/index.html');
 const source = readFileSync(sourcePath, 'utf8');
-assert(
-  source.includes("window.location.pathname.indexOf('/use') !== 0"),
-  'app/index.html must guard the /use/ fallback with pathname.indexOf("/use") !== 0',
-);
-assert(
-  source.includes("window.location.replace('/use/')"),
-  'app/index.html must still offer the /use/ fallback for unbuilt /app/',
-);
 
-assert(existsSync(builtPath), 'use/index.html is missing — run npm run build:pages first');
+assert(existsSync(builtPath), 'use/index.html must exist (run npm run build:pages)');
 const built = readFileSync(builtPath, 'utf8');
 
-// The Vite build copies the fallback script into /use/. It must not
-// reload /use/ when already on that path (slow networks would loop).
-const replaceIdx = built.indexOf("window.location.replace('/use/')");
-assert(replaceIdx !== -1, 'use/index.html should still contain the fallback script from the source');
-
-const ifIdx = built.lastIndexOf('if (', replaceIdx);
-assert(ifIdx !== -1 && ifIdx < replaceIdx, 'location.replace(/use/) must sit inside an if-condition');
-const condition = built.slice(ifIdx, replaceIdx);
 assert(
-  condition.includes("window.location.pathname.indexOf('/use') !== 0"),
-  'use/index.html must not redirect to /use/ when the path already starts with /use',
+  /<script\b[^>]*\bdata-app-redirect\b/.test(source),
+  'app/index.html fallback script must be marked data-app-redirect',
 );
 
-// Simulate the built-page condition: pathname /use or /use/ must not pass.
+const timeoutIdx = source.indexOf('setTimeout(function () {');
+assert(timeoutIdx !== -1, 'app/index.html must keep the /app/ fallback setTimeout');
+const afterOpen = source.slice(timeoutIdx + 'setTimeout(function () {'.length);
+const firstLine = afterOpen.split('\n').map((l) => l.trim()).filter(Boolean)[0] || '';
+const GUARD = "if (!/^\\/app(\\/|$)/.test(location.pathname)) return;";
+assert(
+  firstLine === GUARD,
+  `first line inside setTimeout must be exactly ${GUARD} (got: ${firstLine})`,
+);
+
+// Built page: the inline redirect would violate script-src 'self', so it is stripped.
+assert(
+  !built.includes("window.location.replace('/use/')"),
+  'built use/index.html must not contain the /app/ fallback redirect (it would reload /use/ and violate CSP)',
+);
+assert(
+  !/\bdata-app-redirect\b/.test(built),
+  'built use/index.html must not keep the data-app-redirect script',
+);
+assert(
+  /http-equiv="Content-Security-Policy"/.test(built),
+  'built use/index.html must include the pages-hardening CSP meta tag',
+);
+assert(
+  /script-src 'self'/.test(built) &&
+    /connect-src 'self' https:\/\/generativelanguage\.googleapis\.com/.test(built),
+  'built CSP must allow same-origin scripts and Google Generative Language connect-src',
+);
+
+// Source-guard simulation: only unmounted /app and /app/... may redirect.
+// This is also what npm run dev serves at `/` — the script must no-op there.
 function wouldRedirect(pathname: string, mounted: boolean): boolean {
-  const rootMissingMounted = !mounted;
-  return rootMissingMounted && pathname.indexOf('/use') !== 0;
+  if (!/^\/app(\/|$)/.test(pathname)) return false;
+  return !mounted;
 }
+
+assert(!wouldRedirect('/', false), 'dev server path / must not redirect');
 assert(!wouldRedirect('/use', false), 'pathname /use must not redirect to itself');
 assert(!wouldRedirect('/use/', false), 'pathname /use/ must not redirect to itself');
-assert(!wouldRedirect('/use/index.html', false), 'pathname /use/index.html must not redirect to itself');
-assert(wouldRedirect('/app/', false), 'unbuilt /app/ should still redirect when unmounted');
-assert(wouldRedirect('/', false), 'site root should still be able to take the fallback if this script ran there unmounted');
-assert(!wouldRedirect('/use/', true), 'a mounted /use/ page must not redirect');
+assert(!wouldRedirect('/use/index.html', false), 'pathname /use/index.html must not redirect');
+assert(wouldRedirect('/app', false), 'unbuilt /app should redirect when unmounted');
+assert(wouldRedirect('/app/', false), 'unbuilt /app/ should redirect when unmounted');
+assert(wouldRedirect('/app/index.html', false), 'unbuilt /app/index.html should redirect when unmounted');
+assert(!wouldRedirect('/app/', true), 'a mounted /app/ page must not redirect');
+assert(!wouldRedirect('/application', false), 'paths that only start with "app" as a prefix must not redirect');
 
-console.log('pages-redirect: PASS -- built use/index.html cannot redirect to itself.');
+console.log('pages-redirect: PASS -- /app/ fallback is source-only, /use/ cannot redirect to itself.');

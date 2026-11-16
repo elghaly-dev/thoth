@@ -50,6 +50,10 @@ export const ApiKeyBar: React.FC<ApiKeyBarProps> = ({ lang }) => {
       setMessageKey('key.needed');
       return;
     }
+    if (!/^[\x21-\x7E]{20,200}$/.test(value)) {
+      setMessageKey('key.invalid');
+      return;
+    }
     setUserKey(value);
     setDraft('');
     setMessageKey('key.saved');
@@ -100,7 +104,9 @@ export const ApiKeyBar: React.FC<ApiKeyBarProps> = ({ lang }) => {
             <input
               type="password"
               name="gemini-key"
-              autoComplete="off"
+              autoComplete="new-password"
+              data-1p-ignore
+              data-lpignore="true"
               spellCheck={false}
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
@@ -117,7 +123,12 @@ export const ApiKeyBar: React.FC<ApiKeyBarProps> = ({ lang }) => {
         </form>
       )}
 
-      {messageKey && !runtime.userKeyPresent && messageKey !== 'key.saved' && (
+      {runtime.rejected && (
+        <p role="status" className="text-amber-200">
+          {tx(lang, 'key.invalid')}
+        </p>
+      )}
+      {messageKey && !runtime.userKeyPresent && !runtime.rejected && messageKey !== 'key.saved' && (
         <p role="status" className="text-amber-200">
           {tx(lang, messageKey)}
         </p>

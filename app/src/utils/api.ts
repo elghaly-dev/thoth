@@ -7,7 +7,7 @@
 // the exporter's own Gemini key (sessionStorage, this tab only) and talks
 // to Google directly. The key is never placed in a URL or in the bundle.
 
-import { getRuntime, getUserKey } from './runtime';
+import { detectRuntime, getRuntime, getUserKey, rejectUserKey } from './runtime';
 import {
   browserChat,
   browserImportGuide,
@@ -67,13 +67,18 @@ function useServerProxy(): boolean {
 }
 
 export async function postModel<T>(path: string, body: unknown): Promise<T> {
-  if (useServerProxy()) {
-    return postJson<T>(path, body);
+  if (getRuntime().mode === 'unknown') {
+    await detectRuntime();
   }
 
-  const key = requireUserKey();
+  try {
+    if (useServerProxy()) {
+      return await postJson<T>(path, body);
+    }
 
-  switch (path) {
+    const key = requireUserKey();
+
+    switch (path) {
     case '/api/chat': {
       const b = body as {
         messages: Array<{ role: string; content: string }>;
@@ -106,5 +111,15 @@ export async function postModel<T>(path: string, body: unknown): Promise<T> {
     }
     default:
       throw new Error(`No static-mode handler for ${path}`);
+    }
+  } catch (err) {
+    if (
+      !useServerProxy() &&
+      err instanceof ApiError &&
+      isAuthErrorStatus(err.status)
+    ) {
+      rejectUserKey();
+    }
+    throw err;
   }
 }
