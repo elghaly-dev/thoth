@@ -42,5 +42,5 @@ The default router is hosted Otari (the challenge's partner; registrants get fre
 ## Limits
 - Static page. The network file and its instructions are public.
 - The assistant only explains and drafts. It cannot find buyers, send anything, confirm HS codes or duties, or verify anyone.
-- Other agent sites can call this network; they get no `website_*` tools and are pointed to the full Thoth app.
+- Calls from other agent sites go through the generated `bridge/` (see the challenge's references/linking.md). Not yet tested from another site.
 - The visitor's messages go to the provider they choose.

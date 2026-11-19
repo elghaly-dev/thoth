@@ -1,0 +1,10 @@
+{
+  "networks": [
+    {
+      "name": "thoth_assistant"
+    }
+  ],
+  "actions": {
+    "version": 1
+  }
+}

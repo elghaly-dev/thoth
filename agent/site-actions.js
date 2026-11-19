@@ -26,7 +26,7 @@ class SiteActions {
   static readGuideAction() {
     return {
       name: "get_thoth_guide",
-      description: "Read Thoth's published facts: what it is, its price (free), the tools it offers with what each does, the languages it speaks, its integrity charter, what it cannot do, its privacy note, and the links to the full app.",
+      description: "Read Thoth's published facts: what it is, its price (free), the tools it offers with what each does, the languages it speaks, its integrity charter, what it cannot do, its privacy note, and the link to the home page.",
       effect: "read",
       inputSchema: {
         type: "object",
