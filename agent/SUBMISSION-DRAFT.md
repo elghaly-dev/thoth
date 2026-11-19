@@ -6,16 +6,18 @@ Prepared 18 Nov 2026. **Not submitted.** The owner reviews, registers and submit
 | Item | What I found | Status |
 |---|---|---|
 | Name | Open Agentic Web Challenge (Cognizant AI Lab with Mozilla, MIT Media Lab NANDA, AWS), on Devpost | VERIFIED (press release and repo) |
-| Deadline | **11 January 2027, 16:00 UTC** | From the Devpost page via search; recheck on the rules page |
+| Deadline | **11 January 2027, 8:00 am PT (16:00 UTC)** | Rules page, read by Instinct 19 Nov 2026 |
 | Who can enter | Above the age of majority where you live; all countries and territories except "standard exceptions" | From the Devpost page via search. **Egypt not confirmed**: check that Egypt is not in the exceptions list |
 | What to build | A public website with: a public `.json` agent network, a browser runtime for it, a chat interface, and settings where the visitor picks the LLM and key. Must follow the MVP spec. | VERIFIED (challenge repo README) |
 | Tracks | 1: agentify existing websites. 2: build components for the agentic web. Thoth fits track 1. | VERIFIED (worldwideagenticweb.org via search) |
-| Submission items | Public site URL, the public `.json` network file, the runtime, and a video of it running in a browser | From the Devpost page via search; confirm the video length limit on the rules page |
+| Submission items | Public site URL, the public `.json` network file, the runtime, and a video of it running in a browser | Video: **under 2 minutes**, must show the project running in a web browser, **public on YouTube**. VERIFIED, rules section 4 (19 Nov) |
+| Existing project | Allowed if "significantly updated after the start of the Hackathon Submission Period", and entrants "should explain how". | VERIFIED, rules section 4. See `SIGNIFICANT-UPDATE.md` |
+| IP | Submissions stay the entrant's property. Sponsor gets a non-exclusive license for judging and "the right to promote the Submission" for the Hackathon Period and three years after. | VERIFIED, rules section 7 |
 | Judging | Technical implementation and quality of the idea | From the Devpost page via search; confirm the full list |
 | Prizes | $13,000 pool, announced at Davos | From press coverage |
 | Cost | Free. Otari credits for the first 100 registrants | VERIFIED (repo README) |
 
-I could not open the Devpost rules page itself (blocked in this session). **Before submitting, read the full rules page**, especially the eligibility exceptions, whether an existing site may be entered (track 1 implies yes), the video limit, and IP terms.
+The video limit, the existing-project rule and the IP terms were read on the rules page on 19 Nov 2026 (quotes in `VIDEO-SCRIPT.md` and `SIGNIFICANT-UPDATE.md`). **Still open:** the eligibility exceptions list (excluded countries) and whether Egypt is affected. That check is with Instinct (official OFAC programs page); UNKNOWN until it comes back.
 
 ## Why Thoth fits
 Track 1 asks to agentify an existing website so that any agent, and any visitor with their own key, can use it. Thoth already runs on the visitor's own key and stores nothing. The agentic version keeps Thoth's integrity charter in every agent.
@@ -43,14 +45,8 @@ Voice in the agentic page, more languages, and linking to other agentic trade si
 
 **Built with:** HTML, JavaScript, JSON/HOCON, the Open Agentic Web browser runtime, hosted Otari (default router), GitHub Pages.
 
-## Video script (about 2 minutes; confirm the limit)
-1. (0:00) The Thoth home page, then `thoth.elghaly.dev/agent/`. "Thoth helps exporters talk to buyers. Here it is as an open agentic website."
-2. (0:15) Open AI model settings and paste a key with a spending limit. "The visitor brings their own key. Thoth pays for nothing and stores nothing."
-3. (0:30) Ask "What can Thoth do, and is it free?" Show the agent calling `website_get_thoth_guide`.
-4. (0:50) Ask for a turmeric pitch with no certificates. Show the claims-to-verify list and the scam warning.
-5. (1:15) Translate "₹380 per kg, FOB, minimum 500 kg". Show the exact read-back.
-6. (1:35) Ask "Find me a buyer and send my offer". Show the honest refusal.
-7. (1:50) Show `agent-manifest.json` and the network file. "Any agent can call Thoth."
+## Video script
+Moved to `VIDEO-SCRIPT.md` (1:45 target, under the 2-minute limit).
 
 ## What is still missing before submitting
 | # | Missing item | Who | Blocking? |
@@ -59,7 +55,8 @@ Voice in the agentic page, more languages, and linking to other agentic trade si
 | 2 | **The full app link `/use/` does not exist on main.** It is only in thoth PR 6, which was reviewed as not merge-ready. Either fix and merge PR 6, or change the two links in `thoth-page.js` and `index.html` to the home page | Owner decision | YES (broken link) |
 | 3 | Merge this Draft PR so GitHub Pages serves `thoth.elghaly.dev/agent/` | Owner says "merge" | YES |
 | 4 | Live test with a real key (all five sample queries; the last must be declined) | Owner | YES |
-| 5 | Record the video (script above) | Owner | YES |
+| 5 | Record the video (`VIDEO-SCRIPT.md`) and upload it to YouTube as **Public** | Owner | YES |
+| 5b | Confirm the first sentence of the "How was it updated?" answer in `SIGNIFICANT-UPDATE.md` | Owner | YES |
 | 6 | Register on Devpost and confirm eligibility (Egypt) and the rules | Owner | YES |
 | 7 | Test Gemini through its OpenAI-compatible endpoint, if you want Gemini as an option (UNSURE whether it allows browser calls) | Optional | No |
 | 8 | Add the site to the challenge's Agentic Websites list (pull request to their repo) | Optional, after hosting | No |
