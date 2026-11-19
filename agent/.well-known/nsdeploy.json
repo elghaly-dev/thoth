@@ -1,0 +1,18 @@
+{
+  "protocol": "nsdeploy-link/v1",
+  "exports": [
+    {
+      "network": "thoth_assistant",
+      "front_man": "thoth_front_desk",
+      "aliases": [
+        "thoth_assistant",
+        "thoth_front_desk"
+      ],
+      "url": "thoth_assistant"
+    }
+  ],
+  "imports": [],
+  "link_updates": {
+    "mode": "browser-local"
+  }
+}
