@@ -6,57 +6,66 @@ Prepared 18 Nov 2026. **Not submitted.** The owner reviews, registers and submit
 | Item | What I found | Status |
 |---|---|---|
 | Name | Open Agentic Web Challenge (Cognizant AI Lab with Mozilla, MIT Media Lab NANDA, AWS), on Devpost | VERIFIED (press release and repo) |
-| Deadline | **11 January 2027, 8:00 am PT (16:00 UTC)** | Rules page, read by Instinct 19 Nov 2026 |
-| Who can enter | Above the age of majority where you live; all countries and territories except "standard exceptions" | From the Devpost page via search. **Egypt not confirmed**: check that Egypt is not in the exceptions list |
+| Deadline | **Monday, January 11, 2027 (8:00 am Pacific Time)** | Rules page, read by Instinct 19 Nov 2026 |
+| Who can enter | **UNKNOWN for the owner.** The OFAC page read by Instinct does not list Egypt by name among Active Sanctions Programs. That is a fact about the page, **not an eligibility ruling**; the rules' own exclusions and Devpost's terms decide. | UNKNOWN |
 | What to build | A public website with: a public `.json` agent network, a browser runtime for it, a chat interface, and settings where the visitor picks the LLM and key. Must follow the MVP spec. | VERIFIED (challenge repo README) |
 | Tracks | 1: agentify existing websites. 2: build components for the agentic web. Thoth fits track 1. | VERIFIED (worldwideagenticweb.org via search) |
 | Submission items | Public site URL, the public `.json` network file, the runtime, and a video of it running in a browser | Video: **under 2 minutes**, must show the project running in a web browser, **public on YouTube**. VERIFIED, rules section 4 (19 Nov) |
 | Existing project | Allowed if "significantly updated after the start of the Hackathon Submission Period", and entrants "should explain how". | VERIFIED, rules section 4. See `SIGNIFICANT-UPDATE.md` |
 | IP | Submissions stay the entrant's property. Sponsor gets a non-exclusive license for judging and "the right to promote the Submission" for the Hackathon Period and three years after. | VERIFIED, rules section 7 |
-| Judging | Technical implementation and quality of the idea | From the Devpost page via search; confirm the full list |
-| Prizes | $13,000 pool, announced at Davos | From press coverage |
-| Cost | Free. Otari credits for the first 100 registrants | VERIFIED (repo README) |
+| Judging | Four equally weighted criteria: **Technological Implementation, Design, Potential Impact, Quality of the Idea** | Rules page (per Instinct's review) |
+| Cost | Free to enter | Rules page |
 
-The video limit, the existing-project rule and the IP terms were read on the rules page on 19 Nov 2026 (quotes in `VIDEO-SCRIPT.md` and `SIGNIFICANT-UPDATE.md`). **Still open:** the eligibility exceptions list (excluded countries) and whether Egypt is affected. That check is with Instinct (official OFAC programs page); UNKNOWN until it comes back.
+The deadline, video limit, existing-project rule, judging criteria and IP terms were read on the rules page on 19 Nov 2026 (quotes in `VIDEO-SCRIPT.md` and `SIGNIFICANT-UPDATE.md`). **Eligibility stays UNKNOWN:** the OFAC page does not name Egypt among Active Sanctions Programs, but that is not a ruling on this contest's eligibility.
 
 ## Why Thoth fits
-Track 1 asks to agentify an existing website so that any agent, and any visitor with their own key, can use it. Thoth already runs on the visitor's own key and stores nothing. The agentic version keeps Thoth's integrity charter in every agent.
+Track 1 asks to agentify an existing website. **Design intent:** Thoth runs on the visitor's own key, the page has no server of its own, and every agent carries Thoth's integrity charter in its instructions. **Observed:** not yet; the page has not been built or run with a real key (see the missing-items table).
 
 ## Draft text for the Devpost form
 
 **Project name:** Ask Thoth: an open agentic helper for exporters
 
-**Tagline (one line):** A free, honest agent network that helps exporters pitch, translate and learn export basics, running in any browser on the visitor's own AI key.
+**Tagline (one line):** A free agent network, instructed to stay honest, that helps exporters draft pitches, translate and learn export basics, in the browser on the visitor's own AI key.
 
 **What it does**
-Thoth is a free helper for exporters, small or large, who want to reach buyers abroad. Ask Thoth puts it on the open agentic web. A front-desk agent answers questions about Thoth from the site's own published facts. It hands work to three specialists: a pitch writer that uses only the facts the exporter gives, a trade translator that adds nothing and reads back price, currency, units and Incoterm, and an export-basics explainer. Every agent follows Thoth's integrity charter: no invented certifications, HS codes and duty rates only as "candidates, verify", no promises of sales or clearance, scam warnings, and "check with a licensed customs broker". It runs in the visitor's browser on the provider and key they choose. Thoth pays for no LLM calls and stores nothing.
+Thoth is a free helper for exporters, small or large, who want to reach buyers abroad. Ask Thoth puts it on the open agentic web. **Design (what the agents are instructed to do):** a front-desk agent answers questions about Thoth from the site's own published facts, through one read-only action. It hands work to three specialists: a pitch writer instructed to use only the facts the exporter gives, a trade translator instructed to ask for a read-back of price, currency, unit and Incoterm, and an export-basics explainer. Every agent's instructions carry Thoth's integrity charter: no invented certifications, HS codes and duty rates only as "candidates, verify", no promises of sales or clearance, scam warnings, and "check with a licensed customs broker". It runs in the visitor's browser on the provider and key they choose; requests go to that provider and its terms apply. Thoth pays for no LLM calls.
+
+**Observed behaviour:** [OWNER: fill in after the live test, from what the recording actually shows. Leave out anything not observed.]
 
 **How we built it**
-Thoth's static site gained an `agent/` page that follows the Worldwide Agentic Web MVP spec, using the challenge's browser runtime unchanged. The network is a public `.hocon` built into `thoth_assistant.network.json`, with one read-only website action (`get_thoth_guide`) that serves the same facts the page shows. The charter lives in shared instructions, copied from Thoth's existing server prompts, so the agent and the full app follow the same rules.
+Thoth's static site gained an `agent/` page that follows the Worldwide Agentic Web MVP spec, using the challenge's browser runtime unchanged. The network is a public `.hocon` to be built into `thoth_assistant.network.json` (build not yet run), with one read-only website action (`get_thoth_guide`) that serves the same facts the page shows. The charter lives in shared instructions, copied from Thoth's existing server prompts, so the agents carry the same rules.
 
 **What other agents can do with it**
-Any agentic website can call `https://thoth.elghaly.dev/agent/thoth_assistant` to get honest export help for its own visitors, on that visitor's key, after the visitor agrees.
+Design intent only, **not tested**: the network is meant to be callable from other agentic websites through the challenge runtime, without any `website_*` tools. Do not claim this in the submission until a cross-site call has been tested.
 
 **Challenges**
 Keeping a language model honest about trade facts. The answer was to put the charter in every agent and to give agents no tools that could act on anyone's behalf.
 
 **What's next**
-Voice in the agentic page, more languages, and linking to other agentic trade sites as partners.
+Voice in the agentic page, more languages, and, once tested, calls from other agentic trade sites.
 
 **Built with:** HTML, JavaScript, JSON/HOCON, the Open Agentic Web browser runtime, hosted Otari (default router), GitHub Pages.
 
 ## Video script
 Moved to `VIDEO-SCRIPT.md` (1:45 target, under the 2-minute limit).
 
+## How judges can test it (paid key)
+The page calls a language model **from the visitor's browser with the visitor's own key**. Thoth provides no key and pays for no calls, so a judge needs one of:
+- an account and API key with a provider the runtime supports from the browser (the default router is hosted Otari with `alibaba/qwen3.8-flash`; OpenAI and OpenRouter also work, per `agent/README.md`), **with a spending limit set**; or
+- the video, which shows the real page running.
+
+Say this plainly in the submission's testing instructions: "Bring your own key for the provider you choose; set a spending limit. No key is provided." Any free-credit offer for registrants is **not** claimed here (unverified).
+
 ## What is still missing before submitting
 | # | Missing item | Who | Blocking? |
 |---|---|---|---|
-| 1 | **Run the build** (`build_network.mjs`) to produce `thoth_assistant.network.json`, `bridge/` and the discovery files, and fix what it reports | Owner, on a local machine (commands in `agent/README.md`) | YES |
-| 2 | **The full app link `/use/` does not exist on main.** It is only in thoth PR 6, which was reviewed as not merge-ready. Either fix and merge PR 6, or change the two links in `thoth-page.js` and `index.html` to the home page | Owner decision | YES (broken link) |
+| 1 | **Run the build** (`build_network.mjs`) to produce `thoth_assistant.network.json`, `bridge/` and the discovery files, fix what it reports, and commit the outputs under `agent/`. **Why the file 404s today:** `thoth_assistant.network.json` is not in the repository at all (only the `.hocon` source is), so GitHub Pages has nothing to serve at `/agent/thoth_assistant.network.json`. `index.html` and `agent-manifest.json` already link to it. | Owner, on a local machine (commands in `agent/README.md`). Not run here: running the downloaded challenge script was blocked in this session. | YES |
+| 2 | ~~`/use/` broken link~~ **Fixed in this PR:** every `/use/` link was removed from `agent/` (page, facts, action description, agent instructions, README); they now point to the home page. | Done | No |
 | 3 | Merge this Draft PR so GitHub Pages serves `thoth.elghaly.dev/agent/` | Owner says "merge" | YES |
-| 4 | Live test with a real key (all five sample queries; the last must be declined) | Owner | YES |
+| 4 | Live test with a real key (all five sample queries). Record what each answer actually does; the buyer/send request **should** be refused, and the video keeps that scene only if it is | Owner | YES |
 | 5 | Record the video (`VIDEO-SCRIPT.md`) and upload it to YouTube as **Public** | Owner | YES |
-| 5b | Confirm the first sentence of the "How was it updated?" answer in `SIGNIFICANT-UPDATE.md` | Owner | YES |
-| 6 | Register on Devpost and confirm eligibility (Egypt) and the rules | Owner | YES |
+| 5b | OWNER-CONFIRM in `SIGNIFICANT-UPDATE.md`: the sentence about Thoth before 11 Nov 2026 | Owner | YES |
+| 6 | Register on Devpost and confirm eligibility yourself (still UNKNOWN) and the rules | Owner | YES |
 | 7 | Test Gemini through its OpenAI-compatible endpoint, if you want Gemini as an option (UNSURE whether it allows browser calls) | Optional | No |
-| 8 | Add the site to the challenge's Agentic Websites list (pull request to their repo) | Optional, after hosting | No |
+| 8 | Test a call to the network from another agentic site before claiming interop | Optional | No |
+| 9 | Add the site to the challenge's Agentic Websites list (pull request to their repo) | Optional, after hosting and the test in 8 | No |

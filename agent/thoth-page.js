@@ -42,10 +42,9 @@ export class App {
       "Verify a certification, a company or a buyer.",
       "Process payments or hold money.",
     ],
-    privacy: "This assistant runs in your browser on the AI provider and key you choose. Your messages go to that provider. Thoth stores nothing.",
+    privacy: "This assistant runs in your browser on the AI provider and key you choose. This page has no server of its own. Your messages go to that provider, and its terms apply.",
     links: {
       home: "https://thoth.elghaly.dev/",
-      app: "https://thoth.elghaly.dev/use/",
     },
   });
 

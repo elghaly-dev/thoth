@@ -5,22 +5,29 @@
 - "should include footage that shows the Project running in a web browser"
 - "must be uploaded to and made publicly visible on YouTube"
 
-**Target length: 1:45.** That leaves 15 seconds of margin. Record the screen in one browser tab and speak over it. Every shot below is the real page running in the browser; nothing is mocked.
+**Length: target 1:45, not a measured time.** Time the real recording; it must be under 2:00 on YouTube.
 
-**Before recording:**
-- Run the build (agent/README.md, "One step left") and the five sample queries. The video cannot be recorded until the page runs.
-- Use a key **with a spending limit**. Blur or crop the key field: it must never appear on screen.
-- Use no third-party music, logos or footage (the rules cover third-party material).
-- The `/use/` link: do not click it on camera until it works (see SUBMISSION-DRAFT.md, item 2).
+**Rule for every line below:** say what the prompt asks for and show the real answer on screen. Do not claim behaviour the recording does not show. If an answer on camera differs from the script, change the voice-over to match the screen, not the other way round.
 
-| Time | On screen | Voice-over (about 230 words in total) |
+| Time | On screen | Voice-over |
 |---|---|---|
-| 0:00–0:10 | `thoth.elghaly.dev`, then `thoth.elghaly.dev/agent/` | "Thoth is a free helper for exporters. This is Ask Thoth: the same site, now an open agentic website." |
-| 0:10–0:22 | ⚙ AI model settings; the provider is chosen, the key field is blurred | "The visitor brings their own AI provider and key. Thoth pays for no model calls and stores nothing." |
-| 0:22–0:40 | Ask "What can Thoth do, and is it free?" Show the `website_get_thoth_guide` call, then the answer | "The front-desk agent answers only from the facts this page publishes, through one read-only action." |
-| 0:40–1:00 | Ask for a turmeric pitch with no certificates. Show the claims-to-verify list and the scam warning | "The pitch writer uses only what the exporter gives. It invents no certificates and lists every claim the buyer will want proved." |
-| 1:00–1:15 | Translate "₹380 per kg, FOB, minimum 500 kg". Show the read-back | "The trade translator adds nothing, and reads back price, currency, unit and Incoterm, so nothing changes in translation." |
-| 1:15–1:30 | Ask "Find me a buyer and send my offer". Show the refusal | "And it refuses what it must not do. It cannot find buyers or send anything on anyone's behalf." |
-| 1:30–1:45 | `agent-manifest.json` and the network file in the browser | "The network is public. Any agentic website can call Thoth for its own visitors, on their key, after they agree. Thoth: honest help, open to every agent." |
+| 0:00–0:10 | `thoth.elghaly.dev`, then `thoth.elghaly.dev/agent/` | "Thoth is a free helper for exporters. This is Ask Thoth: the same site, as an open agentic website." |
+| 0:10–0:22 | ⚙ AI model settings; provider chosen; **key field blurred or cropped** | "The visitor picks the AI provider and uses their own key. Requests go to the visitor's chosen provider; its terms apply." |
+| 0:22–0:40 | Ask "What can Thoth do, and is it free?" Show the `website_get_thoth_guide` call, then the answer | "The front-desk agent is told to answer from the facts this page publishes, through one read-only action. Here is its answer." |
+| 0:40–1:00 | Ask for a turmeric pitch with no certificates. Show the full real answer | "The pitch writer is instructed to use only the facts given and to list claims a buyer would want proved. Here is what it wrote." |
+| 1:00–1:15 | Translate "₹380 per kg, FOB, minimum 500 kg". Show the answer | "The trade translator asks for a read-back of price, currency, unit and Incoterm, so the exporter can check them." |
+| 1:15–1:30 | Ask "Find me a buyer and send my offer". Show the real answer | "It should refuse this: it has no tool to find buyers or send anything." **Keep this line only if the recording shows the refusal. If it does not refuse, cut this scene and report it.** |
+| 1:30–1:45 | `agent-manifest.json` and the network file in the browser | "The agent network and its manifest are public, so anyone can read exactly how Thoth's agents are instructed." |
 
-**Upload checklist:** YouTube visibility = Public (not Unlisted, not Private); length under 2:00 shown by YouTube; title "Ask Thoth: an open agentic helper for exporters"; no personal details in the description; the link goes in the Devpost form only when the owner submits.
+(Removed until tested: any claim that other agentic websites can call Thoth.)
+
+## Recording checklist (owner)
+- [ ] **Entrant narration:** your own voice (or your own on-screen text), describing your own project.
+- [ ] **English** voice-over or English subtitles.
+- [ ] **Key never on screen:** blur or crop the key field in every frame; check the export frame by frame around 0:10–0:22.
+- [ ] **Screenshots** of each scene saved, for the Devpost gallery.
+- [ ] **Rights:** no third-party music, logos, footage or fonts you do not have rights to; the browser runtime is Apache-2.0 (credit it in the description).
+- [ ] Every scene shows the real page in a real browser; nothing mocked.
+- [ ] Length under 2:00 on YouTube; visibility **Public** (not Unlisted, not Private).
+- [ ] Title "Ask Thoth: an open agentic helper for exporters"; no personal details in the description.
+- [ ] The link goes in the Devpost form only when the owner submits.
