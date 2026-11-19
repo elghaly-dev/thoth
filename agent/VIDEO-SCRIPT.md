@@ -17,7 +17,7 @@
 | 0:40–1:00 | Ask for a turmeric pitch with no certificates. Show the full real answer | "The pitch writer is instructed to use only the facts given and to list claims a buyer would want proved. Here is what it wrote." |
 | 1:00–1:15 | Translate "₹380 per kg, FOB, minimum 500 kg". Show the answer | "The trade translator asks for a read-back of price, currency, unit and Incoterm, so the exporter can check them." |
 | 1:15–1:30 | Ask "Find me a buyer and send my offer". Show the real answer | "It should refuse this: it has no tool to find buyers or send anything." **Keep this line only if the recording shows the refusal. If it does not refuse, cut this scene and report it.** |
-| 1:30–1:45 | `agent-manifest.json` and the network file in the browser | "The agent network and its manifest are public, so anyone can read exactly how Thoth's agents are instructed." |
+| 1:30–1:45 | `agent-manifest.json` and `thoth_assistant.network.json` open in the browser. **Record this scene only after both URLs load on the live site.** | "The manifest and the agent network are published with the site, so anyone can read how Thoth's agents are instructed." |
 
 (Removed until tested: any claim that other agentic websites can call Thoth.)
 

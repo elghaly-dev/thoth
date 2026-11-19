@@ -8,7 +8,7 @@ Prepared 18 Nov 2026. **Not submitted.** The owner reviews, registers and submit
 | Name | Open Agentic Web Challenge (Cognizant AI Lab with Mozilla, MIT Media Lab NANDA, AWS), on Devpost | VERIFIED (press release and repo) |
 | Deadline | **Monday, January 11, 2027 (8:00 am Pacific Time)** | Rules page, read by Instinct 19 Nov 2026 |
 | Who can enter | **UNKNOWN for the owner.** The OFAC page read by Instinct does not list Egypt by name among Active Sanctions Programs. That is a fact about the page, **not an eligibility ruling**; the rules' own exclusions and Devpost's terms decide. | UNKNOWN |
-| What to build | A public website with: a public `.json` agent network, a browser runtime for it, a chat interface, and settings where the visitor picks the LLM and key. Must follow the MVP spec. | VERIFIED (challenge repo README) |
+| What to build | A public website with: a public `.json` agent network, a browser runtime for it, a chat interface, and settings where the visitor picks the LLM and key (the public rules describe model/key configuration as optional). Should follow the MVP spec. | Challenge repo README; rules page per Instinct |
 | Tracks | 1: agentify existing websites. 2: build components for the agentic web. Thoth fits track 1. | VERIFIED (worldwideagenticweb.org via search) |
 | Submission items | Public site URL, the public `.json` network file, the runtime, and a video of it running in a browser | Video: **under 2 minutes**, must show the project running in a web browser, **public on YouTube**. VERIFIED, rules section 4 (19 Nov) |
 | Existing project | Allowed if "significantly updated after the start of the Hackathon Submission Period", and entrants "should explain how". | VERIFIED, rules section 4. See `SIGNIFICANT-UPDATE.md` |
@@ -33,7 +33,7 @@ Thoth is a free helper for exporters, small or large, who want to reach buyers a
 **Observed behaviour:** [OWNER: fill in after the live test, from what the recording actually shows. Leave out anything not observed.]
 
 **How we built it**
-Thoth's static site gained an `agent/` page that follows the Worldwide Agentic Web MVP spec, using the challenge's browser runtime unchanged. The network is a public `.hocon` to be built into `thoth_assistant.network.json` (build not yet run), with one read-only website action (`get_thoth_guide`) that serves the same facts the page shows. The charter lives in shared instructions, copied from Thoth's existing server prompts, so the agents carry the same rules.
+Thoth's static site gained an `agent/` page intended to follow the Worldwide Agentic Web MVP spec, using the challenge's browser runtime unchanged. The network is a public `.hocon` to be built into `thoth_assistant.network.json` (build not yet run), with one read-only website action (`get_thoth_guide`) that serves the same facts the page shows. The charter lives in shared instructions, copied from Thoth's existing server prompts, so the agents carry the same rules.
 
 **What other agents can do with it**
 Design intent only, **not tested**: the network is meant to be callable from other agentic websites through the challenge runtime, without any `website_*` tools. Do not claim this in the submission until a cross-site call has been tested.
@@ -64,6 +64,8 @@ Say this plainly in the submission's testing instructions: "Bring your own key f
 | 3 | Merge this Draft PR so GitHub Pages serves `thoth.elghaly.dev/agent/` | Owner says "merge" | YES |
 | 4 | Live test with a real key (all five sample queries). Record what each answer actually does; the buyer/send request **should** be refused, and the video keeps that scene only if it is | Owner | YES |
 | 5 | Record the video (`VIDEO-SCRIPT.md`) and upload it to YouTube as **Public** | Owner | YES |
+| 5c | **Screenshots:** one or more current screenshots of the working submitted site (required by the rules) | Owner | YES |
+| 5d | **English:** every required material in English or with English translation (video narration or subtitles, description, screenshots' text) | Owner | YES |
 | 5b | ~~OWNER-CONFIRM~~ Done 19 Nov: new GitHub project (first commit a1e1b22, 12 Nov 2026); AI Studio start date unknown; no earlier date claimed | Done | No |
 | 6 | Register on Devpost and confirm eligibility yourself (still UNKNOWN) and the rules | Owner | YES |
 | 7 | Test Gemini through its OpenAI-compatible endpoint, if you want Gemini as an option (UNSURE whether it allows browser calls) | Optional | No |
