@@ -386,7 +386,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               {tx(lang, 'voice.mic')} {isSpeechRecognitionSupported() ? tx(lang, 'voice.supported') : tx(lang, 'voice.typeMode')}
             </span>
             <span className="text-slate-600">•</span>
-            <span>{tx(lang, 'voice.free')}</span>
+            <span>{tx(lang, 'voice.badge')}</span>
           </div>
         </div>
 
@@ -593,7 +593,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
                 className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}
               >
                 <div className="text-[10px] text-slate-500 mb-1 px-1">
-                  {isUser ? tx(lang, 'voice.youExporter') : tx(lang, 'voice.thothFree')}
+                  {isUser ? tx(lang, 'voice.youExporter') : tx(lang, 'voice.thothServant')}
                 </div>
                 <div
                   className={`max-w-[85%] rounded-2xl p-3.5 text-xs sm:text-sm leading-relaxed shadow-md ${
@@ -695,7 +695,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
             </button>
           </form>
           <div className="mt-1.5 flex items-center justify-between text-[10px] text-slate-500 px-1">
-            <span>{tx(lang, 'voice.freeFooter')}</span>
+            <span>{tx(lang, 'voice.badgeFooter')}</span>
             <span>{tx(lang, 'voice.oneStep')}</span>
           </div>
         </div>

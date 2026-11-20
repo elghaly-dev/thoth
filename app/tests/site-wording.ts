@@ -65,7 +65,7 @@ check(!/class="free"|<footer|class="by"/.test(landing), 'index.html: no "free" b
 const assets = fs.readdirSync(path.join(ROOT, 'use', 'assets')).filter((f) => f.endsWith('.js'));
 check(assets.length > 0, 'use/assets has the built JS');
 for (const f of assets) {
-  // Key names such as header.byElghaly are identifiers, never shown.
+  // Key names such as header.credit are identifiers, never shown.
   const js = stripUrls(read(path.join('use', 'assets', f))).replace(/\b[a-z]+\.byElghaly\b/g, ' ');
   check(!/\bfree Faithful Servant|100% Free|Free tool|elghaly/i.test(js), `use/assets/${f}: free/credit wording in the bundle`);
 }

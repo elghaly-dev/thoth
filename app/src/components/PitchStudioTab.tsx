@@ -211,7 +211,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
               {tx(lang, 'pitch.badge')}
             </span>
-            <span className="text-xs text-slate-400">{tx(lang, 'pitch.freeBy')}</span>
+            <span className="text-xs text-slate-400">{tx(lang, 'pitch.servant')}</span>
           </div>
           <h2 className="text-lg font-bold text-white">
             {tx(lang, 'pitch.title')}
