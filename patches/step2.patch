@@ -1,0 +1,63 @@
+diff --git a/app/src/App.tsx b/app/src/App.tsx
+index 2fa027f..20333be 100644
+--- a/app/src/App.tsx
++++ b/app/src/App.tsx
+@@ -209,7 +209,8 @@ export default function App() {
+             <span>{tx(lang, 'app.footerNoPasswords')}</span>
+           </div>
+         </div>
+-      </footer>
++                <p className="mt-4 text-xs opacity-60">Wyndham Heaven</p>
++        </footer>
+ 
+       {/* Safety & Charter Modal */}
+       <SafetyModal
+diff --git a/app/src/components/Header.tsx b/app/src/components/Header.tsx
+index 2def777..8a8b5d6 100644
+--- a/app/src/components/Header.tsx
++++ b/app/src/components/Header.tsx
+@@ -67,6 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
+                   {tx(lang, 'header.voiceAssistant')}
+                 </span>
+               </h1>
++            <p className="text-[11px] text-zinc-400">by <a href="https://elghaly.dev" className="underline hover:text-white">Elghaly LLC</a></p>
+             </div>
+             <p className="text-xs text-slate-400">
+               {tx(lang, 'header.bridge')}
+diff --git a/app/src/i18n-locales.ts b/app/src/i18n-locales.ts
+index fed4ede..5cb343f 100644
+--- a/app/src/i18n-locales.ts
++++ b/app/src/i18n-locales.ts
+@@ -143,7 +143,7 @@ const HI: LocaleTable = {
+   "voice.mic": "माइक:",
+   "voice.supported": "समर्थित",
+   "voice.typeMode": "टाइप मोड",
+-  "voice.badge": "Faithful Servant",
++  "voice.badge": "विश्वसनीय सेवक",
+   "voice.trackerTitle": "खरीदार पिच की प्रगति (एक बार में एक कदम)",
+   "voice.captured": "{n}/4 दर्ज",
+   "voice.step1Title": "आप क्या बेचते हैं (उत्पाद)",
+@@ -168,7 +168,7 @@ const HI: LocaleTable = {
+   "voice.stopRecording": "रिकॉर्डिंग रोकें",
+   "voice.speakMessage": "संदेश बोलें",
+   "voice.typePlaceholder": "{lang} या अंग्रेज़ी में लिखें... (जैसे हम सूती दरियाँ बनाते हैं, 500 पीस)",
+-  "voice.badgeFooter": "Faithful Servant • कार्ड या बैंक विवरण कभी नहीं माँगता",
++  "voice.badgeFooter": "विश्वसनीय सेवक",
+   "voice.oneStep": "एक बार में एक कदम",
+   "voice.connectionError": "क्षमा करें, थोड़ी देर के लिए कनेक्शन में समस्या आई। अंतिम निर्णय के लिए लाइसेंसधारी कस्टम ब्रोकर से जाँच करें। क्या आप फिर से कह सकते हैं?",
+   "voice.sampleBrassLabel": "पीतल सजावट",
+diff --git a/app/src/i18n.ts b/app/src/i18n.ts
+index 33f0c1b..da875fc 100644
+--- a/app/src/i18n.ts
++++ b/app/src/i18n.ts
+@@ -821,7 +821,9 @@ export function tx(
+ ): string {
+   // zh: full table. Indian languages: LOCALE_TABLES (full tables, [VERIFY]);
+   // any key missing there falls back to English.
+-  let s: string = (lang === 'zh' ? ZH[key] : LOCALE_TABLES[lang]?.[key]) ?? EN_ALL[key];
++  let s: string = lang === 'en'
++    ? EN_ALL[key]
++    : ((lang === 'zh' ? ZH[key] : LOCALE_TABLES[lang]?.[key]) ?? LOCALE_TABLES.hi?.[key] ?? EN_ALL[key]);
+   if (vars) {
+     for (const [k, v] of Object.entries(vars)) {
+       s = s.split(`{${k}}`).join(String(v));
