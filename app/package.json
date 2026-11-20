@@ -11,7 +11,8 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "test:smoke": "tsx tests/smoke-locales.ts",
-    "test:zh": "tsx tests/zh-parity.ts"
+    "test:zh": "tsx tests/zh-parity.ts",
+    "test:nofree": "tsx tests/no-free-wording.ts"
   },
   "dependencies": {
     "@google/genai": "^3.2.0",

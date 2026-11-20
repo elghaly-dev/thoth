@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SupportedLanguage, ChatMessage } from '../types';
 import { VoiceOrb } from './VoiceOrb';
 import { ConsentGate } from './ConsentGate'; // i18n consent.* copy names Gemini
-import { tx, langDisplayName, modelLangHint } from '../i18n';
+import { tx, langDisplayName, modelLangHint, GREETINGS } from '../i18n';
 import { errorText } from '../utils/errors';
 import {
   Send,
@@ -63,17 +63,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
   // Initial greeting
   useEffect(() => {
     if (messages.length === 0 || (messages.length === 1 && messages[0].id === 'msg-init')) {
-      const greetings: Record<string, string> = {
-        hi: 'नमस्ते! मैं थोथ (Thoth) हूँ, निर्यातकों के लिए elghaly का निःशुल्क Faithful Servant। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
-        mr: 'नमस्कार! मी थोथ (Thoth) आहे, निर्यातदारांसाठी elghaly चा मोफत Faithful Servant. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
-        gu: 'નમસ્તે! હું થોથ (Thoth) છું, નિકાસકારો માટે elghaly નો મફત Faithful Servant. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
-        ta: 'வணக்கம்! நான் தோத் (Thoth), ஏற்றுமதியாளர்களுக்கான elghaly இன் இலவச Faithful Servant. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
-        bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য elghaly-এর বিনামূল্যে Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
-        te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం elghaly ఉచిత Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
-        pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ elghaly ਦਾ ਮੁਫ਼ਤ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
-        zh: '您好！我是 Thoth，由 elghaly 为出口商打造的 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
-        en: 'Namaste! I am Thoth, a free Faithful Servant by elghaly for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
-      };
+      const greetings = GREETINGS;
 
       const initialText =
         greetings[currentLang.code] || greetings['en'];

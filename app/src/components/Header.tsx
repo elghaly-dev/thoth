@@ -22,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40">
-      {/* Top micro-bar: 100% Free Guarantee & Trust */}
+      {/* Top micro-bar: who it is for, by whom, and trust */}
       <div className="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-amber-950/60 border-b border-slate-800/80 px-4 py-1.5 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
