@@ -74,9 +74,12 @@ function fallbackSpeechSynthesis(
 
   // Try to find a matching voice if available
   const voices = window.speechSynthesis.getVoices();
-  const matchedVoice = voices.find(
-    (v) => v.lang.startsWith(lang.code) || v.lang === lang.speechCode
-  );
+  // Prefer an exact locale match (e.g. zh-CN over zh-TW / zh-HK), then
+  // fall back to any voice for the base language.
+  const wanted = (lang.speechCode || '').toLowerCase().replace('_', '-');
+  const matchedVoice =
+    voices.find((v) => v.lang.toLowerCase().replace('_', '-') === wanted) ||
+    voices.find((v) => v.lang.toLowerCase().startsWith(lang.code));
   if (matchedVoice) {
     utterance.voice = matchedVoice;
   }

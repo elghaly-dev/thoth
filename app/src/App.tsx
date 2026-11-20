@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SupportedLanguage, SUPPORTED_LANGUAGES } from './types';
 import { Header } from './components/Header';
 import { VoiceAssistantTab } from './components/VoiceAssistantTab';
@@ -6,7 +6,7 @@ import { PitchStudioTab } from './components/PitchStudioTab';
 import { LiveTranslatorTab } from './components/LiveTranslatorTab';
 import { ImportGuideTab } from './components/ImportGuideTab';
 import { SafetyModal } from './components/SafetyModal';
-import { tx } from './i18n';
+import { tx, langDisplayName } from './i18n';
 import {
   Mic,
   Sparkles,
@@ -50,6 +50,12 @@ export default function App() {
   };
 
   const lang = currentLang.code;
+
+  // Keep <html lang> in step with the UI language (zh -> zh-CN) so screen
+  // readers and CJK font selection use Simplified Chinese.
+  useEffect(() => {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  }, [lang]);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-emerald-500/30 selection:text-white">
@@ -124,7 +130,7 @@ export default function App() {
           <div className="hidden md:flex items-center gap-2 text-xs text-slate-400 bg-slate-900/60 px-3 py-1.5 rounded-xl border border-slate-800">
             <Globe className="w-3.5 h-3.5 text-slate-400" />
             <span>
-              {tx(lang, 'app.speakingIn', { native: currentLang.nativeName, name: currentLang.name })}
+              {tx(lang, 'app.speakingIn', { native: currentLang.nativeName, name: langDisplayName(lang, currentLang.name) })}
             </span>
           </div>
         </div>

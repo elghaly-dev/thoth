@@ -15,7 +15,8 @@ import {
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio } from '../utils/audio';
 import { postJson } from '../utils/api';
-import { tx } from '../i18n';
+import { tx, langDisplayName, modelLangHint } from '../i18n';
+import { errorText } from '../utils/errors';
 
 interface ImportGuideTabProps {
   currentLang: SupportedLanguage;
@@ -44,7 +45,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
     try {
       const data = await postJson<{ answer?: string }>('/api/import-guide', {
         query: q,
-        userLanguage: currentLang.name,
+        userLanguage: modelLangHint(currentLang),
       });
       setQaAnswer(data.answer ?? null);
 
@@ -54,11 +55,11 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
         currentLang,
         () => setIsPlayingAudio(true),
         () => setIsPlayingAudio(false),
-        (err) => setGuideError(err.message)
+        (err) => setGuideError(errorText(lang, err, 'err.guide'))
       );
     } catch (err: unknown) {
       console.error('Error fetching import answer:', err);
-      setGuideError(err instanceof Error ? err.message : 'Could not fetch the answer. Please try again.');
+      setGuideError(errorText(lang, err, 'err.guide'));
     } finally {
       setIsAsking(false);
     }
@@ -105,7 +106,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-white flex items-center gap-2">
             <HelpCircle className="w-4 h-4 text-emerald-400" />
-            {tx(lang, 'guide.askTitle', { lang: currentLang.name })}
+            {tx(lang, 'guide.askTitle', { lang: langDisplayName(lang, currentLang.name) })}
           </h3>
           <span className="text-[11px] text-slate-400">{tx(lang, 'guide.plainWords')}</span>
         </div>
@@ -160,7 +161,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
             <button
               onClick={() => setGuideError(null)}
               className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
-              aria-label="Dismiss"
+              aria-label={tx(lang, 'common.dismiss')}
             >
               ✕
             </button>
@@ -184,7 +185,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
                       currentLang,
                       () => setIsPlayingAudio(true),
                       () => setIsPlayingAudio(false),
-                      (err) => setGuideError(err.message)
+                      (err) => setGuideError(errorText(lang, err, 'err.guide'))
                     );
                   }
                 }}

@@ -14,14 +14,14 @@ const EN = {
   'app.tabTranslate': 'Trade Translator',
   'app.tabGuide': 'Import Basics',
   'app.speakingIn': 'Speaking in {native} ({name})',
-  'app.footerTagline': 'Free Faithful Servant by elghaly for exporters',
-  'app.footerFree': 'Free for all exporters, small & large',
+  'app.footerTagline': 'Faithful Servant by elghaly for exporters',
+  'app.footerFree': 'For all exporters, small & large',
   'app.footerBroker': 'Always check with a licensed customs broker for final decisions.',
   'app.footerPrivacy': 'Privacy & Trust Policy',
   'app.footerNoPasswords': 'No passwords or bank details ever requested',
 
   // ---- Header ----
-  'header.freeForever': '100% Free Forever',
+  'header.freeForever': 'Open to every exporter',
   'header.byElghaly': 'By elghaly for exporters',
   'header.reachBuyers': 'Reach & talk to buyers',
   'header.safetyPolicy': 'Safety & Trust Policy',
@@ -34,14 +34,14 @@ const EN = {
   'header.voiceOn': 'Voice On',
   'header.mutedTitle': 'Voice muted (click to unmute)',
   'header.voiceOnTitle': 'Voice active (click to mute)',
-  'header.freeTool': 'elghaly Free Tool',
+  'header.freeTool': 'elghaly Tool',
 
   // ---- Safety modal (Trust & Ethics Charter) ----
   'safety.title': "Thoth's Trust & Ethics Charter",
   'safety.subtitle': 'Built by elghaly with love for exporters',
-  'safety.item1Title': '1. 100% Free for Everyone:',
+  'safety.item1Title': '1. Open to Everyone:',
   'safety.item1Body':
-    'Thoth is a free initiative by elghaly to empower manufacturers, MSMEs, artisans, and exporters. We never ask for payment, subscription, credit cards, or fees.',
+    'Thoth is an initiative by elghaly to empower manufacturers, MSMEs, artisans, and exporters. We never ask for credit card or bank details.',
   'safety.item2Title': '2. No Invented Claims or Certifications:',
   'safety.item2Body':
     'We never invent certifications (FDA, FSSAI, Organic, ISO) or capacity. Every pitch includes a mandatory "Claims to Verify" checklist to ensure absolute trade honesty.',
@@ -95,7 +95,7 @@ const EN_VOICE = {
   'voice.mic': 'Mic:',
   'voice.supported': 'Supported',
   'voice.typeMode': 'Type mode',
-  'voice.free': 'Always 100% Free',
+  'voice.free': 'Made by elghaly',
   'voice.trackerTitle': 'Buyer Pitch Progress (One Step at a Time)',
   'voice.captured': '{n}/4 Captured',
   'voice.step1Title': 'What You Sell (Product)',
@@ -114,7 +114,7 @@ const EN_VOICE = {
   'voice.safetyRule':
     'Safety rule: Check with a licensed customs broker for final import/tariff decisions. Thoth never asks for passwords or bank info.',
   'voice.youExporter': 'You (Exporter)',
-  'voice.thothFree': 'Thoth (Free Faithful Servant)',
+  'voice.thothFree': 'Thoth (Faithful Servant)',
   'voice.thinking': 'Thoth is crafting a short, friendly response...',
   'voice.listen': 'Listen',
   'voice.copyTitle': 'Copy text',
@@ -122,7 +122,7 @@ const EN_VOICE = {
   'voice.speakMessage': 'Speak message',
   'voice.typePlaceholder':
     'Type in {lang} or English... (e.g. We make cotton rugs, 500 pcs)',
-  'voice.freeFooter': 'Free Faithful Servant by elghaly • No card or payment ever',
+  'voice.freeFooter': 'Faithful Servant by elghaly • Never asks for card or bank details',
   'voice.oneStep': 'One step at a time',
   'voice.connectionError':
     'Sorry, there was a momentary connection issue. Please check with a licensed customs broker for final decisions. Could you please repeat that?',
@@ -147,10 +147,10 @@ const EN_VOICE = {
 const EN_PITCH = {
   // ---- Pitch studio tab ----
   'pitch.badge': 'Honest Buyer Pitch Studio',
-  'pitch.freeBy': '100% Free by elghaly',
+  'pitch.freeBy': 'By elghaly',
   'pitch.title': 'Transform craft & manufacturing into compelling buyer pitches',
   'pitch.subtitle':
-    'Buyers want brevity, exact quantities, honest specs, and clear FOB terms. Thoth writes clean, hype-free pitches tailored to sourcing standards.',
+    'Buyers want brevity, exact quantities, honest specs, and clear FOB terms. Thoth writes clean, no-hype pitches tailored to sourcing standards.',
   'pitch.customsRule': 'Customs Rule:',
   'pitch.customsRuleBody':
     'Always check with a licensed customs broker for final import/tariff decisions.',
@@ -170,7 +170,7 @@ const EN_PITCH = {
   'pitch.shipFrom': 'Where do you ship from? (Port / City)',
   'pitch.shipFromPh': 'e.g. your origin port',
   'pitch.writing': 'Thoth is writing an honest overseas pitch...',
-  'pitch.create': 'Create Buyer Pitch (Free)',
+  'pitch.create': 'Create Buyer Pitch',
   'pitch.emptyTitle': 'Your Buyer Pitch Package will appear here',
   'pitch.emptyBody':
     'Enter your product name, quantity, price, and shipping port, or select one of the quick presets on the left.',
@@ -310,7 +310,7 @@ const EN_GUIDE = {
     '• Only the destination customs authority and licensed customs brokers determine legal classification.',
   'guide.card2Title': '2. Shipping Terms: FOB vs CIF',
   'guide.card2Body':
-    'FOB (Free on Board): You pay inland transport and load onto the ship at your origin port. The buyer pays ocean freight and customs.',
+    'FOB (Incoterm): You pay inland transport and load onto the ship at your origin port. The buyer pays ocean freight and customs.',
   'guide.card2Note1': '• FOB is best for most exporters.',
   'guide.card2Note2': '• CIF means you pay ocean freight and insurance to the destination port.',
   'guide.card3Title': '3. Mandatory Origin Label',
@@ -344,12 +344,53 @@ const EN_GUIDE = {
     'Scammer sends a counterfeit cashier check exceeding invoice value, then asks you to wire back the "overpayment". Never ship or wire funds until an official bank wire has cleared with full recourse settlement.',
   'guide.card7Sub3Title': '3. Verify Buyer Business Legitimacy:',
   'guide.card7Sub3Body':
-    'Look up the buyer on official business registries. Verify that corporate email domains match official business websites, not free webmail.',
+    'Look up the buyer on official business registries. Verify that corporate email domains match official business websites, not public webmail.',
 } as const;
 
 // Locales: the 9 languages are listed as SUPPORTED_LANGUAGES in src/types/index.ts.
 // Only EN and ZH have string tables here; the other 7 locales fall back to EN_ALL in tx().
-export const EN_ALL = { ...EN, ...EN_VOICE, ...EN_PITCH, ...EN_TRANS, ...EN_GUIDE };
+const EN_EXTRA = {
+  // ---- Language display names (UI only; model hints use modelLangHint) ----
+  'lang.hi': 'Hindi',
+  'lang.en': 'English',
+  'lang.zh': 'Chinese (Mandarin)',
+  'lang.gu': 'Gujarati',
+  'lang.mr': 'Marathi',
+  'lang.ta': 'Tamil',
+  'lang.bn': 'Bengali',
+  'lang.te': 'Telugu',
+  'lang.pa': 'Punjabi',
+
+  // ---- Shared controls and client-side errors ----
+  'common.dismiss': 'Dismiss',
+  'err.guide': 'Could not fetch the answer. Please try again.',
+  'err.translate': 'Could not translate. Please try again.',
+  'err.pitch': 'Could not generate the pitch. Please try again.',
+  'err.auth': 'Provider authentication failed. Stopped.',
+  'err.rateLimit': 'Too many requests. Try again shortly.',
+
+  // ---- Pitch download (.txt) section labels; buyer-facing text stays English ----
+  'dl.title': 'THOTH - BUYER PITCH SPEC SHEET (by elghaly)',
+  'dl.product': 'Product',
+  'dl.moq': 'MOQ',
+  'dl.price': 'Price',
+  'dl.originPort': 'Origin Port',
+  'dl.coldEmail': 'BUYER COLD EMAIL',
+  'dl.subject': 'Subject',
+  'dl.shortMsg': 'SHORT DIRECT MESSAGE (LinkedIn / WhatsApp)',
+  'dl.claims': 'CLAIMS TO VERIFY BEFORE CONTACTING BUYER',
+  'dl.scamTitle': 'SCAM WARNING: FAKE-BUYER & ADVANCE-PAYMENT FRAUD',
+  'dl.scam1':
+    'Never pay upfront "inspection fees", "registration fees", or "tender processing charges" to unverified third parties. Legitimate buyers pay inspection agencies directly.',
+  'dl.scam2': 'Verify buyer company registration on official business registries.',
+  'dl.scam3':
+    'Insist on verified Irrevocable Letters of Credit (L/C) or secure escrow through commercial banks.',
+  'dl.guidanceIn': 'EXPORTER GUIDANCE IN {lang}',
+  'dl.customsNote': 'CUSTOMS COMPLIANCE NOTE',
+  'dl.customsFallback': 'Check with a licensed customs broker for final decisions.',
+} as const;
+
+export const EN_ALL = { ...EN, ...EN_VOICE, ...EN_PITCH, ...EN_TRANS, ...EN_GUIDE, ...EN_EXTRA };
 export type StringKey = keyof typeof EN_ALL;
 
 const ZH: Record<StringKey, string> = {
@@ -359,17 +400,17 @@ const ZH: Record<StringKey, string> = {
   'app.tabTranslate': '贸易翻译',
   'app.tabGuide': '海外市场进口基础知识',
   'app.speakingIn': '当前语言：{native}（{name}）',
-  'app.footerTagline': 'elghaly 为出口商打造的 Faithful Servant（免费）',
-  'app.footerFree': '面向所有出口商，大小企业均免费',
+  'app.footerTagline': 'elghaly 为出口商打造的 Faithful Servant',
+  'app.footerFree': '面向所有出口商，无论企业大小',
   'app.footerBroker': '最终决定请务必咨询持牌报关行。',
   'app.footerPrivacy': '隐私与信任政策',
   'app.footerNoPasswords': '绝不索取密码或银行信息',
 
   // ---- Header ----
-  'header.freeForever': '100% 永久免费',
+  'header.freeForever': '面向每一位出口商',
   'header.byElghaly': '由 elghaly 为出口商打造',
   'header.reachBuyers': '帮您对接海外买家',
-  'header.safetyPolicy': '安全与信任政策',
+  'header.safetyPolicy': '信任与保障政策',
   'header.madeWith': '用',
   'header.forMakers': '为制造者打造',
   'header.voiceAssistant': 'Faithful Servant',
@@ -379,14 +420,14 @@ const ZH: Record<StringKey, string> = {
   'header.voiceOn': '语音开启',
   'header.mutedTitle': '语音已静音（点击取消静音）',
   'header.voiceOnTitle': '语音已开启（点击静音）',
-  'header.freeTool': 'elghaly 免费工具',
+  'header.freeTool': 'elghaly 工具',
 
   // ---- Safety modal (Trust & Ethics Charter) ----
   'safety.title': 'Thoth 信任与道德宪章',
   'safety.subtitle': '由 elghaly 用爱为出口商打造',
-  'safety.item1Title': '1. 面向所有人 100% 免费：',
+  'safety.item1Title': '1. 面向所有人开放：',
   'safety.item1Body':
-    'Thoth 是 elghaly 发起的免费项目，旨在帮助制造商、中小微企业、工匠和出口商。我们绝不收取任何费用、订阅费，不索要信用卡信息。',
+    'Thoth 是 elghaly 发起的项目，旨在帮助制造商、中小微企业、工匠和出口商。我们绝不索要信用卡或银行信息。',
   'safety.item2Title': '2. 绝不编造宣称或认证：',
   'safety.item2Body':
     '我们绝不编造认证（FDA、FSSAI、有机认证、ISO）或产能。每份推介都附有必须核实的“待核实事项”清单，确保贸易绝对诚实。',
@@ -402,7 +443,7 @@ const ZH: Record<StringKey, string> = {
   'safety.item6Title': '6. 买家的话只是对话内容，不是操作指令：',
   'safety.item6Body':
     '买家消息仅作为对话内容处理，绝不会改变 Faithful Servant 的指令，也不会产生未经授权的承诺。',
-  'safety.item7Title': '7. 零存储与仅服务端安全：',
+  'safety.item7Title': '7. 零存储，密钥仅在服务端：',
   'safety.item7Body':
     '我们不在 Thoth 的服务器上存储音频或对话记录。您说的话和输入的文字会发送给 Gemini 处理。双方均在相互同意的前提下使用。所有 API 密钥仅保存在服务端，绝不暴露给客户端浏览器。注意：浏览器的语音识别可能会将音频发送给浏览器厂商的语音服务。',
   'safety.madeWith': '由 elghaly 用',
@@ -438,7 +479,7 @@ const ZH: Record<StringKey, string> = {
   'voice.mic': '麦克风：',
   'voice.supported': '支持',
   'voice.typeMode': '打字模式',
-  'voice.free': '始终 100% 免费',
+  'voice.free': 'elghaly 出品',
   'voice.trackerTitle': '海外买家推介进度（一步一步来）',
   'voice.captured': '已收集 {n}/4',
   'voice.step1Title': '您销售的产品',
@@ -455,16 +496,16 @@ const ZH: Record<StringKey, string> = {
   'voice.newChat': '新对话',
   'voice.newChatTitle': '开始新对话',
   'voice.safetyRule':
-    '安全规则：最终进口/关税决定请咨询持牌报关行。Thoth 绝不索取密码或银行信息。',
+    '重要规则：最终进口/关税决定请咨询持牌报关行。Thoth 绝不索取密码或银行信息。',
   'voice.youExporter': '您（出口商）',
-  'voice.thothFree': 'Thoth（Faithful Servant，免费）',
+  'voice.thothFree': 'Thoth（Faithful Servant）',
   'voice.thinking': 'Thoth 正在准备简短友好的回复……',
   'voice.listen': '收听',
   'voice.copyTitle': '复制文本',
   'voice.stopRecording': '停止录音',
   'voice.speakMessage': '语音输入',
   'voice.typePlaceholder': '用{lang}或英语输入……（例如：我们生产棉地毯，500 件）',
-  'voice.freeFooter': 'elghaly Faithful Servant（免费） • 永不索要卡片或付款',
+  'voice.freeFooter': 'elghaly 的 Faithful Servant • 绝不索要银行卡信息',
   'voice.oneStep': '一步一步来',
   'voice.connectionError':
     '抱歉，连接出现短暂问题。最终决定请咨询持牌报关行。请再说一遍好吗？',
@@ -482,7 +523,7 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Pitch studio tab ----
   'pitch.badge': '诚实的海外买家推介工作室',
-  'pitch.freeBy': '由 elghaly 提供，100% 免费',
+  'pitch.freeBy': '由 elghaly 提供',
   'pitch.title': '把手工艺与制造转化为打动海外买家的推介',
   'pitch.subtitle':
     '海外买家看重简洁、准确的数量、诚实的规格和清晰的 FOB 条款。Thoth 按海外采购标准撰写简洁、无夸大的推介。',
@@ -504,7 +545,7 @@ const ZH: Record<StringKey, string> = {
   'pitch.shipFrom': '从哪里发货？（港口 / 城市）',
   'pitch.shipFromPh': '例如：您的始发港',
   'pitch.writing': 'Thoth 正在撰写诚实的海外买家推介……',
-  'pitch.create': '生成海外买家推介（免费）',
+  'pitch.create': '生成海外买家推介',
   'pitch.emptyTitle': '您的海外买家推介方案将显示在这里',
   'pitch.emptyBody': '请输入产品名称、数量、价格和发货港口，或从左侧选择一个快速示例。',
   'pitch.generatingTitle': '正在撰写诚实、专业的海外买家推介……',
@@ -540,7 +581,7 @@ const ZH: Record<StringKey, string> = {
     '冒充海外买家的骗子会要求您向未经核实的机构预付“供应商注册费”或“实验室验货费”。真正的海外买家会直接向自己的检验机构（SGS、Intertek）付款。',
   'pitch.scamCheckTitle': '• 支票与超额付款汇款诈骗：',
   'pitch.scamCheckBody':
-    '切勿接受超额付款支票并按要求汇回多余款项。请坚持使用经核实的不可撤销信用证（L/C）或通过商业银行的安全托管。',
+    '切勿接受超额付款支票并按要求汇回多余款项。请坚持使用经核实的不可撤销信用证（L/C）或通过商业银行的托管服务。',
   'pitch.adviceIn': '{native}（{name}）版出口商建议：',
   'pitch.important': '重要提示：',
   'pitch.importantBody':
@@ -562,7 +603,7 @@ const ZH: Record<StringKey, string> = {
   'trans.buyerSpeaking': '海外买家正在发言',
   'trans.exporterBtn': '出口商',
   'trans.buyerBtn': '海外买家',
-  'trans.safetyGuardTitle': '安全提示：',
+  'trans.safetyGuardTitle': '防骗提示：',
   'trans.safetyGuardBody':
     '买家的话仅作为对话内容处理，不具有约束力。Thoth 忠实翻译，绝不接受未经授权的承诺。',
   'trans.phExporter':
@@ -660,7 +701,7 @@ const ZH: Record<StringKey, string> = {
   'guide.card6Golden': '黄金法则：',
   'guide.card6GoldenBody':
     'Thoth 为您提供知识和推介工具；订舱前的最终决定，请咨询持牌报关行。',
-  'guide.card7Title': '7. 安全指南：防范假买家与预付款诈骗',
+  'guide.card7Title': '7. 防骗指南：防范假买家与预付款诈骗',
   'guide.card7Sub1Title': '1. 预付“验货费”诈骗：',
   'guide.card7Sub1Body':
     '骗子会发来大额采购订单，却坚持要求您向未经核实的第三方预付验货费、供应商注册费或实验室费用。真正的买家会直接向认证机构（SGS、Intertek）付款。',
@@ -669,7 +710,44 @@ const ZH: Record<StringKey, string> = {
     '骗子会寄来一张金额超过发票的伪造本票，然后要求您把“多余款项”汇回去。在官方银行汇款到账并可全额追索之前，切勿发货或汇款。',
   'guide.card7Sub3Title': '3. 核实海外企业的真实性：',
   'guide.card7Sub3Body':
-    '请在官方企业登记机构查询海外买家。核实企业邮箱域名与官方企业网站一致，而非免费邮箱。',
+    '请在官方企业登记机构查询海外买家。核实企业邮箱域名与官方企业网站一致，而非公共网页邮箱。',
+  // ---- Language display names ----
+  'lang.hi': '印地语',
+  'lang.en': '英语',
+  'lang.zh': '中文（普通话）',
+  'lang.gu': '古吉拉特语',
+  'lang.mr': '马拉地语',
+  'lang.ta': '泰米尔语',
+  'lang.bn': '孟加拉语',
+  'lang.te': '泰卢固语',
+  'lang.pa': '旁遮普语',
+
+  // ---- Shared controls and client-side errors ----
+  'common.dismiss': '关闭',
+  'err.guide': '无法获取解答，请重试。',
+  'err.translate': '翻译失败，请重试。',
+  'err.pitch': '无法生成推介，请重试。',
+  'err.auth': '服务提供方认证失败，已停止。',
+  'err.rateLimit': '请求过多，请稍后再试。',
+
+  // ---- Pitch download (.txt) section labels ----
+  'dl.title': 'THOTH - 买家推介规格表（elghaly 出品）',
+  'dl.product': '产品',
+  'dl.moq': '最小起订量',
+  'dl.price': '价格',
+  'dl.originPort': '起运港',
+  'dl.coldEmail': '致买家的开发信',
+  'dl.subject': '主题',
+  'dl.shortMsg': '简短私信（LinkedIn / WhatsApp）',
+  'dl.claims': '联系买家前需核实的声明',
+  'dl.scamTitle': '诈骗警告：假买家与预付款欺诈',
+  'dl.scam1':
+    '切勿向未经核实的第三方预付“验货费”“注册费”或“招标处理费”。真正的买家会直接向检验机构付款。',
+  'dl.scam2': '请在官方企业登记机构核实买家公司的注册信息。',
+  'dl.scam3': '请坚持使用经核实的不可撤销信用证（L/C）或通过商业银行的托管服务。',
+  'dl.guidanceIn': '{lang}版出口商指导',
+  'dl.customsNote': '海关合规提示',
+  'dl.customsFallback': '最终决定请咨询持牌报关行。',
 };
 
 /**
@@ -695,3 +773,49 @@ export function tx(
 export function t(lang: LanguageCode, key: StringKey): string {
   return tx(lang, key);
 }
+
+const LANG_NAME_KEYS: Record<string, StringKey> = {
+  Hindi: 'lang.hi',
+  English: 'lang.en',
+  'Chinese (Mandarin)': 'lang.zh',
+  Gujarati: 'lang.gu',
+  Marathi: 'lang.mr',
+  Tamil: 'lang.ta',
+  Bengali: 'lang.bn',
+  Telugu: 'lang.te',
+  Punjabi: 'lang.pa',
+};
+
+/** Show a stored English language name (e.g. "English") in the UI language. */
+export function langDisplayName(uiLang: LanguageCode, englishName: string): string {
+  const key = LANG_NAME_KEYS[englishName];
+  return key ? tx(uiLang, key) : englishName;
+}
+
+/**
+ * Language hint sent to the model. Chinese is pinned to Simplified Chinese
+ * (zh-CN) so replies do not come back in Traditional script; every other
+ * language keeps its existing English name.
+ */
+export function modelLangHint(lang: { code: LanguageCode; name: string }): string {
+  return lang.code === 'zh' ? 'Simplified Chinese (Mandarin, zh-CN)' : lang.name;
+}
+
+/** Read-only view used by scripts/check-zh-parity.ts. */
+export const ZH_STRINGS: Readonly<Record<StringKey, string>> = ZH;
+
+/**
+ * Opening greeting per language (shown and spoken when the Voice tab opens).
+ * Module scope so tests can check it alongside the string tables.
+ */
+export const GREETINGS: Record<LanguageCode, string> = {
+  hi: 'नमस्ते! मैं थोथ (Thoth) हूँ, निर्यातकों के लिए elghaly का Faithful Servant। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
+  mr: 'नमस्कार! मी थोथ (Thoth) आहे, निर्यातदारांसाठी elghaly चा Faithful Servant. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
+  gu: 'નમસ્તે! હું થોથ (Thoth) છું, નિકાસકારો માટે elghaly નો Faithful Servant. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
+  ta: 'வணக்கம்! நான் தோத் (Thoth), ஏற்றுமதியாளர்களுக்கான elghaly இன் Faithful Servant. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
+  bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য elghaly-এর Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
+  te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం elghaly Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
+  pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ elghaly ਦਾ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
+  zh: '您好！我是 Thoth，由 elghaly 为出口商打造的 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
+  en: 'Namaste! I am Thoth, a Faithful Servant by elghaly for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
+};
