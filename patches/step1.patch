@@ -1,0 +1,776 @@
+diff --git a/app/src/App.tsx b/app/src/App.tsx
+index d2646e3..2fa027f 100644
+--- a/app/src/App.tsx
++++ b/app/src/App.tsx
+@@ -189,7 +189,7 @@ export default function App() {
+               <span className="text-slate-300">{tx(lang, 'app.footerTagline')}</span>
+             </div>
+             <span className="text-slate-500 hidden sm:inline">•</span>
+-            <span className="text-emerald-400 font-medium">{tx(lang, 'app.footerFree')}</span>
++            <span className="text-emerald-400 font-medium">{tx(lang, 'app.footerBadge')}</span>
+           </div>
+ 
+           {/* Prominent broker disclaimer */}
+diff --git a/app/src/components/Header.tsx b/app/src/components/Header.tsx
+index 1963a39..2def777 100644
+--- a/app/src/components/Header.tsx
++++ b/app/src/components/Header.tsx
+@@ -26,9 +26,9 @@ export const Header: React.FC<HeaderProps> = ({
+       <div className="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-amber-950/60 border-b border-slate-800/80 px-4 py-1.5 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
+         <div className="flex items-center gap-2">
+           <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+-          <span className="font-semibold text-emerald-400">{tx(lang, 'header.freeForever')}</span>
++          <span className="font-semibold text-emerald-400">{tx(lang, 'header.openToAll')}</span>
+           <span className="text-slate-500">•</span>
+-          <span>{tx(lang, 'header.byElghaly')}</span>
++          <span>{tx(lang, 'header.credit')}</span>
+           <span className="text-slate-500">•</span>
+           <span className="text-slate-400 hidden sm:inline">{tx(lang, 'header.reachBuyers')}</span>
+         </div>
+@@ -118,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({
+             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs text-slate-300 hover:border-slate-600 transition-colors cursor-pointer"
+           >
+             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+-            <span>{tx(lang, 'header.freeTool')}</span>
++            <span>{tx(lang, 'header.openTool')}</span>
+           </button>
+         </div>
+       </div>
+diff --git a/app/src/components/PitchStudioTab.tsx b/app/src/components/PitchStudioTab.tsx
+index e9bba7e..0b5d7de 100644
+--- a/app/src/components/PitchStudioTab.tsx
++++ b/app/src/components/PitchStudioTab.tsx
+@@ -211,7 +211,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
+             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+               {tx(lang, 'pitch.badge')}
+             </span>
+-            <span className="text-xs text-slate-400">{tx(lang, 'pitch.freeBy')}</span>
++            <span className="text-xs text-slate-400">{tx(lang, 'pitch.servant')}</span>
+           </div>
+           <h2 className="text-lg font-bold text-white">
+             {tx(lang, 'pitch.title')}
+diff --git a/app/src/components/SafetyModal.tsx b/app/src/components/SafetyModal.tsx
+index 55fb6a7..8568c3a 100644
+--- a/app/src/components/SafetyModal.tsx
++++ b/app/src/components/SafetyModal.tsx
+@@ -126,7 +126,7 @@ export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose, lang
+ 
+         <div className="mt-5 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+           <span className="flex items-center gap-1">
+-            {tx(lang, 'safety.madeWith')} <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500" aria-hidden="true" /> {tx(lang, 'safety.byElghaly')}
++            {tx(lang, 'safety.madeWith')} <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500" aria-hidden="true" /> {tx(lang, 'safety.credit')}
+           </span>
+           <button
+             type="button"
+diff --git a/app/src/components/VoiceAssistantTab.tsx b/app/src/components/VoiceAssistantTab.tsx
+index 7de61a2..574e224 100644
+--- a/app/src/components/VoiceAssistantTab.tsx
++++ b/app/src/components/VoiceAssistantTab.tsx
+@@ -386,7 +386,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
+               {tx(lang, 'voice.mic')} {isSpeechRecognitionSupported() ? tx(lang, 'voice.supported') : tx(lang, 'voice.typeMode')}
+             </span>
+             <span className="text-slate-600">•</span>
+-            <span>{tx(lang, 'voice.free')}</span>
++            <span>{tx(lang, 'voice.badge')}</span>
+           </div>
+         </div>
+ 
+@@ -593,7 +593,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
+                 className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}
+               >
+                 <div className="text-[10px] text-slate-500 mb-1 px-1">
+-                  {isUser ? tx(lang, 'voice.youExporter') : tx(lang, 'voice.thothFree')}
++                  {isUser ? tx(lang, 'voice.youExporter') : tx(lang, 'voice.thothServant')}
+                 </div>
+                 <div
+                   className={`max-w-[85%] rounded-2xl p-3.5 text-xs sm:text-sm leading-relaxed shadow-md ${
+@@ -695,7 +695,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
+             </button>
+           </form>
+           <div className="mt-1.5 flex items-center justify-between text-[10px] text-slate-500 px-1">
+-            <span>{tx(lang, 'voice.freeFooter')}</span>
++            <span>{tx(lang, 'voice.badgeFooter')}</span>
+             <span>{tx(lang, 'voice.oneStep')}</span>
+           </div>
+         </div>
+diff --git a/app/src/i18n-locales.ts b/app/src/i18n-locales.ts
+index 9338c05..fed4ede 100644
+--- a/app/src/i18n-locales.ts
++++ b/app/src/i18n-locales.ts
+@@ -20,12 +20,12 @@ export const LOCALE_CORE_KEYS = [
+   "app.tabGuide",
+   "app.speakingIn",
+   "app.footerTagline",
+-  "app.footerFree",
++  "app.footerBadge",
+   "app.footerBroker",
+   "app.footerPrivacy",
+   "app.footerNoPasswords",
+-  "header.freeForever",
+-  "header.byElghaly",
++  "header.openToAll",
++  "header.credit",
+   "header.reachBuyers",
+   "header.safetyPolicy",
+   "header.madeWith",
+@@ -37,7 +37,7 @@ export const LOCALE_CORE_KEYS = [
+   "header.voiceOn",
+   "header.mutedTitle",
+   "header.voiceOnTitle",
+-  "header.freeTool",
++  "header.openTool",
+   "safety.title",
+   "safety.subtitle",
+   "safety.item1Title",
+@@ -55,7 +55,7 @@ export const LOCALE_CORE_KEYS = [
+   "safety.item7Title",
+   "safety.item7Body",
+   "safety.madeWith",
+-  "safety.byElghaly",
++  "safety.credit",
+   "safety.close",
+   "orb.listening",
+   "orb.thinking",
+@@ -85,12 +85,12 @@ const HI: LocaleTable = {
+   "app.tabGuide": "आयात की बुनियादी बातें",
+   "app.speakingIn": "{native} ({name}) में बोल रहे हैं",
+   "app.footerTagline": "निर्यातकों के लिए Faithful Servant",
+-  "app.footerFree": "छोटे-बड़े सभी निर्यातकों के लिए",
++  "app.footerBadge": "छोटे-बड़े सभी निर्यातकों के लिए",
+   "app.footerBroker": "अंतिम निर्णय के लिए हमेशा किसी लाइसेंसधारी कस्टम ब्रोकर से जाँच करें।",
+   "app.footerPrivacy": "गोपनीयता और भरोसा नीति",
+   "app.footerNoPasswords": "पासवर्ड या बैंक विवरण कभी नहीं माँगे जाते",
+-  "header.freeForever": "हर निर्यातक के लिए खुला",
+-  "header.byElghaly": "छोटे-बड़े सभी निर्यातकों के लिए",
++  "header.openToAll": "हर निर्यातक के लिए खुला",
++  "header.credit": "छोटे-बड़े सभी निर्यातकों के लिए",
+   "header.reachBuyers": "खरीदारों तक पहुँचें और बात करें",
+   "header.safetyPolicy": "सुरक्षा और भरोसा नीति",
+   "header.madeWith": "बनाया गया",
+@@ -102,7 +102,7 @@ const HI: LocaleTable = {
+   "header.voiceOn": "आवाज़ चालू",
+   "header.mutedTitle": "आवाज़ बंद है (चालू करने के लिए क्लिक करें)",
+   "header.voiceOnTitle": "आवाज़ चालू है (बंद करने के लिए क्लिक करें)",
+-  "header.freeTool": "Faithful Servant",
++  "header.openTool": "Faithful Servant",
+   "safety.title": "थोथ का भरोसा और नैतिकता चार्टर",
+   "safety.subtitle": "निर्यातकों के लिए प्यार से बनाया",
+   "safety.item1Title": "1. सबके लिए खुला:",
+@@ -120,7 +120,7 @@ const HI: LocaleTable = {
+   "safety.item7Title": "7. आपका लिखा कहाँ जाता है:",
+   "safety.item7Body": "आप जो टेक्स्ट भेजते हैं, वह जवाब बनाने के लिए Google के Gemini API को भेजा जाता है; Google उसे कैसे संभालता है, यह इस ऐप के नियंत्रण में नहीं है। वॉइस इनपुट आपके ब्राउज़र की वाक् पहचान का उपयोग करता है। Gemini कुंजी सर्वर पर रहती है और पेज में शामिल नहीं होती।",
+   "safety.madeWith": "बनाया गया",
+-  "safety.byElghaly": "निर्यातकों के लिए",
++  "safety.credit": "निर्यातकों के लिए",
+   "safety.close": "समझ गया, बंद करें",
+   "orb.listening": "{lang} में सुन रहे हैं... (अब बोलें)",
+   "orb.thinking": "थोथ सोच रहा है...",
+@@ -143,7 +143,7 @@ const HI: LocaleTable = {
+   "voice.mic": "माइक:",
+   "voice.supported": "समर्थित",
+   "voice.typeMode": "टाइप मोड",
+-  "voice.free": "Faithful Servant",
++  "voice.badge": "Faithful Servant",
+   "voice.trackerTitle": "खरीदार पिच की प्रगति (एक बार में एक कदम)",
+   "voice.captured": "{n}/4 दर्ज",
+   "voice.step1Title": "आप क्या बेचते हैं (उत्पाद)",
+@@ -161,14 +161,14 @@ const HI: LocaleTable = {
+   "voice.newChatTitle": "नई बातचीत शुरू करें",
+   "voice.safetyRule": "सुरक्षा नियम: आयात/शुल्क के अंतिम निर्णय के लिए लाइसेंसधारी कस्टम ब्रोकर से जाँच करें। थोथ कभी पासवर्ड या बैंक जानकारी नहीं माँगता।",
+   "voice.youExporter": "आप (निर्यातक)",
+-  "voice.thothFree": "थोथ (Faithful Servant)",
++  "voice.thothServant": "थोथ (Faithful Servant)",
+   "voice.thinking": "थोथ एक छोटा, सहज जवाब तैयार कर रहा है...",
+   "voice.listen": "सुनें",
+   "voice.copyTitle": "टेक्स्ट कॉपी करें",
+   "voice.stopRecording": "रिकॉर्डिंग रोकें",
+   "voice.speakMessage": "संदेश बोलें",
+   "voice.typePlaceholder": "{lang} या अंग्रेज़ी में लिखें... (जैसे हम सूती दरियाँ बनाते हैं, 500 पीस)",
+-  "voice.freeFooter": "Faithful Servant • कार्ड या बैंक विवरण कभी नहीं माँगता",
++  "voice.badgeFooter": "Faithful Servant • कार्ड या बैंक विवरण कभी नहीं माँगता",
+   "voice.oneStep": "एक बार में एक कदम",
+   "voice.connectionError": "क्षमा करें, थोड़ी देर के लिए कनेक्शन में समस्या आई। अंतिम निर्णय के लिए लाइसेंसधारी कस्टम ब्रोकर से जाँच करें। क्या आप फिर से कह सकते हैं?",
+   "voice.sampleBrassLabel": "पीतल सजावट",
+@@ -182,7 +182,7 @@ const HI: LocaleTable = {
+   "voice.sampleFobLabel": "FOB बनाम CIF",
+   "voice.sampleFobText": "क्या आप आसान शब्दों में FOB और CIF का अंतर समझा सकते हैं?",
+   "pitch.badge": "ईमानदार खरीदार पिच स्टूडियो",
+-  "pitch.freeBy": "Faithful Servant",
++  "pitch.servant": "Faithful Servant",
+   "pitch.title": "हस्तशिल्प और उत्पादन को दमदार खरीदार पिच में बदलें",
+   "pitch.subtitle": "खरीदार संक्षिप्तता, सटीक मात्रा, ईमानदार विवरण और साफ़ FOB शर्तें चाहते हैं। थोथ सोर्सिंग मानकों के अनुसार साफ़, बिना बढ़ा-चढ़ाकर पिच लिखता है।",
+   "pitch.customsRule": "कस्टम नियम:",
+@@ -404,12 +404,12 @@ const MR: LocaleTable = {
+   "app.tabGuide": "आयातीची मूलभूत माहिती",
+   "app.speakingIn": "{native} ({name}) मध्ये बोलत आहात",
+   "app.footerTagline": "निर्यातदारांसाठी Faithful Servant",
+-  "app.footerFree": "लहान-मोठ्या सर्व निर्यातदारांसाठी",
++  "app.footerBadge": "लहान-मोठ्या सर्व निर्यातदारांसाठी",
+   "app.footerBroker": "अंतिम निर्णयासाठी नेहमी परवानाधारक कस्टम ब्रोकरकडून खात्री करा.",
+   "app.footerPrivacy": "गोपनीयता आणि विश्वास धोरण",
+   "app.footerNoPasswords": "पासवर्ड किंवा बँक तपशील कधीही विचारले जात नाहीत",
+-  "header.freeForever": "प्रत्येक निर्यातदारासाठी खुले",
+-  "header.byElghaly": "लहान-मोठ्या सर्व निर्यातदारांसाठी",
++  "header.openToAll": "प्रत्येक निर्यातदारासाठी खुले",
++  "header.credit": "लहान-मोठ्या सर्व निर्यातदारांसाठी",
+   "header.reachBuyers": "खरेदीदारांपर्यंत पोहोचा आणि बोला",
+   "header.safetyPolicy": "सुरक्षा आणि विश्वास धोरण",
+   "header.madeWith": "बनवले",
+@@ -421,7 +421,7 @@ const MR: LocaleTable = {
+   "header.voiceOn": "आवाज सुरू",
+   "header.mutedTitle": "आवाज बंद आहे (सुरू करण्यासाठी क्लिक करा)",
+   "header.voiceOnTitle": "आवाज सुरू आहे (बंद करण्यासाठी क्लिक करा)",
+-  "header.freeTool": "Faithful Servant",
++  "header.openTool": "Faithful Servant",
+   "safety.title": "थोथचे विश्वास आणि नीतिमत्ता सनद",
+   "safety.subtitle": "निर्यातदारांसाठी प्रेमाने बनवले",
+   "safety.item1Title": "1. सर्वांसाठी खुले:",
+@@ -439,7 +439,7 @@ const MR: LocaleTable = {
+   "safety.item7Title": "7. तुमचा मजकूर कुठे जातो:",
+   "safety.item7Body": "तुम्ही पाठवलेला मजकूर उत्तर तयार करण्यासाठी Google च्या Gemini API ला पाठवला जातो; Google तो कसा हाताळते हे या ॲपच्या नियंत्रणात नाही. व्हॉइस इनपुट तुमच्या ब्राउझरची उच्चार ओळख वापरते. Gemini की सर्व्हरवरच राहते आणि पेजमध्ये समाविष्ट नसते.",
+   "safety.madeWith": "बनवले",
+-  "safety.byElghaly": "निर्यातदारांसाठी",
++  "safety.credit": "निर्यातदारांसाठी",
+   "safety.close": "समजले, बंद करा",
+   "orb.listening": "{lang} मध्ये ऐकत आहे... (आता बोला)",
+   "orb.thinking": "थोथ विचार करत आहे...",
+@@ -462,7 +462,7 @@ const MR: LocaleTable = {
+   "voice.mic": "माइक:",
+   "voice.supported": "समर्थित",
+   "voice.typeMode": "टाइप मोड",
+-  "voice.free": "Faithful Servant",
++  "voice.badge": "Faithful Servant",
+   "voice.trackerTitle": "खरेदीदार पिचची प्रगती (एका वेळी एक पाऊल)",
+   "voice.captured": "{n}/4 नोंदवले",
+   "voice.step1Title": "तुम्ही काय विकता (उत्पादन)",
+@@ -480,14 +480,14 @@ const MR: LocaleTable = {
+   "voice.newChatTitle": "नवीन संवाद सुरू करा",
+   "voice.safetyRule": "सुरक्षा नियम: आयात/शुल्काच्या अंतिम निर्णयासाठी परवानाधारक कस्टम ब्रोकरकडून खात्री करा. थोथ कधीही पासवर्ड किंवा बँक माहिती विचारत नाही.",
+   "voice.youExporter": "तुम्ही (निर्यातदार)",
+-  "voice.thothFree": "थोथ (Faithful Servant)",
++  "voice.thothServant": "थोथ (Faithful Servant)",
+   "voice.thinking": "थोथ छोटे, सहज उत्तर तयार करत आहे...",
+   "voice.listen": "ऐका",
+   "voice.copyTitle": "मजकूर कॉपी करा",
+   "voice.stopRecording": "रेकॉर्डिंग थांबवा",
+   "voice.speakMessage": "संदेश बोला",
+   "voice.typePlaceholder": "{lang} किंवा इंग्रजीत लिहा... (उदा. आम्ही सुती सतरंज्या बनवतो, 500 नग)",
+-  "voice.freeFooter": "Faithful Servant • कार्ड किंवा बँक तपशील कधीही विचारत नाही",
++  "voice.badgeFooter": "Faithful Servant • कार्ड किंवा बँक तपशील कधीही विचारत नाही",
+   "voice.oneStep": "एका वेळी एक पाऊल",
+   "voice.connectionError": "माफ करा, थोड्या वेळासाठी कनेक्शनमध्ये अडचण आली. अंतिम निर्णयासाठी परवानाधारक कस्टम ब्रोकरकडून खात्री करा. कृपया पुन्हा सांगाल का?",
+   "voice.sampleBrassLabel": "पितळी सजावट",
+@@ -501,7 +501,7 @@ const MR: LocaleTable = {
+   "voice.sampleFobLabel": "FOB विरुद्ध CIF",
+   "voice.sampleFobText": "FOB आणि CIF मधील फरक सोप्या शब्दांत सांगाल का?",
+   "pitch.badge": "प्रामाणिक खरेदीदार पिच स्टुडिओ",
+-  "pitch.freeBy": "Faithful Servant",
++  "pitch.servant": "Faithful Servant",
+   "pitch.title": "हस्तकला आणि उत्पादनाला प्रभावी खरेदीदार पिचमध्ये बदला",
+   "pitch.subtitle": "खरेदीदारांना थोडक्यात माहिती, अचूक प्रमाण, प्रामाणिक तपशील आणि स्पष्ट FOB अटी हव्या असतात. थोथ सोर्सिंग मानकांनुसार स्वच्छ, अतिशयोक्ती नसलेले पिच लिहितो.",
+   "pitch.customsRule": "कस्टम नियम:",
+@@ -723,12 +723,12 @@ const GU: LocaleTable = {
+   "app.tabGuide": "આયાતની મૂળભૂત બાબતો",
+   "app.speakingIn": "{native} ({name}) માં બોલી રહ્યા છો",
+   "app.footerTagline": "નિકાસકારો માટે Faithful Servant",
+-  "app.footerFree": "નાના-મોટા તમામ નિકાસકારો માટે",
++  "app.footerBadge": "નાના-મોટા તમામ નિકાસકારો માટે",
+   "app.footerBroker": "અંતિમ નિર્ણય માટે હંમેશા લાઇસન્સધારક કસ્ટમ બ્રોકર પાસે ખાતરી કરો.",
+   "app.footerPrivacy": "ગોપનીયતા અને વિશ્વાસ નીતિ",
+   "app.footerNoPasswords": "પાસવર્ડ કે બેંક વિગતો ક્યારેય માંગવામાં આવતી નથી",
+-  "header.freeForever": "દરેક નિકાસકાર માટે ખુલ્લું",
+-  "header.byElghaly": "નાના-મોટા તમામ નિકાસકારો માટે",
++  "header.openToAll": "દરેક નિકાસકાર માટે ખુલ્લું",
++  "header.credit": "નાના-મોટા તમામ નિકાસકારો માટે",
+   "header.reachBuyers": "ખરીદદારો સુધી પહોંચો અને વાત કરો",
+   "header.safetyPolicy": "સુરક્ષા અને વિશ્વાસ નીતિ",
+   "header.madeWith": "બનાવ્યું",
+@@ -740,7 +740,7 @@ const GU: LocaleTable = {
+   "header.voiceOn": "અવાજ ચાલુ",
+   "header.mutedTitle": "અવાજ બંધ છે (ચાલુ કરવા ક્લિક કરો)",
+   "header.voiceOnTitle": "અવાજ ચાલુ છે (બંધ કરવા ક્લિક કરો)",
+-  "header.freeTool": "Faithful Servant",
++  "header.openTool": "Faithful Servant",
+   "safety.title": "થોથનું વિશ્વાસ અને નીતિ ચાર્ટર",
+   "safety.subtitle": "નિકાસકારો માટે પ્રેમથી બનાવ્યું",
+   "safety.item1Title": "1. સૌ માટે ખુલ્લું:",
+@@ -758,7 +758,7 @@ const GU: LocaleTable = {
+   "safety.item7Title": "7. તમારું લખાણ ક્યાં જાય છે:",
+   "safety.item7Body": "તમે મોકલેલું લખાણ જવાબ બનાવવા માટે Google ના Gemini API ને મોકલવામાં આવે છે; Google તેને કેવી રીતે સંભાળે છે તે આ ઍપના નિયંત્રણમાં નથી. વૉઇસ ઇનપુટ તમારા બ્રાઉઝરની વાણી ઓળખનો ઉપયોગ કરે છે. Gemini કી સર્વર પર જ રહે છે અને પેજમાં સામેલ નથી.",
+   "safety.madeWith": "બનાવ્યું",
+-  "safety.byElghaly": "નિકાસકારો માટે",
++  "safety.credit": "નિકાસકારો માટે",
+   "safety.close": "સમજાયું, બંધ કરો",
+   "orb.listening": "{lang} માં સાંભળી રહ્યું છે... (હવે બોલો)",
+   "orb.thinking": "થોથ વિચારી રહ્યું છે...",
+@@ -781,7 +781,7 @@ const GU: LocaleTable = {
+   "voice.mic": "માઇક:",
+   "voice.supported": "સમર્થિત",
+   "voice.typeMode": "ટાઇપ મોડ",
+-  "voice.free": "Faithful Servant",
++  "voice.badge": "Faithful Servant",
+   "voice.trackerTitle": "ખરીદદાર પિચની પ્રગતિ (એક સમયે એક પગલું)",
+   "voice.captured": "{n}/4 નોંધાયા",
+   "voice.step1Title": "તમે શું વેચો છો (પ્રોડક્ટ)",
+@@ -799,14 +799,14 @@ const GU: LocaleTable = {
+   "voice.newChatTitle": "નવી વાતચીત શરૂ કરો",
+   "voice.safetyRule": "સુરક્ષા નિયમ: આયાત/જકાતના અંતિમ નિર્ણય માટે લાઇસન્સધારક કસ્ટમ બ્રોકર પાસે ખાતરી કરો. થોથ ક્યારેય પાસવર્ડ કે બેંક માહિતી માંગતું નથી.",
+   "voice.youExporter": "તમે (નિકાસકાર)",
+-  "voice.thothFree": "થોથ (Faithful Servant)",
++  "voice.thothServant": "થોથ (Faithful Servant)",
+   "voice.thinking": "થોથ ટૂંકો, સહજ જવાબ તૈયાર કરી રહ્યું છે...",
+   "voice.listen": "સાંભળો",
+   "voice.copyTitle": "લખાણ કૉપિ કરો",
+   "voice.stopRecording": "રેકોર્ડિંગ રોકો",
+   "voice.speakMessage": "સંદેશ બોલો",
+   "voice.typePlaceholder": "{lang} કે અંગ્રેજીમાં લખો... (દા.ત. અમે સુતરાઉ દરીઓ બનાવીએ છીએ, 500 નંગ)",
+-  "voice.freeFooter": "Faithful Servant • કાર્ડ કે બેંક વિગતો ક્યારેય માંગતો નથી",
++  "voice.badgeFooter": "Faithful Servant • કાર્ડ કે બેંક વિગતો ક્યારેય માંગતો નથી",
+   "voice.oneStep": "એક સમયે એક પગલું",
+   "voice.connectionError": "માફ કરશો, થોડા સમય માટે કનેક્શનમાં સમસ્યા આવી. અંતિમ નિર્ણય માટે લાઇસન્સધારક કસ્ટમ બ્રોકર પાસે ખાતરી કરો. શું તમે ફરીથી કહી શકો?",
+   "voice.sampleBrassLabel": "પિત્તળ સજાવટ",
+@@ -820,7 +820,7 @@ const GU: LocaleTable = {
+   "voice.sampleFobLabel": "FOB વિરુદ્ધ CIF",
+   "voice.sampleFobText": "શું તમે સરળ શબ્દોમાં FOB અને CIF નો તફાવત સમજાવી શકો?",
+   "pitch.badge": "પ્રામાણિક ખરીદદાર પિચ સ્ટુડિયો",
+-  "pitch.freeBy": "Faithful Servant",
++  "pitch.servant": "Faithful Servant",
+   "pitch.title": "હસ્તકલા અને ઉત્પાદનને અસરકારક ખરીદદાર પિચમાં ફેરવો",
+   "pitch.subtitle": "ખરીદદારો ટૂંકી વાત, ચોક્કસ જથ્થો, પ્રામાણિક વિગતો અને સ્પષ્ટ FOB શરતો ઇચ્છે છે. થોથ સોર્સિંગ ધોરણો મુજબ સ્વચ્છ, અતિશયોક્તિ વગરની પિચ લખે છે.",
+   "pitch.customsRule": "કસ્ટમ નિયમ:",
+@@ -1042,12 +1042,12 @@ const BN: LocaleTable = {
+   "app.tabGuide": "আমদানির মৌলিক বিষয়",
+   "app.speakingIn": "{native} ({name}) ভাষায় বলছেন",
+   "app.footerTagline": "রপ্তানিকারকদের জন্য Faithful Servant",
+-  "app.footerFree": "ছোট-বড় সব রপ্তানিকারকের জন্য",
++  "app.footerBadge": "ছোট-বড় সব রপ্তানিকারকের জন্য",
+   "app.footerBroker": "চূড়ান্ত সিদ্ধান্তের জন্য সবসময় লাইসেন্সপ্রাপ্ত কাস্টমস ব্রোকারের সাথে যাচাই করুন।",
+   "app.footerPrivacy": "গোপনীয়তা ও আস্থা নীতি",
+   "app.footerNoPasswords": "পাসওয়ার্ড বা ব্যাংকের তথ্য কখনো চাওয়া হয় না",
+-  "header.freeForever": "প্রত্যেক রপ্তানিকারকের জন্য উন্মুক্ত",
+-  "header.byElghaly": "ছোট-বড় সব রপ্তানিকারকের জন্য",
++  "header.openToAll": "প্রত্যেক রপ্তানিকারকের জন্য উন্মুক্ত",
++  "header.credit": "ছোট-বড় সব রপ্তানিকারকের জন্য",
+   "header.reachBuyers": "ক্রেতাদের কাছে পৌঁছান ও কথা বলুন",
+   "header.safetyPolicy": "নিরাপত্তা ও আস্থা নীতি",
+   "header.madeWith": "তৈরি",
+@@ -1059,7 +1059,7 @@ const BN: LocaleTable = {
+   "header.voiceOn": "শব্দ চালু",
+   "header.mutedTitle": "শব্দ বন্ধ আছে (চালু করতে ক্লিক করুন)",
+   "header.voiceOnTitle": "শব্দ চালু আছে (বন্ধ করতে ক্লিক করুন)",
+-  "header.freeTool": "Faithful Servant",
++  "header.openTool": "Faithful Servant",
+   "safety.title": "থথের আস্থা ও নৈতিকতা সনদ",
+   "safety.subtitle": "রপ্তানিকারকদের জন্য ভালোবেসে তৈরি",
+   "safety.item1Title": "1. সবার জন্য উন্মুক্ত:",
+@@ -1077,7 +1077,7 @@ const BN: LocaleTable = {
+   "safety.item7Title": "7. আপনার লেখা কোথায় যায়:",
+   "safety.item7Body": "আপনি যে লেখা পাঠান তা উত্তর তৈরির জন্য Google-এর Gemini API-তে পাঠানো হয়; Google তা কীভাবে ব্যবহার করে তা এই অ্যাপের নিয়ন্ত্রণে নেই। ভয়েস ইনপুট আপনার ব্রাউজারের কণ্ঠ শনাক্তকরণ ব্যবহার করে। Gemini কী সার্ভারেই থাকে এবং পেজে অন্তর্ভুক্ত নয়।",
+   "safety.madeWith": "তৈরি",
+-  "safety.byElghaly": "রপ্তানিকারকদের জন্য",
++  "safety.credit": "রপ্তানিকারকদের জন্য",
+   "safety.close": "বুঝেছি, বন্ধ করুন",
+   "orb.listening": "{lang} ভাষায় শুনছে... (এখন বলুন)",
+   "orb.thinking": "থথ ভাবছে...",
+@@ -1100,7 +1100,7 @@ const BN: LocaleTable = {
+   "voice.mic": "মাইক:",
+   "voice.supported": "সমর্থিত",
+   "voice.typeMode": "টাইপ মোড",
+-  "voice.free": "Faithful Servant",
++  "voice.badge": "Faithful Servant",
+   "voice.trackerTitle": "ক্রেতা পিচের অগ্রগতি (একবারে এক ধাপ)",
+   "voice.captured": "{n}/4 নথিভুক্ত",
+   "voice.step1Title": "আপনি কী বিক্রি করেন (পণ্য)",
+@@ -1118,14 +1118,14 @@ const BN: LocaleTable = {
+   "voice.newChatTitle": "নতুন কথোপকথন শুরু করুন",
+   "voice.safetyRule": "নিরাপত্তা নিয়ম: আমদানি/শুল্কের চূড়ান্ত সিদ্ধান্তের জন্য লাইসেন্সপ্রাপ্ত কাস্টমস ব্রোকারের সাথে যাচাই করুন। থথ কখনো পাসওয়ার্ড বা ব্যাংকের তথ্য চায় না।",
+   "voice.youExporter": "আপনি (রপ্তানিকারক)",
+-  "voice.thothFree": "থথ (Faithful Servant)",
++  "voice.thothServant": "থথ (Faithful Servant)",
+   "voice.thinking": "থথ একটি ছোট, সহজ উত্তর তৈরি করছে...",
+   "voice.listen": "শুনুন",
+   "voice.copyTitle": "লেখা কপি করুন",
+   "voice.stopRecording": "রেকর্ডিং থামান",
+   "voice.speakMessage": "বার্তা বলুন",
+   "voice.typePlaceholder": "{lang} বা ইংরেজিতে লিখুন... (যেমন আমরা সুতির শতরঞ্জি বানাই, 500 পিস)",
+-  "voice.freeFooter": "Faithful Servant • কখনো কার্ড বা ব্যাংকের তথ্য চায় না",
++  "voice.badgeFooter": "Faithful Servant • কখনো কার্ড বা ব্যাংকের তথ্য চায় না",
+   "voice.oneStep": "একবারে এক ধাপ",
+   "voice.connectionError": "দুঃখিত, কিছুক্ষণের জন্য সংযোগে সমস্যা হয়েছে। চূড়ান্ত সিদ্ধান্তের জন্য লাইসেন্সপ্রাপ্ত কাস্টমস ব্রোকারের সাথে যাচাই করুন। আপনি কি আবার বলবেন?",
+   "voice.sampleBrassLabel": "পিতলের সাজসজ্জা",
+@@ -1139,7 +1139,7 @@ const BN: LocaleTable = {
+   "voice.sampleFobLabel": "FOB বনাম CIF",
+   "voice.sampleFobText": "সহজ কথায় FOB আর CIF-এর পার্থক্য বুঝিয়ে বলবেন?",
+   "pitch.badge": "সৎ ক্রেতা পিচ স্টুডিও",
+-  "pitch.freeBy": "Faithful Servant",
++  "pitch.servant": "Faithful Servant",
+   "pitch.title": "হস্তশিল্প ও উৎপাদনকে আকর্ষণীয় ক্রেতা পিচে রূপ দিন",
+   "pitch.subtitle": "ক্রেতারা চান সংক্ষিপ্ত কথা, সঠিক পরিমাণ, সৎ বিবরণ এবং স্পষ্ট FOB শর্ত। থথ সোর্সিং মান অনুযায়ী পরিচ্ছন্ন, অতিরঞ্জনহীন পিচ লেখে।",
+   "pitch.customsRule": "কাস্টমস নিয়ম:",
+@@ -1361,12 +1361,12 @@ const TA: LocaleTable = {
+   "app.tabGuide": "இறக்குமதி அடிப்படைகள்",
+   "app.speakingIn": "{native} ({name}) மொழியில் பேசுகிறீர்கள்",
+   "app.footerTagline": "ஏற்றுமதியாளர்களுக்கான Faithful Servant",
+-  "app.footerFree": "சிறிய, பெரிய எல்லா ஏற்றுமதியாளர்களுக்கும்",
++  "app.footerBadge": "சிறிய, பெரிய எல்லா ஏற்றுமதியாளர்களுக்கும்",
+   "app.footerBroker": "இறுதி முடிவுகளுக்கு எப்போதும் உரிமம் பெற்ற சுங்க முகவரிடம் சரிபார்க்கவும்.",
+   "app.footerPrivacy": "தனியுரிமை மற்றும் நம்பிக்கைக் கொள்கை",
+   "app.footerNoPasswords": "கடவுச்சொல் அல்லது வங்கி விவரங்கள் ஒருபோதும் கேட்கப்படுவதில்லை",
+-  "header.freeForever": "ஒவ்வொரு ஏற்றுமதியாளருக்கும் திறந்தது",
+-  "header.byElghaly": "சிறிய, பெரிய எல்லா ஏற்றுமதியாளர்களுக்கும்",
++  "header.openToAll": "ஒவ்வொரு ஏற்றுமதியாளருக்கும் திறந்தது",
++  "header.credit": "சிறிய, பெரிய எல்லா ஏற்றுமதியாளர்களுக்கும்",
+   "header.reachBuyers": "வாங்குபவர்களை அடைந்து பேசுங்கள்",
+   "header.safetyPolicy": "பாதுகாப்பு மற்றும் நம்பிக்கைக் கொள்கை",
+   "header.madeWith": "உருவாக்கியது",
+@@ -1378,7 +1378,7 @@ const TA: LocaleTable = {
+   "header.voiceOn": "ஒலி இயக்கம்",
+   "header.mutedTitle": "ஒலி அணைக்கப்பட்டுள்ளது (இயக்க கிளிக் செய்யவும்)",
+   "header.voiceOnTitle": "ஒலி இயங்குகிறது (அணைக்க கிளிக் செய்யவும்)",
+-  "header.freeTool": "Faithful Servant",
++  "header.openTool": "Faithful Servant",
+   "safety.title": "தோத்தின் நம்பிக்கை மற்றும் நெறிமுறை சாசனம்",
+   "safety.subtitle": "ஏற்றுமதியாளர்களுக்காக அன்புடன் உருவாக்கப்பட்டது",
+   "safety.item1Title": "1. அனைவருக்கும் திறந்தது:",
+@@ -1396,7 +1396,7 @@ const TA: LocaleTable = {
+   "safety.item7Title": "7. உங்கள் உரை எங்கே செல்கிறது:",
+   "safety.item7Body": "நீங்கள் அனுப்பும் உரை பதில்களை உருவாக்க Google இன் Gemini API க்கு அனுப்பப்படுகிறது; Google அதை எப்படிக் கையாள்கிறது என்பது இந்தச் செயலியின் கட்டுப்பாட்டில் இல்லை. குரல் உள்ளீடு உங்கள் உலாவியின் பேச்சு அறிதலைப் பயன்படுத்துகிறது. Gemini விசை சேவையகத்திலேயே இருக்கும், பக்கத்தில் சேர்க்கப்படுவதில்லை.",
+   "safety.madeWith": "உருவாக்கியது",
+-  "safety.byElghaly": "ஏற்றுமதியாளர்களுக்காக",
++  "safety.credit": "ஏற்றுமதியாளர்களுக்காக",
+   "safety.close": "புரிந்தது, மூடு",
+   "orb.listening": "{lang} மொழியில் கேட்கிறது... (இப்போது பேசுங்கள்)",
+   "orb.thinking": "தோத் யோசிக்கிறது...",
+@@ -1419,7 +1419,7 @@ const TA: LocaleTable = {
+   "voice.mic": "மைக்:",
+   "voice.supported": "ஆதரிக்கப்படுகிறது",
+   "voice.typeMode": "தட்டச்சு முறை",
+-  "voice.free": "Faithful Servant",
++  "voice.badge": "Faithful Servant",
+   "voice.trackerTitle": "வாங்குபவர் பிட்ச் முன்னேற்றம் (ஒரு நேரத்தில் ஒரு படி)",
+   "voice.captured": "{n}/4 பதிவானது",
+   "voice.step1Title": "நீங்கள் என்ன விற்கிறீர்கள் (பொருள்)",
+@@ -1437,14 +1437,14 @@ const TA: LocaleTable = {
+   "voice.newChatTitle": "புதிய உரையாடலைத் தொடங்கு",
+   "voice.safetyRule": "பாதுகாப்பு விதி: இறக்குமதி/சுங்க வரியின் இறுதி முடிவுகளுக்கு உரிமம் பெற்ற சுங்க முகவரிடம் சரிபார்க்கவும். தோத் ஒருபோதும் கடவுச்சொல் அல்லது வங்கித் தகவல் கேட்பதில்லை.",
+   "voice.youExporter": "நீங்கள் (ஏற்றுமதியாளர்)",
+-  "voice.thothFree": "தோத் (Faithful Servant)",
++  "voice.thothServant": "தோத் (Faithful Servant)",
+   "voice.thinking": "தோத் சுருக்கமான, இனிய பதிலைத் தயாரிக்கிறது...",
+   "voice.listen": "கேளுங்கள்",
+   "voice.copyTitle": "உரையை நகலெடு",
+   "voice.stopRecording": "பதிவை நிறுத்து",
+   "voice.speakMessage": "செய்தியைப் பேசு",
+   "voice.typePlaceholder": "{lang} அல்லது ஆங்கிலத்தில் தட்டச்சு செய்யுங்கள்... (எ.கா. நாங்கள் பருத்தி விரிப்புகள் செய்கிறோம், 500 துண்டுகள்)",
+-  "voice.freeFooter": "Faithful Servant • கார்டு அல்லது வங்கி விவரங்களை ஒருபோதும் கேட்பதில்லை",
++  "voice.badgeFooter": "Faithful Servant • கார்டு அல்லது வங்கி விவரங்களை ஒருபோதும் கேட்பதில்லை",
+   "voice.oneStep": "ஒரு நேரத்தில் ஒரு படி",
+   "voice.connectionError": "மன்னிக்கவும், சிறிது நேரம் இணைப்பில் சிக்கல் ஏற்பட்டது. இறுதி முடிவுகளுக்கு உரிமம் பெற்ற சுங்க முகவரிடம் சரிபார்க்கவும். மீண்டும் சொல்ல முடியுமா?",
+   "voice.sampleBrassLabel": "பித்தளை அலங்காரம்",
+@@ -1458,7 +1458,7 @@ const TA: LocaleTable = {
+   "voice.sampleFobLabel": "FOB மற்றும் CIF",
+   "voice.sampleFobText": "FOB க்கும் CIF க்கும் உள்ள வேறுபாட்டை எளிய சொற்களில் விளக்க முடியுமா?",
+   "pitch.badge": "நேர்மையான வாங்குபவர் பிட்ச் ஸ்டுடியோ",
+-  "pitch.freeBy": "Faithful Servant",
++  "pitch.servant": "Faithful Servant",
+   "pitch.title": "கைவினையையும் உற்பத்தியையும் ஈர்க்கும் வாங்குபவர் பிட்ச்சுகளாக மாற்றுங்கள்",
+   "pitch.subtitle": "வாங்குபவர்கள் சுருக்கம், துல்லியமான அளவு, நேர்மையான விவரங்கள் மற்றும் தெளிவான FOB விதிமுறைகளை விரும்புகிறார்கள். தோத் கொள்முதல் தரங்களுக்கு ஏற்ப தெளிவான, மிகைப்படுத்தாத பிட்ச்சுகளை எழுதுகிறது.",
+   "pitch.customsRule": "சுங்க விதி:",
+@@ -1680,12 +1680,12 @@ const TE: LocaleTable = {
+   "app.tabGuide": "దిగుమతి ప్రాథమికాలు",
+   "app.speakingIn": "{native} ({name})లో మాట్లాడుతున్నారు",
+   "app.footerTagline": "ఎగుమతిదారుల కోసం Faithful Servant",
+-  "app.footerFree": "చిన్న, పెద్ద ఎగుమతిదారులందరి కోసం",
++  "app.footerBadge": "చిన్న, పెద్ద ఎగుమతిదారులందరి కోసం",
+   "app.footerBroker": "తుది నిర్ణయాల కోసం ఎల్లప్పుడూ లైసెన్స్ ఉన్న కస్టమ్స్ బ్రోకర్‌తో సరిచూసుకోండి.",
+   "app.footerPrivacy": "గోప్యత మరియు విశ్వాస విధానం",
+   "app.footerNoPasswords": "పాస్‌వర్డ్‌లు లేదా బ్యాంక్ వివరాలు ఎప్పుడూ అడగబడవు",
+-  "header.freeForever": "ప్రతి ఎగుమతిదారుకు అందుబాటులో",
+-  "header.byElghaly": "చిన్న, పెద్ద ఎగుమతిదారులందరి కోసం",
++  "header.openToAll": "ప్రతి ఎగుమతిదారుకు అందుబాటులో",
++  "header.credit": "చిన్న, పెద్ద ఎగుమతిదారులందరి కోసం",
+   "header.reachBuyers": "కొనుగోలుదారులను చేరుకుని మాట్లాడండి",
+   "header.safetyPolicy": "భద్రత మరియు విశ్వాస విధానం",
+   "header.madeWith": "రూపొందించబడింది",
+@@ -1697,7 +1697,7 @@ const TE: LocaleTable = {
+   "header.voiceOn": "శబ్దం ఆన్",
+   "header.mutedTitle": "శబ్దం ఆఫ్‌లో ఉంది (ఆన్ చేయడానికి క్లిక్ చేయండి)",
+   "header.voiceOnTitle": "శబ్దం ఆన్‌లో ఉంది (ఆఫ్ చేయడానికి క్లిక్ చేయండి)",
+-  "header.freeTool": "Faithful Servant",
++  "header.openTool": "Faithful Servant",
+   "safety.title": "థోత్ విశ్వాసం మరియు నైతిక చార్టర్",
+   "safety.subtitle": "ఎగుమతిదారుల కోసం ప్రేమతో రూపొందించబడింది",
+   "safety.item1Title": "1. అందరికీ అందుబాటులో:",
+@@ -1715,7 +1715,7 @@ const TE: LocaleTable = {
+   "safety.item7Title": "7. మీ వచనం ఎక్కడికి వెళ్తుంది:",
+   "safety.item7Body": "మీరు పంపే వచనం సమాధానాలు రూపొందించడానికి Google Gemini APIకి పంపబడుతుంది; Google దాన్ని ఎలా నిర్వహిస్తుందో ఈ యాప్ నియంత్రణలో లేదు. వాయిస్ ఇన్‌పుట్ మీ బ్రౌజర్ స్పీచ్ రికగ్నిషన్‌ను ఉపయోగిస్తుంది. Gemini కీ సర్వర్‌లోనే ఉంటుంది, పేజీలో చేర్చబడదు.",
+   "safety.madeWith": "రూపొందించబడింది",
+-  "safety.byElghaly": "ఎగుమతిదారుల కోసం",
++  "safety.credit": "ఎగుమతిదారుల కోసం",
+   "safety.close": "అర్థమైంది, మూసివేయి",
+   "orb.listening": "{lang}లో వింటోంది... (ఇప్పుడు మాట్లాడండి)",
+   "orb.thinking": "థోత్ ఆలోచిస్తోంది...",
+@@ -1738,7 +1738,7 @@ const TE: LocaleTable = {
+   "voice.mic": "మైక్:",
+   "voice.supported": "మద్దతు ఉంది",
+   "voice.typeMode": "టైప్ మోడ్",
+-  "voice.free": "Faithful Servant",
++  "voice.badge": "Faithful Servant",
+   "voice.trackerTitle": "కొనుగోలుదారు పిచ్ పురోగతి (ఒకసారి ఒక అడుగు)",
+   "voice.captured": "{n}/4 నమోదైంది",
+   "voice.step1Title": "మీరు ఏమి అమ్ముతారు (ఉత్పత్తి)",
+@@ -1756,14 +1756,14 @@ const TE: LocaleTable = {
+   "voice.newChatTitle": "కొత్త సంభాషణ ప్రారంభించండి",
+   "voice.safetyRule": "భద్రతా నియమం: దిగుమతి/సుంకం తుది నిర్ణయాల కోసం లైసెన్స్ ఉన్న కస్టమ్స్ బ్రోకర్‌తో సరిచూసుకోండి. థోత్ ఎప్పుడూ పాస్‌వర్డ్‌లు లేదా బ్యాంక్ సమాచారం అడగదు.",
+   "voice.youExporter": "మీరు (ఎగుమతిదారు)",
+-  "voice.thothFree": "థోత్ (Faithful Servant)",
++  "voice.thothServant": "థోత్ (Faithful Servant)",
+   "voice.thinking": "థోత్ చిన్న, సులభమైన సమాధానం సిద్ధం చేస్తోంది...",
+   "voice.listen": "వినండి",
+   "voice.copyTitle": "వచనాన్ని కాపీ చేయండి",
+   "voice.stopRecording": "రికార్డింగ్ ఆపండి",
+   "voice.speakMessage": "సందేశం మాట్లాడండి",
+   "voice.typePlaceholder": "{lang} లేదా ఆంగ్లంలో టైప్ చేయండి... (ఉదా. మేము నూలు తివాచీలు తయారు చేస్తాము, 500 ముక్కలు)",
+-  "voice.freeFooter": "Faithful Servant • కార్డ్ లేదా బ్యాంక్ వివరాలు ఎప్పుడూ అడగదు",
++  "voice.badgeFooter": "Faithful Servant • కార్డ్ లేదా బ్యాంక్ వివరాలు ఎప్పుడూ అడగదు",
+   "voice.oneStep": "ఒకసారి ఒక అడుగు",
+   "voice.connectionError": "క్షమించండి, కొద్దిసేపు కనెక్షన్‌లో సమస్య వచ్చింది. తుది నిర్ణయాల కోసం లైసెన్స్ ఉన్న కస్టమ్స్ బ్రోకర్‌తో సరిచూసుకోండి. దయచేసి మళ్లీ చెప్పగలరా?",
+   "voice.sampleBrassLabel": "ఇత్తడి అలంకరణ",
+@@ -1777,7 +1777,7 @@ const TE: LocaleTable = {
+   "voice.sampleFobLabel": "FOB vs CIF",
+   "voice.sampleFobText": "FOB మరియు CIF మధ్య తేడాను సులభమైన మాటల్లో వివరించగలరా?",
+   "pitch.badge": "నిజాయితీ కొనుగోలుదారు పిచ్ స్టూడియో",
+-  "pitch.freeBy": "Faithful Servant",
++  "pitch.servant": "Faithful Servant",
+   "pitch.title": "హస్తకళ మరియు తయారీని ఆకట్టుకునే కొనుగోలుదారు పిచ్‌లుగా మార్చండి",
+   "pitch.subtitle": "కొనుగోలుదారులు సంక్షిప్తత, ఖచ్చితమైన పరిమాణాలు, నిజాయితీ వివరాలు మరియు స్పష్టమైన FOB నిబంధనలు కోరుకుంటారు. థోత్ సోర్సింగ్ ప్రమాణాలకు తగినట్లు స్పష్టమైన, అతిశయోక్తి లేని పిచ్‌లు రాస్తుంది.",
+   "pitch.customsRule": "కస్టమ్స్ నియమం:",
+@@ -1999,12 +1999,12 @@ const PA: LocaleTable = {
+   "app.tabGuide": "ਆਯਾਤ ਦੀਆਂ ਮੁੱਢਲੀਆਂ ਗੱਲਾਂ",
+   "app.speakingIn": "{native} ({name}) ਵਿੱਚ ਬੋਲ ਰਹੇ ਹੋ",
+   "app.footerTagline": "ਨਿਰਯਾਤਕਾਂ ਲਈ Faithful Servant",
+-  "app.footerFree": "ਛੋਟੇ-ਵੱਡੇ ਸਾਰੇ ਨਿਰਯਾਤਕਾਂ ਲਈ",
++  "app.footerBadge": "ਛੋਟੇ-ਵੱਡੇ ਸਾਰੇ ਨਿਰਯਾਤਕਾਂ ਲਈ",
+   "app.footerBroker": "ਅੰਤਿਮ ਫ਼ੈਸਲਿਆਂ ਲਈ ਹਮੇਸ਼ਾ ਲਾਇਸੈਂਸਸ਼ੁਦਾ ਕਸਟਮ ਬ੍ਰੋਕਰ ਤੋਂ ਜਾਂਚ ਕਰੋ।",
+   "app.footerPrivacy": "ਪਰਦੇਦਾਰੀ ਅਤੇ ਭਰੋਸਾ ਨੀਤੀ",
+   "app.footerNoPasswords": "ਪਾਸਵਰਡ ਜਾਂ ਬੈਂਕ ਵੇਰਵੇ ਕਦੇ ਨਹੀਂ ਮੰਗੇ ਜਾਂਦੇ",
+-  "header.freeForever": "ਹਰ ਨਿਰਯਾਤਕ ਲਈ ਖੁੱਲ੍ਹਾ",
+-  "header.byElghaly": "ਛੋਟੇ-ਵੱਡੇ ਸਾਰੇ ਨਿਰਯਾਤਕਾਂ ਲਈ",
++  "header.openToAll": "ਹਰ ਨਿਰਯਾਤਕ ਲਈ ਖੁੱਲ੍ਹਾ",
++  "header.credit": "ਛੋਟੇ-ਵੱਡੇ ਸਾਰੇ ਨਿਰਯਾਤਕਾਂ ਲਈ",
+   "header.reachBuyers": "ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚੋ ਅਤੇ ਗੱਲ ਕਰੋ",
+   "header.safetyPolicy": "ਸੁਰੱਖਿਆ ਅਤੇ ਭਰੋਸਾ ਨੀਤੀ",
+   "header.madeWith": "ਬਣਾਇਆ",
+@@ -2016,7 +2016,7 @@ const PA: LocaleTable = {
+   "header.voiceOn": "ਆਵਾਜ਼ ਚਾਲੂ",
+   "header.mutedTitle": "ਆਵਾਜ਼ ਬੰਦ ਹੈ (ਚਾਲੂ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ)",
+   "header.voiceOnTitle": "ਆਵਾਜ਼ ਚਾਲੂ ਹੈ (ਬੰਦ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ)",
+-  "header.freeTool": "Faithful Servant",
++  "header.openTool": "Faithful Servant",
+   "safety.title": "ਥੋਥ ਦਾ ਭਰੋਸਾ ਅਤੇ ਨੈਤਿਕਤਾ ਚਾਰਟਰ",
+   "safety.subtitle": "ਨਿਰਯਾਤਕਾਂ ਲਈ ਪਿਆਰ ਨਾਲ ਬਣਾਇਆ",
+   "safety.item1Title": "1. ਸਭ ਲਈ ਖੁੱਲ੍ਹਾ:",
+@@ -2034,7 +2034,7 @@ const PA: LocaleTable = {
+   "safety.item7Title": "7. ਤੁਹਾਡਾ ਲਿਖਿਆ ਕਿੱਥੇ ਜਾਂਦਾ ਹੈ:",
+   "safety.item7Body": "ਤੁਸੀਂ ਜੋ ਲਿਖਤ ਭੇਜਦੇ ਹੋ, ਉਹ ਜਵਾਬ ਬਣਾਉਣ ਲਈ Google ਦੇ Gemini API ਨੂੰ ਭੇਜੀ ਜਾਂਦੀ ਹੈ; Google ਉਸਨੂੰ ਕਿਵੇਂ ਸੰਭਾਲਦਾ ਹੈ, ਇਹ ਇਸ ਐਪ ਦੇ ਕੰਟਰੋਲ ਵਿੱਚ ਨਹੀਂ। ਆਵਾਜ਼ ਇਨਪੁੱਟ ਤੁਹਾਡੇ ਬ੍ਰਾਊਜ਼ਰ ਦੀ ਬੋਲੀ ਪਛਾਣ ਵਰਤਦਾ ਹੈ। Gemini ਕੁੰਜੀ ਸਰਵਰ ਉੱਤੇ ਰਹਿੰਦੀ ਹੈ ਅਤੇ ਪੰਨੇ ਵਿੱਚ ਸ਼ਾਮਲ ਨਹੀਂ ਹੁੰਦੀ।",
+   "safety.madeWith": "ਬਣਾਇਆ",
+-  "safety.byElghaly": "ਨਿਰਯਾਤਕਾਂ ਲਈ",
++  "safety.credit": "ਨਿਰਯਾਤਕਾਂ ਲਈ",
+   "safety.close": "ਸਮਝ ਗਿਆ, ਬੰਦ ਕਰੋ",
+   "orb.listening": "{lang} ਵਿੱਚ ਸੁਣ ਰਿਹਾ ਹੈ... (ਹੁਣ ਬੋਲੋ)",
+   "orb.thinking": "ਥੋਥ ਸੋਚ ਰਿਹਾ ਹੈ...",
+@@ -2057,7 +2057,7 @@ const PA: LocaleTable = {
+   "voice.mic": "ਮਾਈਕ:",
+   "voice.supported": "ਸਮਰਥਿਤ",
+   "voice.typeMode": "ਟਾਈਪ ਮੋਡ",
+-  "voice.free": "Faithful Servant",
++  "voice.badge": "Faithful Servant",
+   "voice.trackerTitle": "ਖਰੀਦਦਾਰ ਪਿੱਚ ਦੀ ਪ੍ਰਗਤੀ (ਇੱਕ ਵਾਰ ਵਿੱਚ ਇੱਕ ਕਦਮ)",
+   "voice.captured": "{n}/4 ਦਰਜ",
+   "voice.step1Title": "ਤੁਸੀਂ ਕੀ ਵੇਚਦੇ ਹੋ (ਉਤਪਾਦ)",
+@@ -2075,14 +2075,14 @@ const PA: LocaleTable = {
+   "voice.newChatTitle": "ਨਵੀਂ ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰੋ",
+   "voice.safetyRule": "ਸੁਰੱਖਿਆ ਨਿਯਮ: ਆਯਾਤ/ਡਿਊਟੀ ਦੇ ਅੰਤਿਮ ਫ਼ੈਸਲਿਆਂ ਲਈ ਲਾਇਸੈਂਸਸ਼ੁਦਾ ਕਸਟਮ ਬ੍ਰੋਕਰ ਤੋਂ ਜਾਂਚ ਕਰੋ। ਥੋਥ ਕਦੇ ਪਾਸਵਰਡ ਜਾਂ ਬੈਂਕ ਜਾਣਕਾਰੀ ਨਹੀਂ ਮੰਗਦਾ।",
+   "voice.youExporter": "ਤੁਸੀਂ (ਨਿਰਯਾਤਕ)",
+-  "voice.thothFree": "ਥੋਥ (Faithful Servant)",
++  "voice.thothServant": "ਥੋਥ (Faithful Servant)",
+   "voice.thinking": "ਥੋਥ ਇੱਕ ਛੋਟਾ, ਸਹਿਜ ਜਵਾਬ ਤਿਆਰ ਕਰ ਰਿਹਾ ਹੈ...",
+   "voice.listen": "ਸੁਣੋ",
+   "voice.copyTitle": "ਲਿਖਤ ਕਾਪੀ ਕਰੋ",
+   "voice.stopRecording": "ਰਿਕਾਰਡਿੰਗ ਰੋਕੋ",
+   "voice.speakMessage": "ਸੁਨੇਹਾ ਬੋਲੋ",
+   "voice.typePlaceholder": "{lang} ਜਾਂ ਅੰਗਰੇਜ਼ੀ ਵਿੱਚ ਲਿਖੋ... (ਜਿਵੇਂ ਅਸੀਂ ਸੂਤੀ ਦਰੀਆਂ ਬਣਾਉਂਦੇ ਹਾਂ, 500 ਪੀਸ)",
+-  "voice.freeFooter": "Faithful Servant • ਕਾਰਡ ਜਾਂ ਬੈਂਕ ਵੇਰਵੇ ਕਦੇ ਨਹੀਂ ਮੰਗਦਾ",
++  "voice.badgeFooter": "Faithful Servant • ਕਾਰਡ ਜਾਂ ਬੈਂਕ ਵੇਰਵੇ ਕਦੇ ਨਹੀਂ ਮੰਗਦਾ",
+   "voice.oneStep": "ਇੱਕ ਵਾਰ ਵਿੱਚ ਇੱਕ ਕਦਮ",
+   "voice.connectionError": "ਮਾਫ਼ ਕਰਨਾ, ਕੁਝ ਪਲਾਂ ਲਈ ਕਨੈਕਸ਼ਨ ਵਿੱਚ ਸਮੱਸਿਆ ਆਈ। ਅੰਤਿਮ ਫ਼ੈਸਲਿਆਂ ਲਈ ਲਾਇਸੈਂਸਸ਼ੁਦਾ ਕਸਟਮ ਬ੍ਰੋਕਰ ਤੋਂ ਜਾਂਚ ਕਰੋ। ਕੀ ਤੁਸੀਂ ਦੁਬਾਰਾ ਕਹਿ ਸਕਦੇ ਹੋ?",
+   "voice.sampleBrassLabel": "ਪਿੱਤਲ ਸਜਾਵਟ",
+@@ -2096,7 +2096,7 @@ const PA: LocaleTable = {
+   "voice.sampleFobLabel": "FOB ਬਨਾਮ CIF",
+   "voice.sampleFobText": "ਕੀ ਤੁਸੀਂ ਸੌਖੇ ਸ਼ਬਦਾਂ ਵਿੱਚ FOB ਅਤੇ CIF ਦਾ ਫ਼ਰਕ ਸਮਝਾ ਸਕਦੇ ਹੋ?",
+   "pitch.badge": "ਇਮਾਨਦਾਰ ਖਰੀਦਦਾਰ ਪਿੱਚ ਸਟੂਡੀਓ",
+-  "pitch.freeBy": "Faithful Servant",
++  "pitch.servant": "Faithful Servant",
+   "pitch.title": "ਦਸਤਕਾਰੀ ਅਤੇ ਨਿਰਮਾਣ ਨੂੰ ਪ੍ਰਭਾਵਸ਼ਾਲੀ ਖਰੀਦਦਾਰ ਪਿੱਚਾਂ ਵਿੱਚ ਬਦਲੋ",
+   "pitch.subtitle": "ਖਰੀਦਦਾਰ ਸੰਖੇਪਤਾ, ਸਹੀ ਮਾਤਰਾ, ਇਮਾਨਦਾਰ ਵੇਰਵੇ ਅਤੇ ਸਾਫ਼ FOB ਸ਼ਰਤਾਂ ਚਾਹੁੰਦੇ ਹਨ। ਥੋਥ ਸੋਰਸਿੰਗ ਮਿਆਰਾਂ ਅਨੁਸਾਰ ਸਾਫ਼, ਬਿਨਾਂ ਵਧਾ-ਚੜ੍ਹਾ ਕੇ ਪਿੱਚ ਲਿਖਦਾ ਹੈ।",
+   "pitch.customsRule": "ਕਸਟਮ ਨਿਯਮ:",
+diff --git a/app/src/i18n.ts b/app/src/i18n.ts
+index f5f8e7f..33f0c1b 100644
+--- a/app/src/i18n.ts
++++ b/app/src/i18n.ts
+@@ -16,14 +16,14 @@ const EN = {
+   'app.tabGuide': 'Import Basics',
+   'app.speakingIn': 'Speaking in {native} ({name})',
+   'app.footerTagline': 'Faithful Servant for exporters',
+-  'app.footerFree': 'For all exporters, small & large',
++  'app.footerBadge': 'For all exporters, small & large',
+   'app.footerBroker': 'Always check with a licensed customs broker for final decisions.',
+   'app.footerPrivacy': 'Privacy & Trust Policy',
+   'app.footerNoPasswords': 'No passwords or bank details ever requested',
+ 
+   // ---- Header ----
+-  'header.freeForever': 'Open to every exporter',
+-  'header.byElghaly': 'For exporters, small & large',
++  'header.openToAll': 'Open to every exporter',
++  'header.credit': 'For exporters, small & large',
+   'header.reachBuyers': 'Reach & talk to buyers',
+   'header.safetyPolicy': 'Safety & Trust Policy',
+   'header.madeWith': 'Made with',
+@@ -35,7 +35,7 @@ const EN = {
+   'header.voiceOn': 'Voice On',
+   'header.mutedTitle': 'Voice muted (click to unmute)',
+   'header.voiceOnTitle': 'Voice active (click to mute)',
+-  'header.freeTool': 'Faithful Servant',
++  'header.openTool': 'Faithful Servant',
+ 
+   // ---- Safety modal (Trust & Ethics Charter) ----
+   'safety.title': "Thoth's Trust & Ethics Charter",
+@@ -64,7 +64,7 @@ const EN = {
+   'safety.item7Body':
+     "Text you submit is sent to Google's Gemini API to generate replies; Google's handling is outside this app. Voice input uses your browser's speech recognition. The Gemini key stays on the server and is not included in the page.",
+   'safety.madeWith': 'Made with',
+-  'safety.byElghaly': 'for exporters',
++  'safety.credit': 'for exporters',
+   'safety.close': 'Understood & Close',
+ 
+   // ---- Voice orb ----
+@@ -104,7 +104,7 @@ const EN_VOICE = {
+   'voice.mic': 'Mic:',
+   'voice.supported': 'Supported',
+   'voice.typeMode': 'Type mode',
+-  'voice.free': 'Faithful Servant',
++  'voice.badge': 'Faithful Servant',
+   'voice.trackerTitle': 'Buyer Pitch Progress (One Step at a Time)',
+   'voice.captured': '{n}/4 Captured',
+   'voice.step1Title': 'What You Sell (Product)',
+@@ -123,7 +123,7 @@ const EN_VOICE = {
+   'voice.safetyRule':
+     'Safety rule: Check with a licensed customs broker for final import/tariff decisions. Thoth never asks for passwords or bank info.',
+   'voice.youExporter': 'You (Exporter)',
+-  'voice.thothFree': 'Thoth (Faithful Servant)',
++  'voice.thothServant': 'Thoth (Faithful Servant)',
+   'voice.thinking': 'Thoth is crafting a short, friendly response...',
+   'voice.listen': 'Listen',
+   'voice.copyTitle': 'Copy text',
+@@ -131,7 +131,7 @@ const EN_VOICE = {
+   'voice.speakMessage': 'Speak message',
+   'voice.typePlaceholder':
+     'Type in {lang} or English... (e.g. We make cotton rugs, 500 pcs)',
+-  'voice.freeFooter': 'Faithful Servant • Never asks for card or bank details',
++  'voice.badgeFooter': 'Faithful Servant • Never asks for card or bank details',
+   'voice.oneStep': 'One step at a time',
+   'voice.connectionError':
+     'Sorry, there was a momentary connection issue. Please check with a licensed customs broker for final decisions. Could you please repeat that?',
+@@ -156,7 +156,7 @@ const EN_VOICE = {
+ const EN_PITCH = {
+   // ---- Pitch studio tab ----
+   'pitch.badge': 'Honest Buyer Pitch Studio',
+-  'pitch.freeBy': 'Faithful Servant',
++  'pitch.servant': 'Faithful Servant',
+   'pitch.title': 'Transform craft & manufacturing into compelling buyer pitches',
+   'pitch.subtitle':
+     'Buyers want brevity, exact quantities, honest specs, and clear FOB terms. Thoth writes clean, no-hype pitches tailored to sourcing standards.',
+@@ -432,14 +432,14 @@ const ZH: Record<StringKey, string> = {
+   'app.tabGuide': '海外市场进口基础知识',
+   'app.speakingIn': '当前语言：{native}（{name}）',
+   'app.footerTagline': '为出口商打造的 Faithful Servant',
+-  'app.footerFree': '面向所有出口商，无论企业大小',
++  'app.footerBadge': '面向所有出口商，无论企业大小',
+   'app.footerBroker': '最终决定请务必咨询持牌报关行。',
+   'app.footerPrivacy': '隐私与信任政策',
+   'app.footerNoPasswords': '绝不索取密码或银行信息',
+ 
+   // ---- Header ----
+-  'header.freeForever': '面向每一位出口商',
+-  'header.byElghaly': '服务大大小小的出口商',
++  'header.openToAll': '面向每一位出口商',
++  'header.credit': '服务大大小小的出口商',
+   'header.reachBuyers': '帮您对接海外买家',
+   'header.safetyPolicy': '信任与保障政策',
+   'header.madeWith': '用',
+@@ -451,7 +451,7 @@ const ZH: Record<StringKey, string> = {
+   'header.voiceOn': '语音开启',
+   'header.mutedTitle': '语音已静音（点击取消静音）',
+   'header.voiceOnTitle': '语音已开启（点击静音）',
+-  'header.freeTool': 'Faithful Servant',
++  'header.openTool': 'Faithful Servant',
+ 
+   // ---- Safety modal (Trust & Ethics Charter) ----
+   'safety.title': 'Thoth 信任与道德宪章',
+@@ -480,7 +480,7 @@ const ZH: Record<StringKey, string> = {
+   'safety.item7Body':
+     '您提交的文字会发送到 Google 的 Gemini API 以生成回复；Google 如何处理不在本应用的控制范围内。语音输入使用您浏览器的语音识别功能。Gemini 密钥保存在服务器上，不包含在网页中。',
+   'safety.madeWith': '用',
+-  'safety.byElghaly': '为出口商打造',
++  'safety.credit': '为出口商打造',
+   'safety.close': '明白了，关闭',
+ 
+   // ---- Voice orb ----
+@@ -518,7 +518,7 @@ const ZH: Record<StringKey, string> = {
+   'voice.mic': '麦克风：',
+   'voice.supported': '支持',
+   'voice.typeMode': '打字模式',
+-  'voice.free': 'Faithful Servant',
++  'voice.badge': 'Faithful Servant',
+   'voice.trackerTitle': '海外买家推介进度（一步一步来）',
+   'voice.captured': '已收集 {n}/4',
+   'voice.step1Title': '您销售的产品',
+@@ -537,14 +537,14 @@ const ZH: Record<StringKey, string> = {
+   'voice.safetyRule':
+     '重要规则：最终进口/关税决定请咨询持牌报关行。Thoth 绝不索取密码或银行信息。',
+   'voice.youExporter': '您（出口商）',
+-  'voice.thothFree': 'Thoth（Faithful Servant）',
++  'voice.thothServant': 'Thoth（Faithful Servant）',
+   'voice.thinking': 'Thoth 正在准备简短友好的回复……',
+   'voice.listen': '收听',
+   'voice.copyTitle': '复制文本',
+   'voice.stopRecording': '停止录音',
+   'voice.speakMessage': '语音输入',
+   'voice.typePlaceholder': '用{lang}或英语输入……（例如：我们生产棉地毯，500 件）',
+-  'voice.freeFooter': 'Faithful Servant • 绝不索要银行卡信息',
++  'voice.badgeFooter': 'Faithful Servant • 绝不索要银行卡信息',
+   'voice.oneStep': '一步一步来',
+   'voice.connectionError':
+     '抱歉，连接出现短暂问题。最终决定请咨询持牌报关行。请再说一遍好吗？',
+@@ -562,7 +562,7 @@ const ZH: Record<StringKey, string> = {
+ 
+   // ---- Pitch studio tab ----
+   'pitch.badge': '诚实的海外买家推介工作室',
+-  'pitch.freeBy': 'Faithful Servant',
++  'pitch.servant': 'Faithful Servant',
+   'pitch.title': '把手工艺与制造转化为打动海外买家的推介',
+   'pitch.subtitle':
+     '海外买家看重简洁、准确的数量、诚实的规格和清晰的 FOB 条款。Thoth 按海外采购标准撰写简洁、无夸大的推介。',
+diff --git a/app/tests/site-wording.ts b/app/tests/site-wording.ts
+index 0f30c71..ab729d2 100644
+--- a/app/tests/site-wording.ts
++++ b/app/tests/site-wording.ts
+@@ -65,7 +65,7 @@ check(!/class="free"|<footer|class="by"/.test(landing), 'index.html: no "free" b
+ const assets = fs.readdirSync(path.join(ROOT, 'use', 'assets')).filter((f) => f.endsWith('.js'));
+ check(assets.length > 0, 'use/assets has the built JS');
+ for (const f of assets) {
+-  // Key names such as header.byElghaly are identifiers, never shown.
++  // Key names such as header.credit are identifiers, never shown.
+   const js = stripUrls(read(path.join('use', 'assets', f))).replace(/\b[a-z]+\.byElghaly\b/g, ' ');
+   check(!/\bfree Faithful Servant|100% Free|Free tool|elghaly/i.test(js), `use/assets/${f}: free/credit wording in the bundle`);
+ }
