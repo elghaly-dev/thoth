@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { SupportedLanguage, TranslationRecord, ConfirmationReadback } from '../types';
 import {
   Mic,
@@ -27,6 +27,7 @@ import {
 } from '../utils/audio';
 import { ConsentGate } from './ConsentGate';
 import { postJson } from '../utils/api';
+import { useRequestGuard } from '../utils/useRequestGuard';
 import { tx, langDisplayName, modelLangHint } from '../i18n';
 import { errorText } from '../utils/errors';
 
@@ -77,6 +78,20 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
   const [translateError, setTranslateError] = useState<string | null>(null);
 
   const recognitionRef = useRef<any>(null);
+  const { begin, mountedRef } = useRequestGuard();
+
+  // Unmount: stop the microphone and any speech for this tab.
+  useEffect(() => {
+    return () => {
+      try {
+        recognitionRef.current?.abort?.();
+      } catch {
+        // ignore
+      }
+      recognitionRef.current = null;
+      stopAudio();
+    };
+  }, []);
 
   const handleToggleListen = () => {
     if (isListening) {
@@ -142,17 +157,23 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
     const sourceLang = activeSpeaker === 'exporter' ? currentLang.name : 'English';
     const targetLang = activeSpeaker === 'exporter' ? 'English' : currentLang.name;
 
+    const req = begin();
     try {
       const data = await postJson<{
         translatedText?: string;
         keyTerms?: string[];
         confirmationReadback?: ConfirmationReadback;
-      }>('/api/translate', {
-        text,
-        sourceLang: activeSpeaker === 'exporter' ? modelLangHint(currentLang) : sourceLang,
-        targetLang: activeSpeaker === 'exporter' ? targetLang : modelLangHint(currentLang),
-        speakerRole: activeSpeaker === 'exporter' ? 'Exporter' : 'Buyer',
-      });
+      }>(
+        '/api/translate',
+        {
+          text: text.slice(0, 4000),
+          sourceLang: activeSpeaker === 'exporter' ? modelLangHint(currentLang) : sourceLang,
+          targetLang: activeSpeaker === 'exporter' ? targetLang : modelLangHint(currentLang),
+          speakerRole: activeSpeaker === 'exporter' ? 'Exporter' : 'Buyer',
+        },
+        req.signal
+      );
+      if (!req.isCurrent()) return;
 
       const newRecord: TranslationRecord = {
         id: `tx-${Date.now()}`,
@@ -182,10 +203,11 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         (err) => setTranslateError(errorText(lang, err, 'err.translate'))
       );
     } catch (err: unknown) {
+      if (!req.isCurrent()) return;
       console.error('Translation error:', err);
       setTranslateError(errorText(lang, err, 'err.translate'));
     } finally {
-      setIsTranslating(false);
+      if (mountedRef.current) setIsTranslating(false);
     }
   };
 

@@ -2,6 +2,9 @@ import { SupportedLanguage } from '../types';
 import { postJson, ApiError, isAuthErrorStatus } from './api';
 
 let currentAudio: HTMLAudioElement | null = null;
+// The in-flight /api/tts request; stopAudio() aborts it so a reply that
+// arrives after Stop, a tab change or an unmount is never played.
+let ttsController: AbortController | null = null;
 
 /**
  * Play audio from base64 WAV or fallback to browser Web Speech API.
@@ -18,14 +21,23 @@ export async function playTextToSpeech(
   // Stop existing audio
   stopAudio();
 
+  const ctrl = new AbortController();
+  ttsController = ctrl;
+
   onStart?.();
 
   try {
     // 1. Try Gemini TTS backend first
-    const data = await postJson<{ audioData?: string }>('/api/tts', {
-      text: text.slice(0, 450), // keep within single utterance
-      voiceName: lang.code === 'en' ? 'Puck' : 'Kore',
-    });
+    const data = await postJson<{ audioData?: string }>(
+      '/api/tts',
+      {
+        text: text.slice(0, 450), // keep within single utterance
+        voiceName: lang.code === 'en' ? 'Puck' : 'Kore',
+      },
+      ctrl.signal
+    );
+    if (ctrl.signal.aborted) return;
+    ttsController = null;
 
     if (data.audioData) {
       const audio = new Audio(`data:audio/wav;base64,${data.audioData}`);
@@ -41,6 +53,9 @@ export async function playTextToSpeech(
       return;
     }
   } catch (err) {
+    // Stopped (Stop, tab change, unmount): play nothing, not even the fallback.
+    if (ctrl.signal.aborted) return;
+    ttsController = null;
     // Auth failure: surface it visibly instead of silently falling back
     // to local speech and pretending the provider answered.
     if (err instanceof ApiError && isAuthErrorStatus(err.status)) {
@@ -88,6 +103,10 @@ function fallbackSpeechSynthesis(
 }
 
 export function stopAudio() {
+  if (ttsController) {
+    ttsController.abort();
+    ttsController = null;
+  }
   if (currentAudio) {
     try {
       currentAudio.pause();

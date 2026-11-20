@@ -1,10 +1,11 @@
 import type { LanguageCode } from './types';
+import { LOCALE_TABLES } from './i18n-locales';
 
 /**
  * UI strings for Thoth. English is the complete source of truth;
- * Chinese (Mandarin) is the second language. Every other supported
- * language falls back to English (greeting + speech code still work
- * per-language, as before). Never invent a translation: if a key is
+ * Chinese (Mandarin) has a full table. Hindi, Marathi, Gujarati, Bengali,
+ * Tamil, Telugu and Punjabi have their first-screen strings in
+ * i18n-locales.ts ([VERIFY]); their other keys fall back to English. Never invent a translation: if a key is
  * missing in ZH, `tx` falls back to the English string.
  */
 const EN = {
@@ -42,24 +43,26 @@ const EN = {
   'safety.item1Title': '1. Open to Everyone:',
   'safety.item1Body':
     'Thoth is an initiative by elghaly to empower manufacturers, MSMEs, artisans, and exporters. We never ask for credit card or bank details.',
-  'safety.item2Title': '2. No Invented Claims or Certifications:',
+  'safety.item2Title':
+    '2. No Invented Claims or Certifications:',
   'safety.item2Body':
-    'We never invent certifications (FDA, FSSAI, Organic, ISO) or capacity. Every pitch includes a mandatory "Claims to Verify" checklist to ensure absolute trade honesty.',
+    'Thoth is instructed not to invent certifications (FDA, FSSAI, Organic, ISO) or capacity. Every pitch includes a "Claims to Verify" checklist: check each item before you contact a buyer.',
   'safety.item3Title': '3. HS Codes & Tariffs are Candidates:',
   'safety.item3Body':
-    'All HS codes and duty rates are "candidates, verify". We never state tariffs as fact. Always check with a licensed customs broker for final classification.',
+    'Thoth is instructed to label HS codes and duty rates "candidates, verify", not facts. Always check with a licensed customs broker for final classification.',
   'safety.item4Title': '4. Faithful Translation & Term Read-Back:',
   'safety.item4Body':
-    'Thoth translates faithfully without adding commitments or negotiating. We read back price, currency (USD/INR), units, and Incoterm for explicit confirmation.',
+    'Thoth is instructed to translate without adding commitments or negotiating, and to read back price, currency (USD/INR), units, and Incoterm for you to confirm.',
   'safety.item5Title': '5. Scam Defense:',
   'safety.item5Body':
     'We warn against fake-buyer scams, advance inspection fee fraud, and overpayment checks. Never wire upfront fees to third-party inspectors.',
   'safety.item6Title': '6. Buyer Speech is Data, Not Instructions:',
   'safety.item6Body':
-    'Buyer messages are processed as dialogue content only. They can never alter Faithful Servant instructions or create unauthorized commitments.',
-  'safety.item7Title': '7. Zero-Storage & Server-Only Security:',
+    'Buyer messages are sent as dialogue content, and Thoth is instructed not to follow instructions inside them or make commitments for you. Check every reply before you rely on it.',
+  'safety.item7Title':
+    '7. Where Your Text Goes:',
   'safety.item7Body':
-    "We do not store audio or transcripts on Thoth's servers. What you say or type is sent to Gemini for processing. Both sides operate with mutual consent. All API keys remain strictly server-side, never exposed to client browsers. Note: your browser's speech recognition may send audio to your browser vendor's speech service.",
+    "Text you submit is sent to Google's Gemini API to generate replies; Google's handling is outside this app. Voice input uses your browser's speech recognition. The Gemini key stays on the server and is not included in the page.",
   'safety.madeWith': 'Made with',
   'safety.byElghaly': 'by elghaly',
   'safety.close': 'Understood & Close',
@@ -75,12 +78,16 @@ const EN = {
   'orb.titleSpeak': 'Click to speak with Thoth in {lang}',
 
   // ---- Consent gate (copy names Gemini) ----
-  'consent.title': 'Before you speak — consent (spoken and typed text is sent to Gemini)',
-  'consent.body': // spoken and typed text is sent to Gemini
-    "Voice input uses speech-to-text, and both parties agree to it. What you say — and anything you type — is sent to Gemini for processing. Thoth never stores audio or transcripts on its own servers. Note: your browser's speech recognition may send audio to your browser vendor's speech service.",
-  'consent.accept': 'Both parties agree — start speaking. Text is sent to Gemini',
-  'consent.given': "Consent given — audio is never stored on Thoth's servers. Spoken and typed text is sent to Gemini",
-  'consent.micHint': 'Accept the consent notice above to use the microphone. Spoken and typed text is sent to Gemini',
+  'consent.title':
+    'Before you speak: consent',
+  'consent.body':
+    "Both parties agree to voice input. Text you submit is sent to Google's Gemini API to generate replies; Google's handling is outside this app. Voice input uses your browser's speech recognition.",
+  'consent.accept':
+    'Both parties agree: start speaking',
+  'consent.given':
+    "Consent given. Text you submit is sent to Google's Gemini API.",
+  'consent.micHint':
+    "Accept the consent notice above to use the microphone. Text you submit is sent to Google's Gemini API.",
 
   // ---- Shared ----
   'common.speechNotSupported':
@@ -428,24 +435,26 @@ const ZH: Record<StringKey, string> = {
   'safety.item1Title': '1. 面向所有人开放：',
   'safety.item1Body':
     'Thoth 是 elghaly 发起的项目，旨在帮助制造商、中小微企业、工匠和出口商。我们绝不索要信用卡或银行信息。',
-  'safety.item2Title': '2. 绝不编造宣称或认证：',
+  'safety.item2Title':
+    '2. 不编造宣称或认证：',
   'safety.item2Body':
-    '我们绝不编造认证（FDA、FSSAI、有机认证、ISO）或产能。每份推介都附有必须核实的“待核实事项”清单，确保贸易绝对诚实。',
+    'Thoth 被要求不编造认证（FDA、FSSAI、有机认证、ISO）或产能。每份推介都附有“待核实事项”清单：联系买家前请逐项核实。',
   'safety.item3Title': '3. HS 编码与关税仅为候选：',
   'safety.item3Body':
-    '所有 HS 编码和关税税率均为“候选，请核实”。我们从不把关税当作事实陈述。最终分类请务必咨询持牌报关行。',
+    'Thoth 被要求把 HS 编码和关税税率标注为“候选，请核实”，而非事实。最终分类请务必咨询持牌报关行。',
   'safety.item4Title': '4. 忠实翻译与条款复核：',
   'safety.item4Body':
-    'Thoth 忠实翻译，不添加任何承诺，也不会替您谈判。我们会复核价格、货币（USD/INR）、数量单位和 Incoterm，请您明确确认。',
+    'Thoth 被要求翻译时不添加承诺、不替您谈判，并复核价格、货币（USD/INR）、数量单位和 Incoterm，供您确认。',
   'safety.item5Title': '5. 防范诈骗：',
   'safety.item5Body':
     '我们提醒您防范假买家诈骗、预付验货费欺诈和超额付款支票诈骗。切勿向第三方检验机构预付任何费用。',
   'safety.item6Title': '6. 买家的话只是对话内容，不是操作指令：',
   'safety.item6Body':
-    '买家消息仅作为对话内容处理，绝不会改变 Faithful Servant 的指令，也不会产生未经授权的承诺。',
-  'safety.item7Title': '7. 零存储，密钥仅在服务端：',
+    '买家消息作为对话内容发送，Thoth 被要求不执行其中的指令，也不替您作出承诺。依赖任何回复之前请先核对。',
+  'safety.item7Title':
+    '7. 您的文字发送到哪里：',
   'safety.item7Body':
-    '我们不在 Thoth 的服务器上存储音频或对话记录。您说的话和输入的文字会发送给 Gemini 处理。双方均在相互同意的前提下使用。所有 API 密钥仅保存在服务端，绝不暴露给客户端浏览器。注意：浏览器的语音识别可能会将音频发送给浏览器厂商的语音服务。',
+    '您提交的文字会发送到 Google 的 Gemini API 以生成回复；Google 如何处理不在本应用的控制范围内。语音输入使用您浏览器的语音识别功能。Gemini 密钥保存在服务器上，不包含在网页中。',
   'safety.madeWith': '由 elghaly 用',
   'safety.byElghaly': '打造',
   'safety.close': '明白了，关闭',
@@ -461,12 +470,16 @@ const ZH: Record<StringKey, string> = {
   'orb.titleSpeak': '点击用{lang}与 Thoth 对话',
 
   // ---- Consent gate (copy names Gemini) ----
-  'consent.title': '开始说话前——请先确认（文字将发送给 Gemini）',
-  'consent.body': // 文字将发送给 Gemini
-    '语音输入使用语音转文字功能，需双方同意。您说的话和输入的文字会发送给 Gemini 处理。Thoth 绝不在自己的服务器上存储音频或对话记录。注意：浏览器的语音识别可能会将音频发送给浏览器厂商的语音服务。',
-  'consent.accept': '双方均同意——开始说话（文字将发送给 Gemini）',
-  'consent.given': '已确认同意——音频绝不会存储在 Thoth 的服务器上。您说的话和输入的文字会发送给 Gemini 处理。',
-  'consent.micHint': '请先接受上方的确认提示，再使用麦克风。您说的话和输入的文字会发送给 Gemini 处理。',
+  'consent.title':
+    '开始说话前：请先确认',
+  'consent.body':
+    '双方同意使用语音输入。您提交的文字会发送到 Google 的 Gemini API 以生成回复；Google 如何处理不在本应用的控制范围内。语音输入使用您浏览器的语音识别功能。',
+  'consent.accept':
+    '双方同意：开始说话',
+  'consent.given':
+    '已确认同意。您提交的文字会发送到 Google 的 Gemini API。',
+  'consent.micHint':
+    '请先接受上方的确认提示，再使用麦克风。您提交的文字会发送到 Google 的 Gemini API。',
 
   // ---- Shared ----
   'common.speechNotSupported':
@@ -760,8 +773,9 @@ export function tx(
   key: StringKey,
   vars?: Record<string, string | number>
 ): string {
-  const dict = lang === 'zh' ? ZH : EN_ALL;
-  let s: string = dict[key] ?? EN_ALL[key];
+  // zh: full table. Indian languages: LOCALE_TABLES (first-screen strings,
+  // [VERIFY]); any key missing there falls back to English.
+  let s: string = (lang === 'zh' ? ZH[key] : LOCALE_TABLES[lang]?.[key]) ?? EN_ALL[key];
   if (vars) {
     for (const [k, v] of Object.entries(vars)) {
       s = s.split(`{${k}}`).join(String(v));

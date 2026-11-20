@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SupportedLanguage } from '../types';
 import {
   HelpCircle,
@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio } from '../utils/audio';
 import { postJson } from '../utils/api';
+import { useRequestGuard } from '../utils/useRequestGuard';
 import { tx, langDisplayName, modelLangHint } from '../i18n';
 import { errorText } from '../utils/errors';
 
@@ -32,6 +33,11 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
   // "explaining" spinner always stops).
   const [guideError, setGuideError] = useState<string | null>(null);
 
+  const { begin, mountedRef } = useRequestGuard();
+
+  // Unmount: abort the request and stop any speech for this tab.
+  useEffect(() => () => stopAudio(), []);
+
   const handleAskQuestion = async (e?: React.FormEvent, customQ?: string) => {
     if (e) e.preventDefault();
     const q = (customQ || query).trim();
@@ -42,11 +48,17 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
     stopAudio();
     setIsPlayingAudio(false);
 
+    const req = begin();
     try {
-      const data = await postJson<{ answer?: string }>('/api/import-guide', {
-        query: q,
-        userLanguage: modelLangHint(currentLang),
-      });
+      const data = await postJson<{ answer?: string }>(
+        '/api/import-guide',
+        {
+          query: q.slice(0, 4000),
+          userLanguage: modelLangHint(currentLang),
+        },
+        req.signal
+      );
+      if (!req.isCurrent()) return;
       setQaAnswer(data.answer ?? null);
 
       // Play voice read aloud
@@ -58,10 +70,11 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
         (err) => setGuideError(errorText(lang, err, 'err.guide'))
       );
     } catch (err: unknown) {
+      if (!req.isCurrent()) return;
       console.error('Error fetching import answer:', err);
       setGuideError(errorText(lang, err, 'err.guide'));
     } finally {
-      setIsAsking(false);
+      if (mountedRef.current) setIsAsking(false);
     }
   };
 

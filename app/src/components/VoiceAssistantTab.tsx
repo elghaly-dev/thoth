@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio, createSpeechRecognizer, isSpeechRecognitionSupported } from '../utils/audio';
 import { postJson, ApiError, isAuthErrorStatus } from '../utils/api';
+import { useRequestGuard } from '../utils/useRequestGuard';
 
 interface VoiceAssistantTabProps {
   currentLang: SupportedLanguage;
@@ -59,6 +60,21 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
+  const { begin, mountedRef } = useRequestGuard();
+
+  // Unmount: stop the microphone and any speech, so nothing keeps
+  // listening or talking after the tab is closed.
+  useEffect(() => {
+    return () => {
+      try {
+        recognitionRef.current?.abort?.();
+      } catch {
+        // ignore
+      }
+      recognitionRef.current = null;
+      stopAudio();
+    };
+  }, []);
 
   // Initial greeting
   useEffect(() => {
@@ -75,16 +91,9 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         timestamp: new Date(),
       };
       setMessages([initialMessage]);
-
-      if (!isMuted) {
-        playTextToSpeech(
-          initialText,
-          currentLang,
-          () => setIsSpeaking(true),
-          () => setIsSpeaking(false),
-          (err) => setSpeechError(errorText(lang, err, 'voice.connectionError'))
-        );
-      }
+      // The greeting is shown, not spoken: browsers block audio before a
+      // user gesture, and nothing is sent to /api/tts until the user taps
+      // the speaker button on a message.
     }
   }, [currentLang.code]);
 
@@ -174,11 +183,18 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
     // Heuristically check if exporter supplied steps:
     detectSteps(text);
 
+    const req = begin();
     try {
-      const data = await postJson<{ reply?: string }>('/api/chat', {
-        messages: newMessages.map((m) => ({ role: m.role, content: m.content })),
-        userLanguage: modelLangHint(currentLang),
-      });
+      // The server accepts at most 30 messages of 4000 characters each.
+      const data = await postJson<{ reply?: string }>(
+        '/api/chat',
+        {
+          messages: newMessages.slice(-30).map((m) => ({ role: m.role, content: m.content.slice(0, 4000) })),
+          userLanguage: modelLangHint(currentLang),
+        },
+        req.signal
+      );
+      if (!req.isCurrent()) return;
 
       // A missing reply is a failed model call, not a reason to show a
       // canned line that sounds like a real Faithful Servant reply.
@@ -207,6 +223,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         );
       }
     } catch (err: unknown) {
+      if (!req.isCurrent()) return;
       console.error('Error sending message:', err);
       // A 401/403 is a provider-auth failure: show the server's clear
       // error as-is. It is not retried and no fake reply is shown.
@@ -222,7 +239,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
       };
       setMessages((prev) => [...prev, errorMsg]);
     } finally {
-      setIsThinking(false);
+      if (mountedRef.current) setIsThinking(false);
     }
   };
 

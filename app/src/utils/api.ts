@@ -17,11 +17,12 @@ export function isAuthErrorStatus(status: number): boolean {
   return status === 401 || status === 403;
 }
 
-export async function postJson<T>(path: string, body: unknown): Promise<T> {
+export async function postJson<T>(path: string, body: unknown, signal?: AbortSignal): Promise<T> {
   const res = await fetch(path, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
+    signal,
   });
   if (!res.ok) {
     let message = `Server returned ${res.status}`;

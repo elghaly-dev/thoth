@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SupportedLanguage, PitchResult } from '../types';
 import {
   Sparkles,
@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio } from '../utils/audio';
 import { postJson } from '../utils/api';
+import { useRequestGuard } from '../utils/useRequestGuard';
 import { tx, langDisplayName, modelLangHint } from '../i18n';
 import { errorText } from '../utils/errors';
 
@@ -88,6 +89,11 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
     },
   ];
 
+  const { begin, mountedRef } = useRequestGuard();
+
+  // Unmount: abort the request and stop any speech for this tab.
+  useEffect(() => () => stopAudio(), []);
+
   const handleGeneratePitch = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!product.trim() || isGenerating) return;
@@ -97,20 +103,27 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
     stopAudio();
     setIsPlayingAudio(false);
 
+    const req = begin();
     try {
-      const data = await postJson<PitchResult>('/api/pitch', {
-        product,
-        quantity: quantity || 'Flexible MOQ upon discussion',
-        price: price || 'Competitive FOB pricing upon spec review',
-        shippingOrigin: shippingOrigin || 'Origin port',
-        exporterLanguage: modelLangHint(currentLang),
-      });
+      const data = await postJson<PitchResult>(
+        '/api/pitch',
+        {
+          product: product.slice(0, 500),
+          quantity: (quantity || 'MOQ to be discussed').slice(0, 500),
+          price: (price || 'Price on request').slice(0, 500),
+          shippingOrigin: (shippingOrigin || 'Origin port').slice(0, 500),
+          exporterLanguage: modelLangHint(currentLang),
+        },
+        req.signal
+      );
+      if (!req.isCurrent()) return;
       setPitchResult(data);
     } catch (err: unknown) {
+      if (!req.isCurrent()) return;
       console.error('Error generating pitch:', err);
       setPitchError(errorText(lang, err, 'err.pitch'));
     } finally {
-      setIsGenerating(false);
+      if (mountedRef.current) setIsGenerating(false);
     }
   };
 
