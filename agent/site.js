@@ -48,7 +48,7 @@ export class AssistantMount {
       const needsKey = !booted.engine.mockLLM
         && (!booted.engine.byokKey || booted.engine.byokKey === "demo");
       status.textContent = needsKey
-        ? "Assistant needs your AI provider key. Add it in AI model settings below."
+        ? "Assistant needs your model provider key. Add it in Model settings below."
         : "Assistant connected to this page.";
       if (!needsKey) {
         AssistantMount.greet();

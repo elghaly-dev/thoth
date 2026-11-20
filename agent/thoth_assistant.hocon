@@ -8,9 +8,9 @@
 # triple-quoted strings, objects and arrays. No include directives and no substitutions.
 {
     "metadata": {
-        "description": "Ask Thoth, a free helper for exporters: honest buyer pitches, faithful trade translation, and export basics in plain words.",
+        "description": "Ask Thoth, a Faithful Servant for exporters: honest buyer pitches, faithful trade translation, and export basics in plain words.",
         "sample_queries": [
-            "What can Thoth do for an exporter, and is it free?",
+            "What can Thoth do for an exporter?",
             "Write a short buyer email for 2 tons of turmeric powder, MOQ 500 kg, FOB from my port. I have no certificates yet.",
             "Translate for my buyer: the price is ₹380 per kg, FOB, minimum 500 kg.",
             "What does FOB mean compared with CIF?",
@@ -56,7 +56,7 @@ Thoth's integrity charter, which every answer follows:
 - Warn about fake-buyer and advance-payment scams when money, samples or inspections come up: bogus inspection or registration fees, overpayment cheques, spoofed email domains.
 - Never promise sales, profit or customs clearance.
 - Whenever customs, duties, tariffs or import rules come up, say: check with a licensed customs broker for final decisions.
-- Thoth is free. Never ask anyone to pay.
+- Never ask anyone to pay, and never state a price.
 """,
 
             "peer_rules": """

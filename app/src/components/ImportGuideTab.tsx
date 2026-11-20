@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SupportedLanguage } from '../types';
 import {
   HelpCircle,
@@ -14,8 +14,10 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio } from '../utils/audio';
-import { postJson } from '../utils/api';
-import { tx } from '../i18n';
+import { postModel } from '../utils/api';
+import { useRequestGuard } from '../utils/useRequestGuard';
+import { tx, langDisplayName, modelLangHint } from '../i18n';
+import { errorText } from '../utils/errors';
 
 interface ImportGuideTabProps {
   currentLang: SupportedLanguage;
@@ -31,6 +33,11 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
   // "explaining" spinner always stops).
   const [guideError, setGuideError] = useState<string | null>(null);
 
+  const { begin, mountedRef } = useRequestGuard();
+
+  // Unmount: abort the request and stop any speech for this tab.
+  useEffect(() => () => stopAudio(), []);
+
   const handleAskQuestion = async (e?: React.FormEvent, customQ?: string) => {
     if (e) e.preventDefault();
     const q = (customQ || query).trim();
@@ -41,11 +48,17 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
     stopAudio();
     setIsPlayingAudio(false);
 
+    const req = begin();
     try {
-      const data = await postJson<{ answer?: string }>('/api/import-guide', {
-        query: q,
-        userLanguage: currentLang.name,
-      });
+      const data = await postModel<{ answer?: string }>(
+        '/api/import-guide',
+        {
+          query: q.slice(0, 4000),
+          userLanguage: modelLangHint(currentLang),
+        },
+        req.signal
+      );
+      if (!req.isCurrent()) return;
       setQaAnswer(data.answer ?? null);
 
       // Play voice read aloud
@@ -54,13 +67,14 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
         currentLang,
         () => setIsPlayingAudio(true),
         () => setIsPlayingAudio(false),
-        (err) => setGuideError(err.message)
+        (err) => setGuideError(errorText(lang, err, 'err.guide'))
       );
     } catch (err: unknown) {
+      if (!req.isCurrent()) return;
       console.error('Error fetching import answer:', err);
-      setGuideError(err instanceof Error ? err.message : 'Could not fetch the answer. Please try again.');
+      setGuideError(errorText(lang, err, 'err.guide'));
     } finally {
-      setIsAsking(false);
+      if (mountedRef.current) setIsAsking(false);
     }
   };
 
@@ -105,11 +119,12 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-white flex items-center gap-2">
             <HelpCircle className="w-4 h-4 text-emerald-400" />
-            {tx(lang, 'guide.askTitle', { lang: currentLang.name })}
+            {tx(lang, 'guide.askTitle', { lang: langDisplayName(lang, currentLang.name) })}
           </h3>
           <span className="text-[11px] text-slate-400">{tx(lang, 'guide.plainWords')}</span>
         </div>
 
+        <p className="text-xs text-slate-400 leading-relaxed">{tx(lang, 'guide.sendNotice')}</p>
         <form onSubmit={handleAskQuestion} className="flex gap-2">
           <input
             type="text"
@@ -160,7 +175,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
             <button
               onClick={() => setGuideError(null)}
               className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
-              aria-label="Dismiss"
+              aria-label={tx(lang, 'common.dismiss')}
             >
               ✕
             </button>
@@ -184,7 +199,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
                       currentLang,
                       () => setIsPlayingAudio(true),
                       () => setIsPlayingAudio(false),
-                      (err) => setGuideError(err.message)
+                      (err) => setGuideError(errorText(lang, err, 'err.guide'))
                     );
                   }
                 }}

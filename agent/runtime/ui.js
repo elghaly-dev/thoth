@@ -26,7 +26,7 @@ import { PRESENTATION_CSS, renderMarkdown, renderRichComponent } from "./cruse-r
 import { createTurnStatusController } from "./turn-status.js";
 import { reviewActions } from "./action-transport.js";
 
-export const AI_MODEL_SETTINGS_LABEL = "AI model settings";
+export const AI_MODEL_SETTINGS_LABEL = "Model settings";
 export const API_KEY_HELP_URL = "https://ai.google.dev/gemini-api/docs/api-key";
 export const API_KEY_PROVIDERS = [
   // First, because sites built with the agentify-website skill use hosted Otari by default.
@@ -46,7 +46,7 @@ export const API_KEY_PROVIDERS = [
     router: "https://generativelanguage.googleapis.com/v1beta/openai",
     model: "gemini-3.8-flash",
     keyPrefixes: ["AIza"],
-    accessNote: "Free tier",
+    accessNote: "Usage limits apply",
   },
   {
     name: "Groq",
@@ -54,7 +54,7 @@ export const API_KEY_PROVIDERS = [
     router: "https://api.groq.com/openai/v1",
     model: "openai/gpt-oss-120b",
     keyPrefixes: ["gsk_"],
-    accessNote: "Free tier",
+    accessNote: "Usage limits apply",
   },
   {
     name: "OpenAI",
@@ -286,7 +286,7 @@ export function mountApp(root, { engine, trace, manifest }) {
   const net = engine.top?.network;
   const title = manifest?.networks?.[0]?.description || net?.name || "Agent network";
   const needsByok = !engine.mockLLM && (!engine.byokKey || engine.byokKey === "demo");
-  const setupMessage = `To start, add an AI provider key. In ⚙ ${AI_MODEL_SETTINGS_LABEL}, choose a provider, create a key on its site, and paste it into the API key field. Then select Save and start. Your key is saved in this browser.`;
+  const setupMessage = `To start, add a model provider key. In ⚙ ${AI_MODEL_SETTINGS_LABEL}, choose a provider, create a key on its site, and paste it into the API key field. Then select Save and start. Your key is saved in this browser.`;
   const chatSlot = root.querySelector('[data-ns-slot="chat"]');
   const agentsSlot = root.querySelector('[data-ns-slot="agents"]');
   const activitySlot = root.querySelector('[data-ns-slot="activity"]');
@@ -301,11 +301,11 @@ export function mountApp(root, { engine, trace, manifest }) {
       <label>Saved setup <select id="ns-profile"></select></label>
       <div class="ns-key-help"${needsByok ? "" : " hidden"}>
         <strong>Don't have an API key?</strong>
-        <p>An API key is a private code from an AI provider. It lets this page use that provider for you; it is not your password.</p>
+        <p>An API key is a private code from a model provider. It lets this page use that provider for you; it is not your password.</p>
         <a href="${API_KEY_HELP_URL}" target="_blank" rel="noopener noreferrer">What is an API key and how do I get one? <span aria-hidden="true">↗</span></a>
         <p>Choose a provider below and create a key. Its recommended settings will be filled in for you.</p>
         <div class="ns-key-providers">${providerLinksHtml}</div>
-        <div class="ns-hint">Free tiers have usage limits and may vary by region. Other providers may require billing.</div>
+        <div class="ns-hint">Provider tiers have usage limits and may vary by region. Other providers may require billing.</div>
       </div>
       <label><span>API key <span aria-hidden="true">*</span></span><input id="ns-key" type="password" autocomplete="off" placeholder="Paste your API key" required aria-required="true"></label>
       <button id="ns-apply">Save and start</button>
@@ -1069,7 +1069,7 @@ export function mountApp(root, { engine, trace, manifest }) {
       const viaThisSite = !staticMode && !!byokRouter
         && resolveByokRouter(routerEl.value) === resolveByokRouter(byokRouter);
       hintEl.textContent = viaThisSite
-        ? "This site passes your key on to your AI provider."
+        ? "This site passes your key on to your model provider."
         : "Your browser sends your key directly to the Provider URL above.";
     }
   };

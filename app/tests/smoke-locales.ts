@@ -67,7 +67,7 @@ for (const { code } of SUPPORTED_LANGUAGES) {
 }
 
 console.log(
-  `smoke-locales: checked ${checked} strings across ${SUPPORTED_LANGUAGES.length} locales (${SUPPORTED_LANGUAGES.map((l) => l.code).join(', ')}) -- tables: EN + ZH only; other locales fall back to EN.`,
+  `smoke-locales: checked ${checked} strings across ${SUPPORTED_LANGUAGES.length} locales (${SUPPORTED_LANGUAGES.map((l) => l.code).join(', ')}) -- tables: EN, ZH and 7 Indian-language tables ([VERIFY]); any missing key falls back to EN.`,
 );
 if (failures.length > 0) {
   console.error(`smoke-locales: FAIL -- ${failures.length} problem(s):`);
