@@ -1,0 +1,93 @@
+diff --git a/404.html b/404.html
+index 98850dd..2bd31c0 100644
+--- a/404.html
++++ b/404.html
+@@ -1,9 +1,9 @@
+ <!doctype html>
+-<html lang="en">
++<html lang="hi" lang="hi">
+ <head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+-  <title>Thoth — page not found</title>
++  <title>थोथ — निर्यातकों के लिए Faithful Servant</title>
+   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+   <style>
+     body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+diff --git a/agent/index.html b/agent/index.html
+index 9f839bf..438fb7e 100644
+--- a/agent/index.html
++++ b/agent/index.html
+@@ -1,10 +1,10 @@
+ <!doctype html>
+-<html lang="en">
++<html lang="hi" lang="hi">
+   <head>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+-    <title>Ask Thoth</title>
+-    <meta name="description" content="Ask Thoth, a Faithful Servant for exporters, from any browser with your own model provider key: honest buyer pitches, faithful trade translation, and export basics.">
++    <title>थोथ — निर्यातकों के लिए Faithful Servant</title>
++    <meta name="description" content="थोथ निर्यातकों के लिए एक सहायक है: उत्पाद, खरीदारों तक पहुँच, और स्पष्ट अगले कदम।">
+     <link rel="canonical" href="https://thoth.elghaly.dev/agent/">
+     <link rel="stylesheet" href="assistant.css">
+     <script type="module" src="thoth-page.js"></script>
+diff --git a/agent/thoth-page.js b/agent/thoth-page.js
+index e56c1cb..6983883 100644
+--- a/agent/thoth-page.js
++++ b/agent/thoth-page.js
+@@ -14,8 +14,6 @@ export class App {
+    */
+   static GUIDE = Object.freeze({
+     name: "Thoth",
+-    by: "Wyndham Heaven",
+-    price: "Thoth never asks anyone to pay.",
+     helps: "Exporters, small or large, reach and talk to buyers abroad.",
+     tools: [
+       { id: "pitch", name: "Pitch Studio", does: "Turns verified product facts into a short buyer email, a short message, and a list of claims the exporter must verify first." },
+diff --git a/app/index.html b/app/index.html
+index 66641c5..0733f7a 100644
+--- a/app/index.html
++++ b/app/index.html
+@@ -1,13 +1,13 @@
+ <!doctype html>
+-<html lang="en">
++<html lang="hi" lang="hi">
+   <head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+-    <title>Thoth - Faithful Servant for Exporters</title>
+-    <meta name="description" content="Faithful Servant helping exporters connect with buyers, craft honest product pitches, talk with buyers in their language, and understand import basics." />
++    <title>थोथ — निर्यातकों के लिए Faithful Servant</title>
++    <meta name="description" content="थोथ निर्यातकों के लिए एक सहायक है: उत्पाद, खरीदारों तक पहुँच, और स्पष्ट अगले कदम।" />
+     <link rel="canonical" href="https://thoth.elghaly.dev/use/" />
+-    <meta property="og:title" content="Thoth - Faithful Servant for Exporters" />
+-    <meta property="og:description" content="Faithful Servant helping exporters connect with buyers, craft honest product pitches, talk with buyers in their language, and understand import basics." />
++    <meta property="og:title" content="थोथ — निर्यातकों के लिए Faithful Servant" />
++    <meta property="og:description" content="थोथ निर्यातकों के लिए एक सहायक है: उत्पाद, खरीदारों तक पहुँच, और स्पष्ट अगले कदम।" />
+     <meta property="og:type" content="website" />
+     <meta property="og:url" content="https://thoth.elghaly.dev/use/" />
+     <meta property="og:image" content="https://thoth.elghaly.dev/og-image.png" />
+diff --git a/index.html b/index.html
+index e48a2da..7da383a 100644
+--- a/index.html
++++ b/index.html
+@@ -1,13 +1,13 @@
+ <!doctype html>
+-<html lang="en">
++<html lang="hi" lang="hi">
+ <head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+-  <title>Thoth</title>
+-  <meta name="description" content="Thoth is a voice-first multilingual Faithful Servant that helps exporters talk to buyers abroad in their own language.">
++  <title>थोथ — निर्यातकों के लिए Faithful Servant</title>
++  <meta name="description" content="थोथ निर्यातकों के लिए एक सहायक है: उत्पाद, खरीदारों तक पहुँच, और स्पष्ट अगले कदम।">
+   <link rel="canonical" href="https://thoth.elghaly.dev/">
+-  <meta property="og:title" content="Thoth">
+-  <meta property="og:description" content="Thoth is a voice-first multilingual Faithful Servant that helps exporters talk to buyers abroad in their own language.">
++  <meta property="og:title" content="थोथ — निर्यातकों के लिए Faithful Servant">
++  <meta property="og:description" content="थोथ निर्यातकों के लिए एक सहायक है: उत्पाद, खरीदारों तक पहुँच, और स्पष्ट अगले कदम।">
+   <meta property="og:url" content="https://thoth.elghaly.dev/">
+   <meta name="twitter:card" content="summary_large_image">
+   <meta name="twitter:title" content="Thoth">
