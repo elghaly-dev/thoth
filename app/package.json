@@ -14,7 +14,8 @@
     "test:zh": "tsx tests/zh-parity.ts",
     "test:nofree": "tsx tests/no-free-wording.ts",
     "test:server": "tsx tests/server-hardening.ts",
-    "test:locales": "tsx tests/locale-parity.ts"
+    "test:locales": "tsx tests/locale-parity.ts",
+    "test:mic": "tsx tests/mic-blocked.ts"
   },
   "dependencies": {
     "@google/genai": "^3.2.0",

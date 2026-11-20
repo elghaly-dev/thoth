@@ -92,6 +92,8 @@ const EN = {
   // ---- Shared ----
   'common.speechNotSupported':
     'Speech recognition is not supported in this browser. Please use Chrome or Edge, or type your message.',
+  'common.micBlocked':
+    'Microphone access is blocked. Allow it in your browser settings, or type your message.',
 } as const;
 
 const EN_VOICE = {
@@ -484,6 +486,8 @@ const ZH: Record<StringKey, string> = {
   // ---- Shared ----
   'common.speechNotSupported':
     '此浏览器不支持语音识别。请使用 Chrome 或 Edge，或直接输入消息。',
+  'common.micBlocked':
+    '麦克风权限已被阻止。请在浏览器设置中允许，或直接输入消息。', // [VERIFY]
 
   // ---- Voice tab ----
   'voice.liveEngine': '语音引擎',

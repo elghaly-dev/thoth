@@ -24,6 +24,7 @@ import {
   stopAudio,
   createSpeechRecognizer,
   isSpeechRecognitionSupported,
+  isMicBlockedError,
 } from '../utils/audio';
 import { ConsentGate } from './ConsentGate';
 import { postJson } from '../utils/api';
@@ -126,6 +127,8 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         },
         (err: any) => {
           console.warn('Speech recognition error:', err);
+          // A blocked mic must not fail silently: say so and offer typing.
+          if (isMicBlockedError(err)) setSpeechError(tx(lang, 'common.micBlocked'));
           setIsListening(false);
         },
         () => {

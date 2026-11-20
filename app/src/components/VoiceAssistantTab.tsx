@@ -18,7 +18,7 @@ import {
   ArrowRight,
   ShieldAlert,
 } from 'lucide-react';
-import { playTextToSpeech, stopAudio, createSpeechRecognizer, isSpeechRecognitionSupported } from '../utils/audio';
+import { playTextToSpeech, stopAudio, createSpeechRecognizer, isSpeechRecognitionSupported, isMicBlockedError } from '../utils/audio';
 import { postJson, ApiError, isAuthErrorStatus } from '../utils/api';
 import { useRequestGuard } from '../utils/useRequestGuard';
 
@@ -138,6 +138,8 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         },
         (err: any) => {
           console.warn('Speech recognition error:', err);
+          // A blocked mic must not fail silently: say so and offer typing.
+          if (isMicBlockedError(err)) setSpeechError(tx(lang, 'common.micBlocked'));
           setIsListening(false);
         },
         () => {

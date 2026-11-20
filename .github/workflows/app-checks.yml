@@ -28,3 +28,4 @@ jobs:
       - run: npm run test:nofree
       - run: npm run test:locales
       - run: npm run test:server
+      - run: npm run test:mic

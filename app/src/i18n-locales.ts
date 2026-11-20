@@ -70,7 +70,8 @@ export const LOCALE_CORE_KEYS = [
   "consent.accept",
   "consent.given",
   "consent.micHint",
-  "common.speechNotSupported"
+  "common.speechNotSupported",
+  "common.micBlocked"
 ] as const satisfies readonly StringKey[];
 
 type LocaleTable = Partial<Record<StringKey, string>>;
@@ -135,6 +136,7 @@ const HI: LocaleTable = {
   "consent.given": "सहमति दी गई। आप जो टेक्स्ट भेजते हैं, वह Google के Gemini API को भेजा जाता है।",
   "consent.micHint": "माइक्रोफ़ोन इस्तेमाल करने के लिए ऊपर दी गई सहमति स्वीकार करें। आप जो टेक्स्ट भेजते हैं, वह Google के Gemini API को भेजा जाता है।",
   "common.speechNotSupported": "इस ब्राउज़र में वाक् पहचान उपलब्ध नहीं है। कृपया Chrome या Edge इस्तेमाल करें, या अपना संदेश टाइप करें।",
+  "common.micBlocked": "माइक्रोफ़ोन की अनुमति रोकी गई है। ब्राउज़र सेटिंग में इसकी अनुमति दें, या अपना संदेश टाइप करें।",
   "voice.liveEngine": "वॉइस इंजन",
   "voice.title": "थोथ से वॉइस बातचीत",
   "voice.speakNaturally": "{native} ({name}) में सहज रूप से बोलें",
@@ -435,6 +437,7 @@ const MR: LocaleTable = {
   "consent.given": "संमती दिली. तुम्ही पाठवलेला मजकूर Google च्या Gemini API ला पाठवला जातो.",
   "consent.micHint": "मायक्रोफोन वापरण्यासाठी वरील संमती स्वीकारा. तुम्ही पाठवलेला मजकूर Google च्या Gemini API ला पाठवला जातो.",
   "common.speechNotSupported": "या ब्राउझरमध्ये उच्चार ओळख उपलब्ध नाही. कृपया Chrome किंवा Edge वापरा, किंवा तुमचा संदेश टाइप करा.",
+  "common.micBlocked": "मायक्रोफोनची परवानगी रोखलेली आहे. ब्राउझर सेटिंग्जमध्ये परवानगी द्या, किंवा तुमचा संदेश टाइप करा.",
   "voice.liveEngine": "व्हॉइस इंजिन",
   "voice.title": "थोथशी व्हॉइस संवाद",
   "voice.speakNaturally": "{native} ({name}) मध्ये सहज बोला",
@@ -735,6 +738,7 @@ const GU: LocaleTable = {
   "consent.given": "સંમતિ આપી. તમે મોકલેલું લખાણ Google ના Gemini API ને મોકલવામાં આવે છે.",
   "consent.micHint": "માઇક્રોફોન વાપરવા ઉપરની સંમતિ સ્વીકારો. તમે મોકલેલું લખાણ Google ના Gemini API ને મોકલવામાં આવે છે.",
   "common.speechNotSupported": "આ બ્રાઉઝરમાં વાણી ઓળખ ઉપલબ્ધ નથી. કૃપા કરીને Chrome કે Edge વાપરો, અથવા તમારો સંદેશ ટાઇપ કરો.",
+  "common.micBlocked": "માઇક્રોફોનની પરવાનગી અટકાવેલી છે. બ્રાઉઝર સેટિંગ્સમાં મંજૂરી આપો, અથવા તમારો સંદેશ ટાઇપ કરો.",
   "voice.liveEngine": "વૉઇસ એન્જિન",
   "voice.title": "થોથ સાથે વૉઇસ વાતચીત",
   "voice.speakNaturally": "{native} ({name}) માં સહજ રીતે બોલો",
@@ -1035,6 +1039,7 @@ const BN: LocaleTable = {
   "consent.given": "সম্মতি দেওয়া হয়েছে। আপনি যে লেখা পাঠান তা Google-এর Gemini API-তে পাঠানো হয়।",
   "consent.micHint": "মাইক্রোফোন ব্যবহার করতে ওপরের সম্মতি গ্রহণ করুন। আপনি যে লেখা পাঠান তা Google-এর Gemini API-তে পাঠানো হয়।",
   "common.speechNotSupported": "এই ব্রাউজারে কণ্ঠ শনাক্তকরণ নেই। দয়া করে Chrome বা Edge ব্যবহার করুন, অথবা আপনার বার্তা টাইপ করুন।",
+  "common.micBlocked": "মাইক্রোফোনের অনুমতি বন্ধ করা আছে। ব্রাউজারের সেটিংসে অনুমতি দিন, অথবা আপনার বার্তা টাইপ করুন।",
   "voice.liveEngine": "ভয়েস ইঞ্জিন",
   "voice.title": "থথের সাথে ভয়েস কথোপকথন",
   "voice.speakNaturally": "{native} ({name}) ভাষায় স্বাভাবিকভাবে বলুন",
@@ -1335,6 +1340,7 @@ const TA: LocaleTable = {
   "consent.given": "ஒப்புதல் அளிக்கப்பட்டது. நீங்கள் அனுப்பும் உரை Google இன் Gemini API க்கு அனுப்பப்படுகிறது.",
   "consent.micHint": "மைக்ரோஃபோனைப் பயன்படுத்த மேலே உள்ள ஒப்புதலை ஏற்கவும். நீங்கள் அனுப்பும் உரை Google இன் Gemini API க்கு அனுப்பப்படுகிறது.",
   "common.speechNotSupported": "இந்த உலாவியில் பேச்சு அறிதல் இல்லை. Chrome அல்லது Edge பயன்படுத்தவும், அல்லது உங்கள் செய்தியைத் தட்டச்சு செய்யவும்.",
+  "common.micBlocked": "மைக்ரோஃபோன் அனுமதி தடுக்கப்பட்டுள்ளது. உலாவி அமைப்புகளில் அனுமதியுங்கள், அல்லது உங்கள் செய்தியைத் தட்டச்சு செய்யவும்.",
   "voice.liveEngine": "குரல் இயந்திரம்",
   "voice.title": "தோத்துடன் குரல் உரையாடல்",
   "voice.speakNaturally": "{native} ({name}) மொழியில் இயல்பாகப் பேசுங்கள்",
@@ -1635,6 +1641,7 @@ const TE: LocaleTable = {
   "consent.given": "సమ్మతి ఇవ్వబడింది. మీరు పంపే వచనం Google Gemini APIకి పంపబడుతుంది.",
   "consent.micHint": "మైక్రోఫోన్ ఉపయోగించడానికి పై సమ్మతిని అంగీకరించండి. మీరు పంపే వచనం Google Gemini APIకి పంపబడుతుంది.",
   "common.speechNotSupported": "ఈ బ్రౌజర్‌లో స్పీచ్ రికగ్నిషన్ అందుబాటులో లేదు. దయచేసి Chrome లేదా Edge ఉపయోగించండి, లేదా మీ సందేశాన్ని టైప్ చేయండి.",
+  "common.micBlocked": "మైక్రోఫోన్ అనుమతి నిరోధించబడింది. బ్రౌజర్ సెట్టింగ్‌లలో అనుమతించండి, లేదా మీ సందేశాన్ని టైప్ చేయండి.",
   "voice.liveEngine": "వాయిస్ ఇంజిన్",
   "voice.title": "థోత్‌తో వాయిస్ సంభాషణ",
   "voice.speakNaturally": "{native} ({name})లో సహజంగా మాట్లాడండి",
@@ -1935,6 +1942,7 @@ const PA: LocaleTable = {
   "consent.given": "ਸਹਿਮਤੀ ਦਿੱਤੀ ਗਈ। ਤੁਸੀਂ ਜੋ ਲਿਖਤ ਭੇਜਦੇ ਹੋ, ਉਹ Google ਦੇ Gemini API ਨੂੰ ਭੇਜੀ ਜਾਂਦੀ ਹੈ।",
   "consent.micHint": "ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਵਰਤਣ ਲਈ ਉੱਪਰ ਦਿੱਤੀ ਸਹਿਮਤੀ ਸਵੀਕਾਰ ਕਰੋ। ਤੁਸੀਂ ਜੋ ਲਿਖਤ ਭੇਜਦੇ ਹੋ, ਉਹ Google ਦੇ Gemini API ਨੂੰ ਭੇਜੀ ਜਾਂਦੀ ਹੈ।",
   "common.speechNotSupported": "ਇਸ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਬੋਲੀ ਪਛਾਣ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ Chrome ਜਾਂ Edge ਵਰਤੋ, ਜਾਂ ਆਪਣਾ ਸੁਨੇਹਾ ਟਾਈਪ ਕਰੋ।",
+  "common.micBlocked": "ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਦੀ ਇਜਾਜ਼ਤ ਰੋਕੀ ਹੋਈ ਹੈ। ਬ੍ਰਾਊਜ਼ਰ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਇਜਾਜ਼ਤ ਦਿਓ, ਜਾਂ ਆਪਣਾ ਸੁਨੇਹਾ ਟਾਈਪ ਕਰੋ।",
   "voice.liveEngine": "ਆਵਾਜ਼ ਇੰਜਣ",
   "voice.title": "ਥੋਥ ਨਾਲ ਆਵਾਜ਼ ਗੱਲਬਾਤ",
   "voice.speakNaturally": "{native} ({name}) ਵਿੱਚ ਸਹਿਜ ਬੋਲੋ",

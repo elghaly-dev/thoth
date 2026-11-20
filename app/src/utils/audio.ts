@@ -122,6 +122,15 @@ export function stopAudio() {
 }
 
 /**
+ * True when the browser or the user blocked the microphone (Web Speech
+ * `error` codes 'not-allowed' / 'service-not-allowed'). The caller shows
+ * T('common.micBlocked') instead of failing silently.
+ */
+export function isMicBlockedError(err: unknown): boolean {
+  return err === 'not-allowed' || err === 'service-not-allowed';
+}
+
+/**
  * Check if Web Speech Recognition is supported
  */
 export function isSpeechRecognitionSupported(): boolean {
