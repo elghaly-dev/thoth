@@ -189,7 +189,7 @@ export default function App() {
               <span className="text-slate-300">{tx(lang, 'app.footerTagline')}</span>
             </div>
             <span className="text-slate-500 hidden sm:inline">•</span>
-            <span className="text-emerald-400 font-medium">{tx(lang, 'app.footerFree')}</span>
+            <span className="text-emerald-400 font-medium">{tx(lang, 'app.footerBadge')}</span>
           </div>
 
           {/* Prominent broker disclaimer */}
