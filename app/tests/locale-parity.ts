@@ -1,7 +1,7 @@
 /**
  * Locale parity for the Indian-language tables (i18n-locales.ts).
  * Fails when a locale:
- * - is missing any first-screen key (LOCALE_CORE_KEYS) or has a key EN lacks;
+ * - is missing any EN key (all 296, not only the first-screen set) or has a key EN lacks;
  * - changes a {placeholder} set;
  * - is in the wrong script (e.g. a Devanagari letter in Bengali text; the
  *   danda "।" / "॥" is shared punctuation and allowed);
@@ -49,6 +49,10 @@ for (const [code, own] of Object.entries(SCRIPTS)) {
   for (const key of LOCALE_CORE_KEYS) {
     const v = table[key as StringKey];
     check(typeof v === 'string' && v.length > 0, `${code}: first-screen key ${key} is translated`);
+  }
+  for (const key of enKeys) {
+    const v = table[key as StringKey];
+    check(typeof v === 'string' && v.length > 0, `${code}: key ${key} is translated (no English fallback)`);
   }
   for (const [key, value] of Object.entries(table)) {
     check(enKeys.has(key), `${code}: key ${key} exists in EN`);

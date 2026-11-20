@@ -4,8 +4,8 @@ import { LOCALE_TABLES } from './i18n-locales';
 /**
  * UI strings for Thoth. English is the complete source of truth;
  * Chinese (Mandarin) has a full table. Hindi, Marathi, Gujarati, Bengali,
- * Tamil, Telugu and Punjabi have their first-screen strings in
- * i18n-locales.ts ([VERIFY]); their other keys fall back to English. Never invent a translation: if a key is
+ * Tamil, Telugu and Punjabi have full tables in i18n-locales.ts
+ * ([VERIFY - native review pending]); a missing key falls back to English. Never invent a translation: if a key is
  * missing in ZH, `tx` falls back to the English string.
  */
 const EN = {
@@ -773,8 +773,8 @@ export function tx(
   key: StringKey,
   vars?: Record<string, string | number>
 ): string {
-  // zh: full table. Indian languages: LOCALE_TABLES (first-screen strings,
-  // [VERIFY]); any key missing there falls back to English.
+  // zh: full table. Indian languages: LOCALE_TABLES (full tables, [VERIFY]);
+  // any key missing there falls back to English.
   let s: string = (lang === 'zh' ? ZH[key] : LOCALE_TABLES[lang]?.[key]) ?? EN_ALL[key];
   if (vars) {
     for (const [k, v] of Object.entries(vars)) {
