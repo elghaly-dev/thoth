@@ -3,19 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thoth - Faithful Servant for Exporters by elghaly</title>
-    <meta name="description" content="Faithful Servant by elghaly helping exporters connect with buyers, craft honest product pitches, talk with buyers in their language, and navigate import basics." />
+    <title>Thoth - Faithful Servant for Exporters</title>
+    <meta name="description" content="Faithful Servant helping exporters connect with buyers, craft honest product pitches, talk with buyers in their language, and understand import basics." />
+    <link rel="canonical" href="https://thoth.elghaly.dev/use/" />
     <meta property="og:title" content="Thoth - Faithful Servant for Exporters" />
-    <meta property="og:description" content="Faithful Servant by elghaly helping exporters connect with buyers, craft honest product pitches, talk with buyers in their language, and navigate import basics." />
+    <meta property="og:description" content="Faithful Servant helping exporters connect with buyers, craft honest product pitches, talk with buyers in their language, and understand import basics." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://thoth.elghaly.dev/use/" />
+    <meta property="og:image" content="https://thoth.elghaly.dev/og-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://thoth.elghaly.dev/og-image.png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#020617" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Gujarati:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&family=Noto+Sans+Gurmukhi:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script data-app-redirect>
+      // /app/ on GitHub Pages is the Vite source entry. If React does
+      // not mount (no TypeScript transform), send the visitor to the
+      // built app at /use/. The built page sets data-mounted and stays.
+      setTimeout(function () {
+        if (!/^\/app(\/|$)/.test(location.pathname)) return;
+        var root = document.getElementById('root');
+        if (root && !root.getAttribute('data-mounted')) {
+          window.location.replace('/use/');
+        }
+      }, 2000);
+    </script>
   </body>
 </html>
 

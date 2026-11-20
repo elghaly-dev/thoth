@@ -21,7 +21,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio } from '../utils/audio';
-import { postJson } from '../utils/api';
+import { postModel } from '../utils/api';
 import { useRequestGuard } from '../utils/useRequestGuard';
 import { tx, langDisplayName, modelLangHint } from '../i18n';
 import { errorText } from '../utils/errors';
@@ -105,7 +105,7 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
 
     const req = begin();
     try {
-      const data = await postJson<PitchResult>(
+      const data = await postModel<PitchResult>(
         '/api/pitch',
         {
           product: product.slice(0, 500),
@@ -266,6 +266,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
               </div>
             </div>
 
+            <p className="text-xs text-slate-400 leading-relaxed">{tx(lang, 'pitch.sendNotice')}</p>
             <form onSubmit={handleGeneratePitch} className="space-y-3.5">
               {/* Product */}
               <div>

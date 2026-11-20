@@ -54,7 +54,7 @@ export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose, lang 
           type="button"
           onClick={onClose}
           aria-label={tx(lang, 'safety.close')}
-          className="absolute top-4 right-4 p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 min-h-11 min-w-11 p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" aria-hidden="true" />
         </button>

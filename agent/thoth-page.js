@@ -14,8 +14,8 @@ export class App {
    */
   static GUIDE = Object.freeze({
     name: "Thoth",
-    by: "Wyndham Heaven (elghaly)",
-    price: "Free for everyone. Thoth never asks anyone to pay.",
+    by: "Wyndham Heaven",
+    price: "Thoth never asks anyone to pay.",
     helps: "Exporters, small or large, reach and talk to buyers abroad.",
     tools: [
       { id: "pitch", name: "Pitch Studio", does: "Turns verified product facts into a short buyer email, a short message, and a list of claims the exporter must verify first." },
@@ -42,7 +42,7 @@ export class App {
       "Verify a certification, a company or a buyer.",
       "Process payments or hold money.",
     ],
-    privacy: "This assistant runs in your browser on the AI provider and key you choose. Your messages go to that provider. Thoth stores nothing.",
+    privacy: "This assistant runs in your browser on the model provider and key you choose. Your messages go to that provider; its handling is outside this page.",
     links: {
       home: "https://thoth.elghaly.dev/",
       app: "https://thoth.elghaly.dev/use/",

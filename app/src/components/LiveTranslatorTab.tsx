@@ -27,10 +27,11 @@ import {
   isMicBlockedError,
 } from '../utils/audio';
 import { ConsentGate } from './ConsentGate';
-import { postJson } from '../utils/api';
+import { postModel } from '../utils/api';
 import { useRequestGuard } from '../utils/useRequestGuard';
 import { tx, langDisplayName, modelLangHint } from '../i18n';
 import { errorText } from '../utils/errors';
+import { createIdleVoiceController } from '../hooks/useIdleVoiceSession';
 
 interface LiveTranslatorTabProps {
   currentLang: SupportedLanguage;
@@ -77,13 +78,25 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
   // translation failures (401/403 shows the server's clear stop message).
   const [speechError, setSpeechError] = useState<string | null>(null);
   const [translateError, setTranslateError] = useState<string | null>(null);
+  const [idleClosed, setIdleClosed] = useState(false);
 
   const recognitionRef = useRef<any>(null);
   const { begin, mountedRef } = useRequestGuard();
+  const idleRef = useRef(createIdleVoiceController(() => {
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch { /* already ended */ }
+    }
+    stopAudio();
+    setIsListening(false);
+    setIsPlayingId(null);
+    setIdleClosed(true);
+  }));
 
-  // Unmount: stop the microphone and any speech for this tab.
+  // Unmount: stop the idle timer, the microphone and any speech for this tab.
   useEffect(() => {
+    const idle = idleRef.current;
     return () => {
+      idle.disarm();
       try {
         recognitionRef.current?.abort?.();
       } catch {
@@ -98,12 +111,14 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
     if (isListening) {
       if (recognitionRef.current) recognitionRef.current.stop();
       setIsListening(false);
+      idleRef.current.ping();
       return;
     }
 
     if (!hasConsented) {
       return;
     }
+    setIdleClosed(false);
 
     if (!isSpeechRecognitionSupported()) {
       setSpeechError(tx(lang, 'common.speechNotSupported'));
@@ -138,6 +153,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
 
       if (recognition) {
         recognitionRef.current = recognition;
+        idleRef.current.arm();
         recognition.start();
         setIsListening(true);
       }
@@ -151,6 +167,8 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
     const text = (textToTranslate || inputText).trim();
     if (!text || isTranslating) return;
 
+    setIdleClosed(false);
+    idleRef.current.ping();
     setInputText('');
     stopAudio();
     setIsPlayingId(null);
@@ -162,7 +180,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
 
     const req = begin();
     try {
-      const data = await postJson<{
+      const data = await postModel<{
         translatedText?: string;
         keyTerms?: string[];
         confirmationReadback?: ConfirmationReadback;
@@ -284,6 +302,12 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
     <div className="space-y-6">
       {/* Consent gate: mic stays disabled until both parties agree */}
       <ConsentGate lang={lang} accepted={hasConsented} onAccept={() => setHasConsented(true)} />
+
+      {idleClosed && (
+        <div role="status" className="bg-amber-950/40 border border-amber-800/50 rounded-2xl p-3.5 text-xs text-amber-100">
+          {tx(lang, 'trans.idleClosed')}
+        </div>
+      )}
 
       {/* In-app errors (replace alert(); translation failures show here) */}
       {speechError && (

@@ -26,16 +26,16 @@ export class ProviderError extends Error {
 
     const router = ProviderError.parseUrl(routerUrl);
     const page = ProviderError.parseUrl(pageUrl);
-    const routerLabel = router?.host || routerUrl || "the configured AI router";
+    const routerLabel = router?.host || routerUrl || "the configured model router";
     if (!router || !ProviderError.isLocalAddress(router.hostname)) {
       return new ProviderError(
-        `Couldn’t connect to the AI router at ${routerLabel}. Check that the URL is correct, the service is running, and it allows browser requests from ${page?.origin || "this site"} (CORS).`,
+        `Couldn’t connect to the model router at ${routerLabel}. Check that the URL is correct, the service is running, and it allows browser requests from ${page?.origin || "this site"} (CORS).`,
         error,
       );
     }
 
     const origin = page?.origin || "this site";
-    let message = `Couldn’t connect to the local AI router at ${routerLabel}. `;
+    let message = `Couldn’t connect to the local model router at ${routerLabel}. `;
     message += `Check that it is running, that the URL is its OpenAI-compatible base URL, and that it allows browser requests from ${origin} (CORS).`;
     // 11434 is Ollama's default port, so the router there is most likely Ollama.
     if (router.port === "11434") {

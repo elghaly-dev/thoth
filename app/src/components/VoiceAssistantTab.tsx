@@ -19,8 +19,9 @@ import {
   ShieldAlert,
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio, createSpeechRecognizer, isSpeechRecognitionSupported, isMicBlockedError } from '../utils/audio';
-import { postJson, ApiError, isAuthErrorStatus } from '../utils/api';
+import { postModel, ApiError, isAuthErrorStatus } from '../utils/api';
 import { useRequestGuard } from '../utils/useRequestGuard';
+import { createIdleVoiceController } from '../hooks/useIdleVoiceSession';
 
 interface VoiceAssistantTabProps {
   currentLang: SupportedLanguage;
@@ -49,6 +50,21 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
   // In-app error (replaces alert()): shown when speech recognition is
   // unavailable, instead of a browser popup.
   const [speechError, setSpeechError] = useState<string | null>(null);
+  const [idleClosed, setIdleClosed] = useState(false);
+  const idleRef = useRef(createIdleVoiceController(() => {
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch { /* already ended */ }
+    }
+    stopAudio();
+    setIsListening(false);
+    setIsSpeaking(false);
+    setIdleClosed(true);
+  }));
+
+  useEffect(() => {
+    const idle = idleRef.current;
+    return () => idle.disarm();
+  }, []);
 
   // Extracted step detection from conversation
   const [details, setDetails] = useState({
@@ -111,8 +127,10 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         recognitionRef.current.stop();
       }
       setIsListening(false);
+      idleRef.current.ping();
       return;
     }
+    setIdleClosed(false);
 
     if (!hasConsented) { // i18n consent copy names Gemini
       return;
@@ -149,6 +167,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
 
       if (recognition) {
         recognitionRef.current = recognition;
+        idleRef.current.arm();
         recognition.start();
         setIsListening(true);
       }
@@ -167,6 +186,8 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
     const text = (textToSend || inputText).trim();
     if (!text || isThinking) return;
 
+    setIdleClosed(false);
+    idleRef.current.ping();
     setInputText('');
     stopAudio();
     setIsSpeaking(false);
@@ -188,7 +209,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
     const req = begin();
     try {
       // The server accepts at most 30 messages of 4000 characters each.
-      const data = await postJson<{ reply?: string }>(
+      const data = await postModel<{ reply?: string }>(
         '/api/chat',
         {
           messages: newMessages.slice(-30).map((m) => ({ role: m.role, content: m.content.slice(0, 4000) })),
@@ -288,6 +309,8 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
   };
 
   const handleResetChat = () => {
+    idleRef.current.disarm();
+    setIdleClosed(false);
     stopAudio();
     setIsSpeaking(false);
     setIsListening(false);
@@ -309,6 +332,12 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
       <div className="lg:col-span-5 space-y-4">
         {/* Consent gate: mic stays disabled until both parties agree. i18n consent copy names Gemini. */}
         <ConsentGate lang={lang} accepted={hasConsented} onAccept={() => setHasConsented(true)} />{/* i18n consent copy names Gemini */}
+
+        {idleClosed && (
+          <div role="status" className="bg-amber-950/40 border border-amber-800/50 rounded-2xl p-3.5 text-xs text-amber-100">
+            {tx(lang, 'voice.idleClosed')}
+          </div>
+        )}
 
         {/* In-app speech error (replaces alert()) */}
         {speechError && (

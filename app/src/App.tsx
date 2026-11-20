@@ -6,6 +6,7 @@ import { PitchStudioTab } from './components/PitchStudioTab';
 import { LiveTranslatorTab } from './components/LiveTranslatorTab';
 import { ImportGuideTab } from './components/ImportGuideTab';
 import { SafetyModal } from './components/SafetyModal';
+import { ApiKeyBar } from './components/ApiKeyBar';
 import { tx, langDisplayName } from './i18n';
 import {
   Mic,
@@ -59,6 +60,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-emerald-500/30 selection:text-white">
+      <a
+        href="#thoth-main"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:rounded-lg focus:bg-amber-500 focus:text-slate-950 focus:font-semibold"
+      >
+        {tx(lang, 'a11y.skipToMain')}
+      </a>
       {/* Top Header */}
       <Header
         currentLang={currentLang}
@@ -69,14 +76,20 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+      <main id="thoth-main" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+        <ApiKeyBar lang={lang} />
         {/* Navigation Tabs Bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
-          <div className="flex flex-wrap items-center gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800">
+          <div
+            aria-label={tx(lang, 'a11y.primaryTabs')}
+            className="flex flex-wrap items-center gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800"
+          >
             {/* Tab 1: Talk with Thoth */}
             <button
+              type="button"
+              aria-current={activeTab === 'assistant' ? 'page' : undefined}
               onClick={() => setActiveTab('assistant')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'assistant'
                   ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-950/60'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
@@ -88,8 +101,10 @@ export default function App() {
 
             {/* Tab 2: Pitch Studio */}
             <button
+              type="button"
+              aria-current={activeTab === 'pitch' ? 'page' : undefined}
               onClick={() => setActiveTab('pitch')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'pitch'
                   ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-md shadow-amber-950/60'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
@@ -101,8 +116,10 @@ export default function App() {
 
             {/* Tab 3: Live Translator */}
             <button
+              type="button"
+              aria-current={activeTab === 'translate' ? 'page' : undefined}
               onClick={() => setActiveTab('translate')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'translate'
                   ? 'bg-gradient-to-r from-cyan-600 to-indigo-600 text-white shadow-md shadow-cyan-950/60'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
@@ -114,8 +131,10 @@ export default function App() {
 
             {/* Tab 4: Import Guide */}
             <button
+              type="button"
+              aria-current={activeTab === 'guide' ? 'page' : undefined}
               onClick={() => setActiveTab('guide')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'guide'
                   ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-950/60'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'

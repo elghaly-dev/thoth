@@ -29,3 +29,12 @@ jobs:
       - run: npm run test:locales
       - run: npm run test:server
       - run: npm run test:mic
+      - run: npm test            # smoke, idle session, no-secrets, pages redirect
+      - name: Build the Pages bundle (use/)
+        run: npm run build:pages
+      - name: Built use/ must be committed and reproducible (tracked and untracked)
+        working-directory: .
+        run: |
+          git diff --exit-code -- use
+          test -z "$(git status --porcelain --untracked-files=all -- use)" || { git status --porcelain -- use; exit 1; }
+      - run: npm run test:site   # no "free", no "elghaly" credit, no "AI" on any served page

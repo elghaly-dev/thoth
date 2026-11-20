@@ -1,10 +1,8 @@
 # Thoth — Faithful Servant for exporters
 
-Thoth is a Faithful Servant by Wyndham Heaven (elghaly) that helps
+Thoth is a Faithful Servant that helps
 exporters reach and talk to buyers: voice help, honest buyer pitches,
 translation, and import basics.
-
-> Draft: this export is under review on a draft pull request. Do not deploy it.
 
 ## Install
 

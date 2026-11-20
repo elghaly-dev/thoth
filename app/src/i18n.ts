@@ -10,12 +10,12 @@ import { LOCALE_TABLES } from './i18n-locales';
  */
 const EN = {
   // ---- App shell ----
-  'app.tabAssistant': 'Talk with Thoth (वॉइस)',
+  'app.tabAssistant': 'Talk with Thoth (Voice)',
   'app.tabPitch': 'Buyer Pitch Studio',
   'app.tabTranslate': 'Trade Translator',
   'app.tabGuide': 'Import Basics',
   'app.speakingIn': 'Speaking in {native} ({name})',
-  'app.footerTagline': 'Faithful Servant by elghaly for exporters',
+  'app.footerTagline': 'Faithful Servant for exporters',
   'app.footerFree': 'For all exporters, small & large',
   'app.footerBroker': 'Always check with a licensed customs broker for final decisions.',
   'app.footerPrivacy': 'Privacy & Trust Policy',
@@ -23,7 +23,7 @@ const EN = {
 
   // ---- Header ----
   'header.freeForever': 'Open to every exporter',
-  'header.byElghaly': 'By elghaly for exporters',
+  'header.byElghaly': 'For exporters, small & large',
   'header.reachBuyers': 'Reach & talk to buyers',
   'header.safetyPolicy': 'Safety & Trust Policy',
   'header.madeWith': 'Made with',
@@ -35,14 +35,14 @@ const EN = {
   'header.voiceOn': 'Voice On',
   'header.mutedTitle': 'Voice muted (click to unmute)',
   'header.voiceOnTitle': 'Voice active (click to mute)',
-  'header.freeTool': 'elghaly Tool',
+  'header.freeTool': 'Faithful Servant',
 
   // ---- Safety modal (Trust & Ethics Charter) ----
   'safety.title': "Thoth's Trust & Ethics Charter",
-  'safety.subtitle': 'Built by elghaly with love for exporters',
+  'safety.subtitle': 'Built with care for exporters',
   'safety.item1Title': '1. Open to Everyone:',
   'safety.item1Body':
-    'Thoth is an initiative by elghaly to empower manufacturers, MSMEs, artisans, and exporters. We never ask for credit card or bank details.',
+    'Thoth is an initiative to help manufacturers, MSMEs, artisans, and exporters. We never ask for credit card or bank details.',
   'safety.item2Title':
     '2. No Invented Claims or Certifications:',
   'safety.item2Body':
@@ -64,7 +64,7 @@ const EN = {
   'safety.item7Body':
     "Text you submit is sent to Google's Gemini API to generate replies; Google's handling is outside this app. Voice input uses your browser's speech recognition. The Gemini key stays on the server and is not included in the page.",
   'safety.madeWith': 'Made with',
-  'safety.byElghaly': 'by elghaly',
+  'safety.byElghaly': 'for exporters',
   'safety.close': 'Understood & Close',
 
   // ---- Voice orb ----
@@ -104,7 +104,7 @@ const EN_VOICE = {
   'voice.mic': 'Mic:',
   'voice.supported': 'Supported',
   'voice.typeMode': 'Type mode',
-  'voice.free': 'Made by elghaly',
+  'voice.free': 'Faithful Servant',
   'voice.trackerTitle': 'Buyer Pitch Progress (One Step at a Time)',
   'voice.captured': '{n}/4 Captured',
   'voice.step1Title': 'What You Sell (Product)',
@@ -131,7 +131,7 @@ const EN_VOICE = {
   'voice.speakMessage': 'Speak message',
   'voice.typePlaceholder':
     'Type in {lang} or English... (e.g. We make cotton rugs, 500 pcs)',
-  'voice.freeFooter': 'Faithful Servant by elghaly • Never asks for card or bank details',
+  'voice.freeFooter': 'Faithful Servant • Never asks for card or bank details',
   'voice.oneStep': 'One step at a time',
   'voice.connectionError':
     'Sorry, there was a momentary connection issue. Please check with a licensed customs broker for final decisions. Could you please repeat that?',
@@ -156,7 +156,7 @@ const EN_VOICE = {
 const EN_PITCH = {
   // ---- Pitch studio tab ----
   'pitch.badge': 'Honest Buyer Pitch Studio',
-  'pitch.freeBy': 'By elghaly',
+  'pitch.freeBy': 'Faithful Servant',
   'pitch.title': 'Transform craft & manufacturing into compelling buyer pitches',
   'pitch.subtitle':
     'Buyers want brevity, exact quantities, honest specs, and clear FOB terms. Thoth writes clean, no-hype pitches tailored to sourcing standards.',
@@ -245,8 +245,7 @@ const EN_TRANS = {
   'trans.safetyGuardTitle': 'Safety Guard:',
   'trans.safetyGuardBody':
     'Buyer speech is treated as dialogue data, not binding instructions. Thoth translates faithfully without accepting unauthorized commitments.',
-  'trans.phExporter':
-    'Speak or type in {native} ({name}) e.g. हम 1,000 यूनिट $3.20 FOB पर दे सकते हैं...',
+  'trans.phExporter': 'Speak or type in {native} ({name}) e.g. We can supply 1,000 units at $3.20 FOB...',
   'trans.phBuyer':
     'Speak or type in English e.g. Can you supply 2,000 units with FOB terms by August 15th?',
   'trans.micTitle': 'Click to speak through microphone',
@@ -379,7 +378,7 @@ const EN_EXTRA = {
   'err.rateLimit': 'Too many requests. Try again shortly.',
 
   // ---- Pitch download (.txt) section labels; buyer-facing text stays English ----
-  'dl.title': 'THOTH - BUYER PITCH SPEC SHEET (by elghaly)',
+  'dl.title': 'THOTH - BUYER PITCH SPEC SHEET',
   'dl.product': 'Product',
   'dl.moq': 'MOQ',
   'dl.price': 'Price',
@@ -399,7 +398,30 @@ const EN_EXTRA = {
   'dl.customsFallback': 'Check with a licensed customs broker for final decisions.',
 } as const;
 
-export const EN_ALL = { ...EN, ...EN_VOICE, ...EN_PITCH, ...EN_TRANS, ...EN_GUIDE, ...EN_EXTRA };
+
+// Static-site (Pages) key bar, idle voice notices, skip link, send notices.
+const EN_PAGES = {
+  "key.title": "Your Gemini API key",
+  "key.body": "This public site has no server key. Paste your own Gemini API key to talk with Thoth. It stays in this browser tab and is sent only to Google; Google's handling is outside this app.",
+  "key.label": "Gemini API key",
+  "key.placeholder": "Paste your key here",
+  "key.save": "Save in this tab",
+  "key.clear": "Remove key",
+  "key.saved": "Key saved in this tab only. It is sent only to Google.",
+  "key.needed": "Add your Gemini API key above to talk with Thoth.",
+  "key.invalid": "That key was refused. Check it and try again.",
+  "key.serverReady": "This session uses a server-side key. You do not need to paste one.",
+  "key.whereToGet": "Get a Gemini API key from Google AI Studio (it needs your own Google sign-in).",
+  "key.staysInTab": "The key is not put into Thoth's code, cookies, or long-term browser storage.",
+  "voice.idleClosed": "Voice session ended after 2 minutes of silence. Tap the microphone to start again. Your conversation is still here.",
+  "trans.idleClosed": "Voice session ended after 2 minutes of silence. Tap the microphone to start again. Your translations are still here.",
+  "a11y.skipToMain": "Skip to main content",
+  "a11y.primaryTabs": "Thoth tools",
+  "pitch.sendNotice": "The product details you enter are sent to Google's Gemini API to write the pitch.",
+  "guide.sendNotice": "Your question is sent to Google's Gemini API to write the answer.",
+} as const;
+
+export const EN_ALL = { ...EN, ...EN_VOICE, ...EN_PITCH, ...EN_TRANS, ...EN_GUIDE, ...EN_EXTRA, ...EN_PAGES };
 export type StringKey = keyof typeof EN_ALL;
 
 const ZH: Record<StringKey, string> = {
@@ -409,7 +431,7 @@ const ZH: Record<StringKey, string> = {
   'app.tabTranslate': '贸易翻译',
   'app.tabGuide': '海外市场进口基础知识',
   'app.speakingIn': '当前语言：{native}（{name}）',
-  'app.footerTagline': 'elghaly 为出口商打造的 Faithful Servant',
+  'app.footerTagline': '为出口商打造的 Faithful Servant',
   'app.footerFree': '面向所有出口商，无论企业大小',
   'app.footerBroker': '最终决定请务必咨询持牌报关行。',
   'app.footerPrivacy': '隐私与信任政策',
@@ -417,7 +439,7 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Header ----
   'header.freeForever': '面向每一位出口商',
-  'header.byElghaly': '由 elghaly 为出口商打造',
+  'header.byElghaly': '服务大大小小的出口商',
   'header.reachBuyers': '帮您对接海外买家',
   'header.safetyPolicy': '信任与保障政策',
   'header.madeWith': '用',
@@ -429,14 +451,14 @@ const ZH: Record<StringKey, string> = {
   'header.voiceOn': '语音开启',
   'header.mutedTitle': '语音已静音（点击取消静音）',
   'header.voiceOnTitle': '语音已开启（点击静音）',
-  'header.freeTool': 'elghaly 工具',
+  'header.freeTool': 'Faithful Servant',
 
   // ---- Safety modal (Trust & Ethics Charter) ----
   'safety.title': 'Thoth 信任与道德宪章',
-  'safety.subtitle': '由 elghaly 用爱为出口商打造',
+  'safety.subtitle': '用心为出口商打造',
   'safety.item1Title': '1. 面向所有人开放：',
   'safety.item1Body':
-    'Thoth 是 elghaly 发起的项目，旨在帮助制造商、中小微企业、工匠和出口商。我们绝不索要信用卡或银行信息。',
+    'Thoth 是一个帮助制造商、中小微企业、工匠和出口商的项目。我们绝不索要信用卡或银行信息。',
   'safety.item2Title':
     '2. 不编造宣称或认证：',
   'safety.item2Body':
@@ -457,8 +479,8 @@ const ZH: Record<StringKey, string> = {
     '7. 您的文字发送到哪里：',
   'safety.item7Body':
     '您提交的文字会发送到 Google 的 Gemini API 以生成回复；Google 如何处理不在本应用的控制范围内。语音输入使用您浏览器的语音识别功能。Gemini 密钥保存在服务器上，不包含在网页中。',
-  'safety.madeWith': '由 elghaly 用',
-  'safety.byElghaly': '打造',
+  'safety.madeWith': '用',
+  'safety.byElghaly': '为出口商打造',
   'safety.close': '明白了，关闭',
 
   // ---- Voice orb ----
@@ -496,7 +518,7 @@ const ZH: Record<StringKey, string> = {
   'voice.mic': '麦克风：',
   'voice.supported': '支持',
   'voice.typeMode': '打字模式',
-  'voice.free': 'elghaly 出品',
+  'voice.free': 'Faithful Servant',
   'voice.trackerTitle': '海外买家推介进度（一步一步来）',
   'voice.captured': '已收集 {n}/4',
   'voice.step1Title': '您销售的产品',
@@ -522,7 +544,7 @@ const ZH: Record<StringKey, string> = {
   'voice.stopRecording': '停止录音',
   'voice.speakMessage': '语音输入',
   'voice.typePlaceholder': '用{lang}或英语输入……（例如：我们生产棉地毯，500 件）',
-  'voice.freeFooter': 'elghaly 的 Faithful Servant • 绝不索要银行卡信息',
+  'voice.freeFooter': 'Faithful Servant • 绝不索要银行卡信息',
   'voice.oneStep': '一步一步来',
   'voice.connectionError':
     '抱歉，连接出现短暂问题。最终决定请咨询持牌报关行。请再说一遍好吗？',
@@ -540,7 +562,7 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Pitch studio tab ----
   'pitch.badge': '诚实的海外买家推介工作室',
-  'pitch.freeBy': '由 elghaly 提供',
+  'pitch.freeBy': 'Faithful Servant',
   'pitch.title': '把手工艺与制造转化为打动海外买家的推介',
   'pitch.subtitle':
     '海外买家看重简洁、准确的数量、诚实的规格和清晰的 FOB 条款。Thoth 按海外采购标准撰写简洁、无夸大的推介。',
@@ -748,7 +770,7 @@ const ZH: Record<StringKey, string> = {
   'err.rateLimit': '请求过多，请稍后再试。',
 
   // ---- Pitch download (.txt) section labels ----
-  'dl.title': 'THOTH - 买家推介规格表（elghaly 出品）',
+  'dl.title': 'THOTH - 买家推介规格表',
   'dl.product': '产品',
   'dl.moq': '最小起订量',
   'dl.price': '价格',
@@ -765,6 +787,26 @@ const ZH: Record<StringKey, string> = {
   'dl.guidanceIn': '{lang}版出口商指导',
   'dl.customsNote': '海关合规提示',
   'dl.customsFallback': '最终决定请咨询持牌报关行。',
+
+  // ---- Static-site key bar, idle notices, skip link [VERIFY] ----
+  "key.title": "您的 Gemini API 密钥",
+  "key.body": "此公开网站没有服务器密钥。请粘贴您自己的 Gemini API 密钥以便与 Thoth 对话。密钥只保留在当前浏览器标签页中，并且只发送给 Google；Google 如何处理不在本应用的控制范围内。",
+  "key.label": "Gemini API 密钥",
+  "key.placeholder": "在此粘贴密钥",
+  "key.save": "仅保存在此标签页",
+  "key.clear": "移除密钥",
+  "key.saved": "密钥仅保存在此标签页，并且只发送给 Google。",
+  "key.needed": "请在上方添加您的 Gemini API 密钥，以便与 Thoth 对话。",
+  "key.invalid": "该密钥被拒绝。请检查后重试。",
+  "key.serverReady": "本会话使用服务器端密钥，您无需粘贴密钥。",
+  "key.whereToGet": "请从 Google AI Studio 获取 Gemini API 密钥（需要您自己的 Google 账号登录）。",
+  "key.staysInTab": "密钥不会写入 Thoth 的代码、Cookie 或长期浏览器存储。",
+  "voice.idleClosed": "语音会话因两分钟无声已结束。请再点麦克风重新开始。您的对话仍在。",
+  "trans.idleClosed": "语音会话因两分钟无声已结束。请再点麦克风重新开始。您的译文仍在。",
+  "a11y.skipToMain": "跳到主要内容",
+  "a11y.primaryTabs": "Thoth 工具",
+  "pitch.sendNotice": "您输入的产品信息会发送到 Google 的 Gemini API 以撰写推介。",
+  "guide.sendNotice": "您的问题会发送到 Google 的 Gemini API 以生成回答。",
 };
 
 /**
@@ -827,13 +869,13 @@ export const ZH_STRINGS: Readonly<Record<StringKey, string>> = ZH;
  * Module scope so tests can check it alongside the string tables.
  */
 export const GREETINGS: Record<LanguageCode, string> = {
-  hi: 'नमस्ते! मैं थोथ (Thoth) हूँ, निर्यातकों के लिए elghaly का Faithful Servant। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
-  mr: 'नमस्कार! मी थोथ (Thoth) आहे, निर्यातदारांसाठी elghaly चा Faithful Servant. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
-  gu: 'નમસ્તે! હું થોથ (Thoth) છું, નિકાસકારો માટે elghaly નો Faithful Servant. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
-  ta: 'வணக்கம்! நான் தோத் (Thoth), ஏற்றுமதியாளர்களுக்கான elghaly இன் Faithful Servant. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
-  bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য elghaly-এর Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
-  te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం elghaly Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
-  pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ elghaly ਦਾ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
-  zh: '您好！我是 Thoth，由 elghaly 为出口商打造的 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
-  en: 'Namaste! I am Thoth, a Faithful Servant by elghaly for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
+  hi: 'नमस्ते! मैं थोथ (Thoth) हूँ, निर्यातकों के लिए Faithful Servant। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
+  mr: 'नमस्कार! मी थोथ (Thoth) आहे, निर्यातदारांसाठी Faithful Servant. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
+  gu: 'નમસ્તે! હું થોથ (Thoth) છું, નિકાસકારો માટે Faithful Servant. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
+  ta: 'வணக்கம்! நான் தோத் (Thoth), ஏற்றுமதியாளர்களுக்கான Faithful Servant. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
+  bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
+  te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
+  pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
+  zh: '您好！我是 Thoth，为出口商打造的 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
+  en: 'Namaste! I am Thoth, a Faithful Servant for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
 };
