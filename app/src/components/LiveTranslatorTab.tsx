@@ -27,7 +27,8 @@ import {
 } from '../utils/audio';
 import { ConsentGate } from './ConsentGate';
 import { postJson } from '../utils/api';
-import { tx } from '../i18n';
+import { tx, langDisplayName, modelLangHint } from '../i18n';
+import { errorText } from '../utils/errors';
 
 interface LiveTranslatorTabProps {
   currentLang: SupportedLanguage;
@@ -148,8 +149,8 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         confirmationReadback?: ConfirmationReadback;
       }>('/api/translate', {
         text,
-        sourceLang,
-        targetLang,
+        sourceLang: activeSpeaker === 'exporter' ? modelLangHint(currentLang) : sourceLang,
+        targetLang: activeSpeaker === 'exporter' ? targetLang : modelLangHint(currentLang),
         speakerRole: activeSpeaker === 'exporter' ? 'Exporter' : 'Buyer',
       });
 
@@ -178,11 +179,11 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         targetLangConfig,
         () => setIsPlayingId(newRecord.id),
         () => setIsPlayingId(null),
-        (err) => setTranslateError(err.message)
+        (err) => setTranslateError(errorText(lang, err, 'err.translate'))
       );
     } catch (err: unknown) {
       console.error('Translation error:', err);
-      setTranslateError(err instanceof Error ? err.message : 'Could not translate. Please try again.');
+      setTranslateError(errorText(lang, err, 'err.translate'));
     } finally {
       setIsTranslating(false);
     }
@@ -202,7 +203,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         langConfig,
         () => setIsPlayingId(record.id),
         () => setIsPlayingId(null),
-        (err) => setTranslateError(err.message)
+        (err) => setTranslateError(errorText(lang, err, 'err.translate'))
       );
     }
   };
@@ -266,7 +267,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
           <button
             onClick={() => setSpeechError(null)}
             className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
-            aria-label="Dismiss"
+            aria-label={tx(lang, 'common.dismiss')}
           >
             ✕
           </button>
@@ -278,7 +279,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
           <button
             onClick={() => setTranslateError(null)}
             className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
-            aria-label="Dismiss"
+            aria-label={tx(lang, 'common.dismiss')}
           >
             ✕
           </button>
@@ -326,7 +327,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
             >
               <span className="w-2 h-2 rounded-full bg-current animate-ping" />
               {activeSpeaker === 'exporter'
-                ? tx(lang, 'trans.exporterSpeaking', { lang: currentLang.name })
+                ? tx(lang, 'trans.exporterSpeaking', { lang: langDisplayName(lang, currentLang.name) })
                 : tx(lang, 'trans.buyerSpeaking')}
             </span>
           </div>
@@ -389,7 +390,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
               }}
               placeholder={
                 activeSpeaker === 'exporter'
-                  ? tx(lang, 'trans.phExporter', { native: currentLang.nativeName, name: currentLang.name })
+                  ? tx(lang, 'trans.phExporter', { native: currentLang.nativeName, name: langDisplayName(lang, currentLang.name) })
                   : tx(lang, 'trans.phBuyer')
               }
               className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 pr-12"
@@ -497,7 +498,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                     {isExporter ? tx(lang, 'trans.exporterLabel') : tx(lang, 'trans.buyerLabel')}
                   </span>
                   <span className="text-[11px] text-slate-400">
-                    {record.sourceLang} ➔ {record.targetLang}
+                    {langDisplayName(lang, record.sourceLang)} ➔ {langDisplayName(lang, record.targetLang)}
                   </span>
                 </div>
                 <span className="text-[10px] text-slate-500">
@@ -511,7 +512,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                 <div className="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800/80 flex flex-col justify-between">
                   <div>
                     <div className="text-[10px] text-slate-500 uppercase font-semibold mb-1">
-                      {tx(lang, 'trans.originalSpoken', { lang: record.sourceLang })}
+                      {tx(lang, 'trans.originalSpoken', { lang: langDisplayName(lang, record.sourceLang) })}
                     </div>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
                       {record.originalText}
@@ -551,7 +552,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                     <div className="text-[10px] uppercase font-semibold mb-1 text-slate-400">
                       {tx(lang, 'trans.translatedFor', {
                         who: isExporter ? tx(lang, 'trans.usBuyerShort') : tx(lang, 'trans.exporterShort'),
-                        lang: record.targetLang,
+                        lang: langDisplayName(lang, record.targetLang),
                       })}
                     </div>
                     <p className="text-xs sm:text-sm text-white font-medium leading-relaxed font-sans">

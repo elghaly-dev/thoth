@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SupportedLanguage, ChatMessage } from '../types';
 import { VoiceOrb } from './VoiceOrb';
 import { ConsentGate } from './ConsentGate'; // i18n consent.* copy names Gemini
-import { tx } from '../i18n';
+import { tx, langDisplayName, modelLangHint } from '../i18n';
+import { errorText } from '../utils/errors';
 import {
   Send,
   Volume2,
@@ -70,7 +71,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য elghaly-এর বিনামূল্যে Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
         te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం elghaly ఉచిత Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
         pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ elghaly ਦਾ ਮੁਫ਼ਤ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
-        zh: '您好！我是 Thoth，由 elghaly 为出口商打造的免费 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
+        zh: '您好！我是 Thoth，由 elghaly 为出口商打造的 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
         en: 'Namaste! I am Thoth, a free Faithful Servant by elghaly for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
       };
 
@@ -91,7 +92,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
           currentLang,
           () => setIsSpeaking(true),
           () => setIsSpeaking(false),
-          (err) => setSpeechError(err.message)
+          (err) => setSpeechError(errorText(lang, err, 'voice.connectionError'))
         );
       }
     }
@@ -186,7 +187,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
     try {
       const data = await postJson<{ reply?: string }>('/api/chat', {
         messages: newMessages.map((m) => ({ role: m.role, content: m.content })),
-        userLanguage: currentLang.name,
+        userLanguage: modelLangHint(currentLang),
       });
 
       // A missing reply is a failed model call, not a reason to show a
@@ -212,7 +213,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
           currentLang,
           () => setIsSpeaking(true),
           () => setIsSpeaking(false),
-          (err) => setSpeechError(err.message)
+          (err) => setSpeechError(errorText(lang, err, 'voice.connectionError'))
         );
       }
     } catch (err: unknown) {
@@ -221,7 +222,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
       // error as-is. It is not retried and no fake reply is shown.
       const content =
         err instanceof ApiError && isAuthErrorStatus(err.status)
-          ? err.message
+          ? errorText(lang, err, 'voice.connectionError')
           : tx(lang, 'voice.connectionError');
       const errorMsg: ChatMessage = {
         id: `assistant-${Date.now()}`,
@@ -266,7 +267,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         currentLang,
         () => setIsSpeaking(true),
         () => setIsSpeaking(false),
-        (err) => setSpeechError(err.message)
+        (err) => setSpeechError(errorText(lang, err, 'voice.connectionError'))
       );
     }
   };
@@ -307,7 +308,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
             <button
               onClick={() => setSpeechError(null)}
               className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
-              aria-label="Dismiss"
+              aria-label={tx(lang, 'common.dismiss')}
             >
               ✕
             </button>
@@ -326,7 +327,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
             {tx(lang, 'voice.title')}
           </h2>
           <p className="text-xs text-slate-400 mb-2">
-            {tx(lang, 'voice.speakNaturally', { native: currentLang.nativeName, name: currentLang.name })}
+            {tx(lang, 'voice.speakNaturally', { native: currentLang.nativeName, name: langDisplayName(lang, currentLang.name) })}
           </p>
 
           {/* Interactive Voice Orb */}
@@ -520,7 +521,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
             <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-              {tx(lang, 'voice.dialogueStream', { lang: currentLang.name })}
+              {tx(lang, 'voice.dialogueStream', { lang: langDisplayName(lang, currentLang.name) })}
             </h3>
           </div>
           <button
@@ -643,7 +644,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               type="text"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              placeholder={tx(lang, 'voice.typePlaceholder', { lang: currentLang.name })}
+              placeholder={tx(lang, 'voice.typePlaceholder', { lang: langDisplayName(lang, currentLang.name) })}
               className="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
             />
 

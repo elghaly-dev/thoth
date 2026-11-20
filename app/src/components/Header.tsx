@@ -1,7 +1,7 @@
 import React from 'react';
 import { SupportedLanguage, SUPPORTED_LANGUAGES } from '../types';
 import { Volume2, VolumeX, ShieldCheck, Sparkles, Globe, Heart } from 'lucide-react';
-import { tx } from '../i18n';
+import { tx, langDisplayName } from '../i18n';
 
 interface HeaderProps {
   currentLang: SupportedLanguage;
@@ -88,9 +88,9 @@ export const Header: React.FC<HeaderProps> = ({
               }}
               className="bg-transparent text-white font-medium focus:outline-none cursor-pointer pr-1"
             >
-              {SUPPORTED_LANGUAGES.map((lang) => (
-                <option key={lang.code} value={lang.code} className="bg-slate-900 text-white">
-                  {lang.nativeName} ({lang.name})
+              {SUPPORTED_LANGUAGES.map((l) => (
+                <option key={l.code} value={l.code} className="bg-slate-900 text-white">
+                  {l.code === lang ? l.nativeName : `${l.nativeName} (${langDisplayName(lang, l.name)})`}
                 </option>
               ))}
             </select>

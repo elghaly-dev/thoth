@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
-    "test:smoke": "tsx tests/smoke-locales.ts"
+    "test:smoke": "tsx tests/smoke-locales.ts",
+    "test:zh": "tsx tests/zh-parity.ts"
   },
   "dependencies": {
     "@google/genai": "^3.2.0",

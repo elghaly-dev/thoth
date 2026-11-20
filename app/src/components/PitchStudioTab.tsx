@@ -22,7 +22,8 @@ import {
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio } from '../utils/audio';
 import { postJson } from '../utils/api';
-import { tx } from '../i18n';
+import { tx, langDisplayName, modelLangHint } from '../i18n';
+import { errorText } from '../utils/errors';
 
 interface PitchStudioTabProps {
   currentLang: SupportedLanguage;
@@ -102,12 +103,12 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
         quantity: quantity || 'Flexible MOQ upon discussion',
         price: price || 'Competitive FOB pricing upon spec review',
         shippingOrigin: shippingOrigin || 'Origin port',
-        exporterLanguage: currentLang.name,
+        exporterLanguage: modelLangHint(currentLang),
       });
       setPitchResult(data);
     } catch (err: unknown) {
       console.error('Error generating pitch:', err);
-      setPitchError(err instanceof Error ? err.message : 'Could not generate the pitch. Please try again.');
+      setPitchError(errorText(lang, err, 'err.pitch'));
     } finally {
       setIsGenerating(false);
     }
@@ -135,47 +136,48 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
         usLang,
         () => setIsPlayingAudio(true),
         () => setIsPlayingAudio(false),
-        (err) => setPitchError(err.message)
+        (err) => setPitchError(errorText(lang, err, 'err.pitch'))
       );
     }
   };
 
   const handleDownloadTxt = () => {
     if (!pitchResult) return;
+    const L = (k: Parameters<typeof tx>[1]) => tx(lang, k);
     const content = `================================================
-THOTH - BUYER PITCH SPEC SHEET (Free by elghaly)
-Product: ${pitchResult.specCard?.productName || product}
-MOQ: ${pitchResult.specCard?.moq || quantity}
-Price: ${pitchResult.specCard?.indicativePricing || price}
-Origin Port: ${pitchResult.specCard?.originPort || shippingOrigin}
+${L('dl.title')}
+${L('dl.product')}: ${pitchResult.specCard?.productName || product}
+${L('dl.moq')}: ${pitchResult.specCard?.moq || quantity}
+${L('dl.price')}: ${pitchResult.specCard?.indicativePricing || price}
+${L('dl.originPort')}: ${pitchResult.specCard?.originPort || shippingOrigin}
 ================================================
 
-[BUYER COLD EMAIL]
-Subject: ${pitchResult.usEmailSubject}
+[${L('dl.coldEmail')}]
+${L('dl.subject')}: ${pitchResult.usEmailSubject}
 
 ${pitchResult.usBuyerEmail}
 
 ------------------------------------------------
-[SHORT DIRECT MESSAGE (LinkedIn / WhatsApp)]
+[${L('dl.shortMsg')}]
 ${pitchResult.usBuyerShort}
 
 ------------------------------------------------
-[CLAIMS TO VERIFY BEFORE CONTACTING BUYER]
+[${L('dl.claims')}]
 ${(pitchResult.claimsToVerify || []).map((c, i) => `${i + 1}. [ ] ${c}`).join('\n')}
 
 ------------------------------------------------
-[SCAM WARNING: FAKE-BUYER & ADVANCE-PAYMENT FRAUD]
-- Never pay upfront "inspection fees", "registration fees", or "tender processing charges" to unverified third parties. Legitimate buyers pay inspection agencies directly.
-- Verify buyer company registration on official business registries.
-- Insist on verified Irrevocable Letters of Credit (L/C) or secure escrow through commercial banks.
+[${L('dl.scamTitle')}]
+- ${L('dl.scam1')}
+- ${L('dl.scam2')}
+- ${L('dl.scam3')}
 
 ------------------------------------------------
-[EXPORTER GUIDANCE IN ${currentLang.name.toUpperCase()}]
+[${tx(lang, 'dl.guidanceIn', { lang: lang === 'zh' ? langDisplayName(lang, currentLang.name) : currentLang.name.toUpperCase() })}]
 ${pitchResult.exporterSummary}
 
 ------------------------------------------------
-[CUSTOMS COMPLIANCE NOTE]
-${pitchResult.customsNote || 'Check with a licensed customs broker for final decisions.'}
+[${L('dl.customsNote')}]
+${pitchResult.customsNote || L('dl.customsFallback')}
 `;
 
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
@@ -345,7 +347,7 @@ ${pitchResult.customsNote || 'Check with a licensed customs broker for final dec
               <button
                 onClick={() => setPitchError(null)}
                 className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
-                aria-label="Dismiss"
+                aria-label={tx(lang, 'common.dismiss')}
               >
                 ✕
               </button>
@@ -584,7 +586,7 @@ ${pitchResult.customsNote || 'Check with a licensed customs broker for final dec
                 <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4">
                   <div className="text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    {tx(lang, 'pitch.adviceIn', { native: currentLang.nativeName, name: currentLang.name })}
+                    {tx(lang, 'pitch.adviceIn', { native: currentLang.nativeName, name: langDisplayName(lang, currentLang.name) })}
                   </div>
                   <p className="text-xs text-slate-400 leading-relaxed">
                     {pitchResult.exporterSummary}
