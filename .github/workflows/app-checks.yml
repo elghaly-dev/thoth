@@ -21,6 +21,9 @@ jobs:
           cache: npm
           cache-dependency-path: app/package-lock.json
       - run: npm ci
+      - name: Dependency audit (production dependencies)
+        run: npm audit --omit=dev --audit-level=high
+      - run: npm run test:licences   # public/licences.txt matches the shipped packages
       - run: npm run lint
       - run: npm run build
       - run: npm run test:smoke
@@ -29,6 +32,7 @@ jobs:
       - run: npm run test:locales
       - run: npm run test:server
       - run: npm run test:mic
+      - run: npm run test:ondevice   # on-device model: manifest, sha256 download checks, CSP, prompts (mock model)
       - run: npm test            # smoke, idle session, no-secrets, pages redirect
       - name: Build the Pages bundle (use/)
         run: npm run build:pages
@@ -38,3 +42,7 @@ jobs:
           git diff --exit-code -- use
           test -z "$(git status --porcelain --untracked-files=all -- use)" || { git status --porcelain -- use; exit 1; }
       - run: npm run test:site   # no "free", no "elghaly" credit, no "AI" on any served page
+      - name: Playwright core (no browser download; uses the runner's Chrome)
+        run: npm install --no-save --no-package-lock playwright-core@1.49.1
+      - name: No request leaves the site (real browser on the built use/), no source maps, no telemetry
+        run: CHROME_PATH="$(command -v google-chrome)" npm run test:network

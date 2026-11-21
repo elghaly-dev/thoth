@@ -7,6 +7,10 @@ import { LiveTranslatorTab } from './components/LiveTranslatorTab';
 import { ImportGuideTab } from './components/ImportGuideTab';
 import { SafetyModal } from './components/SafetyModal';
 import { ApiKeyBar } from './components/ApiKeyBar';
+import { OnDeviceTab } from './components/OnDeviceTab';
+import { LicencesModal } from './components/LicencesModal';
+import { checkWebGpu, type GpuCheck } from './ondevice/webgpu';
+import { dt } from './ondevice/strings';
 import { tx, langDisplayName } from './i18n';
 import { CREDIT_FOOTER } from './credit';
 import {
@@ -18,15 +22,31 @@ import {
   ShieldAlert,
   Heart,
   Globe,
+  Cpu,
 } from 'lucide-react';
 
 export default function App() {
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>(
     SUPPORTED_LANGUAGES[0] // Hindi as default, easily switchable to English, Marathi, Gujarati, etc.
   );
-  const [activeTab, setActiveTab] = useState<'assistant' | 'pitch' | 'translate' | 'guide'>('assistant');
+  const [activeTab, setActiveTab] = useState<'device' | 'assistant' | 'pitch' | 'translate' | 'guide'>('assistant');
+  // The on-device Faithful Servant is the default where the phone has WebGPU;
+  // the bring-your-own-key cloud tabs stay available either way.
+  const [gpu, setGpu] = useState<GpuCheck | null>(null);
+  useEffect(() => {
+    let live = true;
+    checkWebGpu().then((g) => {
+      if (!live) return;
+      setGpu(g);
+      if (g.ok) setActiveTab((t) => (t === 'assistant' ? 'device' : t));
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
   const [isMuted, setIsMuted] = useState(false);
   const [isSafetyModalOpen, setIsSafetyModalOpen] = useState(false);
+  const [licencesOpen, setLicencesOpen] = useState(false);
 
   // Data passed from voice conversation to Pitch Studio
   const [pitchInitialData, setPitchInitialData] = useState<{
@@ -85,6 +105,21 @@ export default function App() {
             aria-label={tx(lang, 'a11y.primaryTabs')}
             className="flex flex-wrap items-center gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800"
           >
+            {/* Tab 0: Faithful Servant on this phone (on-device) */}
+            <button
+              type="button"
+              aria-current={activeTab === 'device' ? 'page' : undefined}
+              onClick={() => setActiveTab('device')}
+              className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === 'device'
+                  ? 'bg-gradient-to-r from-emerald-700 to-cyan-700 text-white shadow-md shadow-emerald-950/60'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              }`}
+            >
+              <Cpu className="w-4 h-4 text-emerald-300" />
+              <span>{dt(lang, 'tab')}</span>
+            </button>
+
             {/* Tab 1: Talk with Thoth */}
             <button
               type="button"
@@ -156,6 +191,8 @@ export default function App() {
         </div>
 
         {/* Tab Views */}
+        {activeTab === 'device' && <OnDeviceTab lang={lang} gpu={gpu} />}
+
         {activeTab === 'assistant' && (
           <VoiceAssistantTab
             currentLang={currentLang}
@@ -208,10 +245,15 @@ export default function App() {
             </button>
             <span className="text-slate-600">|</span>
             <span>{tx(lang, 'app.footerNoPasswords')}</span>
+            <span className="text-slate-600">|</span>
+            <button type="button" onClick={() => setLicencesOpen(true)} className="underline underline-offset-2 hover:text-slate-200 cursor-pointer">
+              {dt(lang, 'licences')}
+            </button>
           </div>
         </div>
         <p lang="en" className="mt-4 text-center text-[11px] tracking-widest text-slate-500">{CREDIT_FOOTER}</p>
       </footer>
+      {licencesOpen && <LicencesModal lang={lang} onClose={() => setLicencesOpen(false)} />}
 
       {/* Safety & Charter Modal */}
       <SafetyModal
