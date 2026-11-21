@@ -362,6 +362,7 @@ const EN_EXTRA = {
   'lang.hi': 'Hindi',
   'lang.en': 'English',
   'lang.zh': 'Chinese (Mandarin)',
+  'lang.ar': 'Arabic',
   'lang.gu': 'Gujarati',
   'lang.mr': 'Marathi',
   'lang.ta': 'Tamil',
@@ -754,6 +755,7 @@ const ZH: Record<StringKey, string> = {
   'lang.hi': '印地语',
   'lang.en': '英语',
   'lang.zh': '中文（普通话）',
+  'lang.ar': '阿拉伯语', /* [VERIFY] */
   'lang.gu': '古吉拉特语',
   'lang.mr': '马拉地语',
   'lang.ta': '泰米尔语',
@@ -795,12 +797,12 @@ const ZH: Record<StringKey, string> = {
   "key.placeholder": "在此粘贴密钥",
   "key.save": "本次访问使用",
   "key.clear": "移除密钥",
-  "key.saved": "密钥仅保存在此标签页，并且只发送给 Google。",
+  "key.saved": "密钥只保存在本页面的内存中，刷新页面即清除。它只会发送给 Google。", /* [VERIFY] */
   "key.needed": "请在上方添加您的 Gemini API 密钥，以便与 Thoth 对话。",
   "key.invalid": "该密钥被拒绝。请检查后重试。",
   "key.serverReady": "本会话使用服务器端密钥，您无需粘贴密钥。",
   "key.whereToGet": "请从 Google 获取 Gemini API 密钥（需要您自己的 Google 账号登录）。",
-  "key.staysInTab": "密钥不会写入 Thoth 的代码、Cookie 或长期浏览器存储。",
+  "key.staysInTab": "密钥不会写入 Thoth 的代码、Cookie 或任何浏览器存储。", /* [VERIFY] */
   "voice.idleClosed": "语音会话因两分钟无声已结束。请再点麦克风重新开始。您的对话仍在。",
   "trans.idleClosed": "语音会话因两分钟无声已结束。请再点麦克风重新开始。您的译文仍在。",
   "a11y.skipToMain": "跳到主要内容",
@@ -838,6 +840,7 @@ const LANG_NAME_KEYS: Record<string, StringKey> = {
   Hindi: 'lang.hi',
   English: 'lang.en',
   'Chinese (Mandarin)': 'lang.zh',
+  Arabic: 'lang.ar',
   Gujarati: 'lang.gu',
   Marathi: 'lang.mr',
   Tamil: 'lang.ta',
@@ -876,6 +879,7 @@ export const GREETINGS: Record<LanguageCode, string> = {
   bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
   te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
   pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
+  ar: 'مرحبًا! أنا Thoth، الخادم الأمين للمصدّرين. سأساعدك على الوصول إلى المشترين وعرض منتجاتك عليهم. الخطوة الأولى: ما المنتج الذي تصنعه أو تبيعه؟', /* [VERIFY] */
   zh: '您好！我是 Thoth，为出口商打造的 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
   en: 'Namaste! I am Thoth, a Faithful Servant for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
 };

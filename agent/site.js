@@ -11,10 +11,39 @@
  * confirmation dialog, written for the visitor.
  */
 export class AssistantMount {
-  /**
-   * The first chat message once the visitor has a key: what the assistant can do here.
-   */
-  static GREETING = "मैं बता सकता हूँ कि थोथ क्या देता है, आपके तथ्यों से ईमानदार खरीदार पिच लिख सकता हूँ, आपके खरीदार के लिए संदेश का अनुवाद कर सकता हूँ, या FOB और CIF जैसी निर्यात की बुनियादी बातें समझा सकता हूँ।";
+  /** Page text per language (?lang=ar / ?lang=zh; Hindi default). ar/zh are [VERIFY]. */
+  static TEXT = {
+    hi: {
+      greeting: "मैं बता सकता हूँ कि थोथ क्या देता है, आपके तथ्यों से ईमानदार खरीदार पिच लिख सकता हूँ, आपके खरीदार के लिए संदेश का अनुवाद कर सकता हूँ, या FOB और CIF जैसी निर्यात की बुनियादी बातें समझा सकता हूँ।",
+      needsKey: "सहायक को आपकी मॉडल प्रदाता कुंजी चाहिए। इसे नीचे मॉडल सेटिंग में जोड़ें।",
+      ready: "सहायक इस पेज से जुड़ गया है।",
+      failed: "सहायक लोड नहीं हो सका। आप फिर भी यह पेज सीधे इस्तेमाल कर सकते हैं।",
+    },
+    ar: {
+      greeting: "أستطيع أن أخبرك بما يقدّمه Thoth، وأن أكتب عرضًا صادقًا للمشتري من معلوماتك، وأن أترجم رسالة لمشتريك، أو أن أشرح أساسيات التصدير مثل FOB وCIF.",
+      needsKey: "يحتاج المساعد إلى مفتاح مزوّد النموذج الخاص بك. أضفه في إعدادات النموذج أدناه.",
+      ready: "المساعد متصل بهذه الصفحة.",
+      failed: "تعذّر تحميل المساعد. ما زال بإمكانك استخدام هذه الصفحة مباشرة.",
+    },
+    zh: {
+      greeting: "我可以告诉您 Thoth 提供什么，用您的信息写一份诚实的买家推介，为买家翻译一条消息，或讲解 FOB、CIF 等出口基础知识。",
+      needsKey: "助手需要您的模型服务商密钥。请在下方的模型设置中添加。",
+      ready: "助手已连接到本页。",
+      failed: "助手无法加载。您仍然可以直接使用本页。",
+    },
+  };
+
+  /** The page text for ?lang= (Hindi by default). */
+  static text() {
+    let q = "";
+    try { q = new URLSearchParams(globalThis.location?.search || "").get("lang") || ""; } catch {}
+    return AssistantMount.TEXT[q] || AssistantMount.TEXT.hi;
+  }
+
+  /** The first chat message once the visitor has a key. */
+  static get GREETING() {
+    return AssistantMount.text().greeting;
+  }
 
   /**
    * The confirmation dialog's words for each irreversible action. Name each button after
@@ -47,16 +76,14 @@ export class AssistantMount {
       // runtime's "API key required" badge in runtime/ui.js.
       const needsKey = !booted.engine.mockLLM
         && (!booted.engine.byokKey || booted.engine.byokKey === "demo");
-      status.textContent = needsKey
-        ? "सहायक को आपकी मॉडल प्रदाता कुंजी चाहिए। इसे नीचे मॉडल सेटिंग में जोड़ें।"
-        : "सहायक इस पेज से जुड़ गया है।";
+      status.textContent = needsKey ? AssistantMount.text().needsKey : AssistantMount.text().ready;
       if (!needsKey) {
         AssistantMount.greet();
       }
       return booted.engine;
     } catch (error) {
       // The page must keep working without the assistant.
-      status.textContent = "सहायक लोड नहीं हो सका। आप फिर भी यह पेज सीधे इस्तेमाल कर सकते हैं।";
+      status.textContent = AssistantMount.text().failed;
       console.error("Assistant startup failed", error);
       return null;
     }

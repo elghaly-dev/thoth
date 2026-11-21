@@ -7,7 +7,8 @@ export type LanguageCode =
   | 'bn'
   | 'te'
   | 'pa'
-  | 'zh';
+  | 'zh'
+  | 'ar';
 
 export interface SupportedLanguage {
   code: LanguageCode;
@@ -18,9 +19,11 @@ export interface SupportedLanguage {
 }
 
 export const SUPPORTED_LANGUAGES: SupportedLanguage[] = [
-  { code: 'hi', name: 'Hindi', nativeName: 'हिंदी', speechCode: 'hi-IN' },
+  // Switcher order (owner decision): हिन्दी · العربية · 中文, then the others.
+  { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', speechCode: 'hi-IN' },
+  { code: 'ar', name: 'Arabic', nativeName: 'العربية', speechCode: 'ar-EG' },
+  { code: 'zh', name: 'Chinese (Mandarin)', nativeName: '中文', speechCode: 'zh-CN' },
   { code: 'en', name: 'English', nativeName: 'English', speechCode: 'en-US' },
-  { code: 'zh', name: 'Chinese (Mandarin)', nativeName: '中文 (普通话)', speechCode: 'zh-CN' },
   { code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી', speechCode: 'gu-IN' },
   { code: 'mr', name: 'Marathi', nativeName: 'मराठी', speechCode: 'mr-IN' },
   { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', speechCode: 'ta-IN' },

@@ -210,7 +210,9 @@ check(!/[A-Za-z]{3,}/.test(GREETINGS.hi), 'hi greeting has no English words');
   const AGENT_ALLOW = new Set(['FOB', 'CIF', 'thoth', 'assistant', 'network', 'json', 'agent', 'manifest', 'Apache', 'Open', 'Agentic', 'Web', 'runtime', 'LICENSE', 'txt']);
   const words = (noCredits(stripUrls(visible(html))).match(LATIN_WORD) || []).filter((w) => !AGENT_ALLOW.has(w));
   check(words.length === 0, `agent/index.html: visible text in Hindi (found: ${words.slice(0, 8).join(' ')})`);
-  const facts = read('agent/thoth-page.js');
+  // The Hindi GUIDE only; the ar/zh DISPLAY lists are checked by test:keys.
+  const factsAll = read('agent/thoth-page.js');
+  const facts = factsAll.slice(factsAll.indexOf('static GUIDE'), factsAll.indexOf('static page'));
   const shown = [...facts.matchAll(/(?:name|does|price|helps|privacy): "([^"]*)"|^\s+"([^"]*)",?$/gm)].map((m) => m[1] ?? m[2]).filter((v) => v && !/^https?:/.test(v));
   check(shown.length > 20, 'agent/thoth-page.js: facts found');
   for (const v of shown) {
