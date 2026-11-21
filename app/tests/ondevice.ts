@@ -22,6 +22,7 @@ import {
   hexToSri,
   isReady,
   MANIFEST,
+  MANIFESTS,
   manifestProblems,
   MODEL_HOST,
   totalBytes,
@@ -32,6 +33,7 @@ import { explainPrompt, translatePrompt, DEVICE_LANGS } from '../src/ondevice/pr
 import { checkWebGpu } from '../src/ondevice/webgpu';
 import { pickOfflineVoice } from '../src/ondevice/speak';
 import { DEVICE_STRINGS, dt } from '../src/ondevice/strings';
+import { ACTIVE_MODEL, MODEL_LIB_PATH } from '../src/ondevice/config';
 
 const APP = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 let checks = 0;
@@ -44,6 +46,13 @@ const eq = (a: unknown, b: unknown, msg: string) => check(JSON.stringify(a) === 
 
 // ---- manifest ----
 eq(manifestProblems(MANIFEST), [], 'shipped manifest has no problems');
+for (const [k, m] of Object.entries(MANIFESTS)) eq(manifestProblems(m), [], `manifest ${k} has no problems`);
+eq(ACTIVE_MODEL, '0.5b', 'Thoth uses the 0.5B model');
+eq(MANIFEST.modelId, 'Qwen2.5-0.5B-Instruct-q4f16_1-MLC', 'active model id');
+eq(MANIFEST.base, MODEL_HOST + '/qwen2.5-0.5b-q4f16_1/v1/resolve/main/', 'active model folder');
+check(MANIFEST.status === 'pending' || MANIFEST.modelLib?.path === MODEL_LIB_PATH['0.5b'], 'model library path matches the config once ready');
+const cfg = fs.readFileSync(path.join(APP, 'src/ondevice/config.ts'), 'utf8');
+eq((cfg.match(/^export const ACTIVE_MODEL\b.*$/gm) || []).length, 1, 'the model is chosen on one config line');
 eq(MANIFEST.host, MODEL_HOST, 'shipped manifest host');
 check(MANIFEST.status === 'pending' ? !isReady() : isReady(), 'isReady follows status');
 
@@ -76,7 +85,7 @@ bad({ files: ready.files.map((f, i) => (i === 0 ? { ...f, path: '../x' } : f)) }
 bad({ files: [...ready.files, ready.files[0]] }, 'a duplicate path');
 bad({ files: ready.files.filter((f) => f.path !== 'tokenizer.json') }, 'a missing tokenizer.json');
 bad({ modelLib: null }, 'no model library');
-eq(fileUrl(ready, ready.files[3]), MODEL_HOST + '/qwen2.5-1.5b-instruct-q4f16_1-mlc/v1/resolve/main/params_shard_0.bin', 'weight URL');
+eq(fileUrl(ready, ready.files[3]), MANIFEST.base + 'params_shard_0.bin', 'weight URL');
 eq(fileUrl(ready, ready.modelLib!), MODEL_HOST + '/lib/qwen.wasm', 'model library URL');
 eq(['webllm/wasm', 'webllm/config', 'webllm/model', 'webllm/model', 'webllm/model'], [ready.modelLib!, ...ready.files].map((f) => cacheScopeFor(ready, f)), 'cache scope per file');
 eq(hexToSri('e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'), 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=', 'hex to SRI (sha256 of empty)');
@@ -221,6 +230,12 @@ if (fs.existsSync(built)) {
 // ---- WebLLM pin and the internals download.ts relies on ----
 const pkg = JSON.parse(fs.readFileSync(path.join(APP, 'package.json'), 'utf8'));
 eq(pkg.dependencies['@mlc-ai/web-llm'], '0.2.87', 'web-llm pinned to an exact version');
+const lock = JSON.parse(fs.readFileSync(path.join(APP, 'package-lock.json'), 'utf8'));
+for (const [name, want] of [['@mlc-ai/web-llm', '0.2.87'], ['@fontsource/plus-jakarta-sans', '5.3.0']] as const) {
+  eq(pkg.dependencies[name], want, `${name} pinned exactly in package.json`);
+  const entry = lock.packages?.['node_modules/' + name];
+  check(entry?.version === want && /^sha512-/.test(entry?.integrity ?? ''), `${name}: lockfile has the same version and a sha512 integrity hash`);
+}
 const lib = fs.readFileSync(path.join(APP, 'node_modules/@mlc-ai/web-llm/lib/index.js'), 'utf8');
 for (const scope of ['webllm/config', 'webllm/wasm', 'webllm/model']) check(lib.includes(`"${scope}"`), `web-llm still uses cache "${scope}"`);
 check(/if \(!modelUrl\.match\(\/\.\+\\\/resolve\\\/\.\+\\\/\/\)\)/.test(lib), 'web-llm still keeps a base that already has /resolve/…/');

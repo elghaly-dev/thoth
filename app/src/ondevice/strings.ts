@@ -34,6 +34,8 @@ const EN = {
   remove: 'Remove from this phone ({size})',
   removed: 'Removed from this phone.',
   failStart: 'The Faithful Servant could not start on this phone. You can use your own key above instead.',
+  licences: 'Licences',
+  close: 'Close',
 };
 
 export type DeviceStringKey = keyof typeof EN;
@@ -65,6 +67,8 @@ const HI: Record<DeviceStringKey, string> = {
   remove: 'इस फ़ोन से हटाएँ ({size})',
   removed: 'इस फ़ोन से हटा दिया गया।',
   failStart: 'वफ़ादार सेवक इस फ़ोन पर शुरू नहीं हो सका। आप ऊपर अपनी कुंजी का उपयोग कर सकते हैं।',
+  licences: 'लाइसेंस',
+  close: 'बंद करें',
 };
 
 const ZH: Record<DeviceStringKey, string> = {
@@ -94,6 +98,8 @@ const ZH: Record<DeviceStringKey, string> = {
   remove: '从本机删除（{size}）',
   removed: '已从本机删除。',
   failStart: 'Faithful Servant 无法在这部手机上启动。你可以改用上方你自己的密钥。',
+  licences: '许可证',
+  close: '关闭',
 };
 
 export const DEVICE_STRINGS: Partial<Record<LanguageCode, Record<DeviceStringKey, string>>> = { en: EN, hi: HI, zh: ZH };

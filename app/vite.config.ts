@@ -10,8 +10,8 @@ const PAGES_CSP = [
   "script-src 'self' 'wasm-unsafe-eval'",
   // models.elghaly.dev: the on-device model files only (sha256-pinned).
   "connect-src 'self' https://generativelanguage.googleapis.com https://models.elghaly.dev",
-  "style-src 'self' https://fonts.googleapis.com",
-  "font-src https://fonts.gstatic.com",
+  "style-src 'self'",
+  "font-src 'self'",
   "img-src 'self' data:",
   "manifest-src 'self'",
   "media-src 'self' data: blob:",
@@ -44,6 +44,8 @@ function pagesHardening(): Plugin {
 export default defineConfig(() => {
   return {
     base: process.env.THOTH_BASE || '/',
+    // No source maps in production builds (the code is not published).
+    build: { sourcemap: false },
     plugins: [react(), tailwindcss(), pagesHardening()],
     resolve: {
       alias: {

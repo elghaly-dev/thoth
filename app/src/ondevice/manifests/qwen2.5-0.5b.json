@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "status": "pending",
+  "note": "Uploaded by Grok Bot to models.elghaly.dev; stays pending (mock-tested) until the owner confirms the files are live. Then the exact sizes and sha256 values from the upload manifest go here.",
+  "modelId": "Qwen2.5-0.5B-Instruct-q4f16_1-MLC",
+  "name": "Qwen2.5-0.5B-Instruct",
+  "licence": "Apache-2.0",
+  "source": {
+    "repo": "mlc-ai/Qwen2.5-0.5B-Instruct-q4f16_1-MLC",
+    "revision": "32ff081f",
+    "webllm": "0.2.87"
+  },
+  "host": "https://models.elghaly.dev",
+  "base": "https://models.elghaly.dev/qwen2.5-0.5b-q4f16_1/v1/resolve/main/",
+  "modelLib": null,
+  "files": []
+}

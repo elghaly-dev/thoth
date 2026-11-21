@@ -6,7 +6,9 @@
  * extra entry in the page CSP's connect-src). A file whose bytes do not hash
  * to the pinned value is never stored or used.
  */
-import raw from './model-manifest.json';
+import m05 from './manifests/qwen2.5-0.5b.json';
+import m15 from './manifests/qwen2.5-1.5b.json';
+import { ACTIVE_MODEL } from './config';
 
 export const MODEL_HOST = 'https://models.elghaly.dev';
 
@@ -22,6 +24,8 @@ export interface ModelManifest {
   schema: 1;
   status: 'pending' | 'ready';
   note?: string;
+  /** Where the files came from (upstream repo and revision), for the Licences page. */
+  source?: { repo: string; revision: string; webllm?: string };
   modelId: string;
   name: string;
   licence: string;
@@ -33,7 +37,9 @@ export interface ModelManifest {
   files: ModelFile[];
 }
 
-export const MANIFEST = raw as ModelManifest;
+export const MANIFESTS: Record<'0.5b' | '1.5b', ModelManifest> = { '0.5b': m05 as ModelManifest, '1.5b': m15 as ModelManifest };
+/** The manifest of the model Thoth uses now (see config.ts). */
+export const MANIFEST: ModelManifest = MANIFESTS[ACTIVE_MODEL];
 
 const HEX64 = /^[0-9a-f]{64}$/;
 

@@ -8,6 +8,7 @@ import { ImportGuideTab } from './components/ImportGuideTab';
 import { SafetyModal } from './components/SafetyModal';
 import { ApiKeyBar } from './components/ApiKeyBar';
 import { OnDeviceTab } from './components/OnDeviceTab';
+import { LicencesModal } from './components/LicencesModal';
 import { checkWebGpu, type GpuCheck } from './ondevice/webgpu';
 import { dt } from './ondevice/strings';
 import { tx, langDisplayName } from './i18n';
@@ -45,6 +46,7 @@ export default function App() {
   }, []);
   const [isMuted, setIsMuted] = useState(false);
   const [isSafetyModalOpen, setIsSafetyModalOpen] = useState(false);
+  const [licencesOpen, setLicencesOpen] = useState(false);
 
   // Data passed from voice conversation to Pitch Studio
   const [pitchInitialData, setPitchInitialData] = useState<{
@@ -243,10 +245,15 @@ export default function App() {
             </button>
             <span className="text-slate-600">|</span>
             <span>{tx(lang, 'app.footerNoPasswords')}</span>
+            <span className="text-slate-600">|</span>
+            <button type="button" onClick={() => setLicencesOpen(true)} className="underline underline-offset-2 hover:text-slate-200 cursor-pointer">
+              {dt(lang, 'licences')}
+            </button>
           </div>
         </div>
         <p lang="en" className="mt-4 text-center text-[11px] tracking-widest text-slate-500">{CREDIT_FOOTER}</p>
       </footer>
+      {licencesOpen && <LicencesModal lang={lang} onClose={() => setLicencesOpen(false)} />}
 
       {/* Safety & Charter Modal */}
       <SafetyModal

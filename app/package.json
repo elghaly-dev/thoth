@@ -22,9 +22,13 @@
     "test:secrets": "tsx tests/no-secrets.ts",
     "test:pages": "tsx tests/pages-redirect.ts",
     "test:site": "tsx tests/site-wording.ts",
-    "test:ondevice": "tsx tests/ondevice.ts"
+    "test:ondevice": "tsx tests/ondevice.ts",
+    "test:network": "tsx tests/network.ts",
+    "licences": "node scripts/gen-licences.mjs",
+    "test:licences": "node scripts/gen-licences.mjs --check"
   },
   "dependencies": {
+    "@fontsource/plus-jakarta-sans": "5.3.0",
     "@google/genai": "^3.2.0",
     "@mlc-ai/web-llm": "0.2.87",
     "@tailwindcss/vite": "^4.3.3",

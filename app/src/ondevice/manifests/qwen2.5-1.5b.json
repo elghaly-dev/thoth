@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "pending",
-  "note": "Waiting for the model upload to models.elghaly.dev. Until status is \"ready\" the on-device mode shows that it is not available yet.",
+  "note": "Optional \"better quality\" download for later. Not offered until this manifest is ready and the config line points to it.",
   "modelId": "Qwen2.5-1.5B-Instruct-q4f16_1-MLC",
   "name": "Qwen2.5-1.5B-Instruct",
   "licence": "Apache-2.0",
