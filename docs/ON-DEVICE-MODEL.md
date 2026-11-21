@@ -80,7 +80,14 @@ hash, a `..` path, a duplicate, or a missing `mlc-chat-config.json`,
 
 ## Status
 
-Until the manifest is `ready`, the tab says the on-device Faithful Servant is
+Live since 2026-11-21: the Qwen2.5-0.5B files are on R2 (bucket
+`elghaly-models`, custom domain), and the manifest is `ready`, with 12 files and
+290,875,248 bytes (about 0.29 GB). Every value was pinned from the live files,
+each downloaded and hashed. `npm run test:live-model` (manual, not in CI) runs
+the app's own downloader against the live host and checks all 12 files.
+CORS answers only `https://thoth.elghaly.dev`.
+
+Before a manifest is `ready`, the tab says the on-device Faithful Servant is
 being prepared and points to the bring-your-own-key option. CI tests the
 manifest rules, the download checks (fake network and storage), the prompts,
 the WebGPU check, the offline-voice choice, the strings (Hindi, Chinese,

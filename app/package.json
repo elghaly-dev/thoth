@@ -24,6 +24,7 @@
     "test:site": "tsx tests/site-wording.ts",
     "test:ondevice": "tsx tests/ondevice.ts",
     "test:network": "tsx tests/network.ts",
+    "test:live-model": "tsx tests/live-model.ts",
     "licences": "node scripts/gen-licences.mjs",
     "test:licences": "node scripts/gen-licences.mjs --check"
   },
