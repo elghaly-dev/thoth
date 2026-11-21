@@ -1,17 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="hi">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ask Thoth</title>
-    <meta name="description" content="Ask Thoth, a Faithful Servant for exporters, from any browser with your own model provider key: honest buyer pitches, faithful trade translation, and export basics.">
+    <title>थोथ से पूछें</title>
+    <meta name="description" content="थोथ से पूछें — निर्यातकों के लिए वफ़ादार सेवक, किसी भी ब्राउज़र में अपनी चुनी हुई मॉडल प्रदाता कुंजी के साथ: ईमानदार खरीदार पिच, सही व्यापार अनुवाद और निर्यात की बुनियादी बातें। by Elghaly LLC">
     <link rel="canonical" href="https://thoth.elghaly.dev/agent/">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="assistant.css">
     <script type="module" src="thoth-page.js"></script>
     <script type="module" src="site.js"></script>
     <style>
       :root { --bg: #0b0c10; --text: #e8e6e1; --muted: #b5b0a6; --gold: #c9a227; }
-      body { margin: 0 auto; max-width: 1100px; padding: 24px 16px; font: 16px/1.55 "Palatino Linotype", Palatino, Georgia, serif; background: var(--bg); color: var(--text); }
+      body { margin: 0 auto; max-width: 1100px; padding: 24px 16px; font: 16px/1.55 "Noto Serif Devanagari", "Palatino Linotype", Palatino, Georgia, serif; background: var(--bg); color: var(--text); }
       a { color: var(--gold); }
       h1 { font-size: 2rem; margin: 0 0 .25rem; color: var(--gold); letter-spacing: .02em; }
       h2 { font-size: 1.25rem; margin: 1.5rem 0 .5rem; }
@@ -22,35 +28,39 @@
       #assistant { background: #f7f5f0; color: #1f2328; border-radius: 12px; padding: 16px; margin-top: 24px; }
       #assistant a { color: #6b4f0a; }
       footer { color: var(--muted); font-size: .9rem; margin-top: 24px; }
+      .by { margin: 0 0 .75rem; font-family: system-ui, sans-serif; }
+      .by a { text-decoration: none; }
+      .credit { text-align: center; letter-spacing: .12em; font-family: system-ui, sans-serif; font-size: .8rem; }
     </style>
   </head>
   <body>
     <header>
-      <h1>Ask Thoth</h1>
-      <p class="lead">Thoth is a Faithful Servant for exporters. Ask it here, in your browser, with the model provider and key you choose. For voice and live two-way translation, open the <a href="https://thoth.elghaly.dev/use/">full Thoth app</a>.</p>
+      <h1>थोथ से पूछें</h1>
+      <p class="by"><a href="https://elghaly.dev" lang="en">by Elghaly LLC</a></p>
+      <p class="lead">थोथ निर्यातकों के लिए वफ़ादार सेवक है। यहाँ अपने ब्राउज़र में, अपने चुने हुए मॉडल प्रदाता और कुंजी के साथ पूछें। आवाज़ और दोतरफ़ा लाइव अनुवाद के लिए <a href="https://thoth.elghaly.dev/use/">पूरा थोथ ऐप</a> खोलें।</p>
     </header>
     <main>
       <div class="facts">
         <section aria-labelledby="tools-h">
-          <h2 id="tools-h">What Thoth does</h2>
+          <h2 id="tools-h">थोथ क्या करता है</h2>
           <ul id="thoth-tools"></ul>
-          <p>Languages: <span id="thoth-languages"></span></p>
+          <p>भाषाएँ: <span id="thoth-languages"></span></p>
         </section>
         <section aria-labelledby="charter-h">
-          <h2 id="charter-h">Thoth's promises</h2>
+          <h2 id="charter-h">थोथ के वादे</h2>
           <ul id="thoth-charter"></ul>
         </section>
         <section aria-labelledby="cannot-h">
-          <h2 id="cannot-h">What Thoth cannot do</h2>
+          <h2 id="cannot-h">थोथ क्या नहीं कर सकता</h2>
           <ul id="thoth-cannot"></ul>
         </section>
       </div>
 
       <section id="assistant" class="assistant" aria-labelledby="assistant-heading">
-        <h2 id="assistant-heading">Ask Thoth</h2>
-        <p>Ask what Thoth offers, get an honest buyer pitch from your own facts, translate a message for your buyer, or ask about export basics such as FOB and CIF.</p>
-        <p class="assistant-note">Your messages and this page's facts go to the model provider you choose in the settings below; that provider's handling is outside this page. Use a key with a spending limit.</p>
-        <p id="assistant-status" role="status">Connecting the assistant… If this message stays, the assistant could not load. You can still read this page and use the full Thoth app.</p>
+        <h2 id="assistant-heading">थोथ से पूछें</h2>
+        <p>पूछें कि थोथ क्या देता है, अपने तथ्यों से ईमानदार खरीदार पिच पाएँ, अपने खरीदार के लिए संदेश का अनुवाद करें, या FOB और CIF जैसी निर्यात की बुनियादी बातें पूछें।</p>
+        <p class="assistant-note">आपके संदेश और इस पेज के तथ्य उस मॉडल प्रदाता को जाते हैं जिसे आप नीचे सेटिंग में चुनते हैं; वह प्रदाता उन्हें कैसे संभालता है, यह इस पेज के बाहर है। खर्च की सीमा वाली कुंजी इस्तेमाल करें।</p>
+        <p id="assistant-status" role="status">सहायक जुड़ रहा है… अगर यह संदेश बना रहे, तो सहायक लोड नहीं हो सका। आप फिर भी यह पेज पढ़ सकते हैं और पूरा थोथ ऐप इस्तेमाल कर सकते हैं।</p>
         <div id="agent-app">
           <div data-ns-slot="header"></div>
           <div class="assistant-panels">
@@ -62,7 +72,8 @@
       </section>
     </main>
     <footer>
-      <p>This assistant runs in your browser. Its agent network is public at <a href="thoth_assistant.network.json">thoth_assistant.network.json</a>, described by <a href="agent-manifest.json">agent-manifest.json</a>. Browser runtime: Apache-2.0, from the Open Agentic Web project (see runtime/LICENSE.txt).</p>
+      <p>यह सहायक आपके ब्राउज़र में चलता है। इसका एजेंट नेटवर्क <a href="thoth_assistant.network.json">thoth_assistant.network.json</a> पर सार्वजनिक है, और इसका विवरण <a href="agent-manifest.json">agent-manifest.json</a> में है। ब्राउज़र रनटाइम: Apache-2.0, Open Agentic Web प्रोजेक्ट से (देखें runtime/LICENSE.txt)।</p>
+      <p class="credit" lang="en">Wyndham Heaven</p>
     </footer>
   </body>
 </html>

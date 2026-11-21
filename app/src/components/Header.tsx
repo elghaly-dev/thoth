@@ -2,6 +2,7 @@ import React from 'react';
 import { SupportedLanguage, SUPPORTED_LANGUAGES } from '../types';
 import { Volume2, VolumeX, ShieldCheck, Sparkles, Globe, Heart } from 'lucide-react';
 import { tx, langDisplayName } from '../i18n';
+import { CREDIT_TOP, CREDIT_URL } from '../credit';
 
 interface HeaderProps {
   currentLang: SupportedLanguage;
@@ -70,6 +71,9 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
             <p className="text-xs text-slate-400">
               {tx(lang, 'header.bridge')}
+            </p>
+            <p className="text-xs">
+              <a href={CREDIT_URL} lang="en" className="text-amber-300 hover:text-amber-200 hover:underline">{CREDIT_TOP}</a>
             </p>
           </div>
         </div>

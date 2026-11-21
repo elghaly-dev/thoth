@@ -1,5 +1,5 @@
 // Browser-side Gemini calls for static / GitHub Pages mode.
-// The key comes from the exporter (sessionStorage only) and is sent
+// The key comes from the exporter (page memory only) and is sent
 // only to Google, in the x-goog-api-key header (never in the URL).
 // This module is not used when the Node proxy is available.
 

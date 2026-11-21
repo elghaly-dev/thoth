@@ -8,6 +8,7 @@ import { ImportGuideTab } from './components/ImportGuideTab';
 import { SafetyModal } from './components/SafetyModal';
 import { ApiKeyBar } from './components/ApiKeyBar';
 import { tx, langDisplayName } from './i18n';
+import { CREDIT_FOOTER } from './credit';
 import {
   Mic,
   Sparkles,
@@ -209,6 +210,7 @@ export default function App() {
             <span>{tx(lang, 'app.footerNoPasswords')}</span>
           </div>
         </div>
+        <p lang="en" className="mt-4 text-center text-[11px] tracking-widest text-slate-500">{CREDIT_FOOTER}</p>
       </footer>
 
       {/* Safety & Charter Modal */}

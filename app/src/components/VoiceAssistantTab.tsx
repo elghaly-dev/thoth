@@ -646,7 +646,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
 
           {isThinking && (
             <div className="flex flex-col items-start">
-              <div className="text-[10px] text-slate-500 mb-1 px-1">Thoth</div>
+              <div className="text-[10px] text-slate-500 mb-1 px-1">{tx(lang, 'voice.thothServant')}</div>
               <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl rounded-tl-none p-3.5 text-xs text-amber-300 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
                 <span>{tx(lang, 'voice.thinking')}</span>

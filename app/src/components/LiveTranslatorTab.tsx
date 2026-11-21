@@ -57,7 +57,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       originalText:
         'Could you confirm if the cartons will be palletized with ISPM-15 heat-treated pallets for customs clearance?',
       translatedText:
-        'क्या आप पुष्टि कर सकते हैं कि कार्टन अमेरिकी सीमा शुल्क के लिए ISPM-15 हीट-ट्रीटेड पैलेट पर रखे जाएंगे?',
+        'क्या आप पुष्टि कर सकते हैं कि कार्टन सीमा शुल्क के लिए ISPM-15 हीट-ट्रीटेड पैलेट पर रखे जाएंगे?',
       sourceLang: 'English',
       targetLang: 'Hindi',
       keyTerms: ['ISPM-15 heat-treated pallets', 'customs clearance'],

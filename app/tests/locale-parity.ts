@@ -2,7 +2,7 @@
  * Locale parity for the Indian-language tables (i18n-locales.ts).
  * Fails when a locale:
  * - is missing any EN key (all 296, not only the first-screen set) or has a key EN lacks;
- * - changes a {placeholder} set;
+ * - uses a {placeholder} that EN does not have (dropping one is allowed);
  * - is in the wrong script (e.g. a Devanagari letter in Bengali text; the
  *   danda "।" / "॥" is shared punctuation and allowed);
  * - leaves the English text unchanged for a translated key.
@@ -57,7 +57,10 @@ for (const [code, own] of Object.entries(SCRIPTS)) {
   for (const [key, value] of Object.entries(table)) {
     check(enKeys.has(key), `${code}: key ${key} exists in EN`);
     const en = EN_ALL[key as StringKey];
-    check(placeholders(value as string) === placeholders(en), `${code}.${key}: placeholders match EN (${placeholders(en)})`);
+    // A locale may drop a placeholder (Hindi says the language once, without
+    // the doubled English name) but may never invent one.
+    const enPh = new Set(placeholders(en).split(',').filter(Boolean));
+    check(placeholders(value as string).split(',').filter(Boolean).every((p) => enPh.has(p)), `${code}.${key}: placeholders are a subset of EN (${placeholders(en)})`);
     const bad = wrongScript(code, value as string);
     check(bad.length === 0, `${code}.${key}: only ${code} script letters (found ${bad.join('')})`);
     check(own.test(value as string) || /^[A-Za-z ]+$/.test(en), `${code}.${key}: written in ${code} script`);

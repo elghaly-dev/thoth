@@ -407,12 +407,12 @@ const EN_PAGES = {
   "key.placeholder": "Paste your key here",
   "key.save": "Save in this tab",
   "key.clear": "Remove key",
-  "key.saved": "Key saved in this tab only. It is sent only to Google.",
+  "key.saved": "Key kept in this page's memory only; reloading the page forgets it. It is sent only to Google.",
   "key.needed": "Add your Gemini API key above to talk with Thoth.",
   "key.invalid": "That key was refused. Check it and try again.",
   "key.serverReady": "This session uses a server-side key. You do not need to paste one.",
-  "key.whereToGet": "Get a Gemini API key from Google AI Studio (it needs your own Google sign-in).",
-  "key.staysInTab": "The key is not put into Thoth's code, cookies, or long-term browser storage.",
+  "key.whereToGet": "Get a Gemini API key from Google (it needs your own Google sign-in).",
+  "key.staysInTab": "The key is not put into Thoth's code, cookies, or any browser storage.",
   "voice.idleClosed": "Voice session ended after 2 minutes of silence. Tap the microphone to start again. Your conversation is still here.",
   "trans.idleClosed": "Voice session ended after 2 minutes of silence. Tap the microphone to start again. Your translations are still here.",
   "a11y.skipToMain": "Skip to main content",
@@ -799,7 +799,7 @@ const ZH: Record<StringKey, string> = {
   "key.needed": "请在上方添加您的 Gemini API 密钥，以便与 Thoth 对话。",
   "key.invalid": "该密钥被拒绝。请检查后重试。",
   "key.serverReady": "本会话使用服务器端密钥，您无需粘贴密钥。",
-  "key.whereToGet": "请从 Google AI Studio 获取 Gemini API 密钥（需要您自己的 Google 账号登录）。",
+  "key.whereToGet": "请从 Google 获取 Gemini API 密钥（需要您自己的 Google 账号登录）。",
   "key.staysInTab": "密钥不会写入 Thoth 的代码、Cookie 或长期浏览器存储。",
   "voice.idleClosed": "语音会话因两分钟无声已结束。请再点麦克风重新开始。您的对话仍在。",
   "trans.idleClosed": "语音会话因两分钟无声已结束。请再点麦克风重新开始。您的译文仍在。",
@@ -869,7 +869,7 @@ export const ZH_STRINGS: Readonly<Record<StringKey, string>> = ZH;
  * Module scope so tests can check it alongside the string tables.
  */
 export const GREETINGS: Record<LanguageCode, string> = {
-  hi: 'नमस्ते! मैं थोथ (Thoth) हूँ, निर्यातकों के लिए Faithful Servant। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
+  hi: 'नमस्ते! मैं थोथ हूँ, निर्यातकों के लिए वफ़ादार सेवक। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
   mr: 'नमस्कार! मी थोथ (Thoth) आहे, निर्यातदारांसाठी Faithful Servant. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
   gu: 'નમસ્તે! હું થોથ (Thoth) છું, નિકાસકારો માટે Faithful Servant. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
   ta: 'வணக்கம்! நான் தோத் (Thoth), ஏற்றுமதியாளர்களுக்கான Faithful Servant. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',

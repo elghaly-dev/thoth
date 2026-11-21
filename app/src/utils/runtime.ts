@@ -2,9 +2,10 @@
 // - "server": npm run dev / a hosted Node proxy. The Gemini key stays
 //   on the server. Client code never sees it.
 // - "static": GitHub Pages (or any static host). The exporter pastes
-//   their own Gemini key, which is kept in sessionStorage for this tab
-//   only and is sent only to Google. It is never written to the repo,
-//   localStorage, or Thoth's servers.
+//   their own Gemini key. It is kept only in this page's memory (a module
+//   variable): never in localStorage, sessionStorage, cookies, the URL,
+//   the repo or the bundle. Reloading or closing the tab forgets it. It is
+//   sent only to Google.
 
 export type RuntimeMode = 'unknown' | 'server' | 'static';
 
@@ -15,18 +16,14 @@ export interface RuntimeState {
   rejected: boolean;
 }
 
-const STORAGE_KEY = 'thoth.geminiKey';
+// In-memory only. Never written to any browser storage.
+let memoryKey = '';
 
 type Listener = (state: RuntimeState) => void;
 const listeners = new Set<Listener>();
 
 function readUserKey(): string {
-  if (typeof sessionStorage === 'undefined') return '';
-  try {
-    return sessionStorage.getItem(STORAGE_KEY) || '';
-  } catch {
-    return '';
-  }
+  return memoryKey;
 }
 
 let state: RuntimeState = {
@@ -58,14 +55,7 @@ export function getUserKey(): string {
 
 export function setUserKey(key: string): void {
   const trimmed = key.trim();
-  if (typeof sessionStorage !== 'undefined') {
-    try {
-      if (trimmed) sessionStorage.setItem(STORAGE_KEY, trimmed);
-      else sessionStorage.removeItem(STORAGE_KEY);
-    } catch {
-      // Private mode can throw; the in-memory flag still updates.
-    }
-  }
+  memoryKey = trimmed;
   state = { ...state, userKeyPresent: trimmed.length > 0, rejected: false };
   emit();
 }
@@ -76,13 +66,7 @@ export function clearUserKey(): void {
 
 /** Drop a refused key and mark the runtime so the UI can show key.invalid. */
 export function rejectUserKey(): void {
-  if (typeof sessionStorage !== 'undefined') {
-    try {
-      sessionStorage.removeItem(STORAGE_KEY);
-    } catch {
-      // Private mode can throw; the in-memory flag still updates.
-    }
-  }
+  memoryKey = '';
   state = { ...state, userKeyPresent: false, rejected: true };
   emit();
 }

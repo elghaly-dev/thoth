@@ -4,7 +4,7 @@
 // fallback and never keeps a spinner running.
 //
 // On a static host (GitHub Pages) there is no proxy. postModel then uses
-// the exporter's own Gemini key (sessionStorage, this tab only) and talks
+// the exporter's own Gemini key (page memory only) and talks
 // to Google directly. The key is never placed in a URL or in the bundle.
 
 import { detectRuntime, getRuntime, getUserKey, rejectUserKey } from './runtime';
