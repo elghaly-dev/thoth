@@ -21,11 +21,25 @@ android {
         ]
     }
 
+    // Upload-key signing, only when CI passes the key in through environment
+    // variables (GitHub secrets set by the owner). Nothing about the key lives
+    // in this repository; without the variables the release bundle is unsigned.
+    def uploadStore = System.getenv('THOTH_UPLOAD_STORE_FILE')
+    signingConfigs {
+        if (uploadStore) {
+            upload {
+                storeFile file(uploadStore)
+                storePassword System.getenv('THOTH_UPLOAD_STORE_PASSWORD')
+                keyAlias System.getenv('THOTH_UPLOAD_KEY_ALIAS')
+                keyPassword System.getenv('THOTH_UPLOAD_KEY_PASSWORD')
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // UNSIGNED on purpose: no signing block, no keystore, no secrets in
-            // the repo or in CI. Signing happens later, outside this repository.
             minifyEnabled false
+            if (uploadStore) signingConfig signingConfigs.upload
         }
     }
 

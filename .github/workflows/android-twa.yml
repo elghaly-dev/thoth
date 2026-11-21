@@ -1,7 +1,7 @@
 name: android-twa
 on:
   pull_request:
-    paths: ["android/**", "twa-manifest.json", "app/public/**", ".well-known/**", "tools/check-twa.mjs", ".github/workflows/android-twa.yml"]
+    paths: ["android/**", "twa-manifest.json", "app/public/**", ".well-known/**", "tools/check-twa.mjs", "tools/set-assetlinks.mjs", ".github/workflows/android-twa.yml"]
   workflow_dispatch:
 
 permissions:
@@ -55,3 +55,68 @@ jobs:
             android/app/build/outputs/bundle/release/app-release.aab
             android/app/build/outputs/bundle/release/app-release.aab.sha256
           retention-days: 14
+
+  signed-release-aab:
+    # Manual only (Actions > android-twa > Run workflow). Signs with the UPLOAD
+    # key from repository secrets the owner sets; Play App Signing re-signs it.
+    # The keystore is written to the runner's temp folder and deleted at the end.
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Preflight - all four signing secrets must be set together
+        env:
+          S1: ${{ secrets.THOTH_UPLOAD_KEYSTORE_B64 != '' }}
+          S2: ${{ secrets.THOTH_UPLOAD_STORE_PASSWORD != '' }}
+          S3: ${{ secrets.THOTH_UPLOAD_KEY_ALIAS != '' }}
+          S4: ${{ secrets.THOTH_UPLOAD_KEY_PASSWORD != '' }}
+        run: |
+          missing=""
+          [ "$S1" = true ] || missing="$missing THOTH_UPLOAD_KEYSTORE_B64"
+          [ "$S2" = true ] || missing="$missing THOTH_UPLOAD_STORE_PASSWORD"
+          [ "$S3" = true ] || missing="$missing THOTH_UPLOAD_KEY_ALIAS"
+          [ "$S4" = true ] || missing="$missing THOTH_UPLOAD_KEY_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::Signing secrets missing:$missing. Set all four (Settings > Secrets and variables > Actions); see docs/TWA.md."
+            exit 1
+          fi
+          echo "all four signing secrets are set"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.13"
+      - name: Write the upload keystore to the runner temp folder
+        env:
+          KS_B64: ${{ secrets.THOTH_UPLOAD_KEYSTORE_B64 }}
+        run: |
+          set -euo pipefail
+          umask 077
+          printf '%s' "$KS_B64" | base64 -d > "$RUNNER_TEMP/upload.jks"
+          echo "THOTH_UPLOAD_STORE_FILE=$RUNNER_TEMP/upload.jks" >> "$GITHUB_ENV"
+      - name: Build signed AAB
+        env:
+          THOTH_UPLOAD_STORE_PASSWORD: ${{ secrets.THOTH_UPLOAD_STORE_PASSWORD }}
+          THOTH_UPLOAD_KEY_ALIAS: ${{ secrets.THOTH_UPLOAD_KEY_ALIAS }}
+          THOTH_UPLOAD_KEY_PASSWORD: ${{ secrets.THOTH_UPLOAD_KEY_PASSWORD }}
+        run: gradle -p android bundleRelease --no-daemon
+      - name: Verify signature; print the upload certificate SHA-256 (public), size, sha256
+        run: |
+          set -euo pipefail
+          AAB=android/app/build/outputs/bundle/release/app-release.aab
+          jarsigner -verify "$AAB" | grep -q 'jar verified' || { echo "::error::AAB is not signed"; exit 1; }
+          keytool -printcert -jarfile "$AAB" | grep -E 'SHA256:' | sed 's/^ */upload certificate /'
+          echo "AAB size: $(stat -c%s "$AAB") bytes"
+          sha256sum "$AAB" | tee "$AAB.sha256"
+      - name: Delete the keystore
+        if: always()
+        run: rm -f "$RUNNER_TEMP/upload.jks"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thoth-signed-aab
+          path: |
+            android/app/build/outputs/bundle/release/app-release.aab
+            android/app/build/outputs/bundle/release/app-release.aab.sha256
+          retention-days: 7
