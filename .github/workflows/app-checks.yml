@@ -29,6 +29,7 @@ jobs:
       - run: npm run test:locales
       - run: npm run test:server
       - run: npm run test:mic
+      - run: npm run test:ondevice   # on-device model: manifest, sha256 download checks, CSP, prompts (mock model)
       - run: npm test            # smoke, idle session, no-secrets, pages redirect
       - name: Build the Pages bundle (use/)
         run: npm run build:pages

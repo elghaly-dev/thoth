@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "status": "pending",
+  "note": "Waiting for the model upload to models.elghaly.dev. Until status is \"ready\" the on-device mode shows that it is not available yet.",
+  "modelId": "Qwen2.5-1.5B-Instruct-q4f16_1-MLC",
+  "name": "Qwen2.5-1.5B-Instruct",
+  "licence": "Apache-2.0",
+  "host": "https://models.elghaly.dev",
+  "base": "https://models.elghaly.dev/qwen2.5-1.5b-instruct-q4f16_1-mlc/v1/resolve/main/",
+  "modelLib": null,
+  "files": []
+}
