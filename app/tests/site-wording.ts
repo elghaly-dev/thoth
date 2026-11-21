@@ -218,6 +218,7 @@ check(!/[A-Za-z]{3,}/.test(GREETINGS.hi), 'hi greeting has no English words');
     check(DEVANAGARI.test(v) && bad.length === 0, `agent/thoth-page.js: fact in Hindi: ${v.slice(0, 50)} (${bad.join(' ')})`);
   }
   check(!/\bby:\s*"/.test(facts), 'agent/thoth-page.js: no by: field');
+  check(!/\bprice\s*:/.test(facts) && !/asks anyone to pay|भुगतान नहीं माँगता/.test(facts + read('agent/site-actions.js')), 'agent page: no price line');
 }
 
 // Errors the UI already shows to the visitor are logged as warnings, so a
