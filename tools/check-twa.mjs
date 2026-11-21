@@ -2,8 +2,9 @@
 // manifest-check for the Thoth TWA (no network, no Android SDK needed).
 // Fails on: wrong TWA manifest values or URLs that the site does not serve;
 // app/public/site.webmanifest not Hindi / not standalone / icons wrong / no
-// "by Elghaly LLC" / banned words; targetSdk not 35; any signing config or
-// signing material; assetlinks without its TODO placeholder (no guessed key).
+// "by Elghaly LLC" / banned words; targetSdk not 35; signing values that are
+// not environment reads, or signing material in the repo; assetlinks that is
+// neither the TODO placeholder nor well-formed fingerprints (no guessed key).
 // Run: node tools/check-twa.mjs
 import fs from 'node:fs';
 import { execSync } from 'node:child_process';
@@ -38,7 +39,13 @@ check(fs.existsSync('use/site.webmanifest'), 'use/ build carries site.webmanifes
 const gradle = read('android/app/build.gradle');
 check(/targetSdk 35\b/.test(gradle) && /compileSdk 35\b/.test(gradle), 'android: compileSdk/targetSdk 35');
 check(/applicationId 'dev\.elghaly\.thoth'/.test(gradle), 'android: applicationId dev.elghaly.thoth');
-check(!/signingConfig|storePassword|keyPassword|storeFile/.test(gradle), 'android: no signing config (unsigned)');
+// Signing may only come from environment variables (CI secrets): every
+// signing value must be a System.getenv(...) read, never a literal.
+const signLines = gradle.split('\n').filter((l) => /\b(storeFile|storePassword|keyAlias|keyPassword)\b/.test(l));
+check(signLines.length === 4, 'android: exactly 4 signing lines (store file, store password, alias, key password)');
+check(signLines.every((l) => /storeFile file\(uploadStore\)|System\.getenv\('THOTH_UPLOAD_[A-Z_]+'\)/.test(l)), 'android: every signing value comes from an environment variable');
+check(/def uploadStore = System\.getenv\('THOTH_UPLOAD_STORE_FILE'\)/.test(gradle) && /if \(uploadStore\) signingConfig signingConfigs\.upload/.test(gradle), 'android: signing only when the CI variable is set (unsigned otherwise)');
+check(!/['"][^'"]*\.(jks|keystore|p12)['"]/.test(gradle), 'android: no keystore path written in build.gradle');
 const tracked = execSync('git ls-files', { encoding: 'utf8' }).split('\n');
 check(!tracked.some((f) => /\.(jks|keystore|p12)$|keystore\.properties$/.test(f)), 'repo: no signing material tracked');
 const mf = read('android/app/src/main/AndroidManifest.xml');
@@ -47,7 +54,12 @@ check(/https:\/\/thoth\.elghaly\.dev\/use\//.test(gradle), 'android: opens /use/
 
 const al = JSON.parse(read('.well-known/assetlinks.json'));
 const fp = al[0].target.sha256_cert_fingerprints;
-check(fp.length === 1 && /^REPLACE_WITH_/.test(fp[0]), 'assetlinks: fingerprint is still the TODO placeholder (never guessed)');
+const FP = /^([0-9A-F]{2}:){31}[0-9A-F]{2}$/;
+const placeholder = fp.length === 1 && /^REPLACE_WITH_/.test(fp[0]);
+check(placeholder || (fp.length >= 1 && fp.length <= 2 && fp.every((f) => FP.test(f)) && new Set(fp).size === fp.length),
+  'assetlinks: either the TODO placeholder, or 1-2 real SHA-256 fingerprints (AA:BB:… 32 bytes), never a mix');
+check(al.length === 1 && al[0].target.package_name === 'dev.elghaly.thoth' && al[0].relation[0] === 'delegate_permission/common.handle_all_urls', 'assetlinks: package and relation');
+if (placeholder) console.log('assetlinks: TODO placeholder still in place (owner fills it from Play Console)');
 
 if (fails.length) { console.log(`manifest-check: FAIL ${fails.length}/${checks}`); fails.forEach((m) => console.log('  FAIL | ' + m)); process.exit(1); }
 console.log(`manifest-check: PASS ${checks}/${checks}`);
