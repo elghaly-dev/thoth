@@ -62,14 +62,24 @@ jobs:
     # The keystore is written to the runner's temp folder and deleted at the end.
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
-    env:
-      HAVE_KEY: ${{ secrets.THOTH_UPLOAD_KEYSTORE_B64 != '' }}
     steps:
-      - name: Stop if the owner has not set the signing secrets
-        if: env.HAVE_KEY != 'true'
+      - name: Preflight - all four signing secrets must be set together
+        env:
+          S1: ${{ secrets.THOTH_UPLOAD_KEYSTORE_B64 != '' }}
+          S2: ${{ secrets.THOTH_UPLOAD_STORE_PASSWORD != '' }}
+          S3: ${{ secrets.THOTH_UPLOAD_KEY_ALIAS != '' }}
+          S4: ${{ secrets.THOTH_UPLOAD_KEY_PASSWORD != '' }}
         run: |
-          echo "::error::Secrets THOTH_UPLOAD_KEYSTORE_B64, THOTH_UPLOAD_STORE_PASSWORD, THOTH_UPLOAD_KEY_ALIAS, THOTH_UPLOAD_KEY_PASSWORD are not set"
-          exit 1
+          missing=""
+          [ "$S1" = true ] || missing="$missing THOTH_UPLOAD_KEYSTORE_B64"
+          [ "$S2" = true ] || missing="$missing THOTH_UPLOAD_STORE_PASSWORD"
+          [ "$S3" = true ] || missing="$missing THOTH_UPLOAD_KEY_ALIAS"
+          [ "$S4" = true ] || missing="$missing THOTH_UPLOAD_KEY_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::Signing secrets missing:$missing. Set all four (Settings > Secrets and variables > Actions); see docs/TWA.md."
+            exit 1
+          fi
+          echo "all four signing secrets are set"
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
