@@ -85,6 +85,11 @@ Live since 2026-11-21: the Qwen2.5-0.5B files are on R2 (bucket
 290,875,248 bytes (about 0.29 GB). Every value was pinned from the live files,
 each downloaded and hashed. `npm run test:live-model` (manual, not in CI) runs
 the app's own downloader against the live host and checks all 12 files.
+Cross-checked on 2026-11-21 against the published upload manifest
+`https://models.elghaly.dev/manifests/v1/manifest.json` (sha256 prefix
+`358163d33d4b0401`, 104 files): all 11 model files and the model library match
+it in size and sha256. The values in this repository come from our own
+download and hash; the published manifest is the second source.
 CORS answers only `https://thoth.elghaly.dev`.
 
 Before a manifest is `ready`, the tab says the on-device Faithful Servant is
