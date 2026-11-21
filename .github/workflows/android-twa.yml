@@ -31,6 +31,15 @@ jobs:
           gradle-version: "8.13"
       - name: Build unsigned AAB
         run: gradle -p android bundleRelease --no-daemon
+      - name: Print SDK levels (build.gradle and the merged release manifest)
+        run: |
+          set -euo pipefail
+          grep -nE 'compileSdk|targetSdk|minSdk' android/app/build.gradle
+          M=$(find android/app/build/intermediates -path '*release*' -name AndroidManifest.xml | head -1)
+          test -n "$M"
+          echo "merged manifest: $M"
+          grep -oE 'android:(minSdkVersion|targetSdkVersion|compileSdkVersion)="[0-9]+"' "$M"
+          grep -q 'android:targetSdkVersion="35"' "$M" || { echo "::error::targetSdkVersion is not 35"; exit 1; }
       - name: Check it is unsigned; size and sha256
         run: |
           set -euo pipefail
