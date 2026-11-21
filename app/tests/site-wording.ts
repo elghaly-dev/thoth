@@ -220,6 +220,14 @@ check(!/[A-Za-z]{3,}/.test(GREETINGS.hi), 'hi greeting has no English words');
   check(!/\bby:\s*"/.test(facts), 'agent/thoth-page.js: no by: field');
 }
 
+// Errors the UI already shows to the visitor are logged as warnings, so a
+// normal session (mic blocked, no key yet) has 0 console errors.
+for (const f of fs.readdirSync(path.join(APP, 'src', 'components'))) {
+  check(!read(path.join('app', 'src', 'components', f)).includes('console.error('), `components/${f}: no console.error for handled errors`);
+}
+check(!/browser tab/.test(read('app/src/utils/api.ts')), 'api.ts: key wording says page memory, not browser tab');
+check(/memory/.test(EN_ALL['key.body' as StringKey]) && !/browser tab|this tab/i.test(EN_ALL['key.body' as StringKey] + EN_ALL['key.save' as StringKey]), 'key.body/key.save: memory only, no tab storage claim');
+
 if (fails.length) {
   console.log(`site-wording: FAIL ${fails.length}/${checks}`);
   for (const m of fails.slice(0, 40)) console.log('  FAIL | ' + m);

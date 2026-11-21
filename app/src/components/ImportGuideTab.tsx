@@ -71,7 +71,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
       );
     } catch (err: unknown) {
       if (!req.isCurrent()) return;
-      console.error('Error fetching import answer:', err);
+      console.warn('Error fetching import answer:', err);
       setGuideError(errorText(lang, err, 'err.guide'));
     } finally {
       if (mountedRef.current) setIsAsking(false);

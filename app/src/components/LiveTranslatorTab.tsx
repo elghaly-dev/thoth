@@ -158,7 +158,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         setIsListening(true);
       }
     } catch (err) {
-      console.error('Failed to start recognition:', err);
+      console.warn('Failed to start recognition:', err);
       setIsListening(false);
     }
   };
@@ -225,7 +225,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       );
     } catch (err: unknown) {
       if (!req.isCurrent()) return;
-      console.error('Translation error:', err);
+      console.warn('Translation error:', err);
       setTranslateError(errorText(lang, err, 'err.translate'));
     } finally {
       if (mountedRef.current) setIsTranslating(false);

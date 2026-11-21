@@ -126,7 +126,7 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
       setPitchResult(data);
     } catch (err: unknown) {
       if (!req.isCurrent()) return;
-      console.error('Error generating pitch:', err);
+      console.warn('Error generating pitch:', err);
       setPitchError(errorText(lang, err, 'err.pitch'));
     } finally {
       if (mountedRef.current) setIsGenerating(false);

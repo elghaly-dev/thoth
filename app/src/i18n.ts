@@ -402,10 +402,10 @@ const EN_EXTRA = {
 // Static-site (Pages) key bar, idle voice notices, skip link, send notices.
 const EN_PAGES = {
   "key.title": "Your Gemini API key",
-  "key.body": "This public site has no server key. Paste your own Gemini API key to talk with Thoth. It stays in this browser tab and is sent only to Google; Google's handling is outside this app.",
+  "key.body": "This public site has no server key. Paste your own Gemini API key to talk with Thoth. It is kept in this page's memory only (reloading forgets it) and is sent only to Google; Google's handling is outside this app.",
   "key.label": "Gemini API key",
   "key.placeholder": "Paste your key here",
-  "key.save": "Save in this tab",
+  "key.save": "Use for this visit",
   "key.clear": "Remove key",
   "key.saved": "Key kept in this page's memory only; reloading the page forgets it. It is sent only to Google.",
   "key.needed": "Add your Gemini API key above to talk with Thoth.",
@@ -790,10 +790,10 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Static-site key bar, idle notices, skip link [VERIFY] ----
   "key.title": "您的 Gemini API 密钥",
-  "key.body": "此公开网站没有服务器密钥。请粘贴您自己的 Gemini API 密钥以便与 Thoth 对话。密钥只保留在当前浏览器标签页中，并且只发送给 Google；Google 如何处理不在本应用的控制范围内。",
+  "key.body": "此公开网站没有服务器密钥。请粘贴您自己的 Gemini API 密钥以便与 Thoth 对话。密钥只保存在本页面的内存中（刷新页面即清除），并且只发送给 Google；Google 如何处理不在本应用的控制范围内。",
   "key.label": "Gemini API 密钥",
   "key.placeholder": "在此粘贴密钥",
-  "key.save": "仅保存在此标签页",
+  "key.save": "本次访问使用",
   "key.clear": "移除密钥",
   "key.saved": "密钥仅保存在此标签页，并且只发送给 Google。",
   "key.needed": "请在上方添加您的 Gemini API 密钥，以便与 Thoth 对话。",

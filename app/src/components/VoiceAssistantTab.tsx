@@ -172,7 +172,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         setIsListening(true);
       }
     } catch (err) {
-      console.error('Failed to start speech recognition', err);
+      console.warn('Failed to start speech recognition', err);
       setIsListening(false);
     }
   };
@@ -247,7 +247,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
       }
     } catch (err: unknown) {
       if (!req.isCurrent()) return;
-      console.error('Error sending message:', err);
+      console.warn('Error sending message:', err);
       // A 401/403 is a provider-auth failure: show the server's clear
       // error as-is. It is not retried and no fake reply is shown.
       const content =

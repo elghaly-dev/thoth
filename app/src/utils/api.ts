@@ -56,7 +56,7 @@ function requireUserKey(): string {
   if (!key) {
     throw new ApiError(
       401,
-      'Add your Gemini API key to talk with Thoth. It stays in this browser tab and is sent only to Google.',
+      'Add your Gemini API key to talk with Thoth. It is kept in page memory only and sent only to Google.',
     );
   }
   return key;
