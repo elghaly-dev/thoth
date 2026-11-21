@@ -1,0 +1,11 @@
+# Never commit signing material or local machine settings.
+*.jks
+*.keystore
+*.p12
+keystore.properties
+local.properties
+.gradle/
+build/
+app/build/
+*.apk
+*.aab

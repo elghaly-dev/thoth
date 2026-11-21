@@ -1,0 +1,41 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'dev.elghaly.thoth'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'dev.elghaly.thoth'
+        minSdk 23
+        targetSdk 35
+        versionCode 1
+        versionName '1.0.0'
+
+        manifestPlaceholders = [
+            hostName       : 'thoth.elghaly.dev',
+            defaultUrl     : 'https://thoth.elghaly.dev/use/',
+            themeColor     : '#0b0c10',
+            backgroundColor: '#0b0c10',
+        ]
+    }
+
+    buildTypes {
+        release {
+            // UNSIGNED on purpose: no signing block, no keystore, no secrets in
+            // the repo or in CI. Signing happens later, outside this repository.
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    // Trusted Web Activity launcher (Google's android-browser-helper).
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.5.0'
+}
