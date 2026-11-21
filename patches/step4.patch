@@ -1,0 +1,120 @@
+diff --git a/agent/thoth-page.js b/agent/thoth-page.js
+index 6983883..0d4cc2e 100644
+--- a/agent/thoth-page.js
++++ b/agent/thoth-page.js
+@@ -17,7 +17,7 @@ export class App {
+     helps: "Exporters, small or large, reach and talk to buyers abroad.",
+     tools: [
+       { id: "pitch", name: "Pitch Studio", does: "Turns verified product facts into a short buyer email, a short message, and a list of claims the exporter must verify first." },
+-      { id: "translate", name: "Live Translator", does: "Translates between an exporter and a buyer faithfully, and reads back price, currency, units and Incoterm for confirmation." },
++      { id: "translate", name: "Live Translator", does: "Translates between an exporter and a buyer faithfully, and reads back amount, currency, units and Incoterm for confirmation." },
+       { id: "guide", name: "Import Guide", does: "Explains export basics in plain words: HS codes as candidates only, origin labelling, and shipping terms such as FOB and CIF." },
+       { id: "voice", name: "Voice Assistant", does: "Talks with the exporter in their own language." },
+     ],
+diff --git a/app/package.json b/app/package.json
+index b0e2cf9..945d127 100644
+--- a/app/package.json
++++ b/app/package.json
+@@ -21,7 +21,8 @@
+     "test:idle": "tsx tests/idle-session.ts",
+     "test:secrets": "tsx tests/no-secrets.ts",
+     "test:pages": "tsx tests/pages-redirect.ts",
+-    "test:site": "tsx tests/site-wording.ts"
++    "test:site": "tsx tests/site-wording.ts",
++    "test:credit": "tsx tests/i18n-credit.ts"
+   },
+   "dependencies": {
+     "@google/genai": "^3.2.0",
+diff --git a/app/public/icons/icon-180.png b/app/public/icons/icon-180.png
+new file mode 100644
+index 0000000..582db3b
+Binary files /dev/null and b/app/public/icons/icon-180.png differ
+diff --git a/app/public/icons/icon-192.png b/app/public/icons/icon-192.png
+new file mode 100644
+index 0000000..a37f5d6
+Binary files /dev/null and b/app/public/icons/icon-192.png differ
+diff --git a/app/public/icons/icon-32.png b/app/public/icons/icon-32.png
+new file mode 100644
+index 0000000..6c2c3c7
+Binary files /dev/null and b/app/public/icons/icon-32.png differ
+diff --git a/app/public/icons/icon-512.png b/app/public/icons/icon-512.png
+new file mode 100644
+index 0000000..8175d3c
+Binary files /dev/null and b/app/public/icons/icon-512.png differ
+diff --git a/app/public/og-image-hi.svg b/app/public/og-image-hi.svg
+new file mode 100644
+index 0000000..8f4aa5d
+--- /dev/null
++++ b/app/public/og-image-hi.svg
+@@ -0,0 +1,7 @@
++<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
++<rect width="1200" height="630" fill="#0b0b0d"/>
++<rect x="40" y="40" width="1120" height="550" fill="none" stroke="#d4af37" stroke-opacity="0.35"/>
++<text x="600" y="285" text-anchor="middle" font-family="Noto Sans Devanagari, system-ui" font-size="76" fill="#efe8d8">थोथ</text>
++<text x="600" y="360" text-anchor="middle" font-family="Noto Sans Devanagari, system-ui" font-size="34" fill="#d4af37">निर्यातकों के लिए Faithful Servant</text>
++<text x="600" y="520" text-anchor="middle" font-family="system-ui" font-size="22" fill="#9a9a9a">thoth.elghaly.dev</text>
++</svg>
+diff --git a/app/public/site.webmanifest b/app/public/site.webmanifest
+new file mode 100644
+index 0000000..396f23d
+--- /dev/null
++++ b/app/public/site.webmanifest
+@@ -0,0 +1,27 @@
++{
++  "name": "थोथ — निर्यातकों के लिए Faithful Servant",
++  "short_name": "थोथ",
++  "lang": "hi",
++  "dir": "ltr",
++  "start_url": "/",
++  "display": "standalone",
++  "background_color": "#0b0b0d",
++  "theme_color": "#0b0b0d",
++  "icons": [
++    {
++      "src": "/icons/icon-192.png",
++      "sizes": "192x192",
++      "type": "image/png"
++    },
++    {
++      "src": "/icons/icon-512.png",
++      "sizes": "512x512",
++      "type": "image/png"
++    },
++    {
++      "src": "/icons/icon-180.png",
++      "sizes": "180x180",
++      "type": "image/png"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/app/tests/i18n-credit.ts b/app/tests/i18n-credit.ts
+new file mode 100644
+index 0000000..1a9322b
+--- /dev/null
++++ b/app/tests/i18n-credit.ts
+@@ -0,0 +1,24 @@
++/**
++ * test:credit — the credit contract on every page.
++ * - "by Elghaly LLC" linked to https://elghaly.dev sits under the page title (Header).
++ * - "Wyndham Heaven" (Latin, untranslated) is the last line of the footer.
++ * - Neither depends on the active locale.
++ */
++import { readFileSync } from "node:fs";
++
++let fail = 0;
++const check = (ok: boolean, msg: string) => { if (!ok) { fail++; console.log("  FAIL | " + msg); } };
++
++const header = readFileSync(new URL("../src/components/Header.tsx", import.meta.url), "utf8");
++const app = readFileSync(new URL("../src/App.tsx", import.meta.url), "utf8");
++
++check(/by\s*<a\s+href="https:\/\/elghaly\.dev"[^>]*>Elghaly LLC<\/a>/.test(header), "header: by Elghaly LLC linked to https://elghaly.dev");
++check(/<\/h1>[\s\S]{0,400}Elghaly LLC/.test(header), "header: credit sits under the <h1>");
++check(/Wyndham Heaven/.test(app), "footer: Wyndham Heaven present");
++check(/Wyndham Heaven<\/p>\s*<\/footer>/.test(app), "footer: Wyndham Heaven is the last line inside <footer>");
++check(!/Wyndham Heaven/.test(header), "header: Wyndham Heaven must not appear there");
++check(!/by:\s*"Wyndham Heaven"/.test(readFileSync(new URL("../../agent/thoth-page.js", import.meta.url), "utf8")), "manifest by: must not carry Wyndham Heaven");
++check(!/\bfree\b/i.test(header) && !/\bfree\b/i.test(app), "no 'free' in header or footer");
++
++console.log(fail ? `i18n-credit: FAIL (${fail})` : "i18n-credit: PASS 7/7");
++process.exit(fail ? 1 : 0);
