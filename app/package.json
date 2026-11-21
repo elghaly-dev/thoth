@@ -16,6 +16,7 @@
     "test:server": "tsx tests/server-hardening.ts",
     "test:locales": "tsx tests/locale-parity.ts",
     "test:mic": "tsx tests/mic-blocked.ts",
+    "test:keys": "tsx tests/keys-guard.ts",
     "build:pages": "THOTH_BASE=/use/ vite build --outDir ../use --emptyOutDir",
     "test": "tsx tests/smoke-locales.ts && tsx tests/idle-session.ts && tsx tests/no-secrets.ts && tsx tests/pages-redirect.ts",
     "test:idle": "tsx tests/idle-session.ts",

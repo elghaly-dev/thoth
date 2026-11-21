@@ -21,9 +21,12 @@ import {
 } from 'lucide-react';
 
 export default function App() {
-  const [currentLang, setCurrentLang] = useState<SupportedLanguage>(
-    SUPPORTED_LANGUAGES[0] // Hindi as default, easily switchable to English, Marathi, Gujarati, etc.
-  );
+  // Hindi is the default; the static pages pass ?lang=ar or ?lang=zh along.
+  const [currentLang, setCurrentLang] = useState<SupportedLanguage>(() => {
+    let q = '';
+    try { q = new URLSearchParams(window.location.search).get('lang') || ''; } catch { /* no URL */ }
+    return SUPPORTED_LANGUAGES.find((l) => l.code === q) || SUPPORTED_LANGUAGES[0];
+  });
   const [activeTab, setActiveTab] = useState<'assistant' | 'pitch' | 'translate' | 'guide'>('assistant');
   const [isMuted, setIsMuted] = useState(false);
   const [isSafetyModalOpen, setIsSafetyModalOpen] = useState(false);
@@ -54,9 +57,10 @@ export default function App() {
   const lang = currentLang.code;
 
   // Keep <html lang> in step with the UI language (zh -> zh-CN) so screen
-  // readers and CJK font selection use Simplified Chinese.
+  // readers and CJK font selection use Simplified Chinese; Arabic is RTL.
   useEffect(() => {
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   }, [lang]);
 
   return (

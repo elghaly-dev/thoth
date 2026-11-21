@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="hi">
+<html lang="hi" data-i18n-title="title.home">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -100,6 +100,10 @@
       min-height: 44px;
       line-height: 20px;
     }
+    body { position: relative; }
+    .langs { position: absolute; top: 14px; inset-inline-end: 16px; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: .9rem; color: var(--muted); }
+    .langs a { color: var(--muted); text-decoration: none; padding: 6px 4px; }
+    .langs a[aria-current] { color: var(--gold); text-decoration: underline; }
     .cta:hover, .cta:focus { outline: 2px solid #e8e6e1; outline-offset: 3px; }
     .by { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 0.9rem; letter-spacing: 0.06em; margin: -20px 0 32px; }
     .by a { color: var(--gold); text-decoration: none; }
@@ -108,14 +112,16 @@
   </style>
 </head>
 <body>
+  <nav class="langs" aria-label="भाषा / اللغة / 语言"><a href="?lang=hi" data-lang-link="hi" lang="hi">हिन्दी</a> · <a href="?lang=ar" data-lang-link="ar" lang="ar" dir="rtl">العربية</a> · <a href="?lang=zh" data-lang-link="zh" lang="zh-CN">中文</a></nav>
   <main>
-    <p class="mark">निर्यातकों के लिए वफ़ादार सेवक</p>
-    <h1>थोथ</h1>
-    <p class="line">आवाज़ से चलने वाला बहुभाषी वफ़ादार सेवक, जो निर्यातकों को विदेश के खरीदारों से उनकी अपनी भाषा में बात करने में मदद करता है।</p>
+    <p class="mark" data-i18n="mark">निर्यातकों के लिए वफ़ादार सेवक</p>
+    <h1 data-i18n="name">थोथ</h1>
+    <p class="line" data-i18n="line">आवाज़ से चलने वाला बहुभाषी वफ़ादार सेवक, जो निर्यातकों को विदेश के खरीदारों से उनकी अपनी भाषा में बात करने में मदद करता है।</p>
     <p class="by"><a href="https://elghaly.dev" lang="en">by Elghaly LLC</a></p>
-    <p class="badge">छोटे-बड़े हर निर्यातक के लिए</p>
-    <p class="cta-wrap"><a class="cta" href="/use/">थोथ खोलें</a></p>
+    <p class="badge" data-i18n="badge">छोटे-बड़े हर निर्यातक के लिए</p>
+    <p class="cta-wrap"><a class="cta" href="/use/" data-i18n="cta">थोथ खोलें</a></p>
   </main>
   <footer lang="en">Wyndham Heaven</footer>
+  <script src="/lang-switch.js"></script>
 </body>
 </html>

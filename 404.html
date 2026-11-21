@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="hi">
+<html lang="hi" data-i18n-title="title.404">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,17 +17,22 @@
     a { color:#c9a227; }
     h1 { font-weight:500; letter-spacing:.06em; }
     .by a { text-decoration:none; font-family: system-ui, sans-serif; }
+    .langs { position: absolute; top: 14px; right: 16px; font-family: system-ui, sans-serif; font-size: .9rem; }
+    .langs a { color: #9a958c; text-decoration: none; padding: 6px 4px; }
+    .langs a[aria-current] { color: #c9a227; text-decoration: underline; }
     footer { margin-top:40px; color:#9a958c; font-family: system-ui, sans-serif; font-size:.8rem; letter-spacing:.12em; }
   </style>
 </head>
 <body>
+  <nav class="langs" aria-label="भाषा / اللغة / 语言"><a href="?lang=hi" data-lang-link="hi" lang="hi">हिन्दी</a> · <a href="?lang=ar" data-lang-link="ar" lang="ar" dir="rtl">العربية</a> · <a href="?lang=zh" data-lang-link="zh" lang="zh-CN">中文</a></nav>
   <main>
-    <p>निर्यातकों के लिए वफ़ादार सेवक</p>
-    <h1>थोथ</h1>
+    <p data-i18n="mark">निर्यातकों के लिए वफ़ादार सेवक</p>
+    <h1 data-i18n="name">थोथ</h1>
     <p class="by"><a href="https://elghaly.dev" lang="en">by Elghaly LLC</a></p>
-    <p>यह पेज नहीं मिला।</p>
-    <p><a href="/">मुख्य पेज</a> · <a href="/use/">थोथ खोलें</a></p>
+    <p data-i18n="notFound">यह पेज नहीं मिला।</p>
+    <p><a href="/" data-i18n="home">मुख्य पेज</a> · <a href="/use/" data-i18n="cta">थोथ खोलें</a></p>
   </main>
   <footer lang="en">Wyndham Heaven</footer>
+  <script src="/lang-switch.js"></script>
 </body>
 </html>

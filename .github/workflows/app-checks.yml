@@ -27,6 +27,7 @@ jobs:
       - run: npm run test:zh
       - run: npm run test:nofree
       - run: npm run test:locales
+      - run: npm run test:keys
       - run: npm run test:server
       - run: npm run test:mic
       - run: npm test            # smoke, idle session, no-secrets, pages redirect
