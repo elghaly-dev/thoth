@@ -126,7 +126,7 @@ export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose, lang 
 
         <div className="mt-5 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
           <span className="flex items-center gap-1">
-            {tx(lang, 'safety.madeWith')} <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500" aria-hidden="true" /> {tx(lang, 'safety.byElghaly')}
+            {tx(lang, 'safety.madeWith')} <Heart className="w-3.5 h-3.5 text-rose-500 inline fill-rose-500" aria-hidden="true" /> {tx(lang, 'safety.credit')}
           </span>
           <button
             type="button"
