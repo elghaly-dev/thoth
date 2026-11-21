@@ -1,0 +1,24 @@
+{
+  "packageId": "dev.elghaly.thoth",
+  "host": "thoth.elghaly.dev",
+  "name": "Thoth",
+  "launcherName": "Thoth",
+  "display": "standalone",
+  "themeColor": "#0b0c10",
+  "backgroundColor": "#0b0c10",
+  "startUrl": "/use/",
+  "iconUrl": "https://thoth.elghaly.dev/icon-512.png",
+  "maskableIconUrl": "https://thoth.elghaly.dev/icon-maskable-512.png",
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "creao",
+  "webManifestUrl": "https://thoth.elghaly.dev/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {},
+  "enableNotifications": false,
+  "signingKey": {
+    "path": "android.keystore",
+    "alias": "thoth"
+  }
+}

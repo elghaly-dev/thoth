@@ -1,0 +1,57 @@
+name: android-twa
+on:
+  pull_request:
+    paths: ["android/**", "twa-manifest.json", "app/public/**", ".well-known/**", "tools/check-twa.mjs", ".github/workflows/android-twa.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  manifest-check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node tools/check-twa.mjs
+
+  build-unsigned-aab:
+    # Unsigned release bundle only: no keystore, no secrets, nothing published.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.13"
+      - name: Build unsigned AAB
+        run: gradle -p android bundleRelease --no-daemon
+      - name: Print SDK levels (build.gradle and the merged release manifest)
+        run: |
+          set -euo pipefail
+          grep -nE 'compileSdk|targetSdk|minSdk' android/app/build.gradle
+          M=$(find android/app/build/intermediates -path '*release*' -name AndroidManifest.xml | head -1)
+          test -n "$M"
+          echo "merged manifest: $M"
+          grep -oE 'android:(minSdkVersion|targetSdkVersion|compileSdkVersion)="[0-9]+"' "$M"
+          grep -q 'android:targetSdkVersion="35"' "$M" || { echo "::error::targetSdkVersion is not 35"; exit 1; }
+      - name: Check it is unsigned; size and sha256
+        run: |
+          set -euo pipefail
+          AAB=android/app/build/outputs/bundle/release/app-release.aab
+          test -s "$AAB"
+          if jarsigner -verify "$AAB" | grep -q 'jar verified'; then echo "::error::AAB is signed; this job must stay unsigned"; exit 1; fi
+          echo "AAB size: $(stat -c%s "$AAB") bytes"
+          sha256sum "$AAB" | tee "$AAB.sha256"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thoth-unsigned-aab
+          path: |
+            android/app/build/outputs/bundle/release/app-release.aab
+            android/app/build/outputs/bundle/release/app-release.aab.sha256
+          retention-days: 14

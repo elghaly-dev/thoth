@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Hindi is the default; Arabic and Chinese below. -->
+    <string name="app_name">थोथ</string>
+    <!-- Digital Asset Links: the site must also publish
+         https://thoth.elghaly.dev/.well-known/assetlinks.json with the Play App
+         Signing certificate SHA-256 (TODO, see docs/TWA.md). -->
+    <string name="asset_statements" translatable="false">
+        [{ \"relation\": [\"delegate_permission/common.handle_all_urls\"],
+           \"target\": { \"namespace\": \"web\", \"site\": \"https://thoth.elghaly.dev\" } }]
+    </string>
+</resources>
