@@ -45,7 +45,7 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
   const [quantity, setQuantity] = useState(initialData?.quantity || '');
   const [price, setPrice] = useState(initialData?.price || '');
   const [shippingOrigin, setShippingOrigin] = useState(
-    initialData?.shippingOrigin || 'Origin port'
+    initialData?.shippingOrigin || ''
   );
   const [isGenerating, setIsGenerating] = useState(false);
   const [pitchResult, setPitchResult] = useState<PitchResult | null>(null);
@@ -58,7 +58,13 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
 
   // Presets are examples only: labels say so, and product values carry no
   // certification or composition claims — verify before sending.
-  const presets = [
+  // Hindi examples for the Hindi UI; English examples for every other language.
+  const presets = lang === 'hi' ? [
+    { label: tx(lang, 'pitch.presetBrass'), product: 'हाथ से बने ठोस पीतल के सजावटी कटोरे और गमले', quantity: '300 पीस MOQ (क्षमता: 4,000 पीस/माह, जाँचें)', price: '$6.50 / पीस FOB मूल बंदरगाह', origin: 'मूल बंदरगाह' },
+    { label: tx(lang, 'pitch.presetTurmeric'), product: 'हल्दी पाउडर (उदाहरण — दावा करने से पहले ग्रेड और लैब रिपोर्ट जाँचें)', quantity: '1,000 किलो MOQ (मानक 25 किलो निर्यात बोरियाँ)', price: '$3.80 / किलो FOB मूल बंदरगाह', origin: 'मूल बंदरगाह' },
+    { label: tx(lang, 'pitch.presetCotton'), product: 'हाथ से बुनी सूती दरियाँ (उदाहरण — सामग्री जाँचें, 3x5 फ़ुट और 5x8 फ़ुट)', quantity: '150 दरियाँ MOQ', price: '$18.00 / दरी FOB मूल बंदरगाह', origin: 'मूल बंदरगाह' },
+    { label: tx(lang, 'pitch.presetLeather'), product: 'चमड़े के बटुए और पासपोर्ट होल्डर (उदाहरण — चमड़े का ग्रेड जाँचें)', quantity: '250 पीस MOQ', price: '$5.20 / पीस FOB मूल बंदरगाह', origin: 'मूल बंदरगाह' },
+  ] : [
     {
       label: tx(lang, 'pitch.presetBrass'),
       product: 'Handmade Solid Brass Decorative Bowls & Planters',
@@ -120,7 +126,7 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
       setPitchResult(data);
     } catch (err: unknown) {
       if (!req.isCurrent()) return;
-      console.error('Error generating pitch:', err);
+      console.warn('Error generating pitch:', err);
       setPitchError(errorText(lang, err, 'err.pitch'));
     } finally {
       if (mountedRef.current) setIsGenerating(false);
@@ -185,7 +191,7 @@ ${(pitchResult.claimsToVerify || []).map((c, i) => `${i + 1}. [ ] ${c}`).join('\
 - ${L('dl.scam3')}
 
 ------------------------------------------------
-[${tx(lang, 'dl.guidanceIn', { lang: lang === 'zh' ? langDisplayName(lang, currentLang.name) : currentLang.name.toUpperCase() })}]
+[${tx(lang, 'dl.guidanceIn', { lang: lang === 'en' ? currentLang.name.toUpperCase() : langDisplayName(lang, currentLang.name) })}]
 ${pitchResult.exporterSummary}
 
 ------------------------------------------------
@@ -211,7 +217,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
               {tx(lang, 'pitch.badge')}
             </span>
-            <span className="text-xs text-slate-400">{tx(lang, 'pitch.freeBy')}</span>
+            <span className="text-xs text-slate-400">{tx(lang, 'pitch.servant')}</span>
           </div>
           <h2 className="text-lg font-bold text-white">
             {tx(lang, 'pitch.title')}

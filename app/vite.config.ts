@@ -10,6 +10,7 @@ const PAGES_CSP = [
   "style-src 'self' https://fonts.googleapis.com",
   "font-src https://fonts.gstatic.com",
   "img-src 'self' data:",
+  "manifest-src 'self'",
   "media-src 'self' data: blob:",
   "object-src 'none'",
   "base-uri 'none'",

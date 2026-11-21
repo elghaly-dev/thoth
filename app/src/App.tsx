@@ -8,6 +8,7 @@ import { ImportGuideTab } from './components/ImportGuideTab';
 import { SafetyModal } from './components/SafetyModal';
 import { ApiKeyBar } from './components/ApiKeyBar';
 import { tx, langDisplayName } from './i18n';
+import { CREDIT_FOOTER } from './credit';
 import {
   Mic,
   Sparkles,
@@ -189,7 +190,7 @@ export default function App() {
               <span className="text-slate-300">{tx(lang, 'app.footerTagline')}</span>
             </div>
             <span className="text-slate-500 hidden sm:inline">•</span>
-            <span className="text-emerald-400 font-medium">{tx(lang, 'app.footerFree')}</span>
+            <span className="text-emerald-400 font-medium">{tx(lang, 'app.footerBadge')}</span>
           </div>
 
           {/* Prominent broker disclaimer */}
@@ -209,6 +210,7 @@ export default function App() {
             <span>{tx(lang, 'app.footerNoPasswords')}</span>
           </div>
         </div>
+        <p lang="en" className="mt-4 text-center text-[11px] tracking-widest text-slate-500">{CREDIT_FOOTER}</p>
       </footer>
 
       {/* Safety & Charter Modal */}

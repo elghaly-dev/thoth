@@ -172,7 +172,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         setIsListening(true);
       }
     } catch (err) {
-      console.error('Failed to start speech recognition', err);
+      console.warn('Failed to start speech recognition', err);
       setIsListening(false);
     }
   };
@@ -247,7 +247,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
       }
     } catch (err: unknown) {
       if (!req.isCurrent()) return;
-      console.error('Error sending message:', err);
+      console.warn('Error sending message:', err);
       // A 401/403 is a provider-auth failure: show the server's clear
       // error as-is. It is not retried and no fake reply is shown.
       const content =
@@ -386,7 +386,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               {tx(lang, 'voice.mic')} {isSpeechRecognitionSupported() ? tx(lang, 'voice.supported') : tx(lang, 'voice.typeMode')}
             </span>
             <span className="text-slate-600">•</span>
-            <span>{tx(lang, 'voice.free')}</span>
+            <span>{tx(lang, 'voice.badge')}</span>
           </div>
         </div>
 
@@ -593,7 +593,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
                 className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}
               >
                 <div className="text-[10px] text-slate-500 mb-1 px-1">
-                  {isUser ? tx(lang, 'voice.youExporter') : tx(lang, 'voice.thothFree')}
+                  {isUser ? tx(lang, 'voice.youExporter') : tx(lang, 'voice.thothServant')}
                 </div>
                 <div
                   className={`max-w-[85%] rounded-2xl p-3.5 text-xs sm:text-sm leading-relaxed shadow-md ${
@@ -646,7 +646,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
 
           {isThinking && (
             <div className="flex flex-col items-start">
-              <div className="text-[10px] text-slate-500 mb-1 px-1">Thoth</div>
+              <div className="text-[10px] text-slate-500 mb-1 px-1">{tx(lang, 'voice.thothServant')}</div>
               <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl rounded-tl-none p-3.5 text-xs text-amber-300 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
                 <span>{tx(lang, 'voice.thinking')}</span>
@@ -695,7 +695,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
             </button>
           </form>
           <div className="mt-1.5 flex items-center justify-between text-[10px] text-slate-500 px-1">
-            <span>{tx(lang, 'voice.freeFooter')}</span>
+            <span>{tx(lang, 'voice.badgeFooter')}</span>
             <span>{tx(lang, 'voice.oneStep')}</span>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { SupportedLanguage, SUPPORTED_LANGUAGES } from '../types';
 import { Volume2, VolumeX, ShieldCheck, Sparkles, Globe, Heart } from 'lucide-react';
 import { tx, langDisplayName } from '../i18n';
+import { CREDIT_TOP, CREDIT_URL } from '../credit';
 
 interface HeaderProps {
   currentLang: SupportedLanguage;
@@ -26,9 +27,9 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-amber-950/60 border-b border-slate-800/80 px-4 py-1.5 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-semibold text-emerald-400">{tx(lang, 'header.freeForever')}</span>
+          <span className="font-semibold text-emerald-400">{tx(lang, 'header.openToAll')}</span>
           <span className="text-slate-500">•</span>
-          <span>{tx(lang, 'header.byElghaly')}</span>
+          <span>{tx(lang, 'header.credit')}</span>
           <span className="text-slate-500">•</span>
           <span className="text-slate-400 hidden sm:inline">{tx(lang, 'header.reachBuyers')}</span>
         </div>
@@ -70,6 +71,9 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
             <p className="text-xs text-slate-400">
               {tx(lang, 'header.bridge')}
+            </p>
+            <p className="text-xs">
+              <a href={CREDIT_URL} lang="en" className="text-amber-300 hover:text-amber-200 hover:underline">{CREDIT_TOP}</a>
             </p>
           </div>
         </div>
@@ -118,7 +122,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs text-slate-300 hover:border-slate-600 transition-colors cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>{tx(lang, 'header.freeTool')}</span>
+            <span>{tx(lang, 'header.openTool')}</span>
           </button>
         </div>
       </div>

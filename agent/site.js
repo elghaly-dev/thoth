@@ -14,7 +14,7 @@ export class AssistantMount {
   /**
    * The first chat message once the visitor has a key: what the assistant can do here.
    */
-  static GREETING = "I can tell you what Thoth offers, write an honest buyer pitch from your facts, translate a message for your buyer, or explain export basics such as FOB and CIF.";
+  static GREETING = "मैं बता सकता हूँ कि थोथ क्या देता है, आपके तथ्यों से ईमानदार खरीदार पिच लिख सकता हूँ, आपके खरीदार के लिए संदेश का अनुवाद कर सकता हूँ, या FOB और CIF जैसी निर्यात की बुनियादी बातें समझा सकता हूँ।";
 
   /**
    * The confirmation dialog's words for each irreversible action. Name each button after
@@ -48,15 +48,15 @@ export class AssistantMount {
       const needsKey = !booted.engine.mockLLM
         && (!booted.engine.byokKey || booted.engine.byokKey === "demo");
       status.textContent = needsKey
-        ? "Assistant needs your model provider key. Add it in Model settings below."
-        : "Assistant connected to this page.";
+        ? "सहायक को आपकी मॉडल प्रदाता कुंजी चाहिए। इसे नीचे मॉडल सेटिंग में जोड़ें।"
+        : "सहायक इस पेज से जुड़ गया है।";
       if (!needsKey) {
         AssistantMount.greet();
       }
       return booted.engine;
     } catch (error) {
       // The page must keep working without the assistant.
-      status.textContent = "The assistant could not load. You can still use the page directly.";
+      status.textContent = "सहायक लोड नहीं हो सका। आप फिर भी यह पेज सीधे इस्तेमाल कर सकते हैं।";
       console.error("Assistant startup failed", error);
       return null;
     }
@@ -219,7 +219,7 @@ export class AssistantMount {
     dialog.append(heading, sentence);
     const exact = document.createElement("details");
     const exactLabel = document.createElement("summary");
-    exactLabel.textContent = "Technical details";
+    exactLabel.textContent = "तकनीकी विवरण";
     const exactText = document.createElement("pre");
     exactText.textContent = content.exact;
     exact.append(exactLabel, exactText);

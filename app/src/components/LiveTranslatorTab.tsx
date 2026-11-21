@@ -57,7 +57,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       originalText:
         'Could you confirm if the cartons will be palletized with ISPM-15 heat-treated pallets for customs clearance?',
       translatedText:
-        'क्या आप पुष्टि कर सकते हैं कि कार्टन अमेरिकी सीमा शुल्क के लिए ISPM-15 हीट-ट्रीटेड पैलेट पर रखे जाएंगे?',
+        'क्या आप पुष्टि कर सकते हैं कि कार्टन सीमा शुल्क के लिए ISPM-15 हीट-ट्रीटेड पैलेट पर रखे जाएंगे?',
       sourceLang: 'English',
       targetLang: 'Hindi',
       keyTerms: ['ISPM-15 heat-treated pallets', 'customs clearance'],
@@ -158,7 +158,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         setIsListening(true);
       }
     } catch (err) {
-      console.error('Failed to start recognition:', err);
+      console.warn('Failed to start recognition:', err);
       setIsListening(false);
     }
   };
@@ -225,7 +225,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       );
     } catch (err: unknown) {
       if (!req.isCurrent()) return;
-      console.error('Translation error:', err);
+      console.warn('Translation error:', err);
       setTranslateError(errorText(lang, err, 'err.translate'));
     } finally {
       if (mountedRef.current) setIsTranslating(false);

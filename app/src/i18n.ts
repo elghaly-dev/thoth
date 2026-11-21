@@ -16,14 +16,14 @@ const EN = {
   'app.tabGuide': 'Import Basics',
   'app.speakingIn': 'Speaking in {native} ({name})',
   'app.footerTagline': 'Faithful Servant for exporters',
-  'app.footerFree': 'For all exporters, small & large',
+  'app.footerBadge': 'For all exporters, small & large',
   'app.footerBroker': 'Always check with a licensed customs broker for final decisions.',
   'app.footerPrivacy': 'Privacy & Trust Policy',
   'app.footerNoPasswords': 'No passwords or bank details ever requested',
 
   // ---- Header ----
-  'header.freeForever': 'Open to every exporter',
-  'header.byElghaly': 'For exporters, small & large',
+  'header.openToAll': 'Open to every exporter',
+  'header.credit': 'For exporters, small & large',
   'header.reachBuyers': 'Reach & talk to buyers',
   'header.safetyPolicy': 'Safety & Trust Policy',
   'header.madeWith': 'Made with',
@@ -35,7 +35,7 @@ const EN = {
   'header.voiceOn': 'Voice On',
   'header.mutedTitle': 'Voice muted (click to unmute)',
   'header.voiceOnTitle': 'Voice active (click to mute)',
-  'header.freeTool': 'Faithful Servant',
+  'header.openTool': 'Faithful Servant',
 
   // ---- Safety modal (Trust & Ethics Charter) ----
   'safety.title': "Thoth's Trust & Ethics Charter",
@@ -64,7 +64,7 @@ const EN = {
   'safety.item7Body':
     "Text you submit is sent to Google's Gemini API to generate replies; Google's handling is outside this app. Voice input uses your browser's speech recognition. The Gemini key stays on the server and is not included in the page.",
   'safety.madeWith': 'Made with',
-  'safety.byElghaly': 'for exporters',
+  'safety.credit': 'for exporters',
   'safety.close': 'Understood & Close',
 
   // ---- Voice orb ----
@@ -104,7 +104,7 @@ const EN_VOICE = {
   'voice.mic': 'Mic:',
   'voice.supported': 'Supported',
   'voice.typeMode': 'Type mode',
-  'voice.free': 'Faithful Servant',
+  'voice.badge': 'Faithful Servant',
   'voice.trackerTitle': 'Buyer Pitch Progress (One Step at a Time)',
   'voice.captured': '{n}/4 Captured',
   'voice.step1Title': 'What You Sell (Product)',
@@ -123,7 +123,7 @@ const EN_VOICE = {
   'voice.safetyRule':
     'Safety rule: Check with a licensed customs broker for final import/tariff decisions. Thoth never asks for passwords or bank info.',
   'voice.youExporter': 'You (Exporter)',
-  'voice.thothFree': 'Thoth (Faithful Servant)',
+  'voice.thothServant': 'Thoth (Faithful Servant)',
   'voice.thinking': 'Thoth is crafting a short, friendly response...',
   'voice.listen': 'Listen',
   'voice.copyTitle': 'Copy text',
@@ -131,7 +131,7 @@ const EN_VOICE = {
   'voice.speakMessage': 'Speak message',
   'voice.typePlaceholder':
     'Type in {lang} or English... (e.g. We make cotton rugs, 500 pcs)',
-  'voice.freeFooter': 'Faithful Servant • Never asks for card or bank details',
+  'voice.badgeFooter': 'Faithful Servant • Never asks for card or bank details',
   'voice.oneStep': 'One step at a time',
   'voice.connectionError':
     'Sorry, there was a momentary connection issue. Please check with a licensed customs broker for final decisions. Could you please repeat that?',
@@ -156,7 +156,7 @@ const EN_VOICE = {
 const EN_PITCH = {
   // ---- Pitch studio tab ----
   'pitch.badge': 'Honest Buyer Pitch Studio',
-  'pitch.freeBy': 'Faithful Servant',
+  'pitch.servant': 'Faithful Servant',
   'pitch.title': 'Transform craft & manufacturing into compelling buyer pitches',
   'pitch.subtitle':
     'Buyers want brevity, exact quantities, honest specs, and clear FOB terms. Thoth writes clean, no-hype pitches tailored to sourcing standards.',
@@ -402,17 +402,17 @@ const EN_EXTRA = {
 // Static-site (Pages) key bar, idle voice notices, skip link, send notices.
 const EN_PAGES = {
   "key.title": "Your Gemini API key",
-  "key.body": "This public site has no server key. Paste your own Gemini API key to talk with Thoth. It stays in this browser tab and is sent only to Google; Google's handling is outside this app.",
+  "key.body": "This public site has no server key. Paste your own Gemini API key to talk with Thoth. It is kept in this page's memory only (reloading forgets it) and is sent only to Google; Google's handling is outside this app.",
   "key.label": "Gemini API key",
   "key.placeholder": "Paste your key here",
-  "key.save": "Save in this tab",
+  "key.save": "Use for this visit",
   "key.clear": "Remove key",
-  "key.saved": "Key saved in this tab only. It is sent only to Google.",
+  "key.saved": "Key kept in this page's memory only; reloading the page forgets it. It is sent only to Google.",
   "key.needed": "Add your Gemini API key above to talk with Thoth.",
   "key.invalid": "That key was refused. Check it and try again.",
   "key.serverReady": "This session uses a server-side key. You do not need to paste one.",
-  "key.whereToGet": "Get a Gemini API key from Google AI Studio (it needs your own Google sign-in).",
-  "key.staysInTab": "The key is not put into Thoth's code, cookies, or long-term browser storage.",
+  "key.whereToGet": "Get a Gemini API key from Google (it needs your own Google sign-in).",
+  "key.staysInTab": "The key is not put into Thoth's code, cookies, or any browser storage.",
   "voice.idleClosed": "Voice session ended after 2 minutes of silence. Tap the microphone to start again. Your conversation is still here.",
   "trans.idleClosed": "Voice session ended after 2 minutes of silence. Tap the microphone to start again. Your translations are still here.",
   "a11y.skipToMain": "Skip to main content",
@@ -432,14 +432,14 @@ const ZH: Record<StringKey, string> = {
   'app.tabGuide': '海外市场进口基础知识',
   'app.speakingIn': '当前语言：{native}（{name}）',
   'app.footerTagline': '为出口商打造的 Faithful Servant',
-  'app.footerFree': '面向所有出口商，无论企业大小',
+  'app.footerBadge': '面向所有出口商，无论企业大小',
   'app.footerBroker': '最终决定请务必咨询持牌报关行。',
   'app.footerPrivacy': '隐私与信任政策',
   'app.footerNoPasswords': '绝不索取密码或银行信息',
 
   // ---- Header ----
-  'header.freeForever': '面向每一位出口商',
-  'header.byElghaly': '服务大大小小的出口商',
+  'header.openToAll': '面向每一位出口商',
+  'header.credit': '服务大大小小的出口商',
   'header.reachBuyers': '帮您对接海外买家',
   'header.safetyPolicy': '信任与保障政策',
   'header.madeWith': '用',
@@ -451,7 +451,7 @@ const ZH: Record<StringKey, string> = {
   'header.voiceOn': '语音开启',
   'header.mutedTitle': '语音已静音（点击取消静音）',
   'header.voiceOnTitle': '语音已开启（点击静音）',
-  'header.freeTool': 'Faithful Servant',
+  'header.openTool': 'Faithful Servant',
 
   // ---- Safety modal (Trust & Ethics Charter) ----
   'safety.title': 'Thoth 信任与道德宪章',
@@ -480,7 +480,7 @@ const ZH: Record<StringKey, string> = {
   'safety.item7Body':
     '您提交的文字会发送到 Google 的 Gemini API 以生成回复；Google 如何处理不在本应用的控制范围内。语音输入使用您浏览器的语音识别功能。Gemini 密钥保存在服务器上，不包含在网页中。',
   'safety.madeWith': '用',
-  'safety.byElghaly': '为出口商打造',
+  'safety.credit': '为出口商打造',
   'safety.close': '明白了，关闭',
 
   // ---- Voice orb ----
@@ -518,7 +518,7 @@ const ZH: Record<StringKey, string> = {
   'voice.mic': '麦克风：',
   'voice.supported': '支持',
   'voice.typeMode': '打字模式',
-  'voice.free': 'Faithful Servant',
+  'voice.badge': 'Faithful Servant',
   'voice.trackerTitle': '海外买家推介进度（一步一步来）',
   'voice.captured': '已收集 {n}/4',
   'voice.step1Title': '您销售的产品',
@@ -537,14 +537,14 @@ const ZH: Record<StringKey, string> = {
   'voice.safetyRule':
     '重要规则：最终进口/关税决定请咨询持牌报关行。Thoth 绝不索取密码或银行信息。',
   'voice.youExporter': '您（出口商）',
-  'voice.thothFree': 'Thoth（Faithful Servant）',
+  'voice.thothServant': 'Thoth（Faithful Servant）',
   'voice.thinking': 'Thoth 正在准备简短友好的回复……',
   'voice.listen': '收听',
   'voice.copyTitle': '复制文本',
   'voice.stopRecording': '停止录音',
   'voice.speakMessage': '语音输入',
   'voice.typePlaceholder': '用{lang}或英语输入……（例如：我们生产棉地毯，500 件）',
-  'voice.freeFooter': 'Faithful Servant • 绝不索要银行卡信息',
+  'voice.badgeFooter': 'Faithful Servant • 绝不索要银行卡信息',
   'voice.oneStep': '一步一步来',
   'voice.connectionError':
     '抱歉，连接出现短暂问题。最终决定请咨询持牌报关行。请再说一遍好吗？',
@@ -562,7 +562,7 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Pitch studio tab ----
   'pitch.badge': '诚实的海外买家推介工作室',
-  'pitch.freeBy': 'Faithful Servant',
+  'pitch.servant': 'Faithful Servant',
   'pitch.title': '把手工艺与制造转化为打动海外买家的推介',
   'pitch.subtitle':
     '海外买家看重简洁、准确的数量、诚实的规格和清晰的 FOB 条款。Thoth 按海外采购标准撰写简洁、无夸大的推介。',
@@ -790,16 +790,16 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Static-site key bar, idle notices, skip link [VERIFY] ----
   "key.title": "您的 Gemini API 密钥",
-  "key.body": "此公开网站没有服务器密钥。请粘贴您自己的 Gemini API 密钥以便与 Thoth 对话。密钥只保留在当前浏览器标签页中，并且只发送给 Google；Google 如何处理不在本应用的控制范围内。",
+  "key.body": "此公开网站没有服务器密钥。请粘贴您自己的 Gemini API 密钥以便与 Thoth 对话。密钥只保存在本页面的内存中（刷新页面即清除），并且只发送给 Google；Google 如何处理不在本应用的控制范围内。",
   "key.label": "Gemini API 密钥",
   "key.placeholder": "在此粘贴密钥",
-  "key.save": "仅保存在此标签页",
+  "key.save": "本次访问使用",
   "key.clear": "移除密钥",
   "key.saved": "密钥仅保存在此标签页，并且只发送给 Google。",
   "key.needed": "请在上方添加您的 Gemini API 密钥，以便与 Thoth 对话。",
   "key.invalid": "该密钥被拒绝。请检查后重试。",
   "key.serverReady": "本会话使用服务器端密钥，您无需粘贴密钥。",
-  "key.whereToGet": "请从 Google AI Studio 获取 Gemini API 密钥（需要您自己的 Google 账号登录）。",
+  "key.whereToGet": "请从 Google 获取 Gemini API 密钥（需要您自己的 Google 账号登录）。",
   "key.staysInTab": "密钥不会写入 Thoth 的代码、Cookie 或长期浏览器存储。",
   "voice.idleClosed": "语音会话因两分钟无声已结束。请再点麦克风重新开始。您的对话仍在。",
   "trans.idleClosed": "语音会话因两分钟无声已结束。请再点麦克风重新开始。您的译文仍在。",
@@ -869,7 +869,7 @@ export const ZH_STRINGS: Readonly<Record<StringKey, string>> = ZH;
  * Module scope so tests can check it alongside the string tables.
  */
 export const GREETINGS: Record<LanguageCode, string> = {
-  hi: 'नमस्ते! मैं थोथ (Thoth) हूँ, निर्यातकों के लिए Faithful Servant। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
+  hi: 'नमस्ते! मैं थोथ हूँ, निर्यातकों के लिए वफ़ादार सेवक। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
   mr: 'नमस्कार! मी थोथ (Thoth) आहे, निर्यातदारांसाठी Faithful Servant. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
   gu: 'નમસ્તે! હું થોથ (Thoth) છું, નિકાસકારો માટે Faithful Servant. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
   ta: 'வணக்கம்! நான் தோத் (Thoth), ஏற்றுமதியாளர்களுக்கான Faithful Servant. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
