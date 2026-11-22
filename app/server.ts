@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
+import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI, type Content, type ContentListUnion, type GenerateContentConfig } from '@google/genai';
 import {
@@ -13,6 +14,7 @@ import {
   secretsEqual,
   verifySessionToken,
 } from './server-security';
+import { localizeHtmlShell, LANG_COOKIE } from './src/utils/lang-pref';
 
 dotenv.config();
 
@@ -47,10 +49,14 @@ const TRUST_PROXY_HOPS = (() => {
 app.set('trust proxy', TRUST_PROXY_HOPS);
 app.disable('x-powered-by');
 
-// Security headers on every response (owner order 2026-11-22). The CSP matches the Pages
+// Security headers on every response. The CSP matches the Pages
 // build (vite.config.ts PAGES_CSP) and adds frame-ancestors 'none', which only a header can
-// set; it applies in production only, because the Vite dev server injects inline scripts.
+// set; it is sent in production only, because the Vite dev server injects inline scripts.
 // frame-ancestors 'none' also refuses the AI Studio preview frame: open the app in its own tab.
+// Report-Only first: violations are reported in the browser console, nothing is blocked,
+// until a real-browser pass shows no violations. The enforced policy already in main
+// (the Pages meta CSP in vite.config.ts) is unchanged. No wss: or worklet blob: source is
+// needed: the app calls the provider over https fetch and uses the browser speech API.
 const SERVER_CSP = [
   "default-src 'self'",
   "script-src 'self'",
@@ -66,13 +72,13 @@ const SERVER_CSP = [
   "frame-ancestors 'none'",
 ].join('; ');
 app.use((_req: Request, res: Response, next: NextFunction) => {
-  res.setHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains');
+  res.setHeader('Strict-Transport-Security', 'max-age=604800');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'microphone=(self), camera=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-  if (process.env.NODE_ENV === 'production') res.setHeader('Content-Security-Policy', SERVER_CSP);
+  if (process.env.NODE_ENV === 'production') res.setHeader('Content-Security-Policy-Report-Only', SERVER_CSP);
   next();
 });
 
@@ -754,9 +760,18 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    app.use(express.static(path.resolve(__dirname, 'dist')));
-    app.get('*', (_req, res) => {
-      res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+    // index: false so every HTML page goes through the shell below, which
+    // sets <html lang/dir> from ?lang=, the lang cookie, then Accept-Language.
+    app.use(express.static(path.resolve(__dirname, 'dist'), { index: false }));
+    const shell = readFileSync(path.resolve(__dirname, 'dist', 'index.html'), 'utf8');
+    app.get('*', (req, res) => {
+      res.setHeader('Vary', 'Accept-Language, Cookie');
+      res.setHeader('Cache-Control', 'no-cache');
+      const q = req.query.lang;
+      res.type('html').send(localizeHtmlShell(shell, req.headers['accept-language'], {
+        queryLang: Array.isArray(q) ? q[0] : q,
+        cookieLang: readCookie(req.headers.cookie, LANG_COOKIE),
+      }));
     });
   }
 

@@ -49,7 +49,7 @@ Elghaly LLC, 548 Market St, San Francisco, CA 94104, USA
 |---|---|
 | CSP without inline script, inline style or eval on the app | `app/vite.config.ts` (Pages), `app/server.ts` (server) |
 | Landing pages: hashed-style CSP, no script | `tools/check-landing-csp.mjs` |
-| Server headers on every response: HSTS, nosniff, `frame-ancestors 'none'`, `X-Frame-Options: DENY`, Referrer-Policy, Permissions-Policy, COOP; no CORS grant | `app/server.ts`, `app/tests/server-hardening.ts` |
+| Server headers on every response: HSTS (1 week for now), nosniff, `X-Frame-Options: DENY`, Referrer-Policy, Permissions-Policy, COOP; the server CSP (with `frame-ancestors 'none'`) runs in report-only mode until a real-browser pass shows no violations; no CORS grant | `app/server.ts`, `app/tests/server-hardening.ts` |
 | Rate limit, 100 kB body limit, strict input checks, generic error bodies (no stack traces) | `app/server.ts`, `app/tests/server-hardening.ts` |
 | Android: no permissions, no backup, no cleartext, system CAs only, R8, only the launcher exported | `android/`, `tools/check-twa.mjs` |
 | Full-history secret scan on every branch (gitleaks 8.28.0, sha256-pinned) | `.github/workflows/security.yml` |

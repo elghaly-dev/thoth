@@ -15,7 +15,7 @@ for the Open Agentic Web Challenge (track 1: agentify an existing website).
 | `thoth_assistant.hocon` | The agent network: `thoth_front_desk` plus three specialists (`pitch_writer`, `trade_translator`, `export_basics`), all bound by Thoth's integrity charter |
 | `agent-manifest.json`, `links.json` | Public description of the network |
 | `site.js`, `assistant.css` | Mounts the assistant (from the challenge's template) |
-| `runtime/` | The browser runtime, unchanged, Apache-2.0, from cognizant-ai-labs/agentic-web at commit `63a956c` |
+| `runtime/` | The browser runtime, Apache-2.0, from cognizant-ai-labs/agentic-web at commit `63a956c`. Thoth changes: `byok.js` never persists the visitor's key (tab sessionStorage only); provider-key messages say "Model settings" |
 
 ## One step left (run it on your own machine)
 The build script turns the `.hocon` into `thoth_assistant.network.json`, validates it, and writes the `bridge/` folder and discovery files. It was **not run** in the session that prepared this draft, because running the challenge's downloaded scripts was blocked there.

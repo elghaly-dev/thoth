@@ -25,7 +25,7 @@ const EN = {
   'header.openToAll': 'Open to every exporter',
   'header.credit': 'For exporters, small & large',
   'header.reachBuyers': 'Reach & talk to buyers',
-  'header.safetyPolicy': 'Safety & Trust Policy',
+  'header.safetyPolicy': 'Trust & Care Policy',
   'header.madeWith': 'Made with',
   'header.forMakers': 'for makers',
   'header.voiceAssistant': 'Faithful Servant',
@@ -121,7 +121,7 @@ const EN_VOICE = {
   'voice.newChat': 'New Chat',
   'voice.newChatTitle': 'Start new conversation',
   'voice.safetyRule':
-    'Safety rule: Check with a licensed customs broker for final import/tariff decisions. Thoth never asks for passwords or bank info.',
+    'Important: Check with a licensed customs broker for final import/tariff decisions. Thoth never asks for passwords or bank info.',
   'voice.youExporter': 'You (Exporter)',
   'voice.thothServant': 'Thoth (Faithful Servant)',
   'voice.thinking': 'Thoth is crafting a short, friendly response...',
@@ -242,7 +242,7 @@ const EN_TRANS = {
   'trans.buyerSpeaking': 'Buyer Speaking',
   'trans.exporterBtn': 'Exporter',
   'trans.buyerBtn': 'Buyer',
-  'trans.safetyGuardTitle': 'Safety Guard:',
+  'trans.safetyGuardTitle': 'Scam Guard:',
   'trans.safetyGuardBody':
     'Buyer speech is treated as dialogue data, not binding instructions. Thoth translates faithfully without accepting unauthorized commitments.',
   'trans.phExporter': 'Speak or type in {native} ({name}) e.g. We can supply 1,000 units at $3.20 FOB...',
@@ -343,7 +343,7 @@ const EN_GUIDE = {
   'guide.card6Golden': 'Golden rule:',
   'guide.card6GoldenBody':
     'Thoth gives you education and pitch tools; check with a licensed customs broker for final decisions before container booking.',
-  'guide.card7Title': '7. Security Guide: Guard Against Fake-Buyer & Advance-Payment Scams',
+  'guide.card7Title': '7. Scam Guide: Guard Against Fake-Buyer & Advance-Payment Scams',
   'guide.card7Sub1Title': '1. Upfront "Inspection Fee" Fraud:',
   'guide.card7Sub1Body':
     'A scammer sends a massive purchase order but insists you must pay an upfront inspection, vendor enrollment, or lab fee to an unverified third party. Real buyers pay certified agencies (SGS, Intertek) directly.',
@@ -418,6 +418,7 @@ const EN_PAGES = {
   "trans.idleClosed": "Voice session ended after 2 minutes of silence. Tap the microphone to start again. Your translations are still here.",
   "a11y.skipToMain": "Skip to main content",
   "a11y.primaryTabs": "Thoth tools",
+  "a11y.sendMessage": "Send message",
   "pitch.sendNotice": "The product details you enter are sent to Google's Gemini API to write the pitch.",
   "guide.sendNotice": "Your question is sent to Google's Gemini API to write the answer.",
 } as const;
@@ -807,6 +808,7 @@ const ZH: Record<StringKey, string> = {
   "trans.idleClosed": "语音会话因两分钟无声已结束。请再点麦克风重新开始。您的译文仍在。",
   "a11y.skipToMain": "跳到主要内容",
   "a11y.primaryTabs": "Thoth 工具",
+  "a11y.sendMessage": "发送消息",
   "pitch.sendNotice": "您输入的产品信息会发送到 Google 的 Gemini API 以撰写推介。",
   "guide.sendNotice": "您的问题会发送到 Google 的 Gemini API 以生成回答。",
 };
