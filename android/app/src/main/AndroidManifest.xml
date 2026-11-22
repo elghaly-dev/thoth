@@ -39,11 +39,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- Deep links: only the app itself (https://thoth.elghaly.dev/use
+                 and everything under /use/). The landing page (/), /agent/
+                 and every other path stay in the browser. Host must equal
+                 hostName in build.gradle and the host in twa-manifest.json
+                 (checked by tools/check-twa.mjs). -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="${hostName}" />
+                <data android:scheme="https" />
+                <data android:host="thoth.elghaly.dev" />
+                <data android:path="/use" />
+                <data android:pathPrefix="/use/" />
             </intent-filter>
         </activity>
 

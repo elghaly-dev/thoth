@@ -10,6 +10,7 @@
  * - unknown /api paths answer a JSON 404, not the SPA page;
  * - the SPA fallback still serves index.html for app routes;
  * - generateWithFallback clears its timeout.
+ * Session cookie, Origin and log redaction: tests/server-auth.ts.
  * Needs `npm run build` first (dist/). Run: npm run test:server
  */
 import { spawn, type ChildProcess } from 'node:child_process';
@@ -87,7 +88,8 @@ async function startServer(port: number): Promise<ChildProcess> {
 const base = (port: number) => `http://127.0.0.1:${port}`;
 async function post(port: number, p: string, body: unknown, headers: Record<string, string> = {}) {
   const raw = typeof body === 'string' ? body : JSON.stringify(body);
-  const r = await fetch(base(port) + p, { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body: raw });
+  // Same-origin like the served page: the server refuses a POST without Origin.
+  const r = await fetch(base(port) + p, { method: 'POST', headers: { 'content-type': 'application/json', origin: base(port), ...headers }, body: raw });
   const text = await r.text();
   return { status: r.status, text, ct: r.headers.get('content-type') || '', res: r };
 }

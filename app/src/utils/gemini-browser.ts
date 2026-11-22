@@ -14,7 +14,7 @@ const GOOGLE_GENERATE =
 const q = (v: unknown, fallback: string): string =>
   JSON.stringify((typeof v === 'string' ? v : '').slice(0, 4000).trim() || fallback);
 // Language names may reach the prompt only from this allowlist.
-const LANGS = new Set(['English', 'Hindi', 'Chinese', 'Simplified', 'Mandarin', 'Marathi', 'Gujarati', 'Tamil', 'Bengali', 'Telugu', 'Punjabi']);
+const LANGS = new Set(['English', 'Hindi', 'Chinese', 'Simplified', 'Mandarin', 'Marathi', 'Gujarati', 'Tamil', 'Bengali', 'Telugu', 'Punjabi', 'Arabic']);
 const langName = (v: unknown, fallback: string): string =>
   typeof v === 'string' && LANGS.has(v.split(/[ (/]/)[0]) ? v.slice(0, 60) : fallback;
 
@@ -23,7 +23,7 @@ You are Thoth, a Faithful Servant for exporters.
 Your goal is to help any exporter, small or large, reach and talk to buyers.
 
 CRITICAL RULES & INTEGRITY CHARTER:
-1. Speak the user's language (Hindi, Chinese / Mandarin, Marathi, Gujarati, Tamil, Bengali, Telugu, Punjabi, English, etc.). Detect and respond warmly in their language.
+1. Speak the user's language (Hindi, Chinese / Mandarin, Marathi, Gujarati, Tamil, Bengali, Telugu, Punjabi, Arabic, English, etc.). Detect and respond warmly in their language.
 2. When creating messages for buyers, reply in clear, professional English.
 3. Keep answers short, friendly, and structured one step at a time.
 4. When helping an exporter pitch: ask what they sell, quantity (MOQ/capacity), price, and where they ship from (origin port).
