@@ -38,6 +38,8 @@ jobs:
       - run: npm run test:a11y
       - run: npm run test:byok   # agent runtime never persists a visitor's key
       - run: npm run test:deal   # Deal in a Minute: quotes hold only the merchant's facts
+      - run: npm run test:palettes   # every palette meets WCAG AA for the pairs the app uses
+      - run: npm run test:readaloud   # read-aloud: phone voices only, no server call
       - run: npm test            # smoke, idle session, no-secrets, pages redirect
       - name: Build the Pages bundle (use/)
         run: npm run build:pages
@@ -51,6 +53,8 @@ jobs:
         run: npm install --no-save --no-package-lock playwright-core@1.49.1
       - name: No request leaves the site (real browser on the built use/), no source maps, no telemetry
         run: CHROME_PATH="$(command -v google-chrome)" npm run test:network
+      - name: First launch (look, name, language) and Settings in a real browser, EN and AR
+        run: CHROME_PATH="$(command -v google-chrome)" npm run test:welcome
       - name: Arabic in a real browser (phone language, RTL, typing and paste, Arabic font)
         working-directory: .
         run: CHROME_PATH="$(command -v google-chrome)" NODE_PATH=app/node_modules node tools/check-arabic-browser.mjs

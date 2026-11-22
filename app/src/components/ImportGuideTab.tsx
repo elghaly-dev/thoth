@@ -12,6 +12,7 @@ import {
   FileText,
   Users,
   CheckCircle2,
+  X,
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio } from '../utils/audio';
 import { postModel } from '../utils/api';
@@ -137,7 +138,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
           <button
             type="submit"
             disabled={!query.trim() || isAsking}
-            className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white text-xs font-semibold flex items-center gap-2 shadow-md shadow-emerald-950 transition-all cursor-pointer"
+            className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 text-white text-xs font-semibold flex items-center gap-2 shadow-md shadow-emerald-950 transition-all cursor-pointer"
           >
             {isAsking ? (
               <>
@@ -178,7 +179,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
               className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
               aria-label={tx(lang, 'common.dismiss')}
             >
-              ✕
+              <X className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
         )}

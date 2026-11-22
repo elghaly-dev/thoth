@@ -1,6 +1,7 @@
 import React from 'react';
 import { SupportedLanguage, SUPPORTED_LANGUAGES } from '../types';
-import { Volume2, VolumeX, ShieldCheck, Sparkles, Globe, Heart } from 'lucide-react';
+import { Volume2, VolumeX, ShieldCheck, Sparkles, Globe, Heart, Settings } from 'lucide-react';
+import { ts } from '../theme/strings';
 import { tx, langDisplayName } from '../i18n';
 import { CREDIT_TOP, CREDIT_URL } from '../credit';
 
@@ -10,6 +11,7 @@ interface HeaderProps {
   isMuted: boolean;
   onToggleMute: () => void;
   onOpenSafetyModal: () => void;
+  onOpenSettings: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -18,6 +20,7 @@ export const Header: React.FC<HeaderProps> = ({
   isMuted,
   onToggleMute,
   onOpenSafetyModal,
+  onOpenSettings,
 }) => {
   const lang = currentLang.code;
 
@@ -53,12 +56,8 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
         {/* Brand */}
         <div className="flex items-center gap-3">
-          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 via-emerald-600 to-indigo-600 p-[2px] shadow-lg shadow-emerald-900/30">
-            <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-              <span className="text-xl font-black bg-gradient-to-r from-amber-300 via-emerald-300 to-cyan-300 bg-clip-text text-transparent">
-                Θ
-              </span>
-            </div>
+          <div className="flex items-center justify-center w-11 h-11 rounded-full border border-amber-500 bg-slate-900">
+            <span className="thoth-display text-xl text-amber-300" aria-hidden="true">Θ</span>
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -116,6 +115,16 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="hidden md:inline">{isMuted ? tx(lang, 'header.muted') : tx(lang, 'header.voiceOn')}</span>
           </button>
 
+          {/* Settings: look and name */}
+          <button
+            type="button"
+            onClick={onOpenSettings}
+            aria-label={ts(lang, 'settings')}
+            title={ts(lang, 'settings')}
+            className="p-2 rounded-xl border border-slate-700 text-slate-300 hover:border-amber-500 transition-colors cursor-pointer"
+          >
+            <Settings className="w-4 h-4" aria-hidden="true" />
+          </button>
           {/* Safe Export guarantee */}
           <button
             onClick={onOpenSafetyModal}

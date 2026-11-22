@@ -116,7 +116,7 @@ export const ApiKeyBar: React.FC<ApiKeyBarProps> = ({ lang }) => {
           </label>
           <button
             type="submit"
-            className="min-h-11 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-semibold cursor-pointer"
+            className="min-h-11 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold cursor-pointer"
           >
             {tx(lang, 'key.save')}
           </button>

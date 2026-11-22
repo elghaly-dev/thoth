@@ -127,7 +127,7 @@ export const DealMinuteTab: React.FC<DealMinuteTabProps> = ({ currentLang }) => 
           type="button"
           onClick={toggleMic}
           aria-pressed={listening}
-          className={`inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-semibold ${listening ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white hover:bg-emerald-500'}`}
+          className={`inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold ${listening ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white hover:bg-emerald-700'}`}
         >
           {listening ? <Square className="w-5 h-5" aria-hidden="true" /> : <Mic className="w-5 h-5" aria-hidden="true" />}
           {listening ? t('listening') : t('speak')}
@@ -149,7 +149,7 @@ export const DealMinuteTab: React.FC<DealMinuteTabProps> = ({ currentLang }) => 
           type="button"
           onClick={extract}
           disabled={busy || !transcript.trim()}
-          className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-semibold bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-50"
         >
           {busy ? <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" /> : <Wand2 className="w-5 h-5" aria-hidden="true" />}
           {busy ? t('extracting') : t('extract')}
@@ -165,7 +165,7 @@ export const DealMinuteTab: React.FC<DealMinuteTabProps> = ({ currentLang }) => 
         <button
           type="button"
           onClick={draft}
-          className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-semibold bg-emerald-600 text-white hover:bg-emerald-500"
+          className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold bg-emerald-600 text-white hover:bg-emerald-700"
         >
           <FileText className="w-5 h-5" aria-hidden="true" />
           {t('draft')}
@@ -187,7 +187,7 @@ export const DealMinuteTab: React.FC<DealMinuteTabProps> = ({ currentLang }) => 
                   <button
                     type="button"
                     onClick={() => copy(l)}
-                    className="inline-flex items-center gap-1 rounded-xl border border-slate-600 px-3 py-1 text-sm text-slate-200 hover:border-amber-400"
+                    className="inline-flex items-center gap-1 rounded-full border border-slate-700 px-3 py-1 text-sm text-slate-200 hover:border-amber-400"
                   >
                     {copied === l ? <Check className="w-4 h-4" aria-hidden="true" /> : <Copy className="w-4 h-4" aria-hidden="true" />}
                     {copied === l ? t('copied') : t('copy')}

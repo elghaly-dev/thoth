@@ -1,6 +1,6 @@
 /**
- * Strings for the on-device Faithful Servant. English, Hindi and Chinese
- * are complete ([VERIFY] Hindi and Chinese: native review pending); other
+ * Strings for the on-device Faithful Servant. English, Hindi, Chinese and
+ * Arabic are complete ([VERIFY] Hindi, Chinese and Arabic: native review pending); other
  * UI languages fall back to English. Kept apart from the main tables so the
  * existing locale-parity tests stay as they are. {size}, {done}, {total} and
  * {pct} are filled in at run time.
@@ -102,7 +102,39 @@ const ZH: Record<DeviceStringKey, string> = {
   close: '关闭',
 };
 
-export const DEVICE_STRINGS: Partial<Record<LanguageCode, Record<DeviceStringKey, string>>> = { en: EN, hi: HI, zh: ZH };
+// [VERIFY] Arabic: native review pending.
+const AR: Record<DeviceStringKey, string> = {
+  tab: 'الخادم الأمين على هذا الهاتف',
+  title: 'الخادم الأمين على هذا الهاتف',
+  intro: 'ترجمة رسائل التجارة وشرحها بالهندية والعربية والصينية والإنجليزية. يعمل كل شيء على هذا الهاتف، ولا يغادره شيء مما تكتبه.',
+  needDownload: 'أول استخدام يحتاج إلى تنزيل لمرة واحدة بحجم {size}. يُفضَّل استخدام Wi-Fi. بعد ذلك يعمل دون إنترنت.',
+  downloadBtn: 'نزّل الخادم الأمين ({size})',
+  downloading: 'جارٍ التنزيل وفحص كل ملف: {done} من {total}',
+  stop: 'إيقاف',
+  failHash: 'لم يطابق أحد الملفات فحصه، لذلك لم يُحفظ. حاول مرة أخرى لاحقًا.',
+  failNet: 'توقف التنزيل. حاول مرة أخرى، ويُفضَّل عبر Wi-Fi.',
+  notYet: 'الخادم الأمين على الجهاز قيد التجهيز. استخدم الآن مفتاحك الخاص في الأعلى.',
+  noGpu: 'لا يستطيع هذا الهاتف تشغيل الخادم الأمين على الجهاز. يمكنك استخدام مفتاحك الخاص في الأعلى بدلًا من ذلك.',
+  start: 'شغّل الخادم الأمين',
+  loading: 'جارٍ التشغيل على هذا الهاتف: {pct}٪',
+  input: 'الصق الرسالة أو اكتبها',
+  from: 'من',
+  into: 'إلى',
+  detect: 'اكتشاف تلقائي',
+  translate: 'ترجم',
+  explain: 'اشرح',
+  working: 'جارٍ العمل على هذا الهاتف…',
+  readAloud: 'اقرأ بصوت عالٍ',
+  noVoice: 'لا يوجد في هذا الهاتف صوت دون إنترنت لهذه اللغة. يمكنك إضافة صوت من إعدادات تحويل النص إلى كلام في الهاتف.',
+  checkTerms: 'راجع الأرقام والأسعار والشروط مع الطرف الآخر قبل أن توافق.',
+  remove: 'احذفه من هذا الهاتف ({size})',
+  removed: 'حُذف من هذا الهاتف.',
+  failStart: 'تعذّر تشغيل الخادم الأمين على هذا الهاتف. يمكنك استخدام مفتاحك الخاص في الأعلى بدلًا من ذلك.',
+  licences: 'التراخيص',
+  close: 'إغلاق',
+};
+
+export const DEVICE_STRINGS: Partial<Record<LanguageCode, Record<DeviceStringKey, string>>> = { en: EN, hi: HI, zh: ZH, ar: AR };
 
 export function dt(lang: LanguageCode, key: DeviceStringKey, vars: Record<string, string> = {}): string {
   const s = (DEVICE_STRINGS[lang] ?? EN)[key] ?? EN[key];

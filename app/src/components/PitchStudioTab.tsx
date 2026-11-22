@@ -19,6 +19,7 @@ import {
   Square,
   AlertOctagon,
   ShieldCheck,
+  X,
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio } from '../utils/audio';
 import { postModel } from '../utils/api';
@@ -373,7 +374,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
                 className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
                 aria-label={tx(lang, 'common.dismiss')}
               >
-                ✕
+                <X className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
           )}

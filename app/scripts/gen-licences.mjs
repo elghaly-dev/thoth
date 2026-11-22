@@ -24,7 +24,7 @@ const MODELS = [
     notice: 'Copyright 2024 Alibaba Cloud (Qwen team). MLC build mlc-ai/Qwen2.5-0.5B-Instruct-q4f16_1-MLC, revision 32ff081f.',
   },
 ];
-const PACKAGES = ['@mlc-ai/web-llm', '@fontsource/plus-jakarta-sans', 'react', 'react-dom', 'lucide-react', 'motion'];
+const PACKAGES = ['@mlc-ai/web-llm', '@fontsource/plus-jakarta-sans', '@fontsource/noto-sans-arabic', '@fontsource/playfair-display', '@fontsource/amiri', 'react', 'react-dom', 'lucide-react', 'motion'];
 
 const sep = '\n\n' + '='.repeat(72) + '\n\n';
 let out = 'Licences\n\nThoth uses these open models and open-source packages. Their licences ask for the notices below.\n';

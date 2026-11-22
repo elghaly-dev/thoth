@@ -2,7 +2,7 @@
 // manifest-check for the Thoth TWA (no network, no Android SDK needed).
 // Fails on: wrong TWA manifest values or URLs that the site does not serve;
 // app/public/site.webmanifest not Hindi / not standalone / icons wrong / no
-// "by Elghaly LLC" / banned words; targetSdk not 35; signing values that are
+// "by Elghaly LLC" / banned words; targetSdk not 36; signing values that are
 // not environment reads, or signing material in the repo; assetlinks that is
 // neither the TODO placeholder nor well-formed fingerprints (no guessed key).
 // Run: node tools/check-twa.mjs
@@ -37,7 +37,7 @@ for (const v of [sw.name, sw.short_name, sw.description]) for (const re of BANNE
 check(fs.existsSync('use/site.webmanifest'), 'use/ build carries site.webmanifest');
 
 const gradle = read('android/app/build.gradle');
-check(/targetSdk 35\b/.test(gradle) && /compileSdk 35\b/.test(gradle), 'android: compileSdk/targetSdk 35');
+check(/targetSdk 36\b/.test(gradle) && /compileSdk 36\b/.test(gradle), 'android: compileSdk/targetSdk 36 (Google Play target level)');
 check(/applicationId 'dev\.elghaly\.thoth'/.test(gradle), 'android: applicationId dev.elghaly.thoth');
 // Signing may only come from environment variables (CI secrets): every
 // signing value must be a System.getenv(...) read, never a literal.

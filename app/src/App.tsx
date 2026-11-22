@@ -16,6 +16,11 @@ import { dt } from './ondevice/strings';
 import { tx, langDisplayName } from './i18n';
 import { CREDIT_FOOTER } from './credit';
 import { initialLanguage, saveLanguage, dirFor } from './utils/lang-pref';
+import { Welcome } from './components/Welcome';
+import { SettingsSheet } from './components/SettingsSheet';
+import { applyTheme, savedTheme, saveTheme, savedName, saveName, hasWelcomed, markWelcomed } from './theme/prefs';
+import type { PaletteId } from './theme/palettes';
+import { ts } from './theme/strings';
 import {
   Mic,
   Sparkles,
@@ -49,6 +54,13 @@ export default function App() {
     };
   }, []);
   const [isMuted, setIsMuted] = useState(false);
+  // Look and name: on this device only (see theme/prefs.ts).
+  const [theme, setTheme] = useState<PaletteId>(() => savedTheme());
+  const [userName, setUserName] = useState(() => savedName());
+  const [welcomed, setWelcomed] = useState(() => hasWelcomed());
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const pickTheme = (id: PaletteId) => { applyTheme(id); saveTheme(id); setTheme(id); };
+  const pickName = (n: string) => { saveName(n); setUserName(n); };
   const [isSafetyModalOpen, setIsSafetyModalOpen] = useState(false);
   const [licencesOpen, setLicencesOpen] = useState(false);
 
@@ -106,10 +118,14 @@ export default function App() {
         isMuted={isMuted}
         onToggleMute={() => setIsMuted(!isMuted)}
         onOpenSafetyModal={() => setIsSafetyModalOpen(true)}
+        onOpenSettings={() => setSettingsOpen(true)}
       />
 
       {/* Main Content Area */}
       <main id="thoth-main" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+        <p className="thoth-display text-3xl sm:text-4xl text-white pt-2">
+          {userName ? ts(lang, 'welcome').replace('{name}', userName) : ts(lang, 'welcomeAnon')}
+        </p>
         <ApiKeyBar lang={lang} />
         {/* Navigation Tabs Bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
@@ -280,10 +296,27 @@ export default function App() {
             <button type="button" onClick={() => setLicencesOpen(true)} className="underline underline-offset-2 hover:text-slate-200 cursor-pointer">
               {dt(lang, 'licences')}
             </button>
+            <span className="text-slate-600" aria-hidden="true">|</span>
+            <a href={lang === 'ar' ? '/ar/privacy/' : '/privacy/'} className="underline underline-offset-2 hover:text-slate-200">
+              {tx(lang, 'app.privacyPage')}
+            </a>
           </div>
         </div>
         <p lang="en" className="mt-4 text-center text-[11px] tracking-widest text-slate-400">{CREDIT_FOOTER}</p>
       </footer>
+      {settingsOpen && (
+        <SettingsSheet lang={lang} theme={theme} name={userName} onTheme={pickTheme} onName={pickName} onClose={() => setSettingsOpen(false)} />
+      )}
+      {!welcomed && (
+        <Welcome
+          currentLang={currentLang}
+          theme={theme}
+          onTheme={pickTheme}
+          onName={pickName}
+          onLanguage={pickLanguage}
+          onDone={() => { markWelcomed(); setWelcomed(true); }}
+        />
+      )}
       {licencesOpen && <LicencesModal lang={lang} onClose={() => setLicencesOpen(false)} />}
 
       {/* Safety & Charter Modal */}
