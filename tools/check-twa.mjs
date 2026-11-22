@@ -51,6 +51,16 @@ check(!tracked.some((f) => /\.(jks|keystore|p12)$|keystore\.properties$/.test(f)
 const mf = read('android/app/src/main/AndroidManifest.xml');
 check(!/uses-permission/.test(mf), 'android: wrapper asks for no permissions');
 check(/https:\/\/thoth\.elghaly\.dev\/use\//.test(gradle), 'android: opens /use/');
+// Hardening (owner order 2026-11-22): no backup, HTTPS only, R8 on, only the launcher exported.
+check(/android:allowBackup="false"/.test(mf) && /android:fullBackupContent="false"/.test(mf) && /android:dataExtractionRules="@xml\/data_extraction_rules"/.test(mf), 'android: no backup and no device transfer');
+check(/android:usesCleartextTraffic="false"/.test(mf) && /android:networkSecurityConfig="@xml\/network_security_config"/.test(mf), 'android: cleartext off, network security config set');
+const nsc = read('android/app/src/main/res/xml/network_security_config.xml');
+check(/cleartextTrafficPermitted="false"/.test(nsc) && /<certificates src="system" \/>/.test(nsc) && !/src="user"/.test(nsc) && !/<domain-config/.test(nsc), 'android: HTTPS only, system CAs only, no per-domain exceptions');
+const dx = read('android/app/src/main/res/xml/data_extraction_rules.xml');
+check(['cloud-backup', 'device-transfer'].every((t) => new RegExp('<' + t + '>[\\s\\S]*<exclude domain="root" />[\\s\\S]*</' + t + '>').test(dx)), 'android: backup rules exclude everything');
+check(/minifyEnabled true/.test(gradle) && /shrinkResources true/.test(gradle) && /proguard-android-optimize\.txt/.test(gradle), 'android: R8 on for release');
+const exported = [...mf.matchAll(/<(activity|provider|service|receiver)\b[^>]*android:name="([^"]+)"[^>]*android:exported="true"/g)].map((m) => m[2]);
+check(exported.length === 1 && exported[0] === 'com.google.androidbrowserhelper.trusted.LauncherActivity', 'android: only the launcher activity is exported');
 
 const al = JSON.parse(read('.well-known/assetlinks.json'));
 const fp = al[0].target.sha256_cert_fingerprints;

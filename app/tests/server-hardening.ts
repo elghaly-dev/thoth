@@ -38,6 +38,7 @@ const src = fs.readFileSync(path.join(APP, 'server.ts'), 'utf8');
 check(/clearTimeout\(timer\)/.test(src), 'generateWithFallback clears its timeout');
 check(!/json\(\{\s*error:\s*[^}]*\.message/.test(src), 'no response body built from an error message');
 check(src.includes("express.json({ limit: '100kb' })"), 'JSON limit is 100kb');
+check(!/console\.(log|warn|error)\([^)]*\b(err|error|modelErr|req\.body|body|apiKey|GEMINI_API_KEY|THOTH_PROXY_SECRET)\b/.test(src.replace(/function logFailure[\s\S]*?\n}\n/, '').replace(/'(?:[^'\\\n]|\\.)*'|"(?:[^"\\\n]|\\.)*"/g, "''")), 'no log line prints an error object, a body, a key or a secret');
 check(/app\.set\('trust proxy', TRUST_PROXY_HOPS\)/.test(src), 'trust proxy is a hop count, not true');
 
 // ---- provider stub ----
@@ -88,7 +89,7 @@ async function post(port: number, p: string, body: unknown, headers: Record<stri
   const raw = typeof body === 'string' ? body : JSON.stringify(body);
   const r = await fetch(base(port) + p, { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body: raw });
   const text = await r.text();
-  return { status: r.status, text, ct: r.headers.get('content-type') || '' };
+  return { status: r.status, text, ct: r.headers.get('content-type') || '', res: r };
 }
 
 // ---- instance 1: validation, error bodies, 404 ----
@@ -133,6 +134,19 @@ try {
   const spa = await fetch(base(P1) + '/some/app/route');
   const spaText = await spa.text();
   check(spa.status === 200 && spaText.includes('<div id="root">'), 'SPA fallback still serves index.html');
+
+  // Security headers on pages, API answers and errors alike.
+  for (const [label, r] of [['page', spa], ['api 404', nf], ['api error', malformed.res]] as const) {
+    const h = (r as Response).headers;
+    const csp = h.get('content-security-policy') || '';
+    check(/max-age=\d{8,}; includeSubDomains/.test(h.get('strict-transport-security') || ''), `${label}: HSTS`);
+    check(h.get('x-content-type-options') === 'nosniff', `${label}: nosniff`);
+    check(h.get('x-frame-options') === 'DENY' && csp.includes("frame-ancestors 'none'"), `${label}: framing refused`);
+    check(h.get('referrer-policy') === 'strict-origin-when-cross-origin', `${label}: Referrer-Policy`);
+    check((h.get('permissions-policy') || '').includes('camera=()'), `${label}: Permissions-Policy`);
+    check(!/unsafe-inline|unsafe-eval/.test(csp) && csp.includes("object-src 'none'"), `${label}: strict CSP`);
+    check(!h.get('x-powered-by') && !h.get('access-control-allow-origin'), `${label}: no x-powered-by, no CORS grant`);
+  }
 } finally {
   s1.kill();
 }

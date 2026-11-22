@@ -38,7 +38,45 @@ const TRUST_PROXY_HOPS = (() => {
 app.set('trust proxy', TRUST_PROXY_HOPS);
 app.disable('x-powered-by');
 
+// Security headers on every response (owner order 2026-11-22). The CSP matches the Pages
+// build (vite.config.ts PAGES_CSP) and adds frame-ancestors 'none', which only a header can
+// set; it applies in production only, because the Vite dev server injects inline scripts.
+// frame-ancestors 'none' also refuses the AI Studio preview frame: open the app in its own tab.
+const SERVER_CSP = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "connect-src 'self' https://generativelanguage.googleapis.com",
+  "style-src 'self' https://fonts.googleapis.com",
+  "font-src https://fonts.gstatic.com",
+  "img-src 'self' data:",
+  "manifest-src 'self'",
+  "media-src 'self' data: blob:",
+  "object-src 'none'",
+  "base-uri 'none'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join('; ');
+app.use((_req: Request, res: Response, next: NextFunction) => {
+  res.setHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'microphone=(self), camera=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  if (process.env.NODE_ENV === 'production') res.setHeader('Content-Security-Policy', SERVER_CSP);
+  next();
+});
+
 app.use(express.json({ limit: '100kb' }));
+
+// Logs only the error's class and HTTP status: never its message, the request body, a key
+// or a token (a provider message can echo the request).
+function logFailure(label: string, err: unknown): void {
+  const e = err as { name?: unknown; status?: unknown; code?: unknown } | null;
+  const name = e && typeof e.name === 'string' ? e.name : typeof err;
+  const status = e && (typeof e.status === 'number' || typeof e.status === 'string') ? ` status=${e.status}` : '';
+  console.warn(`${label}: ${name}${status}`);
+}
 
 // Liveness for the browser runtime detector. Never includes the key or
 // the proxy secret — only whether a key is configured on this server.
@@ -314,7 +352,7 @@ async function generateWithFallback(params: {
       if (isAuthError(err)) {
         throw err;
       }
-      console.warn(`Model ${model} request error, trying fallback...`, err instanceof Error ? err.message : err);
+      logFailure(`Model ${model} request failed, trying fallback`, err);
       lastError = err;
     }
   }
@@ -377,11 +415,11 @@ Remember: Keep answers short, friendly, and address one step at a time!`;
         res.status(authStatus).json(providerAuthErrorBody(authStatus));
         return;
       }
-      console.warn('Model call failed; returning a labelled error:', modelErr);
+      logFailure('Model call failed; returning a labelled error', modelErr);
       res.status(502).json({ error: GENERIC_FAILURE });
     }
   } catch (error: unknown) {
-    console.error('Chat error:', error);
+    logFailure('Chat error', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -468,7 +506,7 @@ Return a JSON response with:
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    console.error('Pitch error:', error);
+    logFailure('Pitch error', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -559,7 +597,7 @@ STRICT RULES:
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    console.error('Translation error:', error);
+    logFailure('Translation error', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -601,7 +639,7 @@ STRICT MANDATORY RULES:
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    console.error('Import guide error:', error);
+    logFailure('Import guide error', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -669,7 +707,7 @@ app.post('/api/tts', async (req: Request, res: Response) => {
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    console.warn('TTS error (will fallback to browser Web Speech):', error instanceof Error ? error.message : error);
+    logFailure('TTS error (browser speech takes over)', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });

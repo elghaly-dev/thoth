@@ -1,0 +1,11 @@
+# CI, security checks, tooling, the Android wrapper and the server need the repository admin's review.
+/.github/          @Alarm2024
+/tools/            @Alarm2024
+/android/          @Alarm2024
+/.well-known/      @Alarm2024
+/app/server.ts     @Alarm2024
+/app/tests/        @Alarm2024
+/app/vite.config.ts @Alarm2024
+/app/package.json  @Alarm2024
+/app/package-lock.json @Alarm2024
+/SECURITY.md       @Alarm2024

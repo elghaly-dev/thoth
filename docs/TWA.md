@@ -16,7 +16,7 @@ CI `android-twa`:
 - `manifest-check` (tools/check-twa.mjs) on every PR.
 - `build-unsigned-aab` on every PR: Gradle `bundleRelease` with no key, fails if the bundle is
   signed, prints the SDK levels, size and sha256, uploads the artifact.
-- `signed-release-aab`, **manual only** (Actions → android-twa → Run workflow). It signs with
+- `signed-release-aab`, **manual only** (Actions → android-release → Run workflow; its own workflow, so PR runs never see the signing secrets). It signs with
   the **upload key** from four repository secrets, verifies the signature, prints the upload
   certificate's SHA-256 (a public value), and deletes the keystore from the runner at the end.
 
