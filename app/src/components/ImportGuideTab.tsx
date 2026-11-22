@@ -131,7 +131,8 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={tx(lang, 'guide.askPh', { native: currentLang.nativeName })}
-            className="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+            aria-label={tx(lang, 'guide.askTitle', { lang: langDisplayName(lang, currentLang.name) })}
+            className="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500"
           />
           <button
             type="submit"
@@ -145,7 +146,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
               </>
             ) : (
               <>
-                <Send className="w-4 h-4" />
+                <Send className="w-4 h-4 rtl:-scale-x-100" aria-hidden="true" />
                 <span>{tx(lang, 'guide.askBtn')}</span>
               </>
             )}
@@ -161,7 +162,7 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
                 setQuery(sq);
                 handleAskQuestion(undefined, sq);
               }}
-              className="text-[11px] px-2.5 py-1.5 rounded-lg bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer text-left"
+              className="text-[11px] px-2.5 py-1.5 rounded-lg bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:border-slate-600 transition-colors cursor-pointer text-start"
             >
               {sq}
             </button>

@@ -264,7 +264,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
                       setPrice(preset.price);
                       setShippingOrigin(preset.origin);
                     }}
-                    className="p-2 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-emerald-500/50 text-[11px] text-left text-slate-300 hover:text-white transition-all cursor-pointer"
+                    className="p-2 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-emerald-500/50 text-[11px] text-start text-slate-300 hover:text-white transition-all cursor-pointer"
                   >
                     {preset.label}
                   </button>
@@ -276,62 +276,66 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
             <form onSubmit={handleGeneratePitch} className="space-y-3.5">
               {/* Product */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-                  <Package className="w-3.5 h-3.5 text-amber-400" />
+                <label htmlFor="pitch-product" className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
+                  <Package className="w-3.5 h-3.5 text-amber-400" aria-hidden="true" />
                   {tx(lang, 'pitch.whatSell')}
                 </label>
                 <input
+                  id="pitch-product"
                   type="text"
                   required
                   value={product}
                   onChange={(e) => setProduct(e.target.value)}
                   placeholder={tx(lang, 'pitch.whatSellPh')}
-                  className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
               {/* Quantity */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-cyan-400" />
+                <label htmlFor="pitch-quantity" className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
+                  <Layers className="w-3.5 h-3.5 text-cyan-400" aria-hidden="true" />
                   {tx(lang, 'pitch.quantity')}
                 </label>
                 <input
+                  id="pitch-quantity"
                   type="text"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   placeholder={tx(lang, 'pitch.quantityPh')}
-                  className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
               {/* Price */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-                  <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
+                <label htmlFor="pitch-price" className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
+                  <DollarSign className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
                   {tx(lang, 'pitch.price')}
                 </label>
                 <input
+                  id="pitch-price"
                   type="text"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   placeholder={tx(lang, 'pitch.pricePh')}
-                  className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
               {/* Shipping Origin */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-                  <Ship className="w-3.5 h-3.5 text-indigo-400" />
+                <label htmlFor="pitch-origin" className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
+                  <Ship className="w-3.5 h-3.5 text-indigo-400" aria-hidden="true" />
                   {tx(lang, 'pitch.shipFrom')}
                 </label>
                 <input
+                  id="pitch-origin"
                   type="text"
                   value={shippingOrigin}
                   onChange={(e) => setShippingOrigin(e.target.value)}
                   placeholder={tx(lang, 'pitch.shipFromPh')}
-                  className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
@@ -562,7 +566,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
                       onClick={() =>
                         setVerifiedClaims((prev) => ({ ...prev, [idx]: !prev[idx] }))
                       }
-                      className={`w-full p-2.5 rounded-xl border text-left text-xs flex items-start gap-2.5 transition-colors cursor-pointer ${
+                      className={`w-full p-2.5 rounded-xl border text-start text-xs flex items-start gap-2.5 transition-colors cursor-pointer ${
                         verifiedClaims[idx]
                           ? 'bg-emerald-950/30 border-emerald-500/40 text-emerald-200'
                           : 'bg-slate-950/60 border-slate-800 text-slate-300 hover:border-slate-700'
@@ -571,7 +575,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
                       {verifiedClaims[idx] ? (
                         <CheckSquare className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                       ) : (
-                        <Square className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
+                        <Square className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
                       )}
                       <span className="flex-1">
                         <strong>{tx(lang, 'pitch.check', { n: idx + 1 })}</strong> {claim}

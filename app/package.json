@@ -28,9 +28,12 @@
     "test:network": "tsx tests/network.ts",
     "test:live-model": "tsx tests/live-model.ts",
     "licences": "node scripts/gen-licences.mjs",
-    "test:licences": "node scripts/gen-licences.mjs --check"
+    "test:licences": "node scripts/gen-licences.mjs --check",
+    "test:a11y": "tsx tests/a11y-labels.ts",
+    "test:byok": "node ../tools/check-byok-storage.mjs"
   },
   "dependencies": {
+    "@fontsource/noto-sans-arabic": "5.3.0",
     "@fontsource/plus-jakarta-sans": "5.3.0",
     "@google/genai": "^3.2.0",
     "@mlc-ai/web-llm": "0.2.87",

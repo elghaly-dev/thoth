@@ -40,7 +40,7 @@ export async function boot(rootSelector = "#app", opts = {}) {
   }
   if (ignoredParams.length) {
     const names = ignoredParams.join(", ");
-    console.warn(`Inference settings in the page URL are ignored (${names}). Set them in AI model settings.`);
+    console.warn(`Inference settings in the page URL are ignored (${names}). Set them in Model settings.`);
   }
   const savedProfile = getSelectedByokProfile();
   const tabSetup = loadTabByokSetup(savedProfile);

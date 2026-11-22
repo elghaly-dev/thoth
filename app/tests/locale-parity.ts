@@ -110,7 +110,9 @@ check(!/[ऀ-ॣ०-ॿ]/.test(GREETINGS.bn), 'bn greeting has no Devanagari let
 const app = fs.readFileSync(path.join(APP, 'src', 'App.tsx'), 'utf8');
 check(/document\.documentElement\.lang = lang === 'zh' \? 'zh-CN' : lang;/.test(app), 'App sets <html lang> on language switch');
 check(/document\.documentElement\.dir = dirFor\(lang\);/.test(app), 'App sets <html dir> (rtl for ar) on language switch');
-check(/saveLanguage\(lang\)/.test(app) && /initialLanguage\(\)/.test(app), 'App restores and saves the language choice');
+check(/initialLanguage\(\)/.test(app), 'App restores the language choice (or detects the device language)');
+check(/const pickLanguage = \(next: SupportedLanguage\) => \{\s*saveLanguage\(next\.code\);/.test(app) && /onLanguageChange=\{pickLanguage\}/.test(app), 'App saves only a manual pick from the switcher');
+check(!/saveLanguage\(lang\)/.test(app), 'App never saves the detected language on load');
 const html = fs.readFileSync(path.join(APP, 'index.html'), 'utf8');
 check(/<html lang="[a-z-]+"/.test(html), 'index.html has a default <html lang>');
 

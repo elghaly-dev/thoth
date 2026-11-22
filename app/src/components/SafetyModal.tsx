@@ -54,7 +54,7 @@ export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose, lang 
           type="button"
           onClick={onClose}
           aria-label={tx(lang, 'safety.close')}
-          className="absolute top-4 right-4 min-h-11 min-w-11 p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+          className="absolute top-4 end-4 min-h-11 min-w-11 p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" aria-hidden="true" />
         </button>
@@ -73,7 +73,7 @@ export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose, lang 
           </div>
         </div>
 
-        <div className="space-y-2.5 text-xs text-slate-300 max-h-[60vh] overflow-y-auto pr-1">
+        <div className="space-y-2.5 text-xs text-slate-300 max-h-[60vh] overflow-y-auto pe-1">
           <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 flex items-start gap-3">
             <Award className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
             <div>

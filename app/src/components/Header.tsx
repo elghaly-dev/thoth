@@ -28,9 +28,9 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="font-semibold text-emerald-400">{tx(lang, 'header.openToAll')}</span>
-          <span className="text-slate-500">•</span>
+          <span className="text-slate-400">•</span>
           <span>{tx(lang, 'header.credit')}</span>
-          <span className="text-slate-500">•</span>
+          <span className="text-slate-400">•</span>
           <span className="text-slate-400 hidden sm:inline">{tx(lang, 'header.reachBuyers')}</span>
         </div>
 
@@ -42,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
             <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
             <span>{tx(lang, 'header.safetyPolicy')}</span>
           </button>
-          <span className="text-slate-600">|</span>
+          <span className="text-slate-600" aria-hidden="true">|</span>
           <span className="text-slate-400 text-[11px] flex items-center gap-1">
             {tx(lang, 'header.madeWith')} <Heart className="w-3 h-3 text-rose-500 inline fill-rose-500" /> {tx(lang, 'header.forMakers')}
           </span>
@@ -82,7 +82,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center gap-3">
           {/* Language selector */}
           <div className="relative flex items-center bg-slate-900 border border-slate-700/80 rounded-xl px-2.5 py-1.5 text-xs shadow-inner">
-            <Globe className="w-3.5 h-3.5 text-slate-400 mr-2 shrink-0" />
+            <Globe className="w-3.5 h-3.5 text-slate-400 me-2 shrink-0" />
             <select
               aria-label={tx(lang, 'header.selectLanguage')}
               value={currentLang.code}
@@ -90,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({
                 const found = SUPPORTED_LANGUAGES.find((l) => l.code === e.target.value);
                 if (found) onLanguageChange(found);
               }}
-              className="bg-transparent text-white font-medium focus:outline-none cursor-pointer pr-1"
+              className="bg-transparent text-white font-medium focus:outline-none cursor-pointer pe-1"
             >
               {SUPPORTED_LANGUAGES.map((l) => (
                 <option key={l.code} value={l.code} className="bg-slate-900 text-white">

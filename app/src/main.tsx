@@ -7,6 +7,11 @@ import '@fontsource/plus-jakarta-sans/latin-500.css';
 import '@fontsource/plus-jakarta-sans/latin-600.css';
 import '@fontsource/plus-jakarta-sans/latin-700.css';
 import '@fontsource/plus-jakarta-sans/latin-800.css';
+// Arabic, self-hosted like the Latin font: nothing is fetched from another site.
+import '@fontsource/noto-sans-arabic/arabic-400.css';
+import '@fontsource/noto-sans-arabic/arabic-500.css';
+import '@fontsource/noto-sans-arabic/arabic-600.css';
+import '@fontsource/noto-sans-arabic/arabic-700.css';
 import './index.css';
 
 const rootEl = document.getElementById('root');
