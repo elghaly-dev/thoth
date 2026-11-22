@@ -431,6 +431,11 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
               type="text"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
+              aria-label={
+                activeSpeaker === 'exporter'
+                  ? tx(lang, 'trans.exporterSpeaking', { lang: langDisplayName(lang, currentLang.name) })
+                  : tx(lang, 'trans.buyerSpeaking')
+              }
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
@@ -442,10 +447,10 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                   ? tx(lang, 'trans.phExporter', { native: currentLang.nativeName, name: langDisplayName(lang, currentLang.name) })
                   : tx(lang, 'trans.phBuyer')
               }
-              className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 pr-12"
+              className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500 pe-12"
             />
             {isListening && (
-              <span className="absolute right-3 top-3 flex h-3 w-3">
+              <span className="absolute end-3 top-3 flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500" />
               </span>
@@ -490,7 +495,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                 </>
               ) : (
                 <>
-                  <Send className="w-4 h-4" />
+                  <Send className="w-4 h-4 rtl:-scale-x-100" aria-hidden="true" />
                   <span>{tx(lang, 'trans.translateVoice')}</span>
                 </>
               )}
@@ -506,7 +511,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
             {tx(lang, 'trans.logTitle', { n: history.length })}
           </h3>
           <div className="flex items-center gap-3">
-            <span className="text-[11px] text-slate-500">
+            <span className="text-[11px] text-slate-400">
               {tx(lang, 'trans.logNote')}
             </span>
             <button
@@ -550,7 +555,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                     {langDisplayName(lang, record.sourceLang)} ➔ {langDisplayName(lang, record.targetLang)}
                   </span>
                 </div>
-                <span className="text-[10px] text-slate-500">
+                <span className="text-[10px] text-slate-400">
                   {record.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </div>
@@ -560,7 +565,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                 {/* Original utterance */}
                 <div className="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800/80 flex flex-col justify-between">
                   <div>
-                    <div className="text-[10px] text-slate-500 uppercase font-semibold mb-1">
+                    <div className="text-[10px] text-slate-400 uppercase font-semibold mb-1">
                       {tx(lang, 'trans.originalSpoken', { lang: langDisplayName(lang, record.sourceLang) })}
                     </div>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
@@ -683,25 +688,25 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2 text-[11px]">
                   <div className="bg-slate-900 p-2 rounded-lg border border-slate-800">
-                    <span className="text-slate-500 block text-[10px] uppercase">{tx(lang, 'trans.price')}</span>
+                    <span className="text-slate-400 block text-[10px] uppercase">{tx(lang, 'trans.price')}</span>
                     <span className="font-semibold text-emerald-400">
                       {readbackPrice(record)}
                     </span>
                   </div>
                   <div className="bg-slate-900 p-2 rounded-lg border border-slate-800">
-                    <span className="text-slate-500 block text-[10px] uppercase">{tx(lang, 'trans.currency')}</span>
+                    <span className="text-slate-400 block text-[10px] uppercase">{tx(lang, 'trans.currency')}</span>
                     <span className="font-semibold text-cyan-400">
                       {readbackCurrency(record)}
                     </span>
                   </div>
                   <div className="bg-slate-900 p-2 rounded-lg border border-slate-800">
-                    <span className="text-slate-500 block text-[10px] uppercase">{tx(lang, 'trans.units')}</span>
+                    <span className="text-slate-400 block text-[10px] uppercase">{tx(lang, 'trans.units')}</span>
                     <span className="font-semibold text-amber-300">
                       {record.confirmationReadback?.units || record.keyTerms?.find(t => t.toLowerCase().includes('pcs') || t.toLowerCase().includes('piece') || t.toLowerCase().includes('kg') || t.toLowerCase().includes('ton') || t.toLowerCase().includes('pallet')) || tx(lang, 'trans.verifyUnits')}
                     </span>
                   </div>
                   <div className="bg-slate-900 p-2 rounded-lg border border-slate-800">
-                    <span className="text-slate-500 block text-[10px] uppercase">{tx(lang, 'trans.incoterm')}</span>
+                    <span className="text-slate-400 block text-[10px] uppercase">{tx(lang, 'trans.incoterm')}</span>
                     <span className="font-semibold text-purple-300">
                       {readbackIncoterm(record)}
                     </span>

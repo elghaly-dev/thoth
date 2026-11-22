@@ -31,6 +31,8 @@ jobs:
       - run: npm run test:server
       - run: npm run test:auth
       - run: npm run test:mic
+      - run: npm run test:a11y
+      - run: npm run test:byok   # agent runtime never persists a visitor's key
       - run: npm test            # smoke, idle session, no-secrets, pages redirect
       - name: Build the Pages bundle (use/)
         run: npm run build:pages

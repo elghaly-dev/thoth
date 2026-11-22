@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
+import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI, type Content, type ContentListUnion, type GenerateContentConfig } from '@google/genai';
 import {
@@ -14,6 +15,7 @@ import {
   secretsEqual,
   verifySessionToken,
 } from './server-security';
+import { localizeHtmlShell } from './src/utils/lang-pref';
 
 dotenv.config();
 
@@ -47,6 +49,35 @@ const TRUST_PROXY_HOPS = (() => {
 })();
 app.set('trust proxy', TRUST_PROXY_HOPS);
 app.disable('x-powered-by');
+
+// Security headers on every response (owner order 2026-11-22). The CSP matches the Pages
+// build (vite.config.ts PAGES_CSP) and adds frame-ancestors 'none', which only a header can
+// set; it applies in production only, because the Vite dev server injects inline scripts.
+// frame-ancestors 'none' also refuses the AI Studio preview frame: open the app in its own tab.
+const SERVER_CSP = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "connect-src 'self' https://generativelanguage.googleapis.com",
+  "style-src 'self' https://fonts.googleapis.com",
+  "font-src https://fonts.gstatic.com",
+  "img-src 'self' data:",
+  "manifest-src 'self'",
+  "media-src 'self' data: blob:",
+  "object-src 'none'",
+  "base-uri 'none'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join('; ');
+app.use((_req: Request, res: Response, next: NextFunction) => {
+  res.setHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'microphone=(self), camera=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  if (process.env.NODE_ENV === 'production') res.setHeader('Content-Security-Policy', SERVER_CSP);
+  next();
+});
 
 app.use(express.json({ limit: '100kb' }));
 
@@ -723,9 +754,13 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    app.use(express.static(path.resolve(__dirname, 'dist')));
-    app.get('*', (_req, res) => {
-      res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+    // index: false so every HTML page goes through the shell below, which
+    // sets <html lang/dir> from Accept-Language (device language).
+    app.use(express.static(path.resolve(__dirname, 'dist'), { index: false }));
+    const shell = readFileSync(path.resolve(__dirname, 'dist', 'index.html'), 'utf8');
+    app.get('*', (req, res) => {
+      res.setHeader('Vary', 'Accept-Language');
+      res.type('html').send(localizeHtmlShell(shell, req.headers['accept-language']));
     });
   }
 

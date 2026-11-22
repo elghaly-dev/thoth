@@ -60,7 +60,7 @@ export function selectTopRouter(manifest, routerOverride, byokKey, modelOverride
 
   if ((hasRealKey || hasExplicitModel) && (!requested || requestedMock)) {
     if (!declared.byok_router) {
-      throw new Error("A real API key is configured, but this site publishes no AI provider route.");
+      throw new Error("A real API key is configured, but this site publishes no model provider route.");
     }
     requested = declared.byok_router;
     return { baseUrl: requested, mock: false, upgradedToByok: true };

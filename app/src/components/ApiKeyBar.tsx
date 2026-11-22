@@ -83,7 +83,7 @@ export const ApiKeyBar: React.FC<ApiKeyBarProps> = ({ lang }) => {
             {tx(lang, 'key.whereToGet')}
           </a>
         </p>
-        <p className="mt-1 text-xs text-slate-500">{tx(lang, 'key.staysInTab')}</p>
+        <p className="mt-1 text-xs text-slate-400">{tx(lang, 'key.staysInTab')}</p>
       </div>
 
       {runtime.userKeyPresent ? (
@@ -111,7 +111,7 @@ export const ApiKeyBar: React.FC<ApiKeyBarProps> = ({ lang }) => {
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               placeholder={tx(lang, 'key.placeholder')}
-              className="mt-1 w-full min-h-11 rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="mt-1 w-full min-h-11 rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
           </label>
           <button

@@ -68,7 +68,7 @@ export class LlmClient {
     // happens e.g. when a shared/reloaded URL keeps the proxy router but no saved
     // BYOK profile/key is available in this browser.
     if (!this.mock && (!this.apiKey || this.apiKey === "demo")) {
-      throw new Error(`An AI provider key is required for ${hostOf(this.baseUrl) || "the configured provider"}. Open ⚙ AI model settings, paste your key, then select Save and start. Your key stays in this browser and is sent only to the configured provider.`);
+      throw new Error(`A model provider key is required for ${hostOf(this.baseUrl) || "the configured provider"}. Open ⚙ Model settings, paste your key, then select Save and start. Your key stays in this browser tab and is sent only to the configured provider.`);
     }
     assertModelForRouter(model, this.mock, hostOf(this.baseUrl));
     const span = this.trace?.start("model_call", {
