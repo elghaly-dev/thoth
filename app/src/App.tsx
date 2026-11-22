@@ -5,6 +5,8 @@ import { VoiceAssistantTab } from './components/VoiceAssistantTab';
 import { PitchStudioTab } from './components/PitchStudioTab';
 import { LiveTranslatorTab } from './components/LiveTranslatorTab';
 import { ImportGuideTab } from './components/ImportGuideTab';
+import { DealMinuteTab } from './components/DealMinuteTab';
+import { ds } from './deal/strings';
 import { SafetyModal } from './components/SafetyModal';
 import { ApiKeyBar } from './components/ApiKeyBar';
 import { OnDeviceTab } from './components/OnDeviceTab';
@@ -19,6 +21,7 @@ import {
   Sparkles,
   ArrowRightLeft,
   BookOpen,
+  Timer,
   ShieldCheck,
   ShieldAlert,
   Heart,
@@ -30,7 +33,7 @@ export default function App() {
   // ?lang=, then the saved manual pick (localStorage, code only), then the
   // device language, then English.
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>(() => initialLanguage());
-  const [activeTab, setActiveTab] = useState<'device' | 'assistant' | 'pitch' | 'translate' | 'guide'>('assistant');
+  const [activeTab, setActiveTab] = useState<'device' | 'assistant' | 'pitch' | 'deal' | 'translate' | 'guide'>('assistant');
   // The on-device Faithful Servant is the default where the phone has WebGPU;
   // the bring-your-own-key cloud tabs stay available either way.
   const [gpu, setGpu] = useState<GpuCheck | null>(null);
@@ -188,6 +191,21 @@ export default function App() {
               <BookOpen className="w-4 h-4 text-indigo-300" />
               <span>{tx(lang, 'app.tabGuide')}</span>
             </button>
+
+            {/* Tab 5: Deal in a Minute */}
+            <button
+              type="button"
+              aria-current={activeTab === 'deal' ? 'page' : undefined}
+              onClick={() => setActiveTab('deal')}
+              className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === 'deal'
+                  ? 'bg-gradient-to-r from-amber-600 to-rose-600 text-white shadow-md shadow-amber-950/60'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              }`}
+            >
+              <Timer className="w-4 h-4 text-amber-300" />
+              <span>{ds(lang, 'tab')}</span>
+            </button>
           </div>
 
           {/* Language context quick notice */}
@@ -223,6 +241,10 @@ export default function App() {
 
         {activeTab === 'guide' && (
           <ImportGuideTab currentLang={currentLang} />
+        )}
+
+        {activeTab === 'deal' && (
+          <DealMinuteTab currentLang={currentLang} />
         )}
       </main>
 
