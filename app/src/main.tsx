@@ -12,7 +12,16 @@ import '@fontsource/noto-sans-arabic/arabic-400.css';
 import '@fontsource/noto-sans-arabic/arabic-500.css';
 import '@fontsource/noto-sans-arabic/arabic-600.css';
 import '@fontsource/noto-sans-arabic/arabic-700.css';
+// Display serif for headings: Playfair Display (Latin) and Amiri (Arabic), self-hosted.
+import '@fontsource/playfair-display/latin-500.css';
+import '@fontsource/playfair-display/latin-600.css';
+import '@fontsource/amiri/arabic-400.css';
+import '@fontsource/amiri/arabic-700.css';
 import './index.css';
+import { applyTheme, savedTheme } from './theme/prefs';
+
+// Set the saved look before the first paint.
+applyTheme(savedTheme());
 
 const rootEl = document.getElementById('root');
 if (rootEl) {

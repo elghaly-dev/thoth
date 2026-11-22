@@ -3,9 +3,41 @@
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', 'Noto Sans Arabic', 'Noto Sans Devanagari', 'Noto Sans Gujarati', 'Noto Sans Tamil', 'Noto Sans Bengali', 'Noto Sans Telugu', 'Noto Sans Gurmukhi', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: #0b0f19;
-    color: #f1f5f9;
+    background-color: var(--thoth-paper, #fbf8f1);
+    color: var(--thoth-ink, #1f1b16);
+    -webkit-font-smoothing: antialiased;
   }
+  h1, h2, h3, .thoth-display {
+    font-family: 'Playfair Display', 'Amiri', 'Noto Serif Devanagari', 'Noto Serif', Georgia, 'Times New Roman', serif;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+  }
+  :lang(ar) h1, :lang(ar) h2, :lang(ar) h3, :lang(ar) .thoth-display {
+    font-family: 'Amiri', 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.5;
+  }
+}
+
+/* Luxury look (design only). Thin hairlines in the palette's matching tone,
+   soft shadows on cards, and generous rounding come from the palette tokens
+   set in src/theme/palettes.ts. Unlayered, so they win over the utilities. */
+[class*="border-slate-"], [class*="border-b"][class*="border-slate"] {
+  border-color: var(--thoth-hair);
+}
+.rounded-3xl.border, .rounded-2xl.border:not(button):not(input):not(select):not(textarea) {
+  box-shadow: var(--thoth-shadow);
+}
+header.sticky {
+  box-shadow: 0 1px 0 var(--thoth-hair);
+}
+.thoth-tile {
+  box-shadow: var(--thoth-shadow);
+}
+::selection {
+  background: color-mix(in srgb, var(--thoth-accent) 22%, transparent);
+  color: var(--thoth-ink);
 }
 
 @keyframes wave {
@@ -35,14 +67,14 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--thoth-paper);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.4);
+  background: var(--thoth-hair);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.6);
+  background: var(--thoth-accent);
 }
 
 .sr-only {
