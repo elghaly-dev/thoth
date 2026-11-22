@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SupportedLanguage, SUPPORTED_LANGUAGES } from './types';
+import { SupportedLanguage } from './types';
 import { Header } from './components/Header';
 import { VoiceAssistantTab } from './components/VoiceAssistantTab';
 import { PitchStudioTab } from './components/PitchStudioTab';
@@ -9,6 +9,7 @@ import { SafetyModal } from './components/SafetyModal';
 import { ApiKeyBar } from './components/ApiKeyBar';
 import { tx, langDisplayName } from './i18n';
 import { CREDIT_FOOTER } from './credit';
+import { initialLanguage, saveLanguage, dirFor } from './utils/lang-pref';
 import {
   Mic,
   Sparkles,
@@ -21,9 +22,9 @@ import {
 } from 'lucide-react';
 
 export default function App() {
-  const [currentLang, setCurrentLang] = useState<SupportedLanguage>(
-    SUPPORTED_LANGUAGES[0] // Hindi as default, easily switchable to English, Marathi, Gujarati, etc.
-  );
+  // ?lang=, then the saved manual pick (localStorage, code only), then the
+  // device language, then English.
+  const [currentLang, setCurrentLang] = useState<SupportedLanguage>(() => initialLanguage());
   const [activeTab, setActiveTab] = useState<'assistant' | 'pitch' | 'translate' | 'guide'>('assistant');
   const [isMuted, setIsMuted] = useState(false);
   const [isSafetyModalOpen, setIsSafetyModalOpen] = useState(false);
@@ -54,10 +55,18 @@ export default function App() {
   const lang = currentLang.code;
 
   // Keep <html lang> in step with the UI language (zh -> zh-CN) so screen
-  // readers and CJK font selection use Simplified Chinese.
+  // readers and CJK font selection use Simplified Chinese. Arabic is RTL:
+  // <html dir> follows the language.
   useEffect(() => {
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+    document.documentElement.dir = dirFor(lang);
   }, [lang]);
+
+  // Only a manual pick is saved, so device detection never pins a language.
+  const pickLanguage = (next: SupportedLanguage) => {
+    saveLanguage(next.code);
+    setCurrentLang(next);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-emerald-500/30 selection:text-white">
@@ -70,7 +79,7 @@ export default function App() {
       {/* Top Header */}
       <Header
         currentLang={currentLang}
-        onLanguageChange={setCurrentLang}
+        onLanguageChange={pickLanguage}
         isMuted={isMuted}
         onToggleMute={() => setIsMuted(!isMuted)}
         onOpenSafetyModal={() => setIsSafetyModalOpen(true)}
@@ -183,13 +192,13 @@ export default function App() {
       {/* Trust & Compliance Footer */}
       <footer className="border-t border-slate-800 bg-slate-950 py-6 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <div className="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
+          <div className="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-start">
             <div className="flex items-center gap-1.5 font-bold text-slate-200">
               <span className="text-emerald-400 font-black">Θ</span> Thoth
-              <span className="text-slate-500 font-normal">•</span>
+              <span className="text-slate-400 font-normal">•</span>
               <span className="text-slate-300">{tx(lang, 'app.footerTagline')}</span>
             </div>
-            <span className="text-slate-500 hidden sm:inline">•</span>
+            <span className="text-slate-400 hidden sm:inline">•</span>
             <span className="text-emerald-400 font-medium">{tx(lang, 'app.footerBadge')}</span>
           </div>
 
@@ -206,11 +215,11 @@ export default function App() {
             >
               {tx(lang, 'app.footerPrivacy')}
             </button>
-            <span className="text-slate-600">|</span>
+            <span className="text-slate-600" aria-hidden="true">|</span>
             <span>{tx(lang, 'app.footerNoPasswords')}</span>
           </div>
         </div>
-        <p lang="en" className="mt-4 text-center text-[11px] tracking-widest text-slate-500">{CREDIT_FOOTER}</p>
+        <p lang="en" className="mt-4 text-center text-[11px] tracking-widest text-slate-400">{CREDIT_FOOTER}</p>
       </footer>
 
       {/* Safety & Charter Modal */}

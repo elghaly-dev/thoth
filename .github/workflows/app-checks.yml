@@ -27,8 +27,12 @@ jobs:
       - run: npm run test:zh
       - run: npm run test:nofree
       - run: npm run test:locales
+      - run: npm run test:langpref
       - run: npm run test:server
+      - run: npm run test:auth
       - run: npm run test:mic
+      - run: npm run test:a11y
+      - run: npm run test:byok   # agent runtime never persists a visitor's key
       - run: npm test            # smoke, idle session, no-secrets, pages redirect
       - name: Build the Pages bundle (use/)
         run: npm run build:pages
@@ -41,3 +45,8 @@ jobs:
       - name: Ask Thoth network in step with its hocon, no "free" wording
         working-directory: .
         run: node tools/check-agent-network.mjs
+      - name: Playwright core (no browser download; uses the runner's Chrome)
+        run: npm install --no-save --no-package-lock playwright-core@1.49.1
+      - name: Arabic in a real browser (phone language, RTL, typing and paste, Arabic font)
+        working-directory: .
+        run: CHROME_PATH="$(command -v google-chrome)" NODE_PATH=app/node_modules node tools/check-arabic-browser.mjs

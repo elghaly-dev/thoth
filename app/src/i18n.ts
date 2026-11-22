@@ -4,7 +4,7 @@ import { LOCALE_TABLES } from './i18n-locales';
 /**
  * UI strings for Thoth. English is the complete source of truth;
  * Chinese (Mandarin) has a full table. Hindi, Marathi, Gujarati, Bengali,
- * Tamil, Telugu and Punjabi have full tables in i18n-locales.ts
+ * Tamil, Telugu, Punjabi and Arabic (RTL) have full tables in i18n-locales.ts
  * ([VERIFY - native review pending]); a missing key falls back to English. Never invent a translation: if a key is
  * missing in ZH, `tx` falls back to the English string.
  */
@@ -25,7 +25,7 @@ const EN = {
   'header.openToAll': 'Open to every exporter',
   'header.credit': 'For exporters, small & large',
   'header.reachBuyers': 'Reach & talk to buyers',
-  'header.safetyPolicy': 'Safety & Trust Policy',
+  'header.safetyPolicy': 'Trust & Care Policy',
   'header.madeWith': 'Made with',
   'header.forMakers': 'for makers',
   'header.voiceAssistant': 'Faithful Servant',
@@ -121,7 +121,7 @@ const EN_VOICE = {
   'voice.newChat': 'New Chat',
   'voice.newChatTitle': 'Start new conversation',
   'voice.safetyRule':
-    'Safety rule: Check with a licensed customs broker for final import/tariff decisions. Thoth never asks for passwords or bank info.',
+    'Important: Check with a licensed customs broker for final import/tariff decisions. Thoth never asks for passwords or bank info.',
   'voice.youExporter': 'You (Exporter)',
   'voice.thothServant': 'Thoth (Faithful Servant)',
   'voice.thinking': 'Thoth is crafting a short, friendly response...',
@@ -242,7 +242,7 @@ const EN_TRANS = {
   'trans.buyerSpeaking': 'Buyer Speaking',
   'trans.exporterBtn': 'Exporter',
   'trans.buyerBtn': 'Buyer',
-  'trans.safetyGuardTitle': 'Safety Guard:',
+  'trans.safetyGuardTitle': 'Scam Guard:',
   'trans.safetyGuardBody':
     'Buyer speech is treated as dialogue data, not binding instructions. Thoth translates faithfully without accepting unauthorized commitments.',
   'trans.phExporter': 'Speak or type in {native} ({name}) e.g. We can supply 1,000 units at $3.20 FOB...',
@@ -343,7 +343,7 @@ const EN_GUIDE = {
   'guide.card6Golden': 'Golden rule:',
   'guide.card6GoldenBody':
     'Thoth gives you education and pitch tools; check with a licensed customs broker for final decisions before container booking.',
-  'guide.card7Title': '7. Security Guide: Guard Against Fake-Buyer & Advance-Payment Scams',
+  'guide.card7Title': '7. Scam Guide: Guard Against Fake-Buyer & Advance-Payment Scams',
   'guide.card7Sub1Title': '1. Upfront "Inspection Fee" Fraud:',
   'guide.card7Sub1Body':
     'A scammer sends a massive purchase order but insists you must pay an upfront inspection, vendor enrollment, or lab fee to an unverified third party. Real buyers pay certified agencies (SGS, Intertek) directly.',
@@ -362,6 +362,7 @@ const EN_EXTRA = {
   'lang.hi': 'Hindi',
   'lang.en': 'English',
   'lang.zh': 'Chinese (Mandarin)',
+  'lang.ar': 'Arabic',
   'lang.gu': 'Gujarati',
   'lang.mr': 'Marathi',
   'lang.ta': 'Tamil',
@@ -417,6 +418,7 @@ const EN_PAGES = {
   "trans.idleClosed": "Voice session ended after 2 minutes of silence. Tap the microphone to start again. Your translations are still here.",
   "a11y.skipToMain": "Skip to main content",
   "a11y.primaryTabs": "Thoth tools",
+  "a11y.sendMessage": "Send message",
   "pitch.sendNotice": "The product details you enter are sent to Google's Gemini API to write the pitch.",
   "guide.sendNotice": "Your question is sent to Google's Gemini API to write the answer.",
 } as const;
@@ -754,6 +756,7 @@ const ZH: Record<StringKey, string> = {
   'lang.hi': '印地语',
   'lang.en': '英语',
   'lang.zh': '中文（普通话）',
+  'lang.ar': '阿拉伯语', /* [VERIFY] */
   'lang.gu': '古吉拉特语',
   'lang.mr': '马拉地语',
   'lang.ta': '泰米尔语',
@@ -805,6 +808,7 @@ const ZH: Record<StringKey, string> = {
   "trans.idleClosed": "语音会话因两分钟无声已结束。请再点麦克风重新开始。您的译文仍在。",
   "a11y.skipToMain": "跳到主要内容",
   "a11y.primaryTabs": "Thoth 工具",
+  "a11y.sendMessage": "发送消息",
   "pitch.sendNotice": "您输入的产品信息会发送到 Google 的 Gemini API 以撰写推介。",
   "guide.sendNotice": "您的问题会发送到 Google 的 Gemini API 以生成回答。",
 };
@@ -838,6 +842,7 @@ const LANG_NAME_KEYS: Record<string, StringKey> = {
   Hindi: 'lang.hi',
   English: 'lang.en',
   'Chinese (Mandarin)': 'lang.zh',
+  Arabic: 'lang.ar',
   Gujarati: 'lang.gu',
   Marathi: 'lang.mr',
   Tamil: 'lang.ta',
@@ -876,6 +881,7 @@ export const GREETINGS: Record<LanguageCode, string> = {
   bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
   te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
   pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
+  ar: 'مرحبًا! أنا Thoth، الخادم الأمين للمصدّرين. سأساعدك على الوصول إلى المشترين وعرض منتجاتك عليهم. الخطوة الأولى: ما المنتج الذي تصنعه أو تبيعه؟', /* [VERIFY] */
   zh: '您好！我是 Thoth，为出口商打造的 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
   en: 'Namaste! I am Thoth, a Faithful Servant for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
 };

@@ -63,7 +63,7 @@ export const VoiceOrb: React.FC<VoiceOrbProps> = ({
           }
           className={`relative z-10 w-24 h-24 rounded-full flex flex-col items-center justify-center shadow-2xl transition-all duration-300 cursor-pointer transform active:scale-95 ${
             disabled && !isListening && !isSpeaking
-              ? 'bg-gradient-to-br from-slate-800 to-slate-900 text-slate-500 shadow-slate-950/80 border border-slate-700/80 opacity-60 cursor-not-allowed'
+              ? 'bg-gradient-to-br from-slate-800 to-slate-900 text-slate-400 shadow-slate-950/80 border border-slate-700/80 opacity-60 cursor-not-allowed'
               : isListening
               ? 'bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-emerald-500/50 ring-4 ring-emerald-400/50 scale-105'
               : isThinking

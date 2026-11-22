@@ -9,7 +9,11 @@
  *   never echoes a provider error message;
  * - unknown /api paths answer a JSON 404, not the SPA page;
  * - the SPA fallback still serves index.html for app routes;
- * - generateWithFallback clears its timeout.
+ * - generateWithFallback clears its timeout;
+ * - security headers (CSP + frame-ancestors, nosniff, Referrer-Policy,
+ *   X-Frame-Options, HSTS) on pages, API 404s and API errors;
+ * - <html lang/dir> on the SPA shell follows Accept-Language.
+ * Session cookie, Origin and log redaction: tests/server-auth.ts.
  * Needs `npm run build` first (dist/). Run: npm run test:server
  */
 import { spawn, type ChildProcess } from 'node:child_process';
@@ -86,7 +90,8 @@ async function startServer(port: number): Promise<ChildProcess> {
 const base = (port: number) => `http://127.0.0.1:${port}`;
 async function post(port: number, p: string, body: unknown, headers: Record<string, string> = {}) {
   const raw = typeof body === 'string' ? body : JSON.stringify(body);
-  const r = await fetch(base(port) + p, { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body: raw });
+  // Same-origin like the served page: the server refuses a POST without Origin.
+  const r = await fetch(base(port) + p, { method: 'POST', headers: { 'content-type': 'application/json', origin: base(port), ...headers }, body: raw });
   const text = await r.text();
   return { status: r.status, text, ct: r.headers.get('content-type') || '' };
 }
@@ -133,6 +138,37 @@ try {
   const spa = await fetch(base(P1) + '/some/app/route');
   const spaText = await spa.text();
   check(spa.status === 200 && spaText.includes('<div id="root">'), 'SPA fallback still serves index.html');
+
+  // Security headers on a page, an API 404 and an API error.
+  for (const [label, r] of [['page', spa], ['api 404', nf]] as const) {
+    const h = r.headers;
+    check(h.get('x-content-type-options') === 'nosniff', `${label}: X-Content-Type-Options nosniff`);
+    check(h.get('referrer-policy') === 'strict-origin-when-cross-origin', `${label}: Referrer-Policy`);
+    check(h.get('x-frame-options') === 'DENY', `${label}: X-Frame-Options DENY`);
+    check(!h.get('content-security-policy'), `${label}: no new enforced CSP header (Report-Only first)`);
+    const csp = h.get('content-security-policy-report-only') || '';
+    check(csp.includes("frame-ancestors 'none'") && csp.includes("script-src 'self'") && csp.includes("object-src 'none'"), `${label}: CSP with frame-ancestors 'none' (got ${csp.slice(0, 80)})`);
+    check((h.get('strict-transport-security') || '') === 'max-age=604800', `${label}: HSTS 1 week, no includeSubDomains`);
+    check(!h.get('x-powered-by'), `${label}: no X-Powered-By`);
+  }
+  const errR = await fetch(base(P1) + '/api/pitch', { method: 'POST', headers: { 'content-type': 'application/json', origin: base(P1) }, body: '{"product":"brass"}' });
+  check(errR.headers.get('x-content-type-options') === 'nosniff' && (errR.headers.get('content-security-policy-report-only') || '').includes("frame-ancestors 'none'"), 'api error: security headers present');
+
+  // Device language: <html lang/dir> from Accept-Language on the SPA shell.
+  const arPage = await fetch(base(P1) + '/', { headers: { 'accept-language': 'ar-EG,ar;q=0.9,en;q=0.8' } });
+  const arText = await arPage.text();
+  check(arPage.status === 200 && arText.includes('<html lang="ar" dir="rtl">'), 'Accept-Language ar -> <html lang="ar" dir="rtl">');
+  check((arPage.headers.get('vary') || '').toLowerCase().includes('accept-language'), 'shell varies on Accept-Language');
+  check((arPage.headers.get('cache-control') || '') === 'no-cache', 'shell: Cache-Control no-cache');
+  check((arPage.headers.get('vary') || '').toLowerCase().includes('cookie'), 'shell varies on Cookie');
+  const get = async (u: string, h: Record<string, string>) => (await (await fetch(base(P1) + u, { headers: h })).text());
+  check((await get('/', { cookie: 'lang=hi', 'accept-language': 'ar' })).includes('<html lang="hi" dir="ltr">'), 'lang cookie beats Accept-Language');
+  check((await get('/?lang=ar', { cookie: 'lang=hi', 'accept-language': 'en' })).includes('<html lang="ar" dir="rtl">'), '?lang= beats cookie');
+  check((await get('/', { cookie: 'lang=xx', 'accept-language': 'ar' })).includes('<html lang="ar" dir="rtl">'), 'unknown cookie ignored');
+  check((await get('/', { 'accept-language': 'zh-TW,en;q=0.5' })).includes('<html lang="zh-CN" dir="ltr">'), 'zh-TW -> zh');
+  check((await get('/', { 'accept-language': 'ar;q=0, en' })).includes('<html lang="en" dir="ltr">'), 'q=0 excluded');
+  const frText = await (await fetch(base(P1) + '/', { headers: { 'accept-language': 'fr-FR' } })).text();
+  check(frText.includes('<html lang="en" dir="ltr">'), 'unsupported Accept-Language -> English');
 } finally {
   s1.kill();
 }

@@ -15,7 +15,8 @@
  *    in Latin letters, are allowed; URLs are addresses, not text);
  *  - the word "AI" in visible app strings (use "Faithful Servant");
  * and enforces the Hindi site (owner decision): <html lang="hi"> on the
- * landing, 404 and app pages; landing/404/meta text in Devanagari only;
+ * landing and 404 pages (the app shell defaults to English and follows the
+ * device language); landing/404/meta text in Devanagari only;
  * Hindi is the app's default; every Hindi UI string free of English words
  * (brand/trade codes such as FOB, MOQ, Gemini, Google are allowed);
  * a favicon (svg + ico) linked from every page.
@@ -165,7 +166,11 @@ const DEVANAGARI = /[\u0900-\u097F]/;
 const LATIN_WORD = /[A-Za-z]{2,}/g;
 for (const rel of ['index.html', '404.html', 'app/index.html', 'use/index.html']) {
   const html = read(rel);
-  check(/<html lang="hi"/.test(html), `${rel}: <html lang="hi">`);
+  // App shell: the static default is the English fallback; the app (and the
+  // server, from Accept-Language) switch it to the device language on load
+  // (owner decision 2026-11-22). Landing and 404 stay Hindi.
+  if (rel.endsWith('app/index.html') || rel.startsWith('use/')) check(/<html lang="en" dir="ltr"/.test(html), `${rel}: <html lang="en" dir="ltr"> (fallback; device language applied on load)`);
+  else check(/<html lang="hi"/.test(html), `${rel}: <html lang="hi">`);
   check(/<link rel="icon" href="\/favicon\.svg"/.test(html) && /<link rel="icon" href="\/favicon\.ico"/.test(html), `${rel}: favicon (svg + ico) linked`);
   const human: string[] = [];
   for (const m of html.matchAll(/<title>([\s\S]*?)<\/title>/gi)) human.push(m[1]);

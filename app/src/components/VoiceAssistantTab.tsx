@@ -355,7 +355,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
 
         {/* Voice Interaction Orb Card */}
         <div className="bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800 rounded-2xl p-6 shadow-xl text-center relative overflow-hidden">
-          <div className="absolute top-3 right-3">
+          <div className="absolute top-3 end-3">
             <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               {tx(lang, 'voice.liveEngine')}
             </span>
@@ -385,7 +385,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               {tx(lang, 'voice.mic')} {isSpeechRecognitionSupported() ? tx(lang, 'voice.supported') : tx(lang, 'voice.typeMode')}
             </span>
-            <span className="text-slate-600">•</span>
+            <span className="text-slate-600" aria-hidden="true">•</span>
             <span>{tx(lang, 'voice.badge')}</span>
           </div>
         </div>
@@ -529,7 +529,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
           >
             <Sparkles className="w-4 h-4 text-amber-200" />
             <span>{tx(lang, 'voice.generatePitch')}</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 rtl:-scale-x-100" aria-hidden="true" />
           </button>
         </div>
 
@@ -543,7 +543,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               <button
                 key={idx}
                 onClick={() => handleSendMessage(p.text)}
-                className="text-[11px] px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 border border-slate-700/60 hover:border-slate-500 transition-colors text-left cursor-pointer"
+                className="text-[11px] px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 border border-slate-700/60 hover:border-slate-500 transition-colors text-start cursor-pointer"
               >
                 {p.label}
               </button>
@@ -592,14 +592,14 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
                 key={msg.id}
                 className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}
               >
-                <div className="text-[10px] text-slate-500 mb-1 px-1">
+                <div className="text-[10px] text-slate-400 mb-1 px-1">
                   {isUser ? tx(lang, 'voice.youExporter') : tx(lang, 'voice.thothServant')}
                 </div>
                 <div
                   className={`max-w-[85%] rounded-2xl p-3.5 text-xs sm:text-sm leading-relaxed shadow-md ${
                     isUser
-                      ? 'bg-emerald-600 text-white rounded-tr-none'
-                      : 'bg-slate-800/90 text-slate-100 border border-slate-700/80 rounded-tl-none'
+                      ? 'bg-emerald-600 text-white rounded-se-none'
+                      : 'bg-slate-800/90 text-slate-100 border border-slate-700/80 rounded-ss-none'
                   }`}
                 >
                   <p className="whitespace-pre-line">{msg.content}</p>
@@ -646,8 +646,8 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
 
           {isThinking && (
             <div className="flex flex-col items-start">
-              <div className="text-[10px] text-slate-500 mb-1 px-1">{tx(lang, 'voice.thothServant')}</div>
-              <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl rounded-tl-none p-3.5 text-xs text-amber-300 flex items-center gap-2">
+              <div className="text-[10px] text-slate-400 mb-1 px-1">{tx(lang, 'voice.thothServant')}</div>
+              <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl rounded-ss-none p-3.5 text-xs text-amber-300 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
                 <span>{tx(lang, 'voice.thinking')}</span>
               </div>
@@ -669,13 +669,15 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               onClick={handleToggleListening}
               disabled={!hasConsented && !isListening} data-consent="i18n copy names Gemini"
               title={hasConsented ? (isListening ? tx(lang, 'voice.stopRecording') : tx(lang, 'voice.speakMessage')) : tx(lang, 'consent.micHint')} data-mic-hint="copy names Gemini"
+              aria-label={isListening ? tx(lang, 'voice.stopRecording') : tx(lang, 'voice.speakMessage')}
+              aria-pressed={isListening}
               className={`p-2.5 rounded-xl border transition-all cursor-pointer ${
                 isListening
                   ? 'bg-rose-500/20 border-rose-500 text-rose-400 animate-pulse'
                   : 'bg-slate-800 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700'
               } ${!hasConsented && !isListening ? 'opacity-50 cursor-not-allowed' : '' /* consent copy names Gemini */}`}
             >
-              <Volume2 className={`w-4 h-4 ${isListening ? 'animate-bounce' : ''}`} />
+              <Volume2 className={`w-4 h-4 ${isListening ? 'animate-bounce' : ''}`} aria-hidden="true" />
             </button>
 
             <input
@@ -683,18 +685,20 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder={tx(lang, 'voice.typePlaceholder', { lang: langDisplayName(lang, currentLang.name) })}
-              className="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+              aria-label={tx(lang, 'voice.typeMode')}
+              className="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500"
             />
 
             <button
               type="submit"
               disabled={!inputText.trim() || isThinking}
+              aria-label={tx(lang, 'a11y.sendMessage')}
               className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-medium transition-all shadow-md shadow-emerald-950 cursor-pointer"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4 rtl:-scale-x-100" aria-hidden="true" />
             </button>
           </form>
-          <div className="mt-1.5 flex items-center justify-between text-[10px] text-slate-500 px-1">
+          <div className="mt-1.5 flex items-center justify-between text-[10px] text-slate-400 px-1">
             <span>{tx(lang, 'voice.badgeFooter')}</span>
             <span>{tx(lang, 'voice.oneStep')}</span>
           </div>

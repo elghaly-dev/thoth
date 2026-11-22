@@ -7,7 +7,11 @@ export type LanguageCode =
   | 'bn'
   | 'te'
   | 'pa'
-  | 'zh';
+  | 'zh'
+  | 'ar';
+
+/** Languages written right-to-left. The UI sets <html dir> from this. */
+export const RTL_LANGUAGES: ReadonlySet<LanguageCode> = new Set<LanguageCode>(['ar']);
 
 export interface SupportedLanguage {
   code: LanguageCode;
@@ -21,6 +25,7 @@ export const SUPPORTED_LANGUAGES: SupportedLanguage[] = [
   { code: 'hi', name: 'Hindi', nativeName: 'हिंदी', speechCode: 'hi-IN' },
   { code: 'en', name: 'English', nativeName: 'English', speechCode: 'en-US' },
   { code: 'zh', name: 'Chinese (Mandarin)', nativeName: '中文 (普通话)', speechCode: 'zh-CN' },
+  { code: 'ar', name: 'Arabic', nativeName: 'العربية', speechCode: 'ar-EG' },
   { code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી', speechCode: 'gu-IN' },
   { code: 'mr', name: 'Marathi', nativeName: 'मराठी', speechCode: 'mr-IN' },
   { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', speechCode: 'ta-IN' },
