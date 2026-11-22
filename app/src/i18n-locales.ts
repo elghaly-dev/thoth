@@ -92,7 +92,7 @@ const HI: LocaleTable = {
   "header.openToAll": "हर निर्यातक के लिए खुला",
   "header.credit": "छोटे-बड़े सभी निर्यातकों के लिए",
   "header.reachBuyers": "खरीदारों तक पहुँचें और बात करें",
-  "header.safetyPolicy": "सुरक्षा और भरोसा नीति",
+  "header.safetyPolicy": "भरोसा और देखभाल नीति", /* [VERIFY] */
   "header.madeWith": "बनाया गया",
   "header.forMakers": "निर्माताओं के लिए",
   "header.voiceAssistant": "वफ़ादार सेवक",
@@ -159,7 +159,7 @@ const HI: LocaleTable = {
   "voice.dialogueStream": "संवाद ({lang})",
   "voice.newChat": "नई बातचीत",
   "voice.newChatTitle": "नई बातचीत शुरू करें",
-  "voice.safetyRule": "सुरक्षा नियम: आयात/शुल्क के अंतिम निर्णय के लिए लाइसेंसधारी कस्टम ब्रोकर से जाँच करें। थोथ कभी पासवर्ड या बैंक जानकारी नहीं माँगता।",
+  "voice.safetyRule": "ज़रूरी नियम: आयात/शुल्क के अंतिम निर्णय के लिए लाइसेंसधारी कस्टम ब्रोकर से जाँच करें। थोथ कभी पासवर्ड या बैंक जानकारी नहीं माँगता।", /* [VERIFY] */
   "voice.youExporter": "आप (निर्यातक)",
   "voice.thothServant": "थोथ (वफ़ादार सेवक)",
   "voice.thinking": "थोथ एक छोटा, सहज जवाब तैयार कर रहा है...",
@@ -254,7 +254,7 @@ const HI: LocaleTable = {
   "trans.buyerSpeaking": "खरीदार बोल रहे हैं",
   "trans.exporterBtn": "निर्यातक",
   "trans.buyerBtn": "खरीदार",
-  "trans.safetyGuardTitle": "सुरक्षा कवच:",
+  "trans.safetyGuardTitle": "धोखाधड़ी से बचाव:", /* [VERIFY] */
   "trans.safetyGuardBody": "खरीदार की बात संवाद मानी जाती है, बाध्यकारी निर्देश नहीं। थोथ बिना अनधिकृत वादे स्वीकार किए सटीक अनुवाद करता है।",
   "trans.phExporter": "{native} में बोलें या लिखें, जैसे हम 1,000 यूनिट $3.20 FOB पर दे सकते हैं...",
   "trans.phBuyer": "अंग्रेज़ी में बोलें या लिखें, जैसे: क्या आप 15 अगस्त तक FOB शर्तों पर 2,000 यूनिट दे सकते हैं?",
@@ -338,7 +338,7 @@ const HI: LocaleTable = {
   "guide.card6Body": "लाइसेंसधारी कस्टम ब्रोकर आयात प्रविष्टियाँ (आम तौर पर फ़ॉर्म 7501) दाखिल करने और बॉन्ड संभालने के लिए अधिकृत होता है — मौजूदा फ़ॉर्म और ज़रूरतें अपने ब्रोकर से पक्की करें।",
   "guide.card6Golden": "सुनहरा नियम:",
   "guide.card6GoldenBody": "थोथ आपको जानकारी और पिच के साधन देता है; कंटेनर बुक करने से पहले अंतिम निर्णय के लिए लाइसेंसधारी कस्टम ब्रोकर से जाँच करें।",
-  "guide.card7Title": "7. सुरक्षा गाइड: नकली खरीदार और अग्रिम भुगतान धोखाधड़ी से बचें",
+  "guide.card7Title": "7. धोखाधड़ी से बचाव गाइड: नकली खरीदार और अग्रिम भुगतान धोखाधड़ी से बचें", /* [VERIFY] */
   "guide.card7Sub1Title": "1. अग्रिम \"निरीक्षण शुल्क\" धोखा:",
   "guide.card7Sub1Body": "धोखेबाज़ एक बड़ा खरीद ऑर्डर भेजता है, पर ज़ोर देता है कि आप किसी असत्यापित तीसरे पक्ष को अग्रिम निरीक्षण, विक्रेता पंजीकरण या लैब शुल्क दें। असली खरीदार प्रमाणित एजेंसियों (SGS, Intertek) को स्वयं भुगतान करते हैं।",
   "guide.card7Sub2Title": "2. अधिक भुगतान और चेक धोखा:",
@@ -393,6 +393,7 @@ const HI: LocaleTable = {
   "trans.idleClosed": "2 मिनट तक चुप्पी के बाद वॉइस सत्र बंद हो गया। फिर शुरू करने के लिए माइक्रोफ़ोन टैप करें। आपके अनुवाद यहीं हैं।",
   "a11y.skipToMain": "मुख्य सामग्री पर जाएँ",
   "a11y.primaryTabs": "थोथ के साधन",
+  "a11y.sendMessage": "संदेश भेजें", /* [VERIFY] */
   "pitch.sendNotice": "आप जो उत्पाद विवरण डालते हैं, वह पिच लिखने के लिए Google के Gemini API को भेजा जाता है।",
   "guide.sendNotice": "आपका सवाल जवाब लिखने के लिए Google के Gemini API को भेजा जाता है।",
 };
@@ -412,7 +413,7 @@ const MR: LocaleTable = {
   "header.openToAll": "प्रत्येक निर्यातदारासाठी खुले",
   "header.credit": "लहान-मोठ्या सर्व निर्यातदारांसाठी",
   "header.reachBuyers": "खरेदीदारांपर्यंत पोहोचा आणि बोला",
-  "header.safetyPolicy": "सुरक्षा आणि विश्वास धोरण",
+  "header.safetyPolicy": "विश्वास आणि काळजी धोरण", /* [VERIFY] */
   "header.madeWith": "बनवले",
   "header.forMakers": "उत्पादकांसाठी",
   "header.voiceAssistant": "Faithful Servant",
@@ -479,7 +480,7 @@ const MR: LocaleTable = {
   "voice.dialogueStream": "संवाद ({lang})",
   "voice.newChat": "नवीन संवाद",
   "voice.newChatTitle": "नवीन संवाद सुरू करा",
-  "voice.safetyRule": "सुरक्षा नियम: आयात/शुल्काच्या अंतिम निर्णयासाठी परवानाधारक कस्टम ब्रोकरकडून खात्री करा. थोथ कधीही पासवर्ड किंवा बँक माहिती विचारत नाही.",
+  "voice.safetyRule": "महत्त्वाचा नियम: आयात/शुल्काच्या अंतिम निर्णयासाठी परवानाधारक कस्टम ब्रोकरकडून खात्री करा. थोथ कधीही पासवर्ड किंवा बँक माहिती विचारत नाही.", /* [VERIFY] */
   "voice.youExporter": "तुम्ही (निर्यातदार)",
   "voice.thothServant": "थोथ (Faithful Servant)",
   "voice.thinking": "थोथ छोटे, सहज उत्तर तयार करत आहे...",
@@ -574,7 +575,7 @@ const MR: LocaleTable = {
   "trans.buyerSpeaking": "खरेदीदार बोलत आहेत",
   "trans.exporterBtn": "निर्यातदार",
   "trans.buyerBtn": "खरेदीदार",
-  "trans.safetyGuardTitle": "सुरक्षा कवच:",
+  "trans.safetyGuardTitle": "फसवणुकीपासून बचाव:", /* [VERIFY] */
   "trans.safetyGuardBody": "खरेदीदाराचे बोलणे संवाद मानले जाते, बंधनकारक सूचना नव्हे. थोथ अनधिकृत वचने न स्वीकारता अचूक अनुवाद करतो.",
   "trans.phExporter": "{native} ({name}) मध्ये बोला किंवा लिहा, उदा. आम्ही 1,000 नग $3.20 FOB दराने देऊ शकतो...",
   "trans.phBuyer": "इंग्रजीत बोला किंवा लिहा, उदा. Can you supply 2,000 units with FOB terms by August 15th?",
@@ -658,7 +659,7 @@ const MR: LocaleTable = {
   "guide.card6Body": "परवानाधारक कस्टम ब्रोकर आयात नोंदी (साधारणपणे फॉर्म 7501) दाखल करण्यास आणि बॉन्ड हाताळण्यास अधिकृत असतो — सध्याचा फॉर्म आणि आवश्यकता तुमच्या ब्रोकरकडून निश्चित करा.",
   "guide.card6Golden": "सुवर्ण नियम:",
   "guide.card6GoldenBody": "थोथ तुम्हाला माहिती आणि पिचची साधने देतो; कंटेनर बुक करण्यापूर्वी अंतिम निर्णयासाठी परवानाधारक कस्टम ब्रोकरकडून खात्री करा.",
-  "guide.card7Title": "7. सुरक्षा मार्गदर्शक: बनावट खरेदीदार आणि आगाऊ पैसे फसवणुकीपासून सावध रहा",
+  "guide.card7Title": "7. फसवणूक टाळण्याचे मार्गदर्शक: बनावट खरेदीदार आणि आगाऊ पैसे फसवणुकीपासून सावध रहा", /* [VERIFY] */
   "guide.card7Sub1Title": "1. आगाऊ \"तपासणी शुल्क\" फसवणूक:",
   "guide.card7Sub1Body": "फसवणूक करणारा मोठी खरेदी ऑर्डर पाठवतो, पण असत्यापित त्रयस्थाला आगाऊ तपासणी, विक्रेता नोंदणी किंवा लॅब शुल्क भरण्याचा आग्रह धरतो. खरे खरेदीदार प्रमाणित संस्थांना (SGS, Intertek) स्वतः पैसे देतात.",
   "guide.card7Sub2Title": "2. जादा रक्कम आणि चेक फसवणूक:",
@@ -713,6 +714,7 @@ const MR: LocaleTable = {
   "trans.idleClosed": "2 मिनिटे शांततेनंतर व्हॉइस सत्र संपले. पुन्हा सुरू करण्यासाठी मायक्रोफोन टॅप करा. तुमचे अनुवाद इथेच आहेत.",
   "a11y.skipToMain": "मुख्य मजकुरावर जा",
   "a11y.primaryTabs": "थोथची साधने",
+  "a11y.sendMessage": "संदेश पाठवा", /* [VERIFY] */
   "pitch.sendNotice": "तुम्ही भरलेले उत्पादन तपशील पिच लिहिण्यासाठी Google च्या Gemini API ला पाठवले जातात.",
   "guide.sendNotice": "तुमचा प्रश्न उत्तर लिहिण्यासाठी Google च्या Gemini API ला पाठवला जातो.",
 };
@@ -732,7 +734,7 @@ const GU: LocaleTable = {
   "header.openToAll": "દરેક નિકાસકાર માટે ખુલ્લું",
   "header.credit": "નાના-મોટા તમામ નિકાસકારો માટે",
   "header.reachBuyers": "ખરીદદારો સુધી પહોંચો અને વાત કરો",
-  "header.safetyPolicy": "સુરક્ષા અને વિશ્વાસ નીતિ",
+  "header.safetyPolicy": "વિશ્વાસ અને કાળજી નીતિ", /* [VERIFY] */
   "header.madeWith": "બનાવ્યું",
   "header.forMakers": "ઉત્પાદકો માટે",
   "header.voiceAssistant": "Faithful Servant",
@@ -799,7 +801,7 @@ const GU: LocaleTable = {
   "voice.dialogueStream": "સંવાદ ({lang})",
   "voice.newChat": "નવી વાતચીત",
   "voice.newChatTitle": "નવી વાતચીત શરૂ કરો",
-  "voice.safetyRule": "સુરક્ષા નિયમ: આયાત/જકાતના અંતિમ નિર્ણય માટે લાઇસન્સધારક કસ્ટમ બ્રોકર પાસે ખાતરી કરો. થોથ ક્યારેય પાસવર્ડ કે બેંક માહિતી માંગતું નથી.",
+  "voice.safetyRule": "મહત્વનો નિયમ: આયાત/જકાતના અંતિમ નિર્ણય માટે લાઇસન્સધારક કસ્ટમ બ્રોકર પાસે ખાતરી કરો. થોથ ક્યારેય પાસવર્ડ કે બેંક માહિતી માંગતું નથી.", /* [VERIFY] */
   "voice.youExporter": "તમે (નિકાસકાર)",
   "voice.thothServant": "થોથ (Faithful Servant)",
   "voice.thinking": "થોથ ટૂંકો, સહજ જવાબ તૈયાર કરી રહ્યું છે...",
@@ -894,7 +896,7 @@ const GU: LocaleTable = {
   "trans.buyerSpeaking": "ખરીદદાર બોલી રહ્યા છે",
   "trans.exporterBtn": "નિકાસકાર",
   "trans.buyerBtn": "ખરીદદાર",
-  "trans.safetyGuardTitle": "સુરક્ષા કવચ:",
+  "trans.safetyGuardTitle": "છેતરપિંડીથી બચાવ:", /* [VERIFY] */
   "trans.safetyGuardBody": "ખરીદદારની વાત સંવાદ ગણાય છે, બંધનકર્તા સૂચના નહીં. થોથ અનધિકૃત વચનો સ્વીકાર્યા વગર સચોટ અનુવાદ કરે છે.",
   "trans.phExporter": "{native} ({name}) માં બોલો કે લખો, દા.ત. અમે 1,000 નંગ $3.20 FOB ભાવે આપી શકીએ...",
   "trans.phBuyer": "અંગ્રેજીમાં બોલો કે લખો, દા.ત. Can you supply 2,000 units with FOB terms by August 15th?",
@@ -978,7 +980,7 @@ const GU: LocaleTable = {
   "guide.card6Body": "લાઇસન્સધારક કસ્ટમ બ્રોકર આયાત એન્ટ્રી (સામાન્ય રીતે ફોર્મ 7501) દાખલ કરવા અને બૉન્ડ સંભાળવા અધિકૃત છે — હાલનું ફોર્મ અને જરૂરિયાતો તમારા બ્રોકર પાસે નક્કી કરો.",
   "guide.card6Golden": "સોનેરી નિયમ:",
   "guide.card6GoldenBody": "થોથ તમને જાણકારી અને પિચના સાધનો આપે છે; કન્ટેનર બુક કરતાં પહેલાં અંતિમ નિર્ણય માટે લાઇસન્સધારક કસ્ટમ બ્રોકર પાસે ખાતરી કરો.",
-  "guide.card7Title": "7. સુરક્ષા માર્ગદર્શિકા: નકલી ખરીદદાર અને અગાઉથી ચુકવણી છેતરપિંડીથી બચો",
+  "guide.card7Title": "7. છેતરપિંડીથી બચવાની માર્ગદર્શિકા: નકલી ખરીદદાર અને અગાઉથી ચુકવણી છેતરપિંડીથી બચો", /* [VERIFY] */
   "guide.card7Sub1Title": "1. અગાઉથી \"નિરીક્ષણ ફી\" છેતરપિંડી:",
   "guide.card7Sub1Body": "છેતરપિંડી કરનાર મોટો ખરીદ ઑર્ડર મોકલે છે, પણ આગ્રહ રાખે છે કે તમે કોઈ અચકાસાયેલ ત્રીજા પક્ષને અગાઉથી નિરીક્ષણ, વેન્ડર નોંધણી કે લૅબ ફી ચૂકવો. સાચા ખરીદદારો પ્રમાણિત એજન્સીઓને (SGS, Intertek) જાતે ચૂકવે છે.",
   "guide.card7Sub2Title": "2. વધારાની ચુકવણી અને ચેક છેતરપિંડી:",
@@ -1033,6 +1035,7 @@ const GU: LocaleTable = {
   "trans.idleClosed": "2 મિનિટ શાંતિ પછી વૉઇસ સત્ર પૂરું થયું. ફરી શરૂ કરવા માઇક્રોફોન ટૅપ કરો. તમારા અનુવાદ અહીં જ છે.",
   "a11y.skipToMain": "મુખ્ય સામગ્રી પર જાઓ",
   "a11y.primaryTabs": "થોથના સાધનો",
+  "a11y.sendMessage": "સંદેશ મોકલો", /* [VERIFY] */
   "pitch.sendNotice": "તમે ભરેલી પ્રોડક્ટ વિગતો પિચ લખવા માટે Google ના Gemini API ને મોકલાય છે.",
   "guide.sendNotice": "તમારો પ્રશ્ન જવાબ લખવા માટે Google ના Gemini API ને મોકલાય છે.",
 };
@@ -1052,7 +1055,7 @@ const BN: LocaleTable = {
   "header.openToAll": "প্রত্যেক রপ্তানিকারকের জন্য উন্মুক্ত",
   "header.credit": "ছোট-বড় সব রপ্তানিকারকের জন্য",
   "header.reachBuyers": "ক্রেতাদের কাছে পৌঁছান ও কথা বলুন",
-  "header.safetyPolicy": "নিরাপত্তা ও আস্থা নীতি",
+  "header.safetyPolicy": "আস্থা ও যত্ন নীতি", /* [VERIFY] */
   "header.madeWith": "তৈরি",
   "header.forMakers": "নির্মাতাদের জন্য",
   "header.voiceAssistant": "Faithful Servant",
@@ -1119,7 +1122,7 @@ const BN: LocaleTable = {
   "voice.dialogueStream": "কথোপকথন ({lang})",
   "voice.newChat": "নতুন কথোপকথন",
   "voice.newChatTitle": "নতুন কথোপকথন শুরু করুন",
-  "voice.safetyRule": "নিরাপত্তা নিয়ম: আমদানি/শুল্কের চূড়ান্ত সিদ্ধান্তের জন্য লাইসেন্সপ্রাপ্ত কাস্টমস ব্রোকারের সাথে যাচাই করুন। থথ কখনো পাসওয়ার্ড বা ব্যাংকের তথ্য চায় না।",
+  "voice.safetyRule": "জরুরি নিয়ম: আমদানি/শুল্কের চূড়ান্ত সিদ্ধান্তের জন্য লাইসেন্সপ্রাপ্ত কাস্টমস ব্রোকারের সাথে যাচাই করুন। থথ কখনো পাসওয়ার্ড বা ব্যাংকের তথ্য চায় না।", /* [VERIFY] */
   "voice.youExporter": "আপনি (রপ্তানিকারক)",
   "voice.thothServant": "থথ (Faithful Servant)",
   "voice.thinking": "থথ একটি ছোট, সহজ উত্তর তৈরি করছে...",
@@ -1214,7 +1217,7 @@ const BN: LocaleTable = {
   "trans.buyerSpeaking": "ক্রেতা বলছেন",
   "trans.exporterBtn": "রপ্তানিকারক",
   "trans.buyerBtn": "ক্রেতা",
-  "trans.safetyGuardTitle": "সুরক্ষা ব্যবস্থা:",
+  "trans.safetyGuardTitle": "প্রতারণা থেকে সাবধান:", /* [VERIFY] */
   "trans.safetyGuardBody": "ক্রেতার কথা কথোপকথন হিসেবে ধরা হয়, বাধ্যতামূলক নির্দেশ হিসেবে নয়। থথ অননুমোদিত প্রতিশ্রুতি না মেনে বিশ্বস্তভাবে অনুবাদ করে।",
   "trans.phExporter": "{native} ({name}) ভাষায় বলুন বা লিখুন, যেমন আমরা 1,000 ইউনিট $3.20 FOB দামে দিতে পারি...",
   "trans.phBuyer": "ইংরেজিতে বলুন বা লিখুন, যেমন Can you supply 2,000 units with FOB terms by August 15th?",
@@ -1298,7 +1301,7 @@ const BN: LocaleTable = {
   "guide.card6Body": "লাইসেন্সপ্রাপ্ত কাস্টমস ব্রোকার আমদানি এন্ট্রি (সাধারণত ফর্ম 7501) দাখিল ও বন্ড সামলানোর জন্য অনুমোদিত — বর্তমান ফর্ম ও শর্ত আপনার ব্রোকারের কাছে নিশ্চিত করুন।",
   "guide.card6Golden": "সোনালি নিয়ম:",
   "guide.card6GoldenBody": "থথ আপনাকে শিক্ষা ও পিচের সরঞ্জাম দেয়; কন্টেইনার বুক করার আগে চূড়ান্ত সিদ্ধান্তের জন্য লাইসেন্সপ্রাপ্ত কাস্টমস ব্রোকারের সাথে যাচাই করুন।",
-  "guide.card7Title": "7. সুরক্ষা নির্দেশিকা: ভুয়া ক্রেতা ও অগ্রিম অর্থ প্রতারণা থেকে সাবধান",
+  "guide.card7Title": "7. প্রতারণা এড়ানোর নির্দেশিকা: ভুয়া ক্রেতা ও অগ্রিম অর্থ প্রতারণা থেকে সাবধান", /* [VERIFY] */
   "guide.card7Sub1Title": "1. অগ্রিম \"পরিদর্শন ফি\" প্রতারণা:",
   "guide.card7Sub1Body": "প্রতারক একটি বড় ক্রয় আদেশ পাঠায়, কিন্তু জোর দেয় যে আপনাকে কোনো অযাচাইকৃত তৃতীয় পক্ষকে অগ্রিম পরিদর্শন, বিক্রেতা তালিকাভুক্তি বা ল্যাব ফি দিতে হবে। প্রকৃত ক্রেতারা সনদপ্রাপ্ত সংস্থাকে (SGS, Intertek) নিজেরাই টাকা দেন।",
   "guide.card7Sub2Title": "2. অতিরিক্ত অর্থ ও চেক প্রতারণা:",
@@ -1353,6 +1356,7 @@ const BN: LocaleTable = {
   "trans.idleClosed": "2 মিনিট নীরবতার পর ভয়েস সেশন শেষ হয়েছে। আবার শুরু করতে মাইক্রোফোনে ট্যাপ করুন। আপনার অনুবাদ এখানেই আছে।",
   "a11y.skipToMain": "মূল বিষয়বস্তুতে যান",
   "a11y.primaryTabs": "থথের সরঞ্জাম",
+  "a11y.sendMessage": "বার্তা পাঠান", /* [VERIFY] */
   "pitch.sendNotice": "আপনি যে পণ্যের বিবরণ দেন তা পিচ লেখার জন্য Google-এর Gemini API-তে পাঠানো হয়।",
   "guide.sendNotice": "আপনার প্রশ্ন উত্তর লেখার জন্য Google-এর Gemini API-তে পাঠানো হয়।",
 };
@@ -1372,7 +1376,7 @@ const TA: LocaleTable = {
   "header.openToAll": "ஒவ்வொரு ஏற்றுமதியாளருக்கும் திறந்தது",
   "header.credit": "சிறிய, பெரிய எல்லா ஏற்றுமதியாளர்களுக்கும்",
   "header.reachBuyers": "வாங்குபவர்களை அடைந்து பேசுங்கள்",
-  "header.safetyPolicy": "பாதுகாப்பு மற்றும் நம்பிக்கைக் கொள்கை",
+  "header.safetyPolicy": "நம்பிக்கை மற்றும் அக்கறைக் கொள்கை", /* [VERIFY] */
   "header.madeWith": "உருவாக்கியது",
   "header.forMakers": "உற்பத்தியாளர்களுக்காக",
   "header.voiceAssistant": "Faithful Servant",
@@ -1439,7 +1443,7 @@ const TA: LocaleTable = {
   "voice.dialogueStream": "உரையாடல் ({lang})",
   "voice.newChat": "புதிய உரையாடல்",
   "voice.newChatTitle": "புதிய உரையாடலைத் தொடங்கு",
-  "voice.safetyRule": "பாதுகாப்பு விதி: இறக்குமதி/சுங்க வரியின் இறுதி முடிவுகளுக்கு உரிமம் பெற்ற சுங்க முகவரிடம் சரிபார்க்கவும். தோத் ஒருபோதும் கடவுச்சொல் அல்லது வங்கித் தகவல் கேட்பதில்லை.",
+  "voice.safetyRule": "முக்கிய விதி: இறக்குமதி/சுங்க வரியின் இறுதி முடிவுகளுக்கு உரிமம் பெற்ற சுங்க முகவரிடம் சரிபார்க்கவும். தோத் ஒருபோதும் கடவுச்சொல் அல்லது வங்கித் தகவல் கேட்பதில்லை.", /* [VERIFY] */
   "voice.youExporter": "நீங்கள் (ஏற்றுமதியாளர்)",
   "voice.thothServant": "தோத் (Faithful Servant)",
   "voice.thinking": "தோத் சுருக்கமான, இனிய பதிலைத் தயாரிக்கிறது...",
@@ -1534,7 +1538,7 @@ const TA: LocaleTable = {
   "trans.buyerSpeaking": "வாங்குபவர் பேசுகிறார்",
   "trans.exporterBtn": "ஏற்றுமதியாளர்",
   "trans.buyerBtn": "வாங்குபவர்",
-  "trans.safetyGuardTitle": "பாதுகாப்புக் காவல்:",
+  "trans.safetyGuardTitle": "மோசடி எச்சரிக்கை:", /* [VERIFY] */
   "trans.safetyGuardBody": "வாங்குபவரின் பேச்சு உரையாடல் தரவாகக் கருதப்படுகிறது, கட்டுப்படுத்தும் கட்டளையாக அல்ல. தோத் அங்கீகரிக்கப்படாத வாக்குறுதிகளை ஏற்காமல் நம்பகமாக மொழிபெயர்க்கிறது.",
   "trans.phExporter": "{native} ({name}) மொழியில் பேசுங்கள் அல்லது தட்டச்சு செய்யுங்கள், எ.கா. நாங்கள் 1,000 அலகுகளை $3.20 FOB விலையில் தர முடியும்...",
   "trans.phBuyer": "ஆங்கிலத்தில் பேசுங்கள் அல்லது தட்டச்சு செய்யுங்கள், எ.கா. Can you supply 2,000 units with FOB terms by August 15th?",
@@ -1618,7 +1622,7 @@ const TA: LocaleTable = {
   "guide.card6Body": "உரிமம் பெற்ற சுங்க முகவர் இறக்குமதிப் பதிவுகளைத் (பொதுவாகப் படிவம் 7501) தாக்கல் செய்யவும் பிணைகளைக் கையாளவும் அங்கீகரிக்கப்பட்டவர் — தற்போதைய படிவத்தையும் தேவைகளையும் உங்கள் முகவரிடம் உறுதிசெய்யுங்கள்.",
   "guide.card6Golden": "பொன் விதி:",
   "guide.card6GoldenBody": "தோத் உங்களுக்குக் கல்வியும் பிட்ச் கருவிகளும் தருகிறது; கொள்கலன் முன்பதிவுக்கு முன் இறுதி முடிவுகளுக்கு உரிமம் பெற்ற சுங்க முகவரிடம் சரிபார்க்கவும்.",
-  "guide.card7Title": "7. பாதுகாப்பு வழிகாட்டி: போலி வாங்குபவர் மற்றும் முன்பணம் மோசடிகளைத் தவிருங்கள்",
+  "guide.card7Title": "7. மோசடி தவிர்ப்பு வழிகாட்டி: போலி வாங்குபவர் மற்றும் முன்பணம் மோசடிகளைத் தவிருங்கள்", /* [VERIFY] */
   "guide.card7Sub1Title": "1. முன்கூட்டிய \"ஆய்வுக் கட்டண\" மோசடி:",
   "guide.card7Sub1Body": "மோசடிக்காரர் ஒரு பெரிய கொள்முதல் ஆணையை அனுப்பி, சரிபார்க்கப்படாத மூன்றாம் தரப்புக்கு முன்கூட்டியே ஆய்வு, விற்பனையாளர் பதிவு அல்லது ஆய்வகக் கட்டணம் செலுத்த வேண்டும் என்று வலியுறுத்துவார். உண்மையான வாங்குபவர்கள் சான்றளிக்கப்பட்ட நிறுவனங்களுக்கு (SGS, Intertek) தாங்களே பணம் செலுத்துவார்கள்.",
   "guide.card7Sub2Title": "2. கூடுதல் பணம் மற்றும் காசோலை மோசடி:",
@@ -1673,6 +1677,7 @@ const TA: LocaleTable = {
   "trans.idleClosed": "2 நிமிட அமைதிக்குப் பிறகு குரல் அமர்வு முடிந்தது. மீண்டும் தொடங்க மைக்ரோஃபோனைத் தட்டவும். உங்கள் மொழிபெயர்ப்புகள் இங்கேயே உள்ளன.",
   "a11y.skipToMain": "முதன்மை உள்ளடக்கத்துக்குச் செல்",
   "a11y.primaryTabs": "தோத் கருவிகள்",
+  "a11y.sendMessage": "செய்தியை அனுப்பு", /* [VERIFY] */
   "pitch.sendNotice": "நீங்கள் உள்ளிடும் பொருள் விவரங்கள் பிட்ச் எழுத Google இன் Gemini API க்கு அனுப்பப்படுகின்றன.",
   "guide.sendNotice": "உங்கள் கேள்வி பதில் எழுத Google இன் Gemini API க்கு அனுப்பப்படுகிறது.",
 };
@@ -1692,7 +1697,7 @@ const TE: LocaleTable = {
   "header.openToAll": "ప్రతి ఎగుమతిదారుకు అందుబాటులో",
   "header.credit": "చిన్న, పెద్ద ఎగుమతిదారులందరి కోసం",
   "header.reachBuyers": "కొనుగోలుదారులను చేరుకుని మాట్లాడండి",
-  "header.safetyPolicy": "భద్రత మరియు విశ్వాస విధానం",
+  "header.safetyPolicy": "విశ్వాసం మరియు శ్రద్ధ విధానం", /* [VERIFY] */
   "header.madeWith": "రూపొందించబడింది",
   "header.forMakers": "తయారీదారుల కోసం",
   "header.voiceAssistant": "Faithful Servant",
@@ -1759,7 +1764,7 @@ const TE: LocaleTable = {
   "voice.dialogueStream": "సంభాషణ ({lang})",
   "voice.newChat": "కొత్త సంభాషణ",
   "voice.newChatTitle": "కొత్త సంభాషణ ప్రారంభించండి",
-  "voice.safetyRule": "భద్రతా నియమం: దిగుమతి/సుంకం తుది నిర్ణయాల కోసం లైసెన్స్ ఉన్న కస్టమ్స్ బ్రోకర్‌తో సరిచూసుకోండి. థోత్ ఎప్పుడూ పాస్‌వర్డ్‌లు లేదా బ్యాంక్ సమాచారం అడగదు.",
+  "voice.safetyRule": "ముఖ్య నియమం: దిగుమతి/సుంకం తుది నిర్ణయాల కోసం లైసెన్స్ ఉన్న కస్టమ్స్ బ్రోకర్‌తో సరిచూసుకోండి. థోత్ ఎప్పుడూ పాస్‌వర్డ్‌లు లేదా బ్యాంక్ సమాచారం అడగదు.", /* [VERIFY] */
   "voice.youExporter": "మీరు (ఎగుమతిదారు)",
   "voice.thothServant": "థోత్ (Faithful Servant)",
   "voice.thinking": "థోత్ చిన్న, సులభమైన సమాధానం సిద్ధం చేస్తోంది...",
@@ -1854,7 +1859,7 @@ const TE: LocaleTable = {
   "trans.buyerSpeaking": "కొనుగోలుదారు మాట్లాడుతున్నారు",
   "trans.exporterBtn": "ఎగుమతిదారు",
   "trans.buyerBtn": "కొనుగోలుదారు",
-  "trans.safetyGuardTitle": "భద్రతా కవచం:",
+  "trans.safetyGuardTitle": "మోసం హెచ్చరిక:", /* [VERIFY] */
   "trans.safetyGuardBody": "కొనుగోలుదారు మాటలు సంభాషణ డేటాగా పరిగణించబడతాయి, కట్టుబడే ఆదేశాలుగా కాదు. థోత్ అనధికార హామీలను అంగీకరించకుండా నమ్మకంగా అనువదిస్తుంది.",
   "trans.phExporter": "{native} ({name})లో మాట్లాడండి లేదా టైప్ చేయండి, ఉదా. మేము 1,000 యూనిట్లు $3.20 FOB ధరకు ఇవ్వగలము...",
   "trans.phBuyer": "ఆంగ్లంలో మాట్లాడండి లేదా టైప్ చేయండి, ఉదా. Can you supply 2,000 units with FOB terms by August 15th?",
@@ -1938,7 +1943,7 @@ const TE: LocaleTable = {
   "guide.card6Body": "లైసెన్స్ ఉన్న కస్టమ్స్ బ్రోకర్ దిగుమతి ఎంట్రీలు (సాధారణంగా ఫారం 7501) దాఖలు చేయడానికి మరియు బాండ్లను నిర్వహించడానికి అధికారం కలిగి ఉంటారు — ప్రస్తుత ఫారం మరియు అవసరాలను మీ బ్రోకర్‌తో నిర్ధారించుకోండి.",
   "guide.card6Golden": "బంగారు నియమం:",
   "guide.card6GoldenBody": "థోత్ మీకు అవగాహన మరియు పిచ్ సాధనాలు ఇస్తుంది; కంటైనర్ బుకింగ్‌కు ముందు తుది నిర్ణయాల కోసం లైసెన్స్ ఉన్న కస్టమ్స్ బ్రోకర్‌తో సరిచూసుకోండి.",
-  "guide.card7Title": "7. భద్రతా మార్గదర్శి: నకిలీ కొనుగోలుదారు మరియు ముందస్తు చెల్లింపు మోసాల నుండి జాగ్రత్త",
+  "guide.card7Title": "7. మోసాల నివారణ మార్గదర్శి: నకిలీ కొనుగోలుదారు మరియు ముందస్తు చెల్లింపు మోసాల నుండి జాగ్రత్త", /* [VERIFY] */
   "guide.card7Sub1Title": "1. ముందస్తు \"తనిఖీ రుసుము\" మోసం:",
   "guide.card7Sub1Body": "మోసగాడు పెద్ద కొనుగోలు ఆర్డర్ పంపి, ధృవీకరించని మూడవ పక్షానికి ముందుగానే తనిఖీ, విక్రేత నమోదు లేదా ల్యాబ్ రుసుము చెల్లించాలని పట్టుబడతాడు. నిజమైన కొనుగోలుదారులు ధృవీకరించిన సంస్థలకు (SGS, Intertek) తామే చెల్లిస్తారు.",
   "guide.card7Sub2Title": "2. అధిక చెల్లింపు మరియు చెక్ మోసం:",
@@ -1993,6 +1998,7 @@ const TE: LocaleTable = {
   "trans.idleClosed": "2 నిమిషాల నిశ్శబ్దం తర్వాత వాయిస్ సెషన్ ముగిసింది. మళ్లీ ప్రారంభించడానికి మైక్రోఫోన్‌ను ట్యాప్ చేయండి. మీ అనువాదాలు ఇక్కడే ఉన్నాయి.",
   "a11y.skipToMain": "ప్రధాన కంటెంట్‌కు వెళ్లండి",
   "a11y.primaryTabs": "థోత్ సాధనాలు",
+  "a11y.sendMessage": "సందేశం పంపండి", /* [VERIFY] */
   "pitch.sendNotice": "మీరు నమోదు చేసిన ఉత్పత్తి వివరాలు పిచ్ రాయడానికి Google Gemini API కి పంపబడతాయి.",
   "guide.sendNotice": "మీ ప్రశ్న సమాధానం రాయడానికి Google Gemini API కి పంపబడుతుంది.",
 };
@@ -2012,7 +2018,7 @@ const PA: LocaleTable = {
   "header.openToAll": "ਹਰ ਨਿਰਯਾਤਕ ਲਈ ਖੁੱਲ੍ਹਾ",
   "header.credit": "ਛੋਟੇ-ਵੱਡੇ ਸਾਰੇ ਨਿਰਯਾਤਕਾਂ ਲਈ",
   "header.reachBuyers": "ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚੋ ਅਤੇ ਗੱਲ ਕਰੋ",
-  "header.safetyPolicy": "ਸੁਰੱਖਿਆ ਅਤੇ ਭਰੋਸਾ ਨੀਤੀ",
+  "header.safetyPolicy": "ਭਰੋਸਾ ਅਤੇ ਦੇਖਭਾਲ ਨੀਤੀ", /* [VERIFY] */
   "header.madeWith": "ਬਣਾਇਆ",
   "header.forMakers": "ਨਿਰਮਾਤਾਵਾਂ ਲਈ",
   "header.voiceAssistant": "Faithful Servant",
@@ -2079,7 +2085,7 @@ const PA: LocaleTable = {
   "voice.dialogueStream": "ਗੱਲਬਾਤ ({lang})",
   "voice.newChat": "ਨਵੀਂ ਗੱਲਬਾਤ",
   "voice.newChatTitle": "ਨਵੀਂ ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰੋ",
-  "voice.safetyRule": "ਸੁਰੱਖਿਆ ਨਿਯਮ: ਆਯਾਤ/ਡਿਊਟੀ ਦੇ ਅੰਤਿਮ ਫ਼ੈਸਲਿਆਂ ਲਈ ਲਾਇਸੈਂਸਸ਼ੁਦਾ ਕਸਟਮ ਬ੍ਰੋਕਰ ਤੋਂ ਜਾਂਚ ਕਰੋ। ਥੋਥ ਕਦੇ ਪਾਸਵਰਡ ਜਾਂ ਬੈਂਕ ਜਾਣਕਾਰੀ ਨਹੀਂ ਮੰਗਦਾ।",
+  "voice.safetyRule": "ਜ਼ਰੂਰੀ ਨਿਯਮ: ਆਯਾਤ/ਡਿਊਟੀ ਦੇ ਅੰਤਿਮ ਫ਼ੈਸਲਿਆਂ ਲਈ ਲਾਇਸੈਂਸਸ਼ੁਦਾ ਕਸਟਮ ਬ੍ਰੋਕਰ ਤੋਂ ਜਾਂਚ ਕਰੋ। ਥੋਥ ਕਦੇ ਪਾਸਵਰਡ ਜਾਂ ਬੈਂਕ ਜਾਣਕਾਰੀ ਨਹੀਂ ਮੰਗਦਾ।", /* [VERIFY] */
   "voice.youExporter": "ਤੁਸੀਂ (ਨਿਰਯਾਤਕ)",
   "voice.thothServant": "ਥੋਥ (Faithful Servant)",
   "voice.thinking": "ਥੋਥ ਇੱਕ ਛੋਟਾ, ਸਹਿਜ ਜਵਾਬ ਤਿਆਰ ਕਰ ਰਿਹਾ ਹੈ...",
@@ -2174,7 +2180,7 @@ const PA: LocaleTable = {
   "trans.buyerSpeaking": "ਖਰੀਦਦਾਰ ਬੋਲ ਰਹੇ ਹਨ",
   "trans.exporterBtn": "ਨਿਰਯਾਤਕ",
   "trans.buyerBtn": "ਖਰੀਦਦਾਰ",
-  "trans.safetyGuardTitle": "ਸੁਰੱਖਿਆ ਕਵਚ:",
+  "trans.safetyGuardTitle": "ਧੋਖਾਧੜੀ ਤੋਂ ਬਚਾਅ:", /* [VERIFY] */
   "trans.safetyGuardBody": "ਖਰੀਦਦਾਰ ਦੀ ਗੱਲ ਨੂੰ ਗੱਲਬਾਤ ਮੰਨਿਆ ਜਾਂਦਾ ਹੈ, ਬੰਧਨਕਾਰੀ ਹਦਾਇਤ ਨਹੀਂ। ਥੋਥ ਅਣ-ਅਧਿਕਾਰਤ ਵਾਅਦੇ ਮੰਨੇ ਬਿਨਾਂ ਸਹੀ ਅਨੁਵਾਦ ਕਰਦਾ ਹੈ।",
   "trans.phExporter": "{native} ({name}) ਵਿੱਚ ਬੋਲੋ ਜਾਂ ਲਿਖੋ, ਜਿਵੇਂ ਅਸੀਂ 1,000 ਯੂਨਿਟ $3.20 FOB ਉੱਤੇ ਦੇ ਸਕਦੇ ਹਾਂ...",
   "trans.phBuyer": "ਅੰਗਰੇਜ਼ੀ ਵਿੱਚ ਬੋਲੋ ਜਾਂ ਲਿਖੋ, ਜਿਵੇਂ Can you supply 2,000 units with FOB terms by August 15th?",
@@ -2258,7 +2264,7 @@ const PA: LocaleTable = {
   "guide.card6Body": "ਲਾਇਸੈਂਸਸ਼ੁਦਾ ਕਸਟਮ ਬ੍ਰੋਕਰ ਆਯਾਤ ਐਂਟਰੀਆਂ (ਆਮ ਤੌਰ ਉੱਤੇ ਫ਼ਾਰਮ 7501) ਦਾਖ਼ਲ ਕਰਨ ਅਤੇ ਬਾਂਡ ਸੰਭਾਲਣ ਲਈ ਅਧਿਕਾਰਤ ਹੁੰਦਾ ਹੈ — ਮੌਜੂਦਾ ਫ਼ਾਰਮ ਅਤੇ ਲੋੜਾਂ ਆਪਣੇ ਬ੍ਰੋਕਰ ਤੋਂ ਪੱਕੀਆਂ ਕਰੋ।",
   "guide.card6Golden": "ਸੁਨਹਿਰੀ ਨਿਯਮ:",
   "guide.card6GoldenBody": "ਥੋਥ ਤੁਹਾਨੂੰ ਜਾਣਕਾਰੀ ਅਤੇ ਪਿੱਚ ਦੇ ਸਾਧਨ ਦਿੰਦਾ ਹੈ; ਕੰਟੇਨਰ ਬੁੱਕ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਅੰਤਿਮ ਫ਼ੈਸਲਿਆਂ ਲਈ ਲਾਇਸੈਂਸਸ਼ੁਦਾ ਕਸਟਮ ਬ੍ਰੋਕਰ ਤੋਂ ਜਾਂਚ ਕਰੋ।",
-  "guide.card7Title": "7. ਸੁਰੱਖਿਆ ਗਾਈਡ: ਨਕਲੀ ਖਰੀਦਦਾਰ ਅਤੇ ਪੇਸ਼ਗੀ ਭੁਗਤਾਨ ਧੋਖਿਆਂ ਤੋਂ ਬਚੋ",
+  "guide.card7Title": "7. ਧੋਖਾਧੜੀ ਤੋਂ ਬਚਾਅ ਗਾਈਡ: ਨਕਲੀ ਖਰੀਦਦਾਰ ਅਤੇ ਪੇਸ਼ਗੀ ਭੁਗਤਾਨ ਧੋਖਿਆਂ ਤੋਂ ਬਚੋ", /* [VERIFY] */
   "guide.card7Sub1Title": "1. ਪੇਸ਼ਗੀ \"ਨਿਰੀਖਣ ਫੀਸ\" ਧੋਖਾ:",
   "guide.card7Sub1Body": "ਧੋਖੇਬਾਜ਼ ਇੱਕ ਵੱਡਾ ਖਰੀਦ ਆਰਡਰ ਭੇਜਦਾ ਹੈ ਪਰ ਜ਼ੋਰ ਦਿੰਦਾ ਹੈ ਕਿ ਤੁਸੀਂ ਕਿਸੇ ਅਣ-ਪ੍ਰਮਾਣਿਤ ਤੀਜੀ ਧਿਰ ਨੂੰ ਪੇਸ਼ਗੀ ਨਿਰੀਖਣ, ਵਿਕਰੇਤਾ ਦਾਖ਼ਲਾ ਜਾਂ ਲੈਬ ਫੀਸ ਦਿਓ। ਅਸਲੀ ਖਰੀਦਦਾਰ ਪ੍ਰਮਾਣਿਤ ਏਜੰਸੀਆਂ (SGS, Intertek) ਨੂੰ ਖ਼ੁਦ ਭੁਗਤਾਨ ਕਰਦੇ ਹਨ।",
   "guide.card7Sub2Title": "2. ਵੱਧ ਭੁਗਤਾਨ ਅਤੇ ਚੈੱਕ ਧੋਖਾ:",
@@ -2313,6 +2319,7 @@ const PA: LocaleTable = {
   "trans.idleClosed": "2 ਮਿੰਟ ਦੀ ਚੁੱਪ ਤੋਂ ਬਾਅਦ ਆਵਾਜ਼ ਸੈਸ਼ਨ ਖ਼ਤਮ ਹੋ ਗਿਆ। ਦੁਬਾਰਾ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਟੈਪ ਕਰੋ। ਤੁਹਾਡੇ ਅਨੁਵਾਦ ਇੱਥੇ ਹੀ ਹਨ।",
   "a11y.skipToMain": "ਮੁੱਖ ਸਮੱਗਰੀ 'ਤੇ ਜਾਓ",
   "a11y.primaryTabs": "ਥੋਥ ਦੇ ਸਾਧਨ",
+  "a11y.sendMessage": "ਸੁਨੇਹਾ ਭੇਜੋ", /* [VERIFY] */
   "pitch.sendNotice": "ਤੁਸੀਂ ਜੋ ਉਤਪਾਦ ਵੇਰਵੇ ਭਰਦੇ ਹੋ, ਉਹ ਪਿੱਚ ਲਿਖਣ ਲਈ Google ਦੇ Gemini API ਨੂੰ ਭੇਜੇ ਜਾਂਦੇ ਹਨ।",
   "guide.sendNotice": "ਤੁਹਾਡਾ ਸਵਾਲ ਜਵਾਬ ਲਿਖਣ ਲਈ Google ਦੇ Gemini API ਨੂੰ ਭੇਜਿਆ ਜਾਂਦਾ ਹੈ।",
 };
@@ -2321,7 +2328,7 @@ const PA: LocaleTable = {
 const AR: LocaleTable = {
   "app.tabAssistant": "تحدث مع Thoth (صوت)", /* [VERIFY] */
   "app.tabPitch": "استوديو عروض المشترين", /* [VERIFY] */
-  "app.tabTranslate": "مترجم التجارة", /* [VERIFY] */
+  "app.tabTranslate": "المترجم التجاري", /* [VERIFY] */
   "app.tabGuide": "أساسيات الاستيراد", /* [VERIFY] */
   "app.speakingIn": "التحدث بـ{native} ({name})", /* [VERIFY] */
   "app.footerTagline": "الخادم الأمين للمصدّرين", /* [VERIFY] */
@@ -2338,9 +2345,9 @@ const AR: LocaleTable = {
   "header.voiceAssistant": "الخادم الأمين", /* [VERIFY] */
   "header.bridge": "جسر تجاري بين المصدّر والمشتري", /* [VERIFY] */
   "header.selectLanguage": "اختر لغتك المفضلة", /* [VERIFY] */
-  "header.muted": "صامت", /* [VERIFY] */
+  "header.muted": "مكتوم", /* [VERIFY] */
   "header.voiceOn": "الصوت يعمل", /* [VERIFY] */
-  "header.mutedTitle": "الصوت مكتوم (انقر لإعادة التشغيل)", /* [VERIFY] */
+  "header.mutedTitle": "الصوت مكتوم (انقر لإلغاء الكتم)", /* [VERIFY] */
   "header.voiceOnTitle": "الصوت نشط (انقر للكتم)", /* [VERIFY] */
   "header.openTool": "الخادم الأمين", /* [VERIFY] */
   "safety.title": "ميثاق الثقة والأخلاقيات في Thoth", /* [VERIFY] */
@@ -2364,7 +2371,7 @@ const AR: LocaleTable = {
   "safety.close": "فهمت، إغلاق", /* [VERIFY] */
   "orb.listening": "أستمع بـ{lang}... (تحدث الآن)", /* [VERIFY] */
   "orb.thinking": "Thoth يفكر...", /* [VERIFY] */
-  "orb.speaking": "يُنطق الرد... (انقر للإيقاف)", /* [VERIFY] */
+  "orb.speaking": "جارٍ نطق الرد... (انقر للإيقاف)", /* [VERIFY] */
   "orb.tapToTalk": "انقر الميكروفون للتحدث بـ{lang}", /* [VERIFY] */
   "orb.stop": "إيقاف", /* [VERIFY] */
   "orb.titleStopListening": "انقر لإيقاف الاستماع", /* [VERIFY] */
@@ -2388,7 +2395,7 @@ const AR: LocaleTable = {
   "voice.captured": "تم التقاط {n}/4", /* [VERIFY] */
   "voice.step1Title": "ما الذي تبيعه (المنتج)", /* [VERIFY] */
   "voice.step1Hint": "أخبر Thoth ما الذي تصنّعه أو تصدّره", /* [VERIFY] */
-  "voice.step2Title": "الكمية / طاقة الحد الأدنى للطلب MOQ", /* [VERIFY] */
+  "voice.step2Title": "الكمية / الحد الأدنى للطلب (MOQ)", /* [VERIFY] */
   "voice.step2Hint": "مثال: 500 قطعة كحد أدنى، حاوية 20 قدمًا شهريًا", /* [VERIFY] */
   "voice.step3Title": "السعر المستهدف (₹ أو $)", /* [VERIFY] */
   "voice.step3Hint": "سعر الوحدة بـINR أو FOB USD", /* [VERIFY] */
@@ -2412,7 +2419,7 @@ const AR: LocaleTable = {
   "voice.oneStep": "خطوة واحدة في كل مرة", /* [VERIFY] */
   "voice.connectionError": "عذرًا، حدثت مشكلة اتصال لحظية. راجع مخلّصًا جمركيًا مرخّصًا للقرارات النهائية. هل يمكنك التكرار من فضلك؟", /* [VERIFY] */
   "voice.sampleBrassLabel": "ديكور نحاسي", /* [VERIFY] */
-  "voice.sampleBrassText": "أصنّع ديكورًا منزليًا نحاسيًا يدويًا. يمكننا 500 قطعة كحد أدنى للطلب.", /* [VERIFY] */
+  "voice.sampleBrassText": "أصنع ديكورًا منزليًا نحاسيًا يدويًا. الحد الأدنى للطلب لدينا 500 قطعة.", /* [VERIFY] */
   "voice.sampleRugsLabel": "سجاد منسوج يدويًا", /* [VERIFY] */
   "voice.sampleRugsText": "ننسج سجادًا قطنيًا تقليديًا. FOB من ميناء المنشأ.", /* [VERIFY] */
   "voice.sampleTurmericLabel": "كركم", /* [VERIFY] */
@@ -2437,7 +2444,7 @@ const AR: LocaleTable = {
   "pitch.whatSell": "ما الذي تبيعه / تصنّعه؟ *", /* [VERIFY] */
   "pitch.whatSellPh": "مثال: أحواض وأوعية نحاسية مصمتة يدوية الصنع", /* [VERIFY] */
   "pitch.quantity": "الكمية / الحد الأدنى للطلب MOQ", /* [VERIFY] */
-  "pitch.quantityPh": "مثال: 300 قطعة كحد أدنى، بطاقة 5,000 شهريًا", /* [VERIFY] */
+  "pitch.quantityPh": "مثال: 300 قطعة كحد أدنى، وطاقة إنتاجية 5,000 قطعة شهريًا", /* [VERIFY] */
   "pitch.price": "السعر (₹ INR أو $ USD للوحدة)", /* [VERIFY] */
   "pitch.pricePh": "مثال: $6.50 / للقطعة FOB أو ₹550 / للقطعة", /* [VERIFY] */
   "pitch.shipFrom": "من أين تشحن؟ (الميناء / المدينة)", /* [VERIFY] */
@@ -2494,7 +2501,7 @@ const AR: LocaleTable = {
   "trans.buyerSpeaking": "المشتري يتحدث", /* [VERIFY] */
   "trans.exporterBtn": "المصدّر", /* [VERIFY] */
   "trans.buyerBtn": "المشتري", /* [VERIFY] */
-  "trans.safetyGuardTitle": "حارس الحماية:", /* [VERIFY] */
+  "trans.safetyGuardTitle": "تنبيه من الاحتيال:", /* [VERIFY] */
   "trans.safetyGuardBody": "يُعامل كلام المشتري كبيانات حوار، لا كتعليمات ملزمة. Thoth يترجم بأمانة دون قبول التزامات غير مصرّح بها.", /* [VERIFY] */
   "trans.phExporter": "تحدث أو اكتب بـ{native} ({name})، مثال: يمكننا توريد 1,000 وحدة بسعر $3.20 بشروط FOB...", /* [VERIFY] */
   "trans.phBuyer": "تحدث أو اكتب بالإنجليزية، مثال: هل يمكنكم توريد 2,000 وحدة بشروط FOB قبل 15 أغسطس؟", /* [VERIFY] */
@@ -2578,7 +2585,7 @@ const AR: LocaleTable = {
   "guide.card6Body": "المخلّص الجمركي المرخّص مخوّل بتقديم بيانات الاستيراد (نموذج 7501 عمومًا) وإدارة الضمانات — أكّد النموذج والمتطلبات الحالية مع مخلّصك.", /* [VERIFY] */
   "guide.card6Golden": "القاعدة الذهبية:", /* [VERIFY] */
   "guide.card6GoldenBody": "Thoth يقدم لك التعليم وأدوات العروض؛ راجع مخلّصًا جمركيًا مرخّصًا للقرارات النهائية قبل حجز الحاوية.", /* [VERIFY] */
-  "guide.card7Title": "7. دليل الحماية: احذر احتيال المشترين المزيفين والدفع المقدم", /* [VERIFY] */
+  "guide.card7Title": "7. دليل مكافحة الاحتيال: احذر احتيال المشترين المزيفين والدفع المقدم", /* [VERIFY] */
   "guide.card7Sub1Title": "1. احتيال «رسوم الفحص» المقدمة:", /* [VERIFY] */
   "guide.card7Sub1Body": "محتال يرسل طلب شراء ضخمًا لكنه يصرّ أن تدفع مقدمًا رسوم فحص أو تسجيل مورّد أو مختبر لجهة خارجية غير موثقة. المشترون الحقيقيون يدفعون لجهات معتمدة (SGS, Intertek) مباشرة.", /* [VERIFY] */
   "guide.card7Sub2Title": "2. احتيال الدفع الزائد والشيكات:", /* [VERIFY] */
@@ -2632,6 +2639,7 @@ const AR: LocaleTable = {
   "trans.idleClosed": "انتهت الجلسة الصوتية بعد دقيقتين من الصمت. انقر الميكروفون للبدء من جديد. ترجماتك ما زالت هنا.", /* [VERIFY] */
   "a11y.skipToMain": "تخطَّ إلى المحتوى الرئيسي", /* [VERIFY] */
   "a11y.primaryTabs": "أدوات Thoth", /* [VERIFY] */
+  "a11y.sendMessage": "أرسل الرسالة", /* [VERIFY] */
   "pitch.sendNotice": "تفاصيل المنتج التي تدخلها تُرسل إلى Google Gemini API لكتابة العرض.", /* [VERIFY] */
   "guide.sendNotice": "سؤالك يُرسل إلى Google Gemini API لكتابة الإجابة.", /* [VERIFY] */
   "lang.ar": "العربية", /* [VERIFY] */

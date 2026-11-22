@@ -1,6 +1,8 @@
 // byok.js - persistent browser-side BYOK profile storage.
 //
-// Keys never go in URLs. Profiles are stored in localStorage, and on loopback
+// Keys never go in URLs. Profiles are stored in localStorage WITHOUT the key
+// (Thoth change: a visitor's key is kept only in this tab's sessionStorage, so
+// it ends with the tab and is never written to persistent storage). On loopback
 // hosts only we mirror them to a host cookie so settings follow nsDeploy across
 // localhost/127.0.0.1 ports. Do not enable cookie mirroring for non-local hosts:
 // cookies are sent to the serving host on every request. The setup applied in a
@@ -167,14 +169,31 @@ export function loadTabByokSetup(savedProfile = getSelectedByokProfile()) {
   };
 }
 
+// Thoth change: the persisted copy never carries a key.
+function withoutKeys(store) {
+  if (!store) return store;
+  return normalizeStore({ ...store, profiles: store.profiles.map((p) => ({ ...p, key: "" })) });
+}
+
+function hasKeys(store) {
+  return !!store && store.profiles.some((p) => p.key);
+}
+
 function saveByokStore(store) {
-  const normalized = normalizeStore(store);
+  const normalized = withoutKeys(normalizeStore(store));
   try { localStorage.setItem(STORE_KEY, JSON.stringify(normalized)); } catch {}
   writeCookieStore(normalized);
 }
 
 function readLocalStore() {
-  try { return normalizeStore(JSON.parse(localStorage.getItem(STORE_KEY) || "null")); } catch { return null; }
+  let store = null;
+  try { store = normalizeStore(JSON.parse(localStorage.getItem(STORE_KEY) || "null")); } catch { return null; }
+  // Purge a key written by an older version of this page.
+  if (hasKeys(store)) {
+    store = withoutKeys(store);
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch {}
+  }
+  return store;
 }
 
 function readCookieStore() {
@@ -182,7 +201,7 @@ function readCookieStore() {
   const prefix = `${COOKIE_NAME}=`;
   const part = document.cookie.split("; ").find((c) => c.startsWith(prefix));
   if (!part) return null;
-  try { return normalizeStore(JSON.parse(decodeURIComponent(part.slice(prefix.length)))); } catch { return null; }
+  try { return withoutKeys(normalizeStore(JSON.parse(decodeURIComponent(part.slice(prefix.length))))); } catch { return null; }
 }
 
 function writeCookieStore(store) {
