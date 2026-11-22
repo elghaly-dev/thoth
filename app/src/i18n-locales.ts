@@ -24,6 +24,7 @@ export const LOCALE_CORE_KEYS = [
   "app.footerBroker",
   "app.footerPrivacy",
   "app.footerNoPasswords",
+  "app.privacyPage",
   "header.openToAll",
   "header.credit",
   "header.reachBuyers",
@@ -89,6 +90,7 @@ const HI: LocaleTable = {
   "app.footerBroker": "अंतिम निर्णय के लिए हमेशा किसी लाइसेंसधारी कस्टम ब्रोकर से जाँच करें।",
   "app.footerPrivacy": "गोपनीयता और भरोसा नीति",
   "app.footerNoPasswords": "पासवर्ड या बैंक विवरण कभी नहीं माँगे जाते",
+  "app.privacyPage": "गोपनीयता नीति", /* [VERIFY] */
   "header.openToAll": "हर निर्यातक के लिए खुला",
   "header.credit": "छोटे-बड़े सभी निर्यातकों के लिए",
   "header.reachBuyers": "खरीदारों तक पहुँचें और बात करें",
@@ -410,6 +412,7 @@ const MR: LocaleTable = {
   "app.footerBroker": "अंतिम निर्णयासाठी नेहमी परवानाधारक कस्टम ब्रोकरकडून खात्री करा.",
   "app.footerPrivacy": "गोपनीयता आणि विश्वास धोरण",
   "app.footerNoPasswords": "पासवर्ड किंवा बँक तपशील कधीही विचारले जात नाहीत",
+  "app.privacyPage": "गोपनीयता धोरण", /* [VERIFY] */
   "header.openToAll": "प्रत्येक निर्यातदारासाठी खुले",
   "header.credit": "लहान-मोठ्या सर्व निर्यातदारांसाठी",
   "header.reachBuyers": "खरेदीदारांपर्यंत पोहोचा आणि बोला",
@@ -731,6 +734,7 @@ const GU: LocaleTable = {
   "app.footerBroker": "અંતિમ નિર્ણય માટે હંમેશા લાઇસન્સધારક કસ્ટમ બ્રોકર પાસે ખાતરી કરો.",
   "app.footerPrivacy": "ગોપનીયતા અને વિશ્વાસ નીતિ",
   "app.footerNoPasswords": "પાસવર્ડ કે બેંક વિગતો ક્યારેય માંગવામાં આવતી નથી",
+  "app.privacyPage": "ગોપનીયતા નીતિ", /* [VERIFY] */
   "header.openToAll": "દરેક નિકાસકાર માટે ખુલ્લું",
   "header.credit": "નાના-મોટા તમામ નિકાસકારો માટે",
   "header.reachBuyers": "ખરીદદારો સુધી પહોંચો અને વાત કરો",
@@ -1052,6 +1056,7 @@ const BN: LocaleTable = {
   "app.footerBroker": "চূড়ান্ত সিদ্ধান্তের জন্য সবসময় লাইসেন্সপ্রাপ্ত কাস্টমস ব্রোকারের সাথে যাচাই করুন।",
   "app.footerPrivacy": "গোপনীয়তা ও আস্থা নীতি",
   "app.footerNoPasswords": "পাসওয়ার্ড বা ব্যাংকের তথ্য কখনো চাওয়া হয় না",
+  "app.privacyPage": "গোপনীয়তা নীতি", /* [VERIFY] */
   "header.openToAll": "প্রত্যেক রপ্তানিকারকের জন্য উন্মুক্ত",
   "header.credit": "ছোট-বড় সব রপ্তানিকারকের জন্য",
   "header.reachBuyers": "ক্রেতাদের কাছে পৌঁছান ও কথা বলুন",
@@ -1373,6 +1378,7 @@ const TA: LocaleTable = {
   "app.footerBroker": "இறுதி முடிவுகளுக்கு எப்போதும் உரிமம் பெற்ற சுங்க முகவரிடம் சரிபார்க்கவும்.",
   "app.footerPrivacy": "தனியுரிமை மற்றும் நம்பிக்கைக் கொள்கை",
   "app.footerNoPasswords": "கடவுச்சொல் அல்லது வங்கி விவரங்கள் ஒருபோதும் கேட்கப்படுவதில்லை",
+  "app.privacyPage": "தனியுரிமைக் கொள்கை", /* [VERIFY] */
   "header.openToAll": "ஒவ்வொரு ஏற்றுமதியாளருக்கும் திறந்தது",
   "header.credit": "சிறிய, பெரிய எல்லா ஏற்றுமதியாளர்களுக்கும்",
   "header.reachBuyers": "வாங்குபவர்களை அடைந்து பேசுங்கள்",
@@ -1694,6 +1700,7 @@ const TE: LocaleTable = {
   "app.footerBroker": "తుది నిర్ణయాల కోసం ఎల్లప్పుడూ లైసెన్స్ ఉన్న కస్టమ్స్ బ్రోకర్‌తో సరిచూసుకోండి.",
   "app.footerPrivacy": "గోప్యత మరియు విశ్వాస విధానం",
   "app.footerNoPasswords": "పాస్‌వర్డ్‌లు లేదా బ్యాంక్ వివరాలు ఎప్పుడూ అడగబడవు",
+  "app.privacyPage": "గోప్యతా విధానం", /* [VERIFY] */
   "header.openToAll": "ప్రతి ఎగుమతిదారుకు అందుబాటులో",
   "header.credit": "చిన్న, పెద్ద ఎగుమతిదారులందరి కోసం",
   "header.reachBuyers": "కొనుగోలుదారులను చేరుకుని మాట్లాడండి",
@@ -2015,6 +2022,7 @@ const PA: LocaleTable = {
   "app.footerBroker": "ਅੰਤਿਮ ਫ਼ੈਸਲਿਆਂ ਲਈ ਹਮੇਸ਼ਾ ਲਾਇਸੈਂਸਸ਼ੁਦਾ ਕਸਟਮ ਬ੍ਰੋਕਰ ਤੋਂ ਜਾਂਚ ਕਰੋ।",
   "app.footerPrivacy": "ਪਰਦੇਦਾਰੀ ਅਤੇ ਭਰੋਸਾ ਨੀਤੀ",
   "app.footerNoPasswords": "ਪਾਸਵਰਡ ਜਾਂ ਬੈਂਕ ਵੇਰਵੇ ਕਦੇ ਨਹੀਂ ਮੰਗੇ ਜਾਂਦੇ",
+  "app.privacyPage": "ਪਰਦੇਦਾਰੀ ਨੀਤੀ", /* [VERIFY] */
   "header.openToAll": "ਹਰ ਨਿਰਯਾਤਕ ਲਈ ਖੁੱਲ੍ਹਾ",
   "header.credit": "ਛੋਟੇ-ਵੱਡੇ ਸਾਰੇ ਨਿਰਯਾਤਕਾਂ ਲਈ",
   "header.reachBuyers": "ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚੋ ਅਤੇ ਗੱਲ ਕਰੋ",
@@ -2336,6 +2344,7 @@ const AR: LocaleTable = {
   "app.footerBroker": "راجع دائمًا مخلّصًا جمركيًا مرخّصًا قبل القرارات النهائية.", /* [VERIFY] */
   "app.footerPrivacy": "سياسة الخصوصية والثقة", /* [VERIFY] */
   "app.footerNoPasswords": "لا نطلب كلمات مرور أو بيانات بنكية أبدًا", /* [VERIFY] */
+  "app.privacyPage": "سياسة الخصوصية", /* [VERIFY] */
   "header.openToAll": "مفتوح لكل مصدّر", /* [VERIFY] */
   "header.credit": "للمصدّرين، صغارًا وكبارًا", /* [VERIFY] */
   "header.reachBuyers": "تواصل مع المشترين وتحدث إليهم", /* [VERIFY] */
