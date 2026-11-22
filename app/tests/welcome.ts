@@ -111,6 +111,8 @@ try {
   await d2.getByRole('button', { name: THEME_TABLES.ar.start }).click();
   await p2.getByText(THEME_TABLES.ar.welcomeAnon, { exact: true }).waitFor();
   check(true, 'Arabic: skipping the name shows the plain greeting');
+  const tabs = await p2.locator('#thoth-main').innerText();
+  check(tabs.includes('الخادم الأمين على هذا الهاتف') && !tabs.includes('Faithful Servant on this phone'), 'Arabic: the on-device tab label is in Arabic');
   await ar.close();
 } finally {
   await browser.close();

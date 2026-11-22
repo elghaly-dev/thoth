@@ -38,6 +38,7 @@ jobs:
       - run: npm run test:a11y
       - run: npm run test:byok   # agent runtime never persists a visitor's key
       - run: npm run test:palettes   # every palette meets WCAG AA for the pairs the app uses
+      - run: npm run test:readaloud   # read-aloud: phone voices only, no server call
       - run: npm test            # smoke, idle session, no-secrets, pages redirect
       - name: Build the Pages bundle (use/)
         run: npm run build:pages

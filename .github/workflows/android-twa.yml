@@ -39,7 +39,7 @@ jobs:
           test -n "$M"
           echo "merged manifest: $M"
           grep -oE 'android:(minSdkVersion|targetSdkVersion|compileSdkVersion)="[0-9]+"' "$M"
-          grep -q 'android:targetSdkVersion="35"' "$M" || { echo "::error::targetSdkVersion is not 35"; exit 1; }
+          grep -q 'android:targetSdkVersion="36"' "$M" || { echo "::error::targetSdkVersion is not 36"; exit 1; }
       - name: Check it is unsigned; size and sha256
         run: |
           set -euo pipefail
@@ -48,6 +48,17 @@ jobs:
           if jarsigner -verify "$AAB" | grep -q 'jar verified'; then echo "::error::AAB is signed; this job must stay unsigned"; exit 1; fi
           echo "AAB size: $(stat -c%s "$AAB") bytes"
           sha256sum "$AAB" | tee "$AAB.sha256"
+      - name: Permissions in the built AAB (bundletool dump of the merged manifest)
+        run: |
+          set -euo pipefail
+          curl -fsSL -o "$RUNNER_TEMP/bundletool.jar" https://github.com/google/bundletool/releases/download/1.17.2/bundletool-all-1.17.2.jar
+          sha256sum "$RUNNER_TEMP/bundletool.jar"
+          java -jar "$RUNNER_TEMP/bundletool.jar" dump manifest --bundle android/app/build/outputs/bundle/release/app-release.aab > "$RUNNER_TEMP/manifest.xml"
+          echo "uses-permission entries in the AAB:"
+          grep -n 'uses-permission' "$RUNNER_TEMP/manifest.xml" || echo "(none)"
+          grep -no 'android:allowBackup="[a-z]*"' "$RUNNER_TEMP/manifest.xml"
+          if grep -q 'uses-permission' "$RUNNER_TEMP/manifest.xml"; then echo "::error::the built AAB declares permissions; the privacy pages and data form say it asks for none"; exit 1; fi
+          grep -q 'android:allowBackup="false"' "$RUNNER_TEMP/manifest.xml" || { echo "::error::allowBackup is not false in the AAB"; exit 1; }
       - uses: actions/upload-artifact@v4
         with:
           name: thoth-unsigned-aab
