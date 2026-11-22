@@ -62,7 +62,7 @@ App name: Thoth
 Short description (EN, 78 characters):
 The Faithful Servant for exporters: honest pitches, trade translation, basics.
 
-Short description (AR):
+Short description (AR) [VERIFY: native Arabic review before submission]:
 الخادم الأمين للمصدّرين: عروض صادقة، وترجمة تجارية، وأساسيات الاستيراد.
 
 Full description (EN):
@@ -86,7 +86,7 @@ Full description (EN):
 >
 > Privacy policy: thoth.elghaly.dev/privacy/
 
-Full description (AR):
+Full description (AR) [VERIFY: native Arabic review before submission]:
 
 > Thoth هو الخادم الأمين للمصدّرين، صغارًا وكبارًا. by Elghaly LLC.
 >
