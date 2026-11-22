@@ -38,3 +38,6 @@ jobs:
           git diff --exit-code -- use
           test -z "$(git status --porcelain --untracked-files=all -- use)" || { git status --porcelain -- use; exit 1; }
       - run: npm run test:site   # no "free", no "elghaly" credit, no "AI" on any served page
+      - name: Ask Thoth network in step with its hocon, no "free" wording
+        working-directory: .
+        run: node tools/check-agent-network.mjs

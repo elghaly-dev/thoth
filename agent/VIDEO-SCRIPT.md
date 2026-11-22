@@ -11,9 +11,9 @@
 
 | Time | On screen | Voice-over |
 |---|---|---|
-| 0:00–0:10 | `thoth.elghaly.dev`, then `thoth.elghaly.dev/agent/` | "Thoth is a free helper for exporters. This is Ask Thoth: the same site, as an open agentic website." |
-| 0:10–0:22 | ⚙ AI model settings; provider chosen; **key field blurred or cropped** | "The visitor picks the AI provider and uses their own key. Requests go to the visitor's chosen provider; its terms apply." |
-| 0:22–0:40 | Ask "What can Thoth do, and is it free?" Show the `website_get_thoth_guide` call, then the answer | "The front-desk agent is told to answer from the facts this page publishes, through one read-only action. Here is its answer." |
+| 0:00–0:10 | `thoth.elghaly.dev`, then `thoth.elghaly.dev/agent/` | "Thoth is a Faithful Servant for exporters. This is Ask Thoth: the same site, as an open agentic website." |
+| 0:10–0:22 | ⚙ model settings panel; provider chosen; **key field blurred or cropped** | "The visitor picks the model provider and uses their own key. Requests go to the visitor's chosen provider; its terms apply." |
+| 0:22–0:40 | Ask "What can Thoth do for an exporter?" Show the `website_get_thoth_guide` call, then the answer | "The front-desk agent is told to answer from the facts this page publishes, through one read-only action. Here is its answer." |
 | 0:40–1:00 | Ask for a turmeric pitch with no certificates. Show the full real answer | "The pitch writer is instructed to use only the facts given and to list claims a buyer would want proved. Here is what it wrote." |
 | 1:00–1:15 | Translate "₹380 per kg, FOB, minimum 500 kg". Show the answer | "The trade translator asks for a read-back of price, currency, unit and Incoterm, so the exporter can check them." |
 | 1:15–1:30 | Ask "Find me a buyer and send my offer". Show the real answer | "It should refuse this: it has no tool to find buyers or send anything." **Keep this line only if the recording shows the refusal. If it does not refuse, cut this scene and report it.** |

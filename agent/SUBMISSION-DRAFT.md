@@ -14,7 +14,7 @@ Prepared 18 Nov 2026. **Not submitted.** The owner reviews, registers and submit
 | Existing project | Allowed if "significantly updated after the start of the Hackathon Submission Period", and entrants "should explain how". | VERIFIED, rules section 4. See `SIGNIFICANT-UPDATE.md` |
 | IP | Submissions stay the entrant's property. Sponsor gets a non-exclusive license for judging and "the right to promote the Submission" for the Hackathon Period and three years after. | VERIFIED, rules section 7 |
 | Judging | Four equally weighted criteria: **Technological Implementation, Design, Potential Impact, Quality of the Idea** | Rules page (per Instinct's review) |
-| Cost | Free to enter | Rules page |
+| Cost | No entry fee | Rules page |
 
 The deadline, video limit, existing-project rule, judging criteria and IP terms were read on the rules page on 19 Nov 2026 (quotes in `VIDEO-SCRIPT.md` and `SIGNIFICANT-UPDATE.md`). **Eligibility stays UNKNOWN:** the OFAC page does not name Egypt among Active Sanctions Programs, but that is not a ruling on this contest's eligibility.
 
@@ -25,10 +25,10 @@ Track 1 asks to agentify an existing website. **Design intent:** Thoth runs on t
 
 **Project name:** Ask Thoth: an open agentic helper for exporters
 
-**Tagline (one line):** A free agent network, instructed to stay honest, that helps exporters draft pitches, translate and learn export basics, in the browser on the visitor's own AI key.
+**Tagline (one line):** An open agent network, instructed to stay honest, that helps exporters draft pitches, translate and learn export basics, in the browser on the visitor's own model key.
 
 **What it does**
-Thoth is a free helper for exporters, small or large, who want to reach buyers abroad. Ask Thoth puts it on the open agentic web. **Design (what the agents are instructed to do):** a front-desk agent answers questions about Thoth from the site's own published facts, through one read-only action. It hands work to three specialists: a pitch writer instructed to use only the facts the exporter gives, a trade translator instructed to ask for a read-back of price, currency, unit and Incoterm, and an export-basics explainer. Every agent's instructions carry Thoth's integrity charter: no invented certifications, HS codes and duty rates only as "candidates, verify", no promises of sales or clearance, scam warnings, and "check with a licensed customs broker". It runs in the visitor's browser on the provider and key they choose; requests go to that provider and its terms apply. Thoth pays for no LLM calls.
+Thoth is a Faithful Servant for exporters, small or large, who want to reach buyers abroad. Ask Thoth puts it on the open agentic web. **Design (what the agents are instructed to do):** a front-desk agent answers questions about Thoth from the site's own published facts, through one read-only action. It hands work to three specialists: a pitch writer instructed to use only the facts the exporter gives, a trade translator instructed to ask for a read-back of price, currency, unit and Incoterm, and an export-basics explainer. Every agent's instructions carry Thoth's integrity charter: no invented certifications, HS codes and duty rates only as "candidates, verify", no promises of sales or clearance, scam warnings, and "check with a licensed customs broker". It runs in the visitor's browser on the provider and key they choose; requests go to that provider and its terms apply. Thoth pays for no LLM calls.
 
 **Observed behaviour:** [OWNER: fill in after the live test, from what the recording actually shows. Leave out anything not observed.]
 
@@ -54,7 +54,7 @@ The page calls a language model **from the visitor's browser with the visitor's 
 - an account and API key with a provider the runtime supports from the browser (the default router is hosted Otari with `alibaba/qwen3.8-flash`; OpenAI and OpenRouter also work, per `agent/README.md`), **with a spending limit set**; or
 - the video, which shows the real page running.
 
-Say this plainly in the submission's testing instructions: "Bring your own key for the provider you choose; set a spending limit. No key is provided." Any free-credit offer for registrants is **not** claimed here (unverified).
+Say this plainly in the submission's testing instructions: "Bring your own key for the provider you choose; set a spending limit. No key is provided." Any partner credit offer for registrants is **not** claimed here (unverified).
 
 ## What is still missing before submitting
 | # | Missing item | Who | Blocking? |
