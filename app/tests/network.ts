@@ -65,6 +65,8 @@ await new Promise<void>((r) => server.listen(0, '127.0.0.1', () => r()));
 const ORIGIN = `http://127.0.0.1:${(server.address() as { port: number }).port}`;
 const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {});
 const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block' });
+// A returning visitor: past the first-launch screens (look, name, language).
+await ctx.addInitScript(() => { try { localStorage.setItem('thoth.welcomed', '1'); } catch { /* storage blocked */ } });
 const page = await ctx.newPage();
 const outside: string[] = [];
 const errors: string[] = [];

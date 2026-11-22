@@ -34,6 +34,8 @@ const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath
 
 async function open(locale, query = '', init = '') {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, locale, hasTouch: true, isMobile: true });
+  // A returning visitor: past the first-launch screens (look, name, language).
+  await ctx.addInitScript(() => { try { localStorage.setItem('thoth.welcomed', '1'); } catch { /* storage blocked */ } });
   if (init) await ctx.addInitScript(init);
   // Fonts come from Google in production; the test does not depend on the network.
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, (r) => r.abort());

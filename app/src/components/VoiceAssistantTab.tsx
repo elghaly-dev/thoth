@@ -17,6 +17,7 @@ import {
   Ship,
   ArrowRight,
   ShieldAlert,
+  X,
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio, createSpeechRecognizer, isSpeechRecognitionSupported, isMicBlockedError } from '../utils/audio';
 import { postModel, ApiError, isAuthErrorStatus } from '../utils/api';
@@ -348,7 +349,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
               aria-label={tx(lang, 'common.dismiss')}
             >
-              ✕
+              <X className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
         )}
