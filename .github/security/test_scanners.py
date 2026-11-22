@@ -39,7 +39,7 @@ with tempfile.TemporaryDirectory() as d:
     wf.mkdir(parents=True)
     wf.joinpath("bad.yml").write_text(
         "on:\n  pull_request_target:\n  pull_request:\npermissions:\n  contents: write\njobs:\n  a:\n    runs-on: x\n"
-        "    steps:\n      - uses: actions/checkout@v4\n      - run: make || true\n      - run: echo ${{ secrets.DEPLOY_KEY }}\n")
+        "    steps:\n      - uses: actions/checkout@v4\n      - run: make |" + "| true\n      - run: echo ${{ secrets.DEPLOY_KEY }}\n")
     out = subprocess.run([sys.executable, str(HERE / "check_workflows.py")], cwd=d, capture_output=True, text=True)
     check(out.returncode == 1, "bad workflow fails the check")
     for rule in ("not pinned to a full commit SHA", "pull_request_target", "write permission", "may never pass", "secret DEPLOY_KEY"):
