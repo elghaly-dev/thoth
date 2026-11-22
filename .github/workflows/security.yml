@@ -27,8 +27,8 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Fetch every branch
-        run: git fetch --no-tags --prune origin '+refs/heads/*:refs/remotes/origin/*'
+      - name: Branches present (fetch-depth 0 fetches every branch)
+        run: git branch -r | wc -l
       - name: Install gitleaks 8.28.0 (pinned by sha256)
         run: |
           curl -sSfL -o /tmp/gitleaks.tgz https://github.com/gitleaks/gitleaks/releases/download/v8.28.0/gitleaks_8.28.0_linux_x64.tar.gz
@@ -45,8 +45,8 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Fetch every branch
-        run: git fetch --no-tags --prune origin '+refs/heads/*:refs/remotes/origin/*'
+      - name: Branches present (fetch-depth 0 fetches every branch)
+        run: git branch -r | wc -l
       - name: Legal name and personal e-mail scan (tree and full history)
         env:
           PERSONAL_SCAN_FINGERPRINTS: ${{ secrets.PERSONAL_SCAN_FINGERPRINTS }}
