@@ -42,3 +42,8 @@ jobs:
           git diff --exit-code -- use
           test -z "$(git status --porcelain --untracked-files=all -- use)" || { git status --porcelain -- use; exit 1; }
       - run: npm run test:site   # no "free", no "elghaly" credit, no "AI" on any served page
+      - name: Playwright core (no browser download; uses the runner's Chrome)
+        run: npm install --no-save --no-package-lock playwright-core@1.49.1
+      - name: Arabic in a real browser (phone language, RTL, typing and paste, Arabic font)
+        working-directory: .
+        run: CHROME_PATH="$(command -v google-chrome)" NODE_PATH=app/node_modules node tools/check-arabic-browser.mjs
