@@ -348,6 +348,7 @@ const HI: LocaleTable = {
   "lang.hi": "हिंदी",
   "lang.en": "अंग्रेज़ी",
   "lang.zh": "चीनी (मंदारिन)",
+  "lang.ar": "अरबी", /* [VERIFY] */
   "lang.gu": "गुजराती",
   "lang.mr": "मराठी",
   "lang.ta": "तमिल",
@@ -667,6 +668,7 @@ const MR: LocaleTable = {
   "lang.hi": "हिंदी",
   "lang.en": "इंग्रजी",
   "lang.zh": "चिनी (मँडरिन)",
+  "lang.ar": "अरबी", /* [VERIFY] */
   "lang.gu": "गुजराती",
   "lang.mr": "मराठी",
   "lang.ta": "तमिळ",
@@ -986,6 +988,7 @@ const GU: LocaleTable = {
   "lang.hi": "હિન્દી",
   "lang.en": "અંગ્રેજી",
   "lang.zh": "ચીની (મેન્ડરિન)",
+  "lang.ar": "અરબી", /* [VERIFY] */
   "lang.gu": "ગુજરાતી",
   "lang.mr": "મરાઠી",
   "lang.ta": "તમિલ",
@@ -1305,6 +1308,7 @@ const BN: LocaleTable = {
   "lang.hi": "হিন্দি",
   "lang.en": "ইংরেজি",
   "lang.zh": "চীনা (ম্যান্ডারিন)",
+  "lang.ar": "আরবি", /* [VERIFY] */
   "lang.gu": "গুজরাটি",
   "lang.mr": "মারাঠি",
   "lang.ta": "তামিল",
@@ -1624,6 +1628,7 @@ const TA: LocaleTable = {
   "lang.hi": "இந்தி",
   "lang.en": "ஆங்கிலம்",
   "lang.zh": "சீனம் (மாண்டரின்)",
+  "lang.ar": "அரபு", /* [VERIFY] */
   "lang.gu": "குஜராத்தி",
   "lang.mr": "மராத்தி",
   "lang.ta": "தமிழ்",
@@ -1943,6 +1948,7 @@ const TE: LocaleTable = {
   "lang.hi": "హిందీ",
   "lang.en": "ఆంగ్లం",
   "lang.zh": "చైనీస్ (మాండరిన్)",
+  "lang.ar": "అరబిక్", /* [VERIFY] */
   "lang.gu": "గుజరాతీ",
   "lang.mr": "మరాఠీ",
   "lang.ta": "తమిళం",
@@ -2262,6 +2268,7 @@ const PA: LocaleTable = {
   "lang.hi": "ਹਿੰਦੀ",
   "lang.en": "ਅੰਗਰੇਜ਼ੀ",
   "lang.zh": "ਚੀਨੀ (ਮੈਂਡਰਿਨ)",
+  "lang.ar": "ਅਰਬੀ", /* [VERIFY] */
   "lang.gu": "ਗੁਜਰਾਤੀ",
   "lang.mr": "ਮਰਾਠੀ",
   "lang.ta": "ਤਮਿਲ",
@@ -2310,6 +2317,326 @@ const PA: LocaleTable = {
   "guide.sendNotice": "ਤੁਹਾਡਾ ਸਵਾਲ ਜਵਾਬ ਲਿਖਣ ਲਈ Google ਦੇ Gemini API ਨੂੰ ਭੇਜਿਆ ਜਾਂਦਾ ਹੈ।",
 };
 
+// Arabic (Modern Standard), full RTL. Machine-drafted from PR #14: every line [VERIFY] by a native speaker.
+const AR: LocaleTable = {
+  "app.tabAssistant": "تحدث مع Thoth (صوت)", /* [VERIFY] */
+  "app.tabPitch": "استوديو عروض المشترين", /* [VERIFY] */
+  "app.tabTranslate": "مترجم التجارة", /* [VERIFY] */
+  "app.tabGuide": "أساسيات الاستيراد", /* [VERIFY] */
+  "app.speakingIn": "التحدث بـ{native} ({name})", /* [VERIFY] */
+  "app.footerTagline": "الخادم الأمين للمصدّرين", /* [VERIFY] */
+  "app.footerBadge": "لكل المصدّرين، صغارًا وكبارًا", /* [VERIFY] */
+  "app.footerBroker": "راجع دائمًا مخلّصًا جمركيًا مرخّصًا قبل القرارات النهائية.", /* [VERIFY] */
+  "app.footerPrivacy": "سياسة الخصوصية والثقة", /* [VERIFY] */
+  "app.footerNoPasswords": "لا نطلب كلمات مرور أو بيانات بنكية أبدًا", /* [VERIFY] */
+  "header.openToAll": "مفتوح لكل مصدّر", /* [VERIFY] */
+  "header.credit": "للمصدّرين، صغارًا وكبارًا", /* [VERIFY] */
+  "header.reachBuyers": "تواصل مع المشترين وتحدث إليهم", /* [VERIFY] */
+  "header.safetyPolicy": "سياسة الثقة والحماية", /* [VERIFY] */
+  "header.madeWith": "صُنع بـ", /* [VERIFY] */
+  "header.forMakers": "للصُنّاع", /* [VERIFY] */
+  "header.voiceAssistant": "الخادم الأمين", /* [VERIFY] */
+  "header.bridge": "جسر تجاري بين المصدّر والمشتري", /* [VERIFY] */
+  "header.selectLanguage": "اختر لغتك المفضلة", /* [VERIFY] */
+  "header.muted": "صامت", /* [VERIFY] */
+  "header.voiceOn": "الصوت يعمل", /* [VERIFY] */
+  "header.mutedTitle": "الصوت مكتوم (انقر لإعادة التشغيل)", /* [VERIFY] */
+  "header.voiceOnTitle": "الصوت نشط (انقر للكتم)", /* [VERIFY] */
+  "header.openTool": "الخادم الأمين", /* [VERIFY] */
+  "safety.title": "ميثاق الثقة والأخلاقيات في Thoth", /* [VERIFY] */
+  "safety.subtitle": "صُنع بعناية من أجل المصدّرين", /* [VERIFY] */
+  "safety.item1Title": "1. مفتوح للجميع:", /* [VERIFY] */
+  "safety.item1Body": "Thoth مبادرة لمساعدة المصنّعين والمشروعات الصغيرة والمتوسطة والحرفيين والمصدّرين. لا نطلب أبدًا بيانات بطاقة ائتمان أو حساب بنكي.", /* [VERIFY] */
+  "safety.item2Title": "2. لا ادعاءات أو شهادات مختلَقة:", /* [VERIFY] */
+  "safety.item2Body": "Thoth موجَّه بعدم اختلاق شهادات (FDA أو FSSAI أو Organic أو ISO) أو طاقات إنتاجية. كل عرض يتضمن قائمة «ادعاءات تحتاج تحققًا»: راجع كل بند قبل التواصل مع المشتري.", /* [VERIFY] */
+  "safety.item3Title": "3. رموز HS والتعريفات مرشّحة فقط:", /* [VERIFY] */
+  "safety.item3Body": "Thoth موجَّه بأن يوسم رموز HS ونسب الرسوم بأنها «مرشّحة، تحتاج تحققًا» لا حقائق. راجع دائمًا مخلّصًا جمركيًا مرخّصًا للتصنيف النهائي.", /* [VERIFY] */
+  "safety.item4Title": "4. ترجمة أمينة وإعادة قراءة الشروط:", /* [VERIFY] */
+  "safety.item4Body": "Thoth موجَّه بأن يترجم دون إضافة التزامات أو تفاوض، وأن يعيد قراءة السعر والعملة (USD/INR) والوحدات وIncoterm لتؤكدها.", /* [VERIFY] */
+  "safety.item5Title": "5. الحماية من الاحتيال:", /* [VERIFY] */
+  "safety.item5Body": "نحذّر من احتيال المشترين المزيفين ورسوم الفحص المقدَّمة وشيكات الدفع الزائد. لا تحوّل أبدًا رسومًا مقدمة لجهات فحص خارجية.", /* [VERIFY] */
+  "safety.item6Title": "6. كلام المشتري بيانات وليس تعليمات:", /* [VERIFY] */
+  "safety.item6Body": "تُرسل رسائل المشتري كمحتوى حوار، وThoth موجَّه بعدم اتباع أي تعليمات بداخلها وعدم تقديم التزامات نيابة عنك. راجع كل رد قبل الاعتماد عليه.", /* [VERIFY] */
+  "safety.item7Title": "7. أين يذهب نصك:", /* [VERIFY] */
+  "safety.item7Body": "النص الذي ترسله يُرسل إلى Google Gemini API لإنشاء الردود؛ وطريقة تعامل Google معه خارجة عن هذا التطبيق. يستخدم الإدخال الصوتي خاصية التعرّف على الكلام في متصفحك. مفتاح Gemini يبقى على الخادم ولا يُضمَّن في الصفحة.", /* [VERIFY] */
+  "safety.madeWith": "صُنع بـ", /* [VERIFY] */
+  "safety.credit": "للمصدّرين", /* [VERIFY] */
+  "safety.close": "فهمت، إغلاق", /* [VERIFY] */
+  "orb.listening": "أستمع بـ{lang}... (تحدث الآن)", /* [VERIFY] */
+  "orb.thinking": "Thoth يفكر...", /* [VERIFY] */
+  "orb.speaking": "يُنطق الرد... (انقر للإيقاف)", /* [VERIFY] */
+  "orb.tapToTalk": "انقر الميكروفون للتحدث بـ{lang}", /* [VERIFY] */
+  "orb.stop": "إيقاف", /* [VERIFY] */
+  "orb.titleStopListening": "انقر لإيقاف الاستماع", /* [VERIFY] */
+  "orb.titleStopSpeaking": "انقر لإيقاف النطق", /* [VERIFY] */
+  "orb.titleSpeak": "انقر للتحدث مع Thoth بـ{lang}", /* [VERIFY] */
+  "consent.title": "قبل أن تتحدث: الموافقة", /* [VERIFY] */
+  "consent.body": "يوافق الطرفان على الإدخال الصوتي. النص الذي ترسله يُرسل إلى Google Gemini API لإنشاء الردود؛ وطريقة تعامل Google معه خارجة عن هذا التطبيق. يستخدم الإدخال الصوتي خاصية التعرّف على الكلام في متصفحك.", /* [VERIFY] */
+  "consent.accept": "يوافق الطرفان: ابدأ الحديث", /* [VERIFY] */
+  "consent.given": "تم تسجيل الموافقة. النص الذي ترسله يُرسل إلى Google Gemini API.", /* [VERIFY] */
+  "consent.micHint": "اقبل إشعار الموافقة أعلاه لاستخدام الميكروفون. النص الذي ترسله يُرسل إلى Google Gemini API.", /* [VERIFY] */
+  "common.speechNotSupported": "التعرّف على الكلام غير مدعوم في هذا المتصفح. استخدم Chrome أو Edge، أو اكتب رسالتك.", /* [VERIFY] */
+  "common.micBlocked": "الوصول إلى الميكروفون محظور. اسمح به من إعدادات المتصفح، أو اكتب رسالتك.", /* [VERIFY] */
+  "voice.liveEngine": "محرك الصوت", /* [VERIFY] */
+  "voice.title": "محادثة صوتية مع Thoth", /* [VERIFY] */
+  "voice.speakNaturally": "تحدث بحرية بـ{native} ({name})", /* [VERIFY] */
+  "voice.mic": "الميكروفون:", /* [VERIFY] */
+  "voice.supported": "مدعوم", /* [VERIFY] */
+  "voice.typeMode": "وضع الكتابة", /* [VERIFY] */
+  "voice.badge": "الخادم الأمين", /* [VERIFY] */
+  "voice.trackerTitle": "تقدّم عرض المشتري (خطوة واحدة في كل مرة)", /* [VERIFY] */
+  "voice.captured": "تم التقاط {n}/4", /* [VERIFY] */
+  "voice.step1Title": "ما الذي تبيعه (المنتج)", /* [VERIFY] */
+  "voice.step1Hint": "أخبر Thoth ما الذي تصنّعه أو تصدّره", /* [VERIFY] */
+  "voice.step2Title": "الكمية / طاقة الحد الأدنى للطلب MOQ", /* [VERIFY] */
+  "voice.step2Hint": "مثال: 500 قطعة كحد أدنى، حاوية 20 قدمًا شهريًا", /* [VERIFY] */
+  "voice.step3Title": "السعر المستهدف (₹ أو $)", /* [VERIFY] */
+  "voice.step3Hint": "سعر الوحدة بـINR أو FOB USD", /* [VERIFY] */
+  "voice.step4Title": "من أين تشحن", /* [VERIFY] */
+  "voice.step4Hint": "مثال: ميناء الشحن لديك", /* [VERIFY] */
+  "voice.generatePitch": "أنشئ عرض المشتري وورقة المواصفات", /* [VERIFY] */
+  "voice.quickExamples": "أمثلة سريعة للمصدّرين (انقر للسؤال):", /* [VERIFY] */
+  "voice.dialogueStream": "سجل الحوار ({lang})", /* [VERIFY] */
+  "voice.newChat": "محادثة جديدة", /* [VERIFY] */
+  "voice.newChatTitle": "ابدأ محادثة جديدة", /* [VERIFY] */
+  "voice.safetyRule": "قاعدة مهمة: راجع مخلّصًا جمركيًا مرخّصًا لقرارات الاستيراد والتعريفة النهائية. Thoth لا يطلب كلمات مرور أو بيانات بنكية أبدًا.", /* [VERIFY] */
+  "voice.youExporter": "أنت (المصدّر)", /* [VERIFY] */
+  "voice.thothServant": "Thoth (الخادم الأمين)", /* [VERIFY] */
+  "voice.thinking": "Thoth يصوغ ردًا قصيرًا وودودًا...", /* [VERIFY] */
+  "voice.listen": "استمع", /* [VERIFY] */
+  "voice.copyTitle": "انسخ النص", /* [VERIFY] */
+  "voice.stopRecording": "أوقف التسجيل", /* [VERIFY] */
+  "voice.speakMessage": "انطق الرسالة", /* [VERIFY] */
+  "voice.typePlaceholder": "اكتب بـ{lang} أو بالإنجليزية... (مثال: نصنع سجادًا قطنيًا، 500 قطعة)", /* [VERIFY] */
+  "voice.badgeFooter": "الخادم الأمين • لا يطلب بيانات بطاقة أو حساب بنكي أبدًا", /* [VERIFY] */
+  "voice.oneStep": "خطوة واحدة في كل مرة", /* [VERIFY] */
+  "voice.connectionError": "عذرًا، حدثت مشكلة اتصال لحظية. راجع مخلّصًا جمركيًا مرخّصًا للقرارات النهائية. هل يمكنك التكرار من فضلك؟", /* [VERIFY] */
+  "voice.sampleBrassLabel": "ديكور نحاسي", /* [VERIFY] */
+  "voice.sampleBrassText": "أصنّع ديكورًا منزليًا نحاسيًا يدويًا. يمكننا 500 قطعة كحد أدنى للطلب.", /* [VERIFY] */
+  "voice.sampleRugsLabel": "سجاد منسوج يدويًا", /* [VERIFY] */
+  "voice.sampleRugsText": "ننسج سجادًا قطنيًا تقليديًا. FOB من ميناء المنشأ.", /* [VERIFY] */
+  "voice.sampleTurmericLabel": "كركم", /* [VERIFY] */
+  "voice.sampleTurmericText": "مثال: ننتج مسحوق كركم Lakadong — تحقق من الدرجة والشهادات قبل الادعاء.", /* [VERIFY] */
+  "voice.sampleLeatherLabel": "محافظ جلدية", /* [VERIFY] */
+  "voice.sampleLeatherText": "نصنع محافظ وحافظات بطاقات جلدية. السعر $5 للقطعة.", /* [VERIFY] */
+  "voice.sampleFobLabel": "FOB مقابل CIF", /* [VERIFY] */
+  "voice.sampleFobText": "هل تشرح الفرق بين FOB وCIF بكلمات بسيطة؟", /* [VERIFY] */
+  "pitch.badge": "استوديو عروض مشترين صادقة", /* [VERIFY] */
+  "pitch.servant": "الخادم الأمين", /* [VERIFY] */
+  "pitch.title": "حوّل الحرفة والتصنيع إلى عروض مقنعة للمشترين", /* [VERIFY] */
+  "pitch.subtitle": "المشترون يريدون الإيجاز والكميات الدقيقة والمواصفات الصادقة وشروط FOB الواضحة. Thoth يكتب عروضًا نظيفة بلا مبالغة وفق معايير التوريد.", /* [VERIFY] */
+  "pitch.customsRule": "قاعدة جمركية:", /* [VERIFY] */
+  "pitch.customsRuleBody": "راجع دائمًا مخلّصًا جمركيًا مرخّصًا لقرارات الاستيراد والتعريفة النهائية.", /* [VERIFY] */
+  "pitch.productDetails": "تفاصيل المنتج", /* [VERIFY] */
+  "pitch.stepByStep": "خطوة بخطوة", /* [VERIFY] */
+  "pitch.quickFill": "أمثلة تعبئة سريعة", /* [VERIFY] */
+  "pitch.presetBrass": "ديكور نحاسي · مثال", /* [VERIFY] */
+  "pitch.presetTurmeric": "توابل / كركم · مثال", /* [VERIFY] */
+  "pitch.presetCotton": "سجاد قطني · مثال", /* [VERIFY] */
+  "pitch.presetLeather": "منتجات جلدية · مثال", /* [VERIFY] */
+  "pitch.whatSell": "ما الذي تبيعه / تصنّعه؟ *", /* [VERIFY] */
+  "pitch.whatSellPh": "مثال: أحواض وأوعية نحاسية مصمتة يدوية الصنع", /* [VERIFY] */
+  "pitch.quantity": "الكمية / الحد الأدنى للطلب MOQ", /* [VERIFY] */
+  "pitch.quantityPh": "مثال: 300 قطعة كحد أدنى، بطاقة 5,000 شهريًا", /* [VERIFY] */
+  "pitch.price": "السعر (₹ INR أو $ USD للوحدة)", /* [VERIFY] */
+  "pitch.pricePh": "مثال: $6.50 / للقطعة FOB أو ₹550 / للقطعة", /* [VERIFY] */
+  "pitch.shipFrom": "من أين تشحن؟ (الميناء / المدينة)", /* [VERIFY] */
+  "pitch.shipFromPh": "مثال: ميناء الشحن لديك", /* [VERIFY] */
+  "pitch.writing": "Thoth يكتب عرضًا صادقًا للمشتري...", /* [VERIFY] */
+  "pitch.create": "أنشئ عرض المشتري", /* [VERIFY] */
+  "pitch.emptyTitle": "ستظهر حزمة عرض المشتري هنا", /* [VERIFY] */
+  "pitch.emptyBody": "أدخل اسم المنتج والكمية والسعر وميناء الشحن، أو اختر أحد الأمثلة الجاهزة على اليسار.", /* [VERIFY] */
+  "pitch.generatingTitle": "يُصاغ عرض مهني صادق للمشتري...", /* [VERIFY] */
+  "pitch.generatingBody": "تنسيق المواصفات وتسعير FOB وصياغة إنجليزية موجزة للمشتري.", /* [VERIFY] */
+  "pitch.ready": "حزمة عرض المشتري جاهزة", /* [VERIFY] */
+  "pitch.hearVoice": "استمع بصوت المشتري", /* [VERIFY] */
+  "pitch.stopVoice": "أوقف الصوت", /* [VERIFY] */
+  "pitch.hearTitle": "استمع كيف يبدو هذا للمشتري", /* [VERIFY] */
+  "pitch.downloadTxt": "نزّل TXT", /* [VERIFY] */
+  "pitch.downloadTitle": "نزّل العرض كملف .txt", /* [VERIFY] */
+  "pitch.emailTitle": "بريد تعارف للمشتري (3-4 جمل، معدل فتح مرتفع)", /* [VERIFY] */
+  "pitch.copyEmail": "انسخ البريد", /* [VERIFY] */
+  "pitch.copied": "تم النسخ!", /* [VERIFY] */
+  "pitch.subject": "الموضوع: ", /* [VERIFY] */
+  "pitch.dmTitle": "عرض برسالة مباشرة (LinkedIn / WhatsApp / رسالة مباشرة)", /* [VERIFY] */
+  "pitch.copy": "نسخ", /* [VERIFY] */
+  "pitch.specProduct": "المنتج", /* [VERIFY] */
+  "pitch.specMoq": "الحد الأدنى للطلب MOQ", /* [VERIFY] */
+  "pitch.specPrice": "السعر الاسترشادي", /* [VERIFY] */
+  "pitch.specPort": "ميناء المنشأ", /* [VERIFY] */
+  "pitch.claimsTitle": "ادعاءات تحتاج تحققًا قبل التواصل مع المشترين", /* [VERIFY] */
+  "pitch.claimsBadge": "لا تختلق ادعاءات FDA أو FSSAI أو Organic أبدًا", /* [VERIFY] */
+  "pitch.claimsBody": "يجري المشترون والسلطات الجمركية فحوصات امتثال دقيقة. اذكر فقط ما تملك مستنداته الفعلية. تحقق من كل بند أدناه:", /* [VERIFY] */
+  "pitch.check": "تحقق {n}:", /* [VERIFY] */
+  "pitch.claimDefault1": "تحقق من تركيبة خامات المنتج وتقارير المختبر", /* [VERIFY] */
+  "pitch.claimDefault2": "تحقق من شهادات FDA أو FSSAI أو الشهادات العضوية (لا تدّعِها أبدًا دون شهادة سارية)", /* [VERIFY] */
+  "pitch.claimDefault3": "أكّد الطاقة الإنتاجية وجدول التسليم دون تأخير", /* [VERIFY] */
+  "pitch.claimDefault4": "تأكد أن المنصات الخشبية تحمل ختم المعالجة الحرارية ISPM-15", /* [VERIFY] */
+  "pitch.scamTitle": "تحذير من الاحتيال: مشترون مزيفون واحتيال الدفع المقدم", /* [VERIFY] */
+  "pitch.scamFeeTitle": "• رسوم الفحص والتسجيل المزيفة:", /* [VERIFY] */
+  "pitch.scamFeeBody": "محتالون ينتحلون صفة مشترين يطلبون تحويل «رسوم تسجيل مورّد» أو «رسوم فحص مختبر» مقدمًا لجهة غير موثقة. المشترون الحقيقيون يدفعون لجهات الفحص (SGS, Intertek) مباشرة.", /* [VERIFY] */
+  "pitch.scamCheckTitle": "• احتيال الشيكات والدفع الزائد:", /* [VERIFY] */
+  "pitch.scamCheckBody": "لا تقبل أبدًا شيكًا بمبلغ زائد مع طلب تحويل الفرق. أصرّ على خطابات اعتماد مستندية غير قابلة للإلغاء (L/C) موثقة أو ضمان بنكي عبر بنوك تجارية.", /* [VERIFY] */
+  "pitch.adviceIn": "نصيحة للمصدّر بـ{native} ({name}):", /* [VERIFY] */
+  "pitch.important": "تنبيه مهم:", /* [VERIFY] */
+  "pitch.importantBody": "لا تَعِد أبدًا بنتائج مبيعات. عند الشحن، راجع مخلّصًا جمركيًا مرخّصًا للقرارات النهائية بشأن رموز HTS ورسوم الاستيراد والتخليص.", /* [VERIFY] */
+  "trans.clearSession": "امسح الجلسة", /* [VERIFY] */
+  "trans.clearTitle": "امسح نصوص الجلسة من الذاكرة", /* [VERIFY] */
+  "trans.badge": "ترجمة تجارية", /* [VERIFY] */
+  "trans.faithful": "أمينة تمامًا • بلا تفاوض", /* [VERIFY] */
+  "trans.titleExporter": "المصدّر", /* [VERIFY] */
+  "trans.titleBuyer": "المشتري", /* [VERIFY] */
+  "trans.subtitle": "استخدمه أثناء مكالمات Zoom أو مفاوضات الهاتف. Thoth يترجم بأمانة دون إضافة التزامات أو تفاوض. إعادة القراءة تؤكد كل تفاصيل السعر وIncoterm.", /* [VERIFY] */
+  "trans.ruleTitle": "القاعدة:", /* [VERIFY] */
+  "trans.ruleBody": "التعريفات مرشّحة، تحقق منها. راجع دائمًا مخلّصًا جمركيًا مرخّصًا للقرارات النهائية.", /* [VERIFY] */
+  "trans.activeSpeaker": "المتحدث النشط:", /* [VERIFY] */
+  "trans.exporterSpeaking": "المصدّر ({lang}) يتحدث", /* [VERIFY] */
+  "trans.buyerSpeaking": "المشتري يتحدث", /* [VERIFY] */
+  "trans.exporterBtn": "المصدّر", /* [VERIFY] */
+  "trans.buyerBtn": "المشتري", /* [VERIFY] */
+  "trans.safetyGuardTitle": "حارس الحماية:", /* [VERIFY] */
+  "trans.safetyGuardBody": "يُعامل كلام المشتري كبيانات حوار، لا كتعليمات ملزمة. Thoth يترجم بأمانة دون قبول التزامات غير مصرّح بها.", /* [VERIFY] */
+  "trans.phExporter": "تحدث أو اكتب بـ{native} ({name})، مثال: يمكننا توريد 1,000 وحدة بسعر $3.20 بشروط FOB...", /* [VERIFY] */
+  "trans.phBuyer": "تحدث أو اكتب بالإنجليزية، مثال: هل يمكنكم توريد 2,000 وحدة بشروط FOB قبل 15 أغسطس؟", /* [VERIFY] */
+  "trans.micTitle": "انقر للتحدث عبر الميكروفون", /* [VERIFY] */
+  "trans.stopMic": "أوقف الميكروفون", /* [VERIFY] */
+  "trans.speak": "تحدث", /* [VERIFY] */
+  "trans.translateVoice": "ترجم وانطق", /* [VERIFY] */
+  "trans.translating": "يترجم...", /* [VERIFY] */
+  "trans.logTitle": "سجل المحادثة ({n} تبادلًا)", /* [VERIFY] */
+  "trans.logNote": "الأسعار والوحدات والتواريخ متطابقة بدقة", /* [VERIFY] */
+  "trans.exporterLabel": "المصدّر", /* [VERIFY] */
+  "trans.buyerLabel": "المشتري", /* [VERIFY] */
+  "trans.exporterShort": "المصدّر", /* [VERIFY] */
+  "trans.usBuyerShort": "المشتري", /* [VERIFY] */
+  "trans.originalSpoken": "الأصل المنطوق ({lang}):", /* [VERIFY] */
+  "trans.translatedFor": "مترجم لـ{who} ({lang}):", /* [VERIFY] */
+  "trans.listenOriginal": "استمع للأصل", /* [VERIFY] */
+  "trans.listen": "استمع", /* [VERIFY] */
+  "trans.hearTranslation": "استمع للترجمة", /* [VERIFY] */
+  "trans.hearTranslationTitle": "استمع إلى الترجمة منطوقة", /* [VERIFY] */
+  "trans.translatedBadge": "مترجَم", /* [VERIFY] */
+  "trans.exactTerms": "الشروط المستخرجة بدقة:", /* [VERIFY] */
+  "trans.readbackTitle": "إعادة قراءة شروط التجارة (أمينة وبلا تفاوض):", /* [VERIFY] */
+  "trans.confirmBtn": "انقر لتأكيد إعادة القراءة", /* [VERIFY] */
+  "trans.confirmedBtn": "تم تأكيد الشروط", /* [VERIFY] */
+  "trans.price": "السعر", /* [VERIFY] */
+  "trans.currency": "العملة", /* [VERIFY] */
+  "trans.units": "الوحدات / الكمية", /* [VERIFY] */
+  "trans.incoterm": "Incoterm", /* [VERIFY] */
+  "trans.verifyPrice": "تحقق من السعر", /* [VERIFY] */
+  "trans.verifyUnits": "تحقق من الوحدات", /* [VERIFY] */
+  "trans.toConfirm": "للتأكيد", /* [VERIFY] */
+  "trans.readbackFallback": "تحقق بإعادة القراءة: يجب تأكيد السعر والعملة ووحدات الكمية وIncoterm قبل الاتفاق.", /* [VERIFY] */
+  "trans.confirmTtsPrefix": "إعادة قراءة للتأكيد: ", /* [VERIFY] */
+  "trans.confirmTtsFallback": "تحقق من كل الشروط قبل الاتفاق", /* [VERIFY] */
+  "trans.hearReadback": "استمع لإعادة القراءة", /* [VERIFY] */
+  "trans.hearReadbackTitle": "استمع إلى قراءة التحقق بصوت عالٍ", /* [VERIFY] */
+  "guide.badge": "مركز معرفة الاستيراد", /* [VERIFY] */
+  "guide.badgeSub": "كلمات بسيطة للمصدّرين الجدد وذوي الخبرة", /* [VERIFY] */
+  "guide.title": "تبسيط الجمارك وشروط الشحن والامتثال", /* [VERIFY] */
+  "guide.subtitle": "المشترون يتوقعون وضوحًا في شروط الشحن (FOB مقابل CIF) وبطاقات بيان دقيقة ومستندات قياسية. تعلّم الأساسيات قبل التسعير!", /* [VERIFY] */
+  "guide.brokerTitle": "قاعدة المخلّص الجمركي:", /* [VERIFY] */
+  "guide.brokerBody": "اللوائح الجمركية تطبّقها سلطة جمارك بلد الوجهة. راجع دائمًا مخلّصًا جمركيًا مرخّصًا للتصنيفات الجمركية وقرارات الدخول النهائية.", /* [VERIFY] */
+  "guide.askTitle": "اسأل Thoth أي سؤال عن الاستيراد ({lang})", /* [VERIFY] */
+  "guide.plainWords": "كلمات بسيطة، بلا مصطلحات معقدة", /* [VERIFY] */
+  "guide.askPh": "اسأل بـ{native} أو بالإنجليزية (مثال: كيف ألصق بطاقات البيان على القمصان القطنية للجمارك؟)", /* [VERIFY] */
+  "guide.askBtn": "اسأل Thoth", /* [VERIFY] */
+  "guide.explaining": "يشرح...", /* [VERIFY] */
+  "guide.answerTitle": "شرح Thoth بلغة بسيطة:", /* [VERIFY] */
+  "guide.listen": "استمع", /* [VERIFY] */
+  "guide.stopVoice": "أوقف الصوت", /* [VERIFY] */
+  "guide.sampleQ1": "ما الفرق بين FOB وCIF للمشترين؟", /* [VERIFY] */
+  "guide.sampleQ2": "ما بطاقات البيان الإلزامية على المنتجات المصدّرة؟", /* [VERIFY] */
+  "guide.sampleQ3": "كيف أجد رمز HS الصحيح لمنتجي؟", /* [VERIFY] */
+  "guide.sampleQ4": "هل يدفع المشتري الرسوم الجمركية أم المصدّر؟", /* [VERIFY] */
+  "guide.sampleQ5": "ماذا يحدث إذا لم تكن منصاتي الخشبية حاصلة على ISPM-15؟", /* [VERIFY] */
+  "guide.card1Tag": "رمز مرشّح • تحقق", /* [VERIFY] */
+  "guide.card1Title": "1. رموز HS / HTS ونسب الرسوم", /* [VERIFY] */
+  "guide.card1Body": "رموز HS (6 أرقام دوليًا) ورموز HTS (10 أرقام) ونسب الرسوم المرتبطة بها مرشّحة للتحقق فقط — لا تذكر تعريفة أبدًا كحقيقة.", /* [VERIFY] */
+  "guide.card1Note1": "• نسب التعريفة تتغير وتعتمد على مواصفات الخامة وبلد المنشأ بدقة.", /* [VERIFY] */
+  "guide.card1Note2": "• سلطة جمارك بلد الوجهة والمخلّصون الجمركيون المرخّصون وحدهم يحددون التصنيف القانوني.", /* [VERIFY] */
+  "guide.card2Title": "2. شروط الشحن: FOB مقابل CIF", /* [VERIFY] */
+  "guide.card2Body": "FOB (Incoterm): تدفع أنت النقل الداخلي والتحميل على السفينة في ميناء المنشأ. المشتري يدفع الشحن البحري والجمارك.", /* [VERIFY] */
+  "guide.card2Note1": "• FOB هو الأنسب لمعظم المصدّرين.", /* [VERIFY] */
+  "guide.card2Note2": "• CIF يعني أنك تدفع الشحن البحري والتأمين إلى ميناء الوجهة.", /* [VERIFY] */
+  "guide.card3Title": "3. وسم بلد المنشأ الإلزامي", /* [VERIFY] */
+  "guide.card3Body": "قواعد الاستيراد تتطلب عمومًا وسم المنتجات ببلد المنشأ بالإنجليزية بشكل واضح وثابت — أكّد قاعدة الوسم الدقيقة مع مخلّص جمركي مرخّص.", /* [VERIFY] */
+  "guide.card3Note1": "•وسّم كل منتج على حدة وكذلك كرتونة الشحن الرئيسية.", /* [VERIFY] */
+  "guide.card3Note2": "• يجب أن يُقرأ بوضوح: بلد المنشأ، بالإنجليزية.", /* [VERIFY] */
+  "guide.card4Title": "4. المنصات ومعالجة ISPM-15", /* [VERIFY] */
+  "guide.card4Body": "كل عبوات الخشب الصلب (المنصات والصناديق ومواد التثبيت) يجب أن تكون معالجة حراريًا وتحمل ختم ISPM-15 الرسمي.", /* [VERIFY] */
+  "guide.card4Note1": "• الخشب غير المطابق يُرجَع في ميناء الوجهة على نفقة المصدّر.", /* [VERIFY] */
+  "guide.card4Note2": "• أو استخدم منصات بلاستيكية أو من ورق مضغوط.", /* [VERIFY] */
+  "guide.card5Title": "5. مستندات التصدير الأساسية", /* [VERIFY] */
+  "guide.card5Body": "كل شحنة تتطلب أربع أوراق نظيفة ودقيقة:", /* [VERIFY] */
+  "guide.card5Doc1": "1. الفاتورة التجارية (قيمة مفصلة بـUSD)", /* [VERIFY] */
+  "guide.card5Doc2": "2. قائمة التعبئة (الوزن القائم/الصافي وعدد الكراتين)", /* [VERIFY] */
+  "guide.card5Doc3": "3. بوليصة الشحن (B/L من شركة الشحن)", /* [VERIFY] */
+  "guide.card5Doc4": "4. شهادة المنشأ (تصدر في بلد المنشأ)", /* [VERIFY] */
+  "guide.card6Title": "6. دور المخلّص الجمركي", /* [VERIFY] */
+  "guide.card6Body": "المخلّص الجمركي المرخّص مخوّل بتقديم بيانات الاستيراد (نموذج 7501 عمومًا) وإدارة الضمانات — أكّد النموذج والمتطلبات الحالية مع مخلّصك.", /* [VERIFY] */
+  "guide.card6Golden": "القاعدة الذهبية:", /* [VERIFY] */
+  "guide.card6GoldenBody": "Thoth يقدم لك التعليم وأدوات العروض؛ راجع مخلّصًا جمركيًا مرخّصًا للقرارات النهائية قبل حجز الحاوية.", /* [VERIFY] */
+  "guide.card7Title": "7. دليل الحماية: احذر احتيال المشترين المزيفين والدفع المقدم", /* [VERIFY] */
+  "guide.card7Sub1Title": "1. احتيال «رسوم الفحص» المقدمة:", /* [VERIFY] */
+  "guide.card7Sub1Body": "محتال يرسل طلب شراء ضخمًا لكنه يصرّ أن تدفع مقدمًا رسوم فحص أو تسجيل مورّد أو مختبر لجهة خارجية غير موثقة. المشترون الحقيقيون يدفعون لجهات معتمدة (SGS, Intertek) مباشرة.", /* [VERIFY] */
+  "guide.card7Sub2Title": "2. احتيال الدفع الزائد والشيكات:", /* [VERIFY] */
+  "guide.card7Sub2Body": "المحتال يرسل شيكًا مصرفيًا مزورًا يتجاوز قيمة الفاتورة، ثم يطلب تحويل «المبلغ الزائد». لا تشحن ولا تحوّل أموالًا حتى يتم تحصيل تحويل بنكي رسمي بتسوية نهائية.", /* [VERIFY] */
+  "guide.card7Sub3Title": "3. تحقق من مشروعية نشاط المشتري:", /* [VERIFY] */
+  "guide.card7Sub3Body": "ابحث عن المشتري في سجلات الأعمال الرسمية. تحقق أن نطاقات البريد المؤسسية تطابق مواقع الأعمال الرسمية، لا البريد العام.", /* [VERIFY] */
+  "lang.hi": "الهندية", /* [VERIFY] */
+  "lang.en": "الإنجليزية", /* [VERIFY] */
+  "lang.zh": "الصينية (الماندرين)", /* [VERIFY] */
+  "lang.gu": "الغوجاراتية", /* [VERIFY] */
+  "lang.mr": "الماراثية", /* [VERIFY] */
+  "lang.ta": "التاميلية", /* [VERIFY] */
+  "lang.bn": "البنغالية", /* [VERIFY] */
+  "lang.te": "التيلوغوية", /* [VERIFY] */
+  "lang.pa": "البنجابية", /* [VERIFY] */
+  "common.dismiss": "إغلاق", /* [VERIFY] */
+  "err.guide": "تعذّر جلب الإجابة. حاول مرة أخرى.", /* [VERIFY] */
+  "err.translate": "تعذّرت الترجمة. حاول مرة أخرى.", /* [VERIFY] */
+  "err.pitch": "تعذّر إنشاء العرض. حاول مرة أخرى.", /* [VERIFY] */
+  "err.auth": "فشل التحقق لدى المزوّد. تم الإيقاف.", /* [VERIFY] */
+  "err.rateLimit": "طلبات كثيرة. حاول بعد قليل.", /* [VERIFY] */
+  "dl.title": "THOTH - ورقة مواصفات عرض المشتري", /* [VERIFY] */
+  "dl.product": "المنتج", /* [VERIFY] */
+  "dl.moq": "الحد الأدنى للطلب MOQ", /* [VERIFY] */
+  "dl.price": "السعر", /* [VERIFY] */
+  "dl.originPort": "ميناء المنشأ", /* [VERIFY] */
+  "dl.coldEmail": "بريد تعارف للمشتري", /* [VERIFY] */
+  "dl.subject": "الموضوع", /* [VERIFY] */
+  "dl.shortMsg": "رسالة قصيرة مباشرة (LinkedIn / WhatsApp)", /* [VERIFY] */
+  "dl.claims": "ادعاءات تحتاج تحققًا قبل التواصل مع المشتري", /* [VERIFY] */
+  "dl.scamTitle": "تحذير من الاحتيال: مشترون مزيفون واحتيال الدفع المقدم", /* [VERIFY] */
+  "dl.scam1": "لا تدفع أبدًا «رسوم فحص» أو «رسوم تسجيل» أو «رسوم معالجة مناقصة» مقدمًا لجهات غير موثقة. المشترون الحقيقيون يدفعون لجهات الفحص مباشرة.", /* [VERIFY] */
+  "dl.scam2": "تحقق من تسجيل شركة المشتري في سجلات الأعمال الرسمية.", /* [VERIFY] */
+  "dl.scam3": "أصرّ على خطابات اعتماد مستندية غير قابلة للإلغاء (L/C) موثقة أو ضمان بنكي عبر بنوك تجارية.", /* [VERIFY] */
+  "dl.guidanceIn": "إرشاد المصدّر بـ{lang}", /* [VERIFY] */
+  "dl.customsNote": "ملاحظة امتثال جمركي", /* [VERIFY] */
+  "dl.customsFallback": "راجع مخلّصًا جمركيًا مرخّصًا للقرارات النهائية.", /* [VERIFY] */
+  "key.title": "مفتاح Gemini API الخاص بك", /* [VERIFY] */
+  "key.body": "هذا الموقع العام لا يملك مفتاح خادم. الصق مفتاح Gemini API الخاص بك للتحدث مع Thoth. يُحفظ في ذاكرة هذه الصفحة فقط (وتمسحه إعادة تحميل الصفحة) ويُرسل إلى Google فقط؛ وطريقة تعامل Google معه خارجة عن هذا التطبيق.", /* [VERIFY] */
+  "key.label": "مفتاح Gemini API", /* [VERIFY] */
+  "key.placeholder": "الصق مفتاحك هنا", /* [VERIFY] */
+  "key.save": "استخدمه لهذه الزيارة", /* [VERIFY] */
+  "key.clear": "أزل المفتاح", /* [VERIFY] */
+  "key.saved": "المفتاح في ذاكرة هذه الصفحة فقط؛ إعادة تحميل الصفحة تمسحه. يُرسل إلى Google فقط.", /* [VERIFY] */
+  "key.needed": "أضف مفتاح Gemini API أعلاه للتحدث مع Thoth.", /* [VERIFY] */
+  "key.invalid": "هذا المفتاح مرفوض. تحقق منه وحاول مجددًا.", /* [VERIFY] */
+  "key.serverReady": "هذه الجلسة تستخدم مفتاحًا على الخادم. لا حاجة للصق مفتاح.", /* [VERIFY] */
+  "key.whereToGet": "احصل على مفتاح Gemini API من Google (يتطلب تسجيل دخولك بحساب Google الخاص بك).", /* [VERIFY] */
+  "key.staysInTab": "لا يُكتب المفتاح في كود Thoth ولا في ملفات تعريف الارتباط ولا في أي تخزين للمتصفح.", /* [VERIFY] */
+  "voice.idleClosed": "انتهت الجلسة الصوتية بعد دقيقتين من الصمت. انقر الميكروفون للبدء من جديد. محادثتك ما زالت هنا.", /* [VERIFY] */
+  "trans.idleClosed": "انتهت الجلسة الصوتية بعد دقيقتين من الصمت. انقر الميكروفون للبدء من جديد. ترجماتك ما زالت هنا.", /* [VERIFY] */
+  "a11y.skipToMain": "تخطَّ إلى المحتوى الرئيسي", /* [VERIFY] */
+  "a11y.primaryTabs": "أدوات Thoth", /* [VERIFY] */
+  "pitch.sendNotice": "تفاصيل المنتج التي تدخلها تُرسل إلى Google Gemini API لكتابة العرض.", /* [VERIFY] */
+  "guide.sendNotice": "سؤالك يُرسل إلى Google Gemini API لكتابة الإجابة.", /* [VERIFY] */
+  "lang.ar": "العربية", /* [VERIFY] */
+};
+
 export const LOCALE_TABLES: Partial<Record<LanguageCode, LocaleTable>> = {
-  hi: HI, mr: MR, gu: GU, bn: BN, ta: TA, te: TE, pa: PA,
+  hi: HI, mr: MR, gu: GU, bn: BN, ta: TA, te: TE, pa: PA, ar: AR,
 };

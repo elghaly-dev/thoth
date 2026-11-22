@@ -51,6 +51,20 @@ check(!tracked.some((f) => /\.(jks|keystore|p12)$|keystore\.properties$/.test(f)
 const mf = read('android/app/src/main/AndroidManifest.xml');
 check(!/uses-permission/.test(mf), 'android: wrapper asks for no permissions');
 check(/https:\/\/thoth\.elghaly\.dev\/use\//.test(gradle), 'android: opens /use/');
+// Deep-link filter: https only, the exact host, and only /use or /use/...
+// (no wildcard host, no pathPattern, no http, no other paths).
+const viewFilters = [...mf.matchAll(/<intent-filter[^>]*>([\s\S]*?)<\/intent-filter>/g)].map((m) => m[0]).filter((f) => /android\.intent\.action\.VIEW/.test(f));
+check(viewFilters.length === 1, 'android: exactly one VIEW (deep-link) intent filter');
+const vf = viewFilters[0] || '';
+const attr = (name) => [...vf.matchAll(new RegExp(`android:${name}="([^"]*)"`, 'g'))].map((m) => m[1]);
+const gradleHost = (gradle.match(/hostName\s*:\s*'([^']+)'/) || [])[1];
+check(/android:autoVerify="true"/.test(vf), 'android: deep-link filter is autoVerify');
+check(JSON.stringify(attr('scheme')) === '["https"]', `android: deep-link scheme is https only (got ${attr('scheme')})`);
+check(JSON.stringify(attr('host')) === '["thoth.elghaly.dev"]' && gradleHost === 'thoth.elghaly.dev' && twa.host === 'thoth.elghaly.dev', `android: deep-link host is exactly thoth.elghaly.dev and matches build.gradle + twa-manifest (got ${attr('host')})`);
+check(JSON.stringify(attr('path')) === '["/use"]' && JSON.stringify(attr('pathPrefix')) === '["/use/"]', `android: deep-link paths are /use and /use/ only (got path=${attr('path')} prefix=${attr('pathPrefix')})`);
+check(attr('pathPattern').length === 0 && attr('pathAdvancedPattern').length === 0 && attr('pathSuffix').length === 0 && attr('port').length === 0, 'android: no pathPattern/pathSuffix/port in the deep-link filter');
+check(!/REPLACE_|\$\{hostName\}|\*/.test(vf), 'android: deep-link filter has no placeholder or wildcard');
+check(['', '/', '/agent/', '/index.html'].every((p) => !(p === '/use' || p.startsWith('/use/'))) && ['/use', '/use/', '/use/index.html'].every((p) => p === '/use' || p.startsWith('/use/')), 'android: /use paths open the app, /, /agent/ stay in the browser');
 
 const al = JSON.parse(read('.well-known/assetlinks.json'));
 const fp = al[0].target.sha256_cert_fingerprints;

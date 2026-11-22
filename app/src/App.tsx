@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SupportedLanguage, SUPPORTED_LANGUAGES } from './types';
+import { SupportedLanguage } from './types';
 import { Header } from './components/Header';
 import { VoiceAssistantTab } from './components/VoiceAssistantTab';
 import { PitchStudioTab } from './components/PitchStudioTab';
@@ -13,6 +13,7 @@ import { checkWebGpu, type GpuCheck } from './ondevice/webgpu';
 import { dt } from './ondevice/strings';
 import { tx, langDisplayName } from './i18n';
 import { CREDIT_FOOTER } from './credit';
+import { initialLanguage, saveLanguage, dirFor } from './utils/lang-pref';
 import {
   Mic,
   Sparkles,
@@ -26,9 +27,8 @@ import {
 } from 'lucide-react';
 
 export default function App() {
-  const [currentLang, setCurrentLang] = useState<SupportedLanguage>(
-    SUPPORTED_LANGUAGES[0] // Hindi as default, easily switchable to English, Marathi, Gujarati, etc.
-  );
+  // Hindi is the default; ?lang= or the saved choice (localStorage, code only) wins.
+  const [currentLang, setCurrentLang] = useState<SupportedLanguage>(() => initialLanguage());
   const [activeTab, setActiveTab] = useState<'device' | 'assistant' | 'pitch' | 'translate' | 'guide'>('assistant');
   // The on-device Faithful Servant is the default where the phone has WebGPU;
   // the bring-your-own-key cloud tabs stay available either way.
@@ -74,9 +74,12 @@ export default function App() {
   const lang = currentLang.code;
 
   // Keep <html lang> in step with the UI language (zh -> zh-CN) so screen
-  // readers and CJK font selection use Simplified Chinese.
+  // readers and CJK font selection use Simplified Chinese. Arabic is RTL:
+  // <html dir> follows the language, and the choice is saved for next visit.
   useEffect(() => {
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+    document.documentElement.dir = dirFor(lang);
+    saveLanguage(lang);
   }, [lang]);
 
   return (

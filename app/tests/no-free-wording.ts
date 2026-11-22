@@ -12,7 +12,7 @@
  *
  * Patterns: English "free" as a whole word, case-insensitive (so "freight" and
  * "freedom" do not match), plus the "free" words of the other UI languages:
- * 免费, निःशुल्क, मुफ़्त/मुफ्त, मोफत, મફત, இலவச, বিনামূল্যে, ఉచిత, ਮੁਫ਼ਤ/ਮੁਫਤ.
+ * 免费, निःशुल्क, मुफ़्त/मुफ्त, मोफत, મફત, இலவச, বিনামূল্যে, ఉచిత, ਮੁਫ਼ਤ/ਮੁਫਤ, مجاني/مجانًا/بلا مقابل.
  *
  * Run: npm run test:nofree   (tsx tests/no-free-wording.ts)
  */
@@ -34,6 +34,7 @@ const PATTERNS: { name: string; re: RegExp }[] = [
   { name: 'বিনামূল্যে', re: /বিনামূল্যে/ },
   { name: 'ఉచిత', re: /ఉచిత/ },
   { name: 'ਮੁਫ਼ਤ', re: /ਮੁਫ਼ਤ|ਮੁਫਤ/ },
+  { name: 'مجاني', re: /مجان|بلا مقابل|ببلاش/ },
 ];
 
 const hits: string[] = [];
