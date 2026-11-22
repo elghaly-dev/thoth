@@ -73,3 +73,32 @@ if (fails.length) {
   process.exit(1);
 }
 console.log(`palettes: PASS ${checks}/${checks} (WCAG AA 4.5:1, ${PALETTES.length} palettes)`);
+
+// Hover states: under the palettes, shades 400/500 are deep accents, so a button with ink text
+// (text-white) must never hover to them. Scan every component's class strings.
+{
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const walk = (d: string): string[] => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]));
+  const offenders: string[] = [];
+  for (const f of walk(new URL('../src', import.meta.url).pathname).filter((x) => x.endsWith('.tsx'))) {
+    const src = fs.readFileSync(f, 'utf8');
+    // Each class string on its own: a static className="...", or each quoted branch inside a className={`...`}.
+    const segments: string[] = [];
+    for (const m of src.matchAll(/className="([^"]*)"/g)) segments.push(m[1]);
+    for (const m of src.matchAll(/className=\{`([^`]*)`\}/g)) {
+      const t = m[1];
+      segments.push(t.replace(/\$\{[^}]*\}/g, ' '));
+      for (const q of t.matchAll(/'([^']*)'/g)) segments.push(q[1]);
+    }
+    for (const c of segments) {
+      // Opaque hover to a deep shade (a translucent hover such as /20 stays light).
+      if (/(^|\s)text-white(\s|$)/.test(c) && /hover:bg-[a-z]+-(400|500)(?![\w/])/.test(c)) offenders.push(path.basename(f) + ': ' + c.trim().slice(0, 60));
+    }
+  }
+  if (offenders.length) {
+    console.log(`palettes: FAIL ink text hovering to a deep accent in ${offenders.join(', ')}`);
+    process.exit(1);
+  }
+  console.log('palettes: no ink-text button hovers to a deep accent');
+}

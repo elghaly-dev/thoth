@@ -145,7 +145,7 @@ export function OnDeviceTab({ lang, gpu }: Props) {
       {phase === 'need-download' && (
         <div className="space-y-3">
           <p className="text-sm text-slate-300">{dt(lang, 'needDownload', { size })}</p>
-          <button type="button" onClick={download} className={`${btn} bg-emerald-600 hover:bg-emerald-500 text-white`}>
+          <button type="button" onClick={download} className={`${btn} bg-emerald-600 hover:bg-emerald-700 text-white`}>
             <Download className="w-4 h-4" aria-hidden="true" />
             {dt(lang, 'downloadBtn', { size })}
           </button>
@@ -166,7 +166,7 @@ export function OnDeviceTab({ lang, gpu }: Props) {
       )}
 
       {phase === 'downloaded' && (
-        <button type="button" onClick={start} className={`${btn} bg-emerald-600 hover:bg-emerald-500 text-white`}>
+        <button type="button" onClick={start} className={`${btn} bg-emerald-600 hover:bg-emerald-700 text-white`}>
           <Cpu className="w-4 h-4" aria-hidden="true" />
           {dt(lang, 'start')}
         </button>
@@ -214,11 +214,11 @@ export function OnDeviceTab({ lang, gpu }: Props) {
                 ))}
               </select>
             </label>
-            <button type="button" disabled={busy || !text.trim()} onClick={() => run('translate')} className={`${btn} bg-cyan-600 hover:bg-cyan-500 text-white`}>
+            <button type="button" disabled={busy || !text.trim()} onClick={() => run('translate')} className={`${btn} bg-cyan-600 hover:bg-cyan-700 text-white`}>
               <Languages className="w-4 h-4" aria-hidden="true" />
               {dt(lang, 'translate')}
             </button>
-            <button type="button" disabled={busy || !text.trim()} onClick={() => run('explain')} className={`${btn} bg-indigo-600 hover:bg-indigo-500 text-white`}>
+            <button type="button" disabled={busy || !text.trim()} onClick={() => run('explain')} className={`${btn} bg-indigo-600 hover:bg-indigo-700 text-white`}>
               <Lightbulb className="w-4 h-4" aria-hidden="true" />
               {dt(lang, 'explain')}
             </button>

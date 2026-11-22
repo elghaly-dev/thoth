@@ -113,6 +113,10 @@ try {
     ['/api/pitch', { product: 42 }],
     ['/api/pitch', { product: 'x'.repeat(501) }],
     ['/api/translate', { text: 'hi', speakerRole: 'Admin' }],
+    ['/api/deal-facts', {}],
+    ['/api/deal-facts', { transcript: 42 }],
+    ['/api/deal-facts', { transcript: 'x'.repeat(4001) }],
+    ['/api/deal-facts', { transcript: 'brass lamps', extra: 1 }],
   ];
   for (const [p, b] of bad) {
     const r = await post(P1, p, b);

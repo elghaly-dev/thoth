@@ -694,7 +694,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               type="submit"
               disabled={!inputText.trim() || isThinking}
               aria-label={tx(lang, 'a11y.sendMessage')}
-              className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-medium transition-all shadow-md shadow-emerald-950 cursor-pointer"
+              className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 text-white font-medium transition-all shadow-md shadow-emerald-950 cursor-pointer"
             >
               <Send className="w-4 h-4 rtl:-scale-x-100" aria-hidden="true" />
             </button>

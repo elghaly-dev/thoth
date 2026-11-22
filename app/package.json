@@ -31,6 +31,7 @@
     "test:licences": "node scripts/gen-licences.mjs --check",
     "test:a11y": "tsx tests/a11y-labels.ts",
     "test:byok": "node ../tools/check-byok-storage.mjs",
+    "test:deal": "tsx tests/deal-minute.ts",
     "test:palettes": "tsx tests/palettes.ts",
     "test:welcome": "tsx tests/welcome.ts",
     "test:readaloud": "tsx tests/read-aloud.ts"

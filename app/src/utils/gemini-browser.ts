@@ -4,6 +4,7 @@
 // This module is not used when the Node proxy is available.
 
 import { ApiError, isAuthErrorStatus } from './api';
+import { EXTRACT_INSTRUCTION } from '../deal/deal';
 
 const MODELS = ['gemini-3.8-flash', 'gemini-3.1-flash-lite'] as const;
 const TIMEOUT_MS = 20_000;
@@ -356,4 +357,20 @@ STRICT MANDATORY RULES:
     answer:
       answer || 'Always check with a licensed customs broker for final decisions.',
   };
+}
+
+/** Deal in a Minute: extract facts only (the client then keeps what is in the transcript). */
+export async function browserDealFacts(
+  apiKey: string,
+  transcript: string,
+  signal?: AbortSignal,
+): Promise<{ raw: string }> {
+  const raw = await generateWithFallbackBrowser({
+    apiKey,
+    contents: [{ role: 'user', parts: [{ text: transcript }] }],
+    systemInstruction: EXTRACT_INSTRUCTION,
+    responseMimeType: 'application/json',
+    signal,
+  });
+  return { raw };
 }
