@@ -1,7 +1,8 @@
 import React from 'react';
 import { SupportedLanguage, SUPPORTED_LANGUAGES } from '../types';
 import { Volume2, VolumeX, ShieldCheck, Sparkles, Globe, Heart } from 'lucide-react';
-import { tx } from '../i18n';
+import { tx, langDisplayName } from '../i18n';
+import { CREDIT_TOP, CREDIT_URL } from '../credit';
 
 interface HeaderProps {
   currentLang: SupportedLanguage;
@@ -22,13 +23,13 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40">
-      {/* Top micro-bar: 100% Free Guarantee & Trust */}
+      {/* Top micro-bar: who it is for, by whom, and trust */}
       <div className="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-amber-950/60 border-b border-slate-800/80 px-4 py-1.5 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-semibold text-emerald-400">{tx(lang, 'header.freeForever')}</span>
+          <span className="font-semibold text-emerald-400">{tx(lang, 'header.openToAll')}</span>
           <span className="text-slate-500">•</span>
-          <span>{tx(lang, 'header.byElghaly')}</span>
+          <span>{tx(lang, 'header.credit')}</span>
           <span className="text-slate-500">•</span>
           <span className="text-slate-400 hidden sm:inline">{tx(lang, 'header.reachBuyers')}</span>
         </div>
@@ -71,6 +72,9 @@ export const Header: React.FC<HeaderProps> = ({
             <p className="text-xs text-slate-400">
               {tx(lang, 'header.bridge')}
             </p>
+            <p className="text-xs">
+              <a href={CREDIT_URL} lang="en" className="text-amber-300 hover:text-amber-200 hover:underline">{CREDIT_TOP}</a>
+            </p>
           </div>
         </div>
 
@@ -88,9 +92,9 @@ export const Header: React.FC<HeaderProps> = ({
               }}
               className="bg-transparent text-white font-medium focus:outline-none cursor-pointer pr-1"
             >
-              {SUPPORTED_LANGUAGES.map((lang) => (
-                <option key={lang.code} value={lang.code} className="bg-slate-900 text-white">
-                  {lang.nativeName} ({lang.name})
+              {SUPPORTED_LANGUAGES.map((l) => (
+                <option key={l.code} value={l.code} className="bg-slate-900 text-white">
+                  {l.code === lang ? l.nativeName : `${l.nativeName} (${langDisplayName(lang, l.name)})`}
                 </option>
               ))}
             </select>
@@ -98,7 +102,9 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Sound toggle */}
           <button
+            type="button"
             onClick={onToggleMute}
+            aria-pressed={isMuted}
             title={isMuted ? tx(lang, 'header.mutedTitle') : tx(lang, 'header.voiceOnTitle')}
             className={`p-2 rounded-xl border text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
               isMuted
@@ -116,7 +122,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs text-slate-300 hover:border-slate-600 transition-colors cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>{tx(lang, 'header.freeTool')}</span>
+            <span>{tx(lang, 'header.openTool')}</span>
           </button>
         </div>
       </div>

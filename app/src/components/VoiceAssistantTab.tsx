@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SupportedLanguage, ChatMessage } from '../types';
 import { VoiceOrb } from './VoiceOrb';
 import { ConsentGate } from './ConsentGate'; // i18n consent.* copy names Gemini
-import { tx } from '../i18n';
+import { tx, langDisplayName, modelLangHint, GREETINGS } from '../i18n';
+import { errorText } from '../utils/errors';
 import {
   Send,
   Volume2,
@@ -17,8 +18,10 @@ import {
   ArrowRight,
   ShieldAlert,
 } from 'lucide-react';
-import { playTextToSpeech, stopAudio, createSpeechRecognizer, isSpeechRecognitionSupported } from '../utils/audio';
-import { postJson, ApiError, isAuthErrorStatus } from '../utils/api';
+import { playTextToSpeech, stopAudio, createSpeechRecognizer, isSpeechRecognitionSupported, isMicBlockedError } from '../utils/audio';
+import { postModel, ApiError, isAuthErrorStatus } from '../utils/api';
+import { useRequestGuard } from '../utils/useRequestGuard';
+import { createIdleVoiceController } from '../hooks/useIdleVoiceSession';
 
 interface VoiceAssistantTabProps {
   currentLang: SupportedLanguage;
@@ -47,6 +50,21 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
   // In-app error (replaces alert()): shown when speech recognition is
   // unavailable, instead of a browser popup.
   const [speechError, setSpeechError] = useState<string | null>(null);
+  const [idleClosed, setIdleClosed] = useState(false);
+  const idleRef = useRef(createIdleVoiceController(() => {
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch { /* already ended */ }
+    }
+    stopAudio();
+    setIsListening(false);
+    setIsSpeaking(false);
+    setIdleClosed(true);
+  }));
+
+  useEffect(() => {
+    const idle = idleRef.current;
+    return () => idle.disarm();
+  }, []);
 
   // Extracted step detection from conversation
   const [details, setDetails] = useState({
@@ -58,21 +76,26 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
+  const { begin, mountedRef } = useRequestGuard();
+
+  // Unmount: stop the microphone and any speech, so nothing keeps
+  // listening or talking after the tab is closed.
+  useEffect(() => {
+    return () => {
+      try {
+        recognitionRef.current?.abort?.();
+      } catch {
+        // ignore
+      }
+      recognitionRef.current = null;
+      stopAudio();
+    };
+  }, []);
 
   // Initial greeting
   useEffect(() => {
     if (messages.length === 0 || (messages.length === 1 && messages[0].id === 'msg-init')) {
-      const greetings: Record<string, string> = {
-        hi: 'नमस्ते! मैं थोथ (Thoth) हूँ, निर्यातकों के लिए elghaly का निःशुल्क Faithful Servant। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
-        mr: 'नमस्कार! मी थोथ (Thoth) आहे, निर्यातदारांसाठी elghaly चा मोफत Faithful Servant. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
-        gu: 'નમસ્તે! હું થોથ (Thoth) છું, નિકાસકારો માટે elghaly નો મફત Faithful Servant. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
-        ta: 'வணக்கம்! நான் தோத் (Thoth), ஏற்றுமதியாளர்களுக்கான elghaly இன் இலவச Faithful Servant. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
-        bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য elghaly-এর বিনামূল্যে Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
-        te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం elghaly ఉచిత Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
-        pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ elghaly ਦਾ ਮੁਫ਼ਤ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
-        zh: '您好！我是 Thoth，由 elghaly 为出口商打造的免费 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
-        en: 'Namaste! I am Thoth, a free Faithful Servant by elghaly for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
-      };
+      const greetings = GREETINGS;
 
       const initialText =
         greetings[currentLang.code] || greetings['en'];
@@ -84,16 +107,9 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         timestamp: new Date(),
       };
       setMessages([initialMessage]);
-
-      if (!isMuted) {
-        playTextToSpeech(
-          initialText,
-          currentLang,
-          () => setIsSpeaking(true),
-          () => setIsSpeaking(false),
-          (err) => setSpeechError(err.message)
-        );
-      }
+      // The greeting is shown, not spoken: browsers block audio before a
+      // user gesture, and nothing is sent to /api/tts until the user taps
+      // the speaker button on a message.
     }
   }, [currentLang.code]);
 
@@ -111,8 +127,10 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         recognitionRef.current.stop();
       }
       setIsListening(false);
+      idleRef.current.ping();
       return;
     }
+    setIdleClosed(false);
 
     if (!hasConsented) { // i18n consent copy names Gemini
       return;
@@ -138,6 +156,8 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         },
         (err: any) => {
           console.warn('Speech recognition error:', err);
+          // A blocked mic must not fail silently: say so and offer typing.
+          if (isMicBlockedError(err)) setSpeechError(tx(lang, 'common.micBlocked'));
           setIsListening(false);
         },
         () => {
@@ -147,11 +167,12 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
 
       if (recognition) {
         recognitionRef.current = recognition;
+        idleRef.current.arm();
         recognition.start();
         setIsListening(true);
       }
     } catch (err) {
-      console.error('Failed to start speech recognition', err);
+      console.warn('Failed to start speech recognition', err);
       setIsListening(false);
     }
   };
@@ -165,6 +186,8 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
     const text = (textToSend || inputText).trim();
     if (!text || isThinking) return;
 
+    setIdleClosed(false);
+    idleRef.current.ping();
     setInputText('');
     stopAudio();
     setIsSpeaking(false);
@@ -183,11 +206,18 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
     // Heuristically check if exporter supplied steps:
     detectSteps(text);
 
+    const req = begin();
     try {
-      const data = await postJson<{ reply?: string }>('/api/chat', {
-        messages: newMessages.map((m) => ({ role: m.role, content: m.content })),
-        userLanguage: currentLang.name,
-      });
+      // The server accepts at most 30 messages of 4000 characters each.
+      const data = await postModel<{ reply?: string }>(
+        '/api/chat',
+        {
+          messages: newMessages.slice(-30).map((m) => ({ role: m.role, content: m.content.slice(0, 4000) })),
+          userLanguage: modelLangHint(currentLang),
+        },
+        req.signal
+      );
+      if (!req.isCurrent()) return;
 
       // A missing reply is a failed model call, not a reason to show a
       // canned line that sounds like a real Faithful Servant reply.
@@ -212,16 +242,17 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
           currentLang,
           () => setIsSpeaking(true),
           () => setIsSpeaking(false),
-          (err) => setSpeechError(err.message)
+          (err) => setSpeechError(errorText(lang, err, 'voice.connectionError'))
         );
       }
     } catch (err: unknown) {
-      console.error('Error sending message:', err);
+      if (!req.isCurrent()) return;
+      console.warn('Error sending message:', err);
       // A 401/403 is a provider-auth failure: show the server's clear
       // error as-is. It is not retried and no fake reply is shown.
       const content =
         err instanceof ApiError && isAuthErrorStatus(err.status)
-          ? err.message
+          ? errorText(lang, err, 'voice.connectionError')
           : tx(lang, 'voice.connectionError');
       const errorMsg: ChatMessage = {
         id: `assistant-${Date.now()}`,
@@ -231,7 +262,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
       };
       setMessages((prev) => [...prev, errorMsg]);
     } finally {
-      setIsThinking(false);
+      if (mountedRef.current) setIsThinking(false);
     }
   };
 
@@ -266,7 +297,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         currentLang,
         () => setIsSpeaking(true),
         () => setIsSpeaking(false),
-        (err) => setSpeechError(err.message)
+        (err) => setSpeechError(errorText(lang, err, 'voice.connectionError'))
       );
     }
   };
@@ -278,6 +309,8 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
   };
 
   const handleResetChat = () => {
+    idleRef.current.disarm();
+    setIdleClosed(false);
     stopAudio();
     setIsSpeaking(false);
     setIsListening(false);
@@ -300,6 +333,12 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         {/* Consent gate: mic stays disabled until both parties agree. i18n consent copy names Gemini. */}
         <ConsentGate lang={lang} accepted={hasConsented} onAccept={() => setHasConsented(true)} />{/* i18n consent copy names Gemini */}
 
+        {idleClosed && (
+          <div role="status" className="bg-amber-950/40 border border-amber-800/50 rounded-2xl p-3.5 text-xs text-amber-100">
+            {tx(lang, 'voice.idleClosed')}
+          </div>
+        )}
+
         {/* In-app speech error (replaces alert()) */}
         {speechError && (
           <div className="bg-rose-950/40 border border-rose-800/50 rounded-2xl p-3.5 text-xs text-rose-200 flex items-start justify-between gap-3">
@@ -307,7 +346,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
             <button
               onClick={() => setSpeechError(null)}
               className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
-              aria-label="Dismiss"
+              aria-label={tx(lang, 'common.dismiss')}
             >
               ✕
             </button>
@@ -326,7 +365,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
             {tx(lang, 'voice.title')}
           </h2>
           <p className="text-xs text-slate-400 mb-2">
-            {tx(lang, 'voice.speakNaturally', { native: currentLang.nativeName, name: currentLang.name })}
+            {tx(lang, 'voice.speakNaturally', { native: currentLang.nativeName, name: langDisplayName(lang, currentLang.name) })}
           </p>
 
           {/* Interactive Voice Orb */}
@@ -347,7 +386,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               {tx(lang, 'voice.mic')} {isSpeechRecognitionSupported() ? tx(lang, 'voice.supported') : tx(lang, 'voice.typeMode')}
             </span>
             <span className="text-slate-600">•</span>
-            <span>{tx(lang, 'voice.free')}</span>
+            <span>{tx(lang, 'voice.badge')}</span>
           </div>
         </div>
 
@@ -520,7 +559,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
             <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-              {tx(lang, 'voice.dialogueStream', { lang: currentLang.name })}
+              {tx(lang, 'voice.dialogueStream', { lang: langDisplayName(lang, currentLang.name) })}
             </h3>
           </div>
           <button
@@ -554,7 +593,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
                 className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}
               >
                 <div className="text-[10px] text-slate-500 mb-1 px-1">
-                  {isUser ? tx(lang, 'voice.youExporter') : tx(lang, 'voice.thothFree')}
+                  {isUser ? tx(lang, 'voice.youExporter') : tx(lang, 'voice.thothServant')}
                 </div>
                 <div
                   className={`max-w-[85%] rounded-2xl p-3.5 text-xs sm:text-sm leading-relaxed shadow-md ${
@@ -607,7 +646,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
 
           {isThinking && (
             <div className="flex flex-col items-start">
-              <div className="text-[10px] text-slate-500 mb-1 px-1">Thoth</div>
+              <div className="text-[10px] text-slate-500 mb-1 px-1">{tx(lang, 'voice.thothServant')}</div>
               <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl rounded-tl-none p-3.5 text-xs text-amber-300 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
                 <span>{tx(lang, 'voice.thinking')}</span>
@@ -643,7 +682,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               type="text"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              placeholder={tx(lang, 'voice.typePlaceholder', { lang: currentLang.name })}
+              placeholder={tx(lang, 'voice.typePlaceholder', { lang: langDisplayName(lang, currentLang.name) })}
               className="flex-1 bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
             />
 
@@ -656,7 +695,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
             </button>
           </form>
           <div className="mt-1.5 flex items-center justify-between text-[10px] text-slate-500 px-1">
-            <span>{tx(lang, 'voice.freeFooter')}</span>
+            <span>{tx(lang, 'voice.badgeFooter')}</span>
             <span>{tx(lang, 'voice.oneStep')}</span>
           </div>
         </div>

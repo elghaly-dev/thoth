@@ -1,7 +1,11 @@
 import { SupportedLanguage } from '../types';
 import { postJson, ApiError, isAuthErrorStatus } from './api';
+import { getRuntime } from './runtime';
 
 let currentAudio: HTMLAudioElement | null = null;
+// The in-flight /api/tts request; stopAudio() aborts it so a reply that
+// arrives after Stop, a tab change or an unmount is never played.
+let ttsController: AbortController | null = null;
 
 /**
  * Play audio from base64 WAV or fallback to browser Web Speech API.
@@ -18,14 +22,32 @@ export async function playTextToSpeech(
   // Stop existing audio
   stopAudio();
 
+  const ctrl = new AbortController();
+  ttsController = ctrl;
+
   onStart?.();
 
+  // Static / GitHub Pages mode has no TTS proxy. Use the browser voice
+  // so a missing /api/tts is not treated as a provider failure, and so
+  // a user-supplied key is never sent to a path that does not exist.
+  const rt = getRuntime();
+  const canUseServerTts = rt.mode === 'server' && rt.serverHasKey;
+
   try {
+    if (!canUseServerTts) {
+      throw new Error('server-tts-unavailable');
+    }
     // 1. Try Gemini TTS backend first
-    const data = await postJson<{ audioData?: string }>('/api/tts', {
-      text: text.slice(0, 450), // keep within single utterance
-      voiceName: lang.code === 'en' ? 'Puck' : 'Kore',
-    });
+    const data = await postJson<{ audioData?: string }>(
+      '/api/tts',
+      {
+        text: text.slice(0, 450), // keep within single utterance
+        voiceName: lang.code === 'en' ? 'Puck' : 'Kore',
+      },
+      ctrl.signal
+    );
+    if (ctrl.signal.aborted) return;
+    ttsController = null;
 
     if (data.audioData) {
       const audio = new Audio(`data:audio/wav;base64,${data.audioData}`);
@@ -41,6 +63,9 @@ export async function playTextToSpeech(
       return;
     }
   } catch (err) {
+    // Stopped (Stop, tab change, unmount): play nothing, not even the fallback.
+    if (ctrl.signal.aborted) return;
+    ttsController = null;
     // Auth failure: surface it visibly instead of silently falling back
     // to local speech and pretending the provider answered.
     if (err instanceof ApiError && isAuthErrorStatus(err.status)) {
@@ -48,7 +73,9 @@ export async function playTextToSpeech(
       onEnd?.();
       return;
     }
-    console.warn('Backend TTS failed, using browser synthesis', err);
+    if (!(err instanceof Error && err.message === 'server-tts-unavailable')) {
+      console.warn('Backend TTS failed, using browser synthesis', err);
+    }
   }
 
   // 2. Fallback to Browser SpeechSynthesis
@@ -74,9 +101,12 @@ function fallbackSpeechSynthesis(
 
   // Try to find a matching voice if available
   const voices = window.speechSynthesis.getVoices();
-  const matchedVoice = voices.find(
-    (v) => v.lang.startsWith(lang.code) || v.lang === lang.speechCode
-  );
+  // Prefer an exact locale match (e.g. zh-CN over zh-TW / zh-HK), then
+  // fall back to any voice for the base language.
+  const wanted = (lang.speechCode || '').toLowerCase().replace('_', '-');
+  const matchedVoice =
+    voices.find((v) => v.lang.toLowerCase().replace('_', '-') === wanted) ||
+    voices.find((v) => v.lang.toLowerCase().startsWith(lang.code));
   if (matchedVoice) {
     utterance.voice = matchedVoice;
   }
@@ -85,6 +115,10 @@ function fallbackSpeechSynthesis(
 }
 
 export function stopAudio() {
+  if (ttsController) {
+    ttsController.abort();
+    ttsController = null;
+  }
   if (currentAudio) {
     try {
       currentAudio.pause();
@@ -97,6 +131,15 @@ export function stopAudio() {
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
     window.speechSynthesis.cancel();
   }
+}
+
+/**
+ * True when the browser or the user blocked the microphone (Web Speech
+ * `error` codes 'not-allowed' / 'service-not-allowed'). The caller shows
+ * T('common.micBlocked') instead of failing silently.
+ */
+export function isMicBlockedError(err: unknown): boolean {
+  return err === 'not-allowed' || err === 'service-not-allowed';
 }
 
 /**

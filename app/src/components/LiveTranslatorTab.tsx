@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { SupportedLanguage, TranslationRecord, ConfirmationReadback } from '../types';
 import {
   Mic,
@@ -24,10 +24,14 @@ import {
   stopAudio,
   createSpeechRecognizer,
   isSpeechRecognitionSupported,
+  isMicBlockedError,
 } from '../utils/audio';
 import { ConsentGate } from './ConsentGate';
-import { postJson } from '../utils/api';
-import { tx } from '../i18n';
+import { postModel } from '../utils/api';
+import { useRequestGuard } from '../utils/useRequestGuard';
+import { tx, langDisplayName, modelLangHint } from '../i18n';
+import { errorText } from '../utils/errors';
+import { createIdleVoiceController } from '../hooks/useIdleVoiceSession';
 
 interface LiveTranslatorTabProps {
   currentLang: SupportedLanguage;
@@ -53,7 +57,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       originalText:
         'Could you confirm if the cartons will be palletized with ISPM-15 heat-treated pallets for customs clearance?',
       translatedText:
-        'क्या आप पुष्टि कर सकते हैं कि कार्टन अमेरिकी सीमा शुल्क के लिए ISPM-15 हीट-ट्रीटेड पैलेट पर रखे जाएंगे?',
+        'क्या आप पुष्टि कर सकते हैं कि कार्टन सीमा शुल्क के लिए ISPM-15 हीट-ट्रीटेड पैलेट पर रखे जाएंगे?',
       sourceLang: 'English',
       targetLang: 'Hindi',
       keyTerms: ['ISPM-15 heat-treated pallets', 'customs clearance'],
@@ -74,19 +78,47 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
   // translation failures (401/403 shows the server's clear stop message).
   const [speechError, setSpeechError] = useState<string | null>(null);
   const [translateError, setTranslateError] = useState<string | null>(null);
+  const [idleClosed, setIdleClosed] = useState(false);
 
   const recognitionRef = useRef<any>(null);
+  const { begin, mountedRef } = useRequestGuard();
+  const idleRef = useRef(createIdleVoiceController(() => {
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch { /* already ended */ }
+    }
+    stopAudio();
+    setIsListening(false);
+    setIsPlayingId(null);
+    setIdleClosed(true);
+  }));
+
+  // Unmount: stop the idle timer, the microphone and any speech for this tab.
+  useEffect(() => {
+    const idle = idleRef.current;
+    return () => {
+      idle.disarm();
+      try {
+        recognitionRef.current?.abort?.();
+      } catch {
+        // ignore
+      }
+      recognitionRef.current = null;
+      stopAudio();
+    };
+  }, []);
 
   const handleToggleListen = () => {
     if (isListening) {
       if (recognitionRef.current) recognitionRef.current.stop();
       setIsListening(false);
+      idleRef.current.ping();
       return;
     }
 
     if (!hasConsented) {
       return;
     }
+    setIdleClosed(false);
 
     if (!isSpeechRecognitionSupported()) {
       setSpeechError(tx(lang, 'common.speechNotSupported'));
@@ -110,6 +142,8 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         },
         (err: any) => {
           console.warn('Speech recognition error:', err);
+          // A blocked mic must not fail silently: say so and offer typing.
+          if (isMicBlockedError(err)) setSpeechError(tx(lang, 'common.micBlocked'));
           setIsListening(false);
         },
         () => {
@@ -119,11 +153,12 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
 
       if (recognition) {
         recognitionRef.current = recognition;
+        idleRef.current.arm();
         recognition.start();
         setIsListening(true);
       }
     } catch (err) {
-      console.error('Failed to start recognition:', err);
+      console.warn('Failed to start recognition:', err);
       setIsListening(false);
     }
   };
@@ -132,6 +167,8 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
     const text = (textToTranslate || inputText).trim();
     if (!text || isTranslating) return;
 
+    setIdleClosed(false);
+    idleRef.current.ping();
     setInputText('');
     stopAudio();
     setIsPlayingId(null);
@@ -141,17 +178,23 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
     const sourceLang = activeSpeaker === 'exporter' ? currentLang.name : 'English';
     const targetLang = activeSpeaker === 'exporter' ? 'English' : currentLang.name;
 
+    const req = begin();
     try {
-      const data = await postJson<{
+      const data = await postModel<{
         translatedText?: string;
         keyTerms?: string[];
         confirmationReadback?: ConfirmationReadback;
-      }>('/api/translate', {
-        text,
-        sourceLang,
-        targetLang,
-        speakerRole: activeSpeaker === 'exporter' ? 'Exporter' : 'Buyer',
-      });
+      }>(
+        '/api/translate',
+        {
+          text: text.slice(0, 4000),
+          sourceLang: activeSpeaker === 'exporter' ? modelLangHint(currentLang) : sourceLang,
+          targetLang: activeSpeaker === 'exporter' ? targetLang : modelLangHint(currentLang),
+          speakerRole: activeSpeaker === 'exporter' ? 'Exporter' : 'Buyer',
+        },
+        req.signal
+      );
+      if (!req.isCurrent()) return;
 
       const newRecord: TranslationRecord = {
         id: `tx-${Date.now()}`,
@@ -178,13 +221,14 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         targetLangConfig,
         () => setIsPlayingId(newRecord.id),
         () => setIsPlayingId(null),
-        (err) => setTranslateError(err.message)
+        (err) => setTranslateError(errorText(lang, err, 'err.translate'))
       );
     } catch (err: unknown) {
-      console.error('Translation error:', err);
-      setTranslateError(err instanceof Error ? err.message : 'Could not translate. Please try again.');
+      if (!req.isCurrent()) return;
+      console.warn('Translation error:', err);
+      setTranslateError(errorText(lang, err, 'err.translate'));
     } finally {
-      setIsTranslating(false);
+      if (mountedRef.current) setIsTranslating(false);
     }
   };
 
@@ -202,7 +246,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         langConfig,
         () => setIsPlayingId(record.id),
         () => setIsPlayingId(null),
-        (err) => setTranslateError(err.message)
+        (err) => setTranslateError(errorText(lang, err, 'err.translate'))
       );
     }
   };
@@ -259,6 +303,12 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       {/* Consent gate: mic stays disabled until both parties agree */}
       <ConsentGate lang={lang} accepted={hasConsented} onAccept={() => setHasConsented(true)} />
 
+      {idleClosed && (
+        <div role="status" className="bg-amber-950/40 border border-amber-800/50 rounded-2xl p-3.5 text-xs text-amber-100">
+          {tx(lang, 'trans.idleClosed')}
+        </div>
+      )}
+
       {/* In-app errors (replace alert(); translation failures show here) */}
       {speechError && (
         <div className="bg-rose-950/40 border border-rose-800/50 rounded-2xl p-4 text-xs text-rose-200 flex items-start justify-between gap-3">
@@ -266,7 +316,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
           <button
             onClick={() => setSpeechError(null)}
             className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
-            aria-label="Dismiss"
+            aria-label={tx(lang, 'common.dismiss')}
           >
             ✕
           </button>
@@ -278,7 +328,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
           <button
             onClick={() => setTranslateError(null)}
             className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
-            aria-label="Dismiss"
+            aria-label={tx(lang, 'common.dismiss')}
           >
             ✕
           </button>
@@ -326,7 +376,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
             >
               <span className="w-2 h-2 rounded-full bg-current animate-ping" />
               {activeSpeaker === 'exporter'
-                ? tx(lang, 'trans.exporterSpeaking', { lang: currentLang.name })
+                ? tx(lang, 'trans.exporterSpeaking', { lang: langDisplayName(lang, currentLang.name) })
                 : tx(lang, 'trans.buyerSpeaking')}
             </span>
           </div>
@@ -389,7 +439,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
               }}
               placeholder={
                 activeSpeaker === 'exporter'
-                  ? tx(lang, 'trans.phExporter', { native: currentLang.nativeName, name: currentLang.name })
+                  ? tx(lang, 'trans.phExporter', { native: currentLang.nativeName, name: langDisplayName(lang, currentLang.name) })
                   : tx(lang, 'trans.phBuyer')
               }
               className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 pr-12"
@@ -497,7 +547,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                     {isExporter ? tx(lang, 'trans.exporterLabel') : tx(lang, 'trans.buyerLabel')}
                   </span>
                   <span className="text-[11px] text-slate-400">
-                    {record.sourceLang} ➔ {record.targetLang}
+                    {langDisplayName(lang, record.sourceLang)} ➔ {langDisplayName(lang, record.targetLang)}
                   </span>
                 </div>
                 <span className="text-[10px] text-slate-500">
@@ -511,7 +561,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                 <div className="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800/80 flex flex-col justify-between">
                   <div>
                     <div className="text-[10px] text-slate-500 uppercase font-semibold mb-1">
-                      {tx(lang, 'trans.originalSpoken', { lang: record.sourceLang })}
+                      {tx(lang, 'trans.originalSpoken', { lang: langDisplayName(lang, record.sourceLang) })}
                     </div>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
                       {record.originalText}
@@ -551,7 +601,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                     <div className="text-[10px] uppercase font-semibold mb-1 text-slate-400">
                       {tx(lang, 'trans.translatedFor', {
                         who: isExporter ? tx(lang, 'trans.usBuyerShort') : tx(lang, 'trans.exporterShort'),
-                        lang: record.targetLang,
+                        lang: langDisplayName(lang, record.targetLang),
                       })}
                     </div>
                     <p className="text-xs sm:text-sm text-white font-medium leading-relaxed font-sans">

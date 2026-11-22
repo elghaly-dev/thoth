@@ -1,11 +1,47 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig} from 'vite';
+import {defineConfig, type Plugin} from 'vite';
+
+const PAGES_CSP = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "connect-src 'self' https://generativelanguage.googleapis.com",
+  "style-src 'self' https://fonts.googleapis.com",
+  "font-src https://fonts.gstatic.com",
+  "img-src 'self' data:",
+  "manifest-src 'self'",
+  "media-src 'self' data: blob:",
+  "object-src 'none'",
+  "base-uri 'none'",
+  "form-action 'self'",
+].join('; ');
+
+/** Build-only: inject a CSP meta tag and strip the /app/ fallback redirect. */
+function pagesHardening(): Plugin {
+  return {
+    name: 'pages-hardening',
+    apply: 'build',
+    transformIndexHtml(html) {
+      const withoutRedirect = html.replace(
+        /<script\b[^>]*\bdata-app-redirect\b[^>]*>[\s\S]*?<\/script>\s*/gi,
+        '',
+      );
+      if (withoutRedirect.includes('http-equiv="Content-Security-Policy"')) {
+        return withoutRedirect;
+      }
+      return withoutRedirect.replace(
+        /<head([^>]*)>/i,
+        `<head$1>\n    <meta http-equiv="Content-Security-Policy" content="${PAGES_CSP}" />`,
+      );
+    },
+  };
+}
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss()],
+    base: process.env.THOTH_BASE || '/',
+    plugins: [react(), tailwindcss(), pagesHardening()],
     resolve: {
       alias: {
         '@': path.resolve(import.meta.dirname, '.'),

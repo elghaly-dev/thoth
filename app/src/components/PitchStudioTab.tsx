@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SupportedLanguage, PitchResult } from '../types';
 import {
   Sparkles,
@@ -21,8 +21,10 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { playTextToSpeech, stopAudio } from '../utils/audio';
-import { postJson } from '../utils/api';
-import { tx } from '../i18n';
+import { postModel } from '../utils/api';
+import { useRequestGuard } from '../utils/useRequestGuard';
+import { tx, langDisplayName, modelLangHint } from '../i18n';
+import { errorText } from '../utils/errors';
 
 interface PitchStudioTabProps {
   currentLang: SupportedLanguage;
@@ -43,7 +45,7 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
   const [quantity, setQuantity] = useState(initialData?.quantity || '');
   const [price, setPrice] = useState(initialData?.price || '');
   const [shippingOrigin, setShippingOrigin] = useState(
-    initialData?.shippingOrigin || 'Origin port'
+    initialData?.shippingOrigin || ''
   );
   const [isGenerating, setIsGenerating] = useState(false);
   const [pitchResult, setPitchResult] = useState<PitchResult | null>(null);
@@ -56,7 +58,13 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
 
   // Presets are examples only: labels say so, and product values carry no
   // certification or composition claims — verify before sending.
-  const presets = [
+  // Hindi examples for the Hindi UI; English examples for every other language.
+  const presets = lang === 'hi' ? [
+    { label: tx(lang, 'pitch.presetBrass'), product: 'हाथ से बने ठोस पीतल के सजावटी कटोरे और गमले', quantity: '300 पीस MOQ (क्षमता: 4,000 पीस/माह, जाँचें)', price: '$6.50 / पीस FOB मूल बंदरगाह', origin: 'मूल बंदरगाह' },
+    { label: tx(lang, 'pitch.presetTurmeric'), product: 'हल्दी पाउडर (उदाहरण — दावा करने से पहले ग्रेड और लैब रिपोर्ट जाँचें)', quantity: '1,000 किलो MOQ (मानक 25 किलो निर्यात बोरियाँ)', price: '$3.80 / किलो FOB मूल बंदरगाह', origin: 'मूल बंदरगाह' },
+    { label: tx(lang, 'pitch.presetCotton'), product: 'हाथ से बुनी सूती दरियाँ (उदाहरण — सामग्री जाँचें, 3x5 फ़ुट और 5x8 फ़ुट)', quantity: '150 दरियाँ MOQ', price: '$18.00 / दरी FOB मूल बंदरगाह', origin: 'मूल बंदरगाह' },
+    { label: tx(lang, 'pitch.presetLeather'), product: 'चमड़े के बटुए और पासपोर्ट होल्डर (उदाहरण — चमड़े का ग्रेड जाँचें)', quantity: '250 पीस MOQ', price: '$5.20 / पीस FOB मूल बंदरगाह', origin: 'मूल बंदरगाह' },
+  ] : [
     {
       label: tx(lang, 'pitch.presetBrass'),
       product: 'Handmade Solid Brass Decorative Bowls & Planters',
@@ -87,6 +95,11 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
     },
   ];
 
+  const { begin, mountedRef } = useRequestGuard();
+
+  // Unmount: abort the request and stop any speech for this tab.
+  useEffect(() => () => stopAudio(), []);
+
   const handleGeneratePitch = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!product.trim() || isGenerating) return;
@@ -96,20 +109,27 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
     stopAudio();
     setIsPlayingAudio(false);
 
+    const req = begin();
     try {
-      const data = await postJson<PitchResult>('/api/pitch', {
-        product,
-        quantity: quantity || 'Flexible MOQ upon discussion',
-        price: price || 'Competitive FOB pricing upon spec review',
-        shippingOrigin: shippingOrigin || 'Origin port',
-        exporterLanguage: currentLang.name,
-      });
+      const data = await postModel<PitchResult>(
+        '/api/pitch',
+        {
+          product: product.slice(0, 500),
+          quantity: (quantity || 'MOQ to be discussed').slice(0, 500),
+          price: (price || 'Price on request').slice(0, 500),
+          shippingOrigin: (shippingOrigin || 'Origin port').slice(0, 500),
+          exporterLanguage: modelLangHint(currentLang),
+        },
+        req.signal
+      );
+      if (!req.isCurrent()) return;
       setPitchResult(data);
     } catch (err: unknown) {
-      console.error('Error generating pitch:', err);
-      setPitchError(err instanceof Error ? err.message : 'Could not generate the pitch. Please try again.');
+      if (!req.isCurrent()) return;
+      console.warn('Error generating pitch:', err);
+      setPitchError(errorText(lang, err, 'err.pitch'));
     } finally {
-      setIsGenerating(false);
+      if (mountedRef.current) setIsGenerating(false);
     }
   };
 
@@ -135,47 +155,48 @@ export const PitchStudioTab: React.FC<PitchStudioTabProps> = ({
         usLang,
         () => setIsPlayingAudio(true),
         () => setIsPlayingAudio(false),
-        (err) => setPitchError(err.message)
+        (err) => setPitchError(errorText(lang, err, 'err.pitch'))
       );
     }
   };
 
   const handleDownloadTxt = () => {
     if (!pitchResult) return;
+    const L = (k: Parameters<typeof tx>[1]) => tx(lang, k);
     const content = `================================================
-THOTH - BUYER PITCH SPEC SHEET (Free by elghaly)
-Product: ${pitchResult.specCard?.productName || product}
-MOQ: ${pitchResult.specCard?.moq || quantity}
-Price: ${pitchResult.specCard?.indicativePricing || price}
-Origin Port: ${pitchResult.specCard?.originPort || shippingOrigin}
+${L('dl.title')}
+${L('dl.product')}: ${pitchResult.specCard?.productName || product}
+${L('dl.moq')}: ${pitchResult.specCard?.moq || quantity}
+${L('dl.price')}: ${pitchResult.specCard?.indicativePricing || price}
+${L('dl.originPort')}: ${pitchResult.specCard?.originPort || shippingOrigin}
 ================================================
 
-[BUYER COLD EMAIL]
-Subject: ${pitchResult.usEmailSubject}
+[${L('dl.coldEmail')}]
+${L('dl.subject')}: ${pitchResult.usEmailSubject}
 
 ${pitchResult.usBuyerEmail}
 
 ------------------------------------------------
-[SHORT DIRECT MESSAGE (LinkedIn / WhatsApp)]
+[${L('dl.shortMsg')}]
 ${pitchResult.usBuyerShort}
 
 ------------------------------------------------
-[CLAIMS TO VERIFY BEFORE CONTACTING BUYER]
+[${L('dl.claims')}]
 ${(pitchResult.claimsToVerify || []).map((c, i) => `${i + 1}. [ ] ${c}`).join('\n')}
 
 ------------------------------------------------
-[SCAM WARNING: FAKE-BUYER & ADVANCE-PAYMENT FRAUD]
-- Never pay upfront "inspection fees", "registration fees", or "tender processing charges" to unverified third parties. Legitimate buyers pay inspection agencies directly.
-- Verify buyer company registration on official business registries.
-- Insist on verified Irrevocable Letters of Credit (L/C) or secure escrow through commercial banks.
+[${L('dl.scamTitle')}]
+- ${L('dl.scam1')}
+- ${L('dl.scam2')}
+- ${L('dl.scam3')}
 
 ------------------------------------------------
-[EXPORTER GUIDANCE IN ${currentLang.name.toUpperCase()}]
+[${tx(lang, 'dl.guidanceIn', { lang: lang === 'en' ? currentLang.name.toUpperCase() : langDisplayName(lang, currentLang.name) })}]
 ${pitchResult.exporterSummary}
 
 ------------------------------------------------
-[CUSTOMS COMPLIANCE NOTE]
-${pitchResult.customsNote || 'Check with a licensed customs broker for final decisions.'}
+[${L('dl.customsNote')}]
+${pitchResult.customsNote || L('dl.customsFallback')}
 `;
 
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
@@ -196,7 +217,7 @@ ${pitchResult.customsNote || 'Check with a licensed customs broker for final dec
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
               {tx(lang, 'pitch.badge')}
             </span>
-            <span className="text-xs text-slate-400">{tx(lang, 'pitch.freeBy')}</span>
+            <span className="text-xs text-slate-400">{tx(lang, 'pitch.servant')}</span>
           </div>
           <h2 className="text-lg font-bold text-white">
             {tx(lang, 'pitch.title')}
@@ -251,6 +272,7 @@ ${pitchResult.customsNote || 'Check with a licensed customs broker for final dec
               </div>
             </div>
 
+            <p className="text-xs text-slate-400 leading-relaxed">{tx(lang, 'pitch.sendNotice')}</p>
             <form onSubmit={handleGeneratePitch} className="space-y-3.5">
               {/* Product */}
               <div>
@@ -345,7 +367,7 @@ ${pitchResult.customsNote || 'Check with a licensed customs broker for final dec
               <button
                 onClick={() => setPitchError(null)}
                 className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
-                aria-label="Dismiss"
+                aria-label={tx(lang, 'common.dismiss')}
               >
                 ✕
               </button>
@@ -584,7 +606,7 @@ ${pitchResult.customsNote || 'Check with a licensed customs broker for final dec
                 <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4">
                   <div className="text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    {tx(lang, 'pitch.adviceIn', { native: currentLang.nativeName, name: currentLang.name })}
+                    {tx(lang, 'pitch.adviceIn', { native: currentLang.nativeName, name: langDisplayName(lang, currentLang.name) })}
                   </div>
                   <p className="text-xs text-slate-400 leading-relaxed">
                     {pitchResult.exporterSummary}
