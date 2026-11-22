@@ -39,7 +39,7 @@ jobs:
           test -n "$M"
           echo "merged manifest: $M"
           grep -oE 'android:(minSdkVersion|targetSdkVersion|compileSdkVersion)="[0-9]+"' "$M"
-          grep -q 'android:targetSdkVersion="35"' "$M" || { echo "::error::targetSdkVersion is not 35"; exit 1; }
+          grep -q 'android:targetSdkVersion="36"' "$M" || { echo "::error::targetSdkVersion is not 36"; exit 1; }
       - name: Check it is unsigned; size and sha256
         run: |
           set -euo pipefail

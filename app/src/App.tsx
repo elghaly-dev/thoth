@@ -258,6 +258,10 @@ export default function App() {
             <button type="button" onClick={() => setLicencesOpen(true)} className="underline underline-offset-2 hover:text-slate-200 cursor-pointer">
               {dt(lang, 'licences')}
             </button>
+            <span className="text-slate-600" aria-hidden="true">|</span>
+            <a href={lang === 'ar' ? '/ar/privacy/' : '/privacy/'} className="underline underline-offset-2 hover:text-slate-200">
+              {tx(lang, 'app.privacyPage')}
+            </a>
           </div>
         </div>
         <p lang="en" className="mt-4 text-center text-[11px] tracking-widest text-slate-400">{CREDIT_FOOTER}</p>
