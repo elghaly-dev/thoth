@@ -82,6 +82,21 @@ check(localizeHtmlShell(shell, 'fr-FR').includes('<html lang="en" dir="ltr">'), 
 check(localizeHtmlShell(shell, undefined).includes('<html lang="en" dir="ltr">'), 'server shell: no header -> English');
 check(localizeHtmlShell(shell, '"><script>x</script>').includes('<html lang="en" dir="ltr">') && !localizeHtmlShell(shell, '"><script>').includes('<script>'), 'server shell: header text is never echoed');
 
+// Review fixes: zh variants, q=0, shell precedence, cookie.
+for (const t of ['zh-Hant', 'zh-TW', 'zh-HK', 'zh-Hant-TW']) check(detectLanguage([t])?.code === 'zh', `${t} maps to zh (single Chinese locale)`);
+check(detectLanguage('ar;q=0, en;q=0.5')?.code === 'en', 'q=0 language skipped');
+check(detectLanguage('ar;q=0') === undefined, 'only q=0 -> none');
+const SH = '<html lang="en"><head></head></html>';
+check(localizeHtmlShell(SH, 'ar', { queryLang: 'hi', cookieLang: 'ar' }).includes('lang="hi"'), 'shell: ?lang beats cookie');
+check(localizeHtmlShell(SH, 'en', { cookieLang: 'ar' }).includes('lang="ar" dir="rtl"'), 'shell: cookie beats Accept-Language');
+check(localizeHtmlShell(SH, 'ar', { cookieLang: 'zz' }).includes('lang="ar" dir="rtl"'), 'shell: bad cookie ignored');
+check(localizeHtmlShell(SH, undefined, {}).includes('lang="en" dir="ltr"'), 'shell: default English');
+let cookieSet = '';
+(globalThis as any).document = { set cookie(v: string) { cookieSet = v; } };
+saveLanguage('ar', mem());
+check(/^lang=ar; Path=\/; Max-Age=\d+; SameSite=Lax/.test(cookieSet), 'manual pick writes the lang cookie (Path=/, SameSite=Lax)');
+delete (globalThis as any).document;
+
 if (fails.length) {
   console.log(`lang-pref: FAIL ${fails.length}/${checks}`);
   for (const f of fails) console.log('  FAIL | ' + f);

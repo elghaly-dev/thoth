@@ -145,19 +145,28 @@ try {
     check(h.get('x-content-type-options') === 'nosniff', `${label}: X-Content-Type-Options nosniff`);
     check(h.get('referrer-policy') === 'strict-origin-when-cross-origin', `${label}: Referrer-Policy`);
     check(h.get('x-frame-options') === 'DENY', `${label}: X-Frame-Options DENY`);
-    const csp = h.get('content-security-policy') || '';
+    check(!h.get('content-security-policy'), `${label}: no new enforced CSP header (Report-Only first)`);
+    const csp = h.get('content-security-policy-report-only') || '';
     check(csp.includes("frame-ancestors 'none'") && csp.includes("script-src 'self'") && csp.includes("object-src 'none'"), `${label}: CSP with frame-ancestors 'none' (got ${csp.slice(0, 80)})`);
-    check(/max-age=\d+/.test(h.get('strict-transport-security') || ''), `${label}: HSTS`);
+    check((h.get('strict-transport-security') || '') === 'max-age=604800', `${label}: HSTS 1 week, no includeSubDomains`);
     check(!h.get('x-powered-by'), `${label}: no X-Powered-By`);
   }
   const errR = await fetch(base(P1) + '/api/pitch', { method: 'POST', headers: { 'content-type': 'application/json', origin: base(P1) }, body: '{"product":"brass"}' });
-  check(errR.headers.get('x-content-type-options') === 'nosniff' && (errR.headers.get('content-security-policy') || '').includes("frame-ancestors 'none'"), 'api error: security headers present');
+  check(errR.headers.get('x-content-type-options') === 'nosniff' && (errR.headers.get('content-security-policy-report-only') || '').includes("frame-ancestors 'none'"), 'api error: security headers present');
 
   // Device language: <html lang/dir> from Accept-Language on the SPA shell.
   const arPage = await fetch(base(P1) + '/', { headers: { 'accept-language': 'ar-EG,ar;q=0.9,en;q=0.8' } });
   const arText = await arPage.text();
   check(arPage.status === 200 && arText.includes('<html lang="ar" dir="rtl">'), 'Accept-Language ar -> <html lang="ar" dir="rtl">');
   check((arPage.headers.get('vary') || '').toLowerCase().includes('accept-language'), 'shell varies on Accept-Language');
+  check((arPage.headers.get('cache-control') || '') === 'no-cache', 'shell: Cache-Control no-cache');
+  check((arPage.headers.get('vary') || '').toLowerCase().includes('cookie'), 'shell varies on Cookie');
+  const get = async (u: string, h: Record<string, string>) => (await (await fetch(base(P1) + u, { headers: h })).text());
+  check((await get('/', { cookie: 'lang=hi', 'accept-language': 'ar' })).includes('<html lang="hi" dir="ltr">'), 'lang cookie beats Accept-Language');
+  check((await get('/?lang=ar', { cookie: 'lang=hi', 'accept-language': 'en' })).includes('<html lang="ar" dir="rtl">'), '?lang= beats cookie');
+  check((await get('/', { cookie: 'lang=xx', 'accept-language': 'ar' })).includes('<html lang="ar" dir="rtl">'), 'unknown cookie ignored');
+  check((await get('/', { 'accept-language': 'zh-TW,en;q=0.5' })).includes('<html lang="zh-CN" dir="ltr">'), 'zh-TW -> zh');
+  check((await get('/', { 'accept-language': 'ar;q=0, en' })).includes('<html lang="en" dir="ltr">'), 'q=0 excluded');
   const frText = await (await fetch(base(P1) + '/', { headers: { 'accept-language': 'fr-FR' } })).text();
   check(frText.includes('<html lang="en" dir="ltr">'), 'unsupported Accept-Language -> English');
 } finally {

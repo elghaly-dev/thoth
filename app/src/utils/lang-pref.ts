@@ -36,7 +36,10 @@ function navigatorLanguages(): readonly string[] {
 /**
  * First supported language in the device's preference list. Tags are
  * matched on their primary subtag ("ar-EG" -> ar, "en-GB" -> en,
- * "zh-Hans-CN" -> zh). Accepts navigator.languages or an Accept-Language
+ * "zh-Hans-CN" -> zh). Chinese has one locale here (Simplified), so
+ * Traditional tags (zh-Hant, zh-TW, zh-HK, zh-MO) map to it on purpose,
+ * as the closest available language, rather than falling through to
+ * English. Accepts navigator.languages or an Accept-Language
  * header value ("ar-EG,ar;q=0.9,en;q=0.8", q-ordered).
  */
 export function detectLanguage(prefs: readonly string[] | string | null | undefined): SupportedLanguage | undefined {
@@ -84,9 +87,28 @@ export function initialLanguage(
   return find(q) || find(saved) || detectLanguage(devicePrefs) || find(FALLBACK_LANGUAGE) || SUPPORTED_LANGUAGES[0];
 }
 
+/**
+ * Cookie that carries the manual pick to the server, which cannot read
+ * localStorage; it lets the HTML shell have the right lang/dir on first paint.
+ * Holds only the language code.
+ */
+export const LANG_COOKIE = 'lang';
+
+function writeLangCookie(code: string): void {
+  try {
+    if (typeof document === 'undefined') return;
+    const secure = typeof location !== 'undefined' && location.protocol === 'https:' ? '; Secure' : '';
+    document.cookie = `${LANG_COOKIE}=${code}; Path=/; Max-Age=31536000; SameSite=Lax${secure}`;
+  } catch {
+    /* cookies blocked: the server falls back to Accept-Language */
+  }
+}
+
 /** Call only for a manual pick in the language switcher. */
 export function saveLanguage(code: LanguageCode, store: StorageLike | null = storage()): void {
-  if (!find(code) || !store) return;
+  if (!find(code)) return;
+  writeLangCookie(code);
+  if (!store) return;
   try {
     store.setItem(LANG_STORAGE_KEY, code);
   } catch {
@@ -99,12 +121,24 @@ export function dirFor(code: LanguageCode): 'rtl' | 'ltr' {
 }
 
 /**
- * Server side: set <html lang> and dir on the SPA shell from the
- * Accept-Language header, so the first paint already has the right
- * direction. The client then applies ?lang= / the saved pick on mount.
+ * Server side: set <html lang> and dir on the SPA shell so the first paint
+ * already has the right direction. Order: ?lang=, then the cookie written by
+ * a manual pick, then Accept-Language, then English. The client applies the
+ * same order on mount.
  */
-export function localizeHtmlShell(html: string, acceptLanguage: string | undefined): string {
-  const code = (detectLanguage(acceptLanguage) || find(FALLBACK_LANGUAGE) || SUPPORTED_LANGUAGES[0]).code;
+export function localizeHtmlShell(
+  html: string,
+  acceptLanguage: string | undefined,
+  pick: { queryLang?: unknown; cookieLang?: unknown } = {}
+): string {
+  const str = (v: unknown) => (typeof v === 'string' ? v : null);
+  const code = (
+    find(str(pick.queryLang)) ||
+    find(str(pick.cookieLang)) ||
+    detectLanguage(acceptLanguage) ||
+    find(FALLBACK_LANGUAGE) ||
+    SUPPORTED_LANGUAGES[0]
+  ).code;
   const lang = code === 'zh' ? 'zh-CN' : code;
   return html.replace(/<html\b[^>]*>/i, `<html lang="${lang}" dir="${dirFor(code)}">`);
 }
