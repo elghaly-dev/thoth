@@ -4,7 +4,7 @@ import { LOCALE_TABLES } from './i18n-locales';
 /**
  * UI strings for Thoth. English is the complete source of truth;
  * Chinese (Mandarin) has a full table. Hindi, Marathi, Gujarati, Bengali,
- * Tamil, Telugu and Punjabi have full tables in i18n-locales.ts
+ * Tamil, Telugu, Punjabi and Arabic (RTL) have full tables in i18n-locales.ts
  * ([VERIFY - native review pending]); a missing key falls back to English. Never invent a translation: if a key is
  * missing in ZH, `tx` falls back to the English string.
  */
@@ -362,6 +362,7 @@ const EN_EXTRA = {
   'lang.hi': 'Hindi',
   'lang.en': 'English',
   'lang.zh': 'Chinese (Mandarin)',
+  'lang.ar': 'Arabic',
   'lang.gu': 'Gujarati',
   'lang.mr': 'Marathi',
   'lang.ta': 'Tamil',
@@ -754,6 +755,7 @@ const ZH: Record<StringKey, string> = {
   'lang.hi': '印地语',
   'lang.en': '英语',
   'lang.zh': '中文（普通话）',
+  'lang.ar': '阿拉伯语', /* [VERIFY] */
   'lang.gu': '古吉拉特语',
   'lang.mr': '马拉地语',
   'lang.ta': '泰米尔语',
@@ -838,6 +840,7 @@ const LANG_NAME_KEYS: Record<string, StringKey> = {
   Hindi: 'lang.hi',
   English: 'lang.en',
   'Chinese (Mandarin)': 'lang.zh',
+  Arabic: 'lang.ar',
   Gujarati: 'lang.gu',
   Marathi: 'lang.mr',
   Tamil: 'lang.ta',
@@ -876,6 +879,7 @@ export const GREETINGS: Record<LanguageCode, string> = {
   bn: 'নমস্কার! আমি থথ (Thoth), রপ্তানিকারকদের জন্য Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
   te: 'నమస్కారం! నేను థోత్ (Thoth), ఎగుమతిదారుల కోసం Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
   pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਥੋਥ (Thoth) ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
+  ar: 'مرحبًا! أنا Thoth، الخادم الأمين للمصدّرين. سأساعدك على الوصول إلى المشترين وعرض منتجاتك عليهم. الخطوة الأولى: ما المنتج الذي تصنعه أو تبيعه؟', /* [VERIFY] */
   zh: '您好！我是 Thoth，为出口商打造的 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
   en: 'Namaste! I am Thoth, a Faithful Servant for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
 };

@@ -4,6 +4,16 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI, type Content, type ContentListUnion, type GenerateContentConfig } from '@google/genai';
+import {
+  SESSION_COOKIE,
+  SESSION_COOKIE_OPTIONS,
+  checkOrigin,
+  issueSessionToken,
+  readCookie,
+  redact,
+  secretsEqual,
+  verifySessionToken,
+} from './server-security';
 
 dotenv.config();
 
@@ -67,13 +77,14 @@ const ai: GoogleGenAI | null = HAS_API_KEY
 // ---- Proxy protection: rate limit + auth gate ----
 // The model routes are a proxy for a paid key. Three layers:
 // 1. Per-IP rate limit on /api/* (60 requests per minute).
-// 2. Same-origin check on /api/*: a request carrying an Origin header
-//    from another site is refused, so other sites cannot use this
-//    server as an open relay.
+// 2. Origin check on /api/*: a foreign Origin is refused, and so is a
+//    state-changing request (POST) with no Origin at all, so other sites
+//    and scripts cannot use this server as an open relay.
 // 3. Optional shared secret (THOTH_PROXY_SECRET, env only, name in
 //    .env.example): when set, /api/* requests must present it as the
 //    `x-thoth-proxy-secret` header, an `Authorization: Bearer` token,
-//    or the HttpOnly cookie the server sets on page loads. The secret
+//    or a signed session cookie issued by POST /api/session only after
+//    the secret itself was presented (see server-security.ts). The secret
 //    never appears in client source or the bundle. When unset, the
 //    gate is off and the server logs a warning; the rate limit and
 //    same-origin check still apply.
@@ -84,6 +95,13 @@ if (!HAS_PROXY_SECRET) {
   console.warn(
     'THOTH_PROXY_SECRET is not set. The proxy auth gate is off; /api/* relies on the per-IP rate limit and same-origin check. Set THOTH_PROXY_SECRET in the server environment to require it.'
   );
+}
+
+// Every server log line goes through redact(): the Gemini key, the proxy
+// secret, Bearer/session tokens and key=/token= fields never reach logs.
+function logRedacted(level: 'warn' | 'error', label: string, err?: unknown): void {
+  const line = err === undefined ? label : `${label} ${redact(err, [GEMINI_API_KEY, THOTH_PROXY_SECRET])}`;
+  console[level](redact(line, [GEMINI_API_KEY, THOTH_PROXY_SECRET]));
 }
 
 const PROXY_RATE_LIMIT_PER_MINUTE = 20;
@@ -98,60 +116,66 @@ const proxyRateLimiter = rateLimit({
   },
 });
 
-function readCookie(req: Request, name: string): string | null {
-  const header = req.headers.cookie || '';
-  for (const part of header.split(';')) {
-    const [key, ...rest] = part.trim().split('=');
-    if (key === name) return decodeURIComponent(rest.join('='));
-  }
-  return null;
-}
-
 /** True when the request may proceed; false after answering an error. */
 function proxyGate(req: Request, res: Response): boolean {
-  const origin = req.headers.origin;
-  if (typeof origin === 'string' && origin.length > 0) {
-    try {
-      const originUrl = new URL(origin);
-      const host = req.headers.host || '';
-      if (originUrl.host !== host) {
-        res.status(403).json({ error: 'Cross-origin requests are not allowed.' });
-        return false;
-      }
-    } catch {
-      res.status(403).json({ error: 'Cross-origin requests are not allowed.' });
-      return false;
-    }
+  // Origin: a missing Origin on a state-changing request, or any foreign
+  // Origin, is refused before auth or a model call.
+  const verdict = checkOrigin(req.method, req.headers.origin, req.headers.host);
+  if (verdict !== 'ok') {
+    res.status(403).json({ error: 'Cross-origin requests are not allowed.' });
+    return false;
   }
 
   if (HAS_PROXY_SECRET) {
-    const headerSecret = req.headers['x-thoth-proxy-secret'];
-    const authHeader = req.headers.authorization;
-    const bearer =
-      typeof authHeader === 'string' && authHeader.startsWith('Bearer ')
-        ? authHeader.slice('Bearer '.length)
-        : null;
-    const cookieSecret = readCookie(req, 'thoth-proxy');
-    const presented = typeof headerSecret === 'string' ? headerSecret : bearer ?? cookieSecret;
-    if (presented !== THOTH_PROXY_SECRET) {
-      res.status(401).json({ error: 'Proxy authentication required.' });
-      return false;
-    }
+    if (presentedSecretMatches(req)) return true;
+    if (verifySessionToken(THOTH_PROXY_SECRET, readCookie(req.headers.cookie, SESSION_COOKIE))) return true;
+    res.status(401).json({ error: 'Proxy authentication required.' });
+    return false;
   }
   return true;
 }
 
-// Issue the proxy cookie on page loads (non-API GETs) so the served UI
-// can call /api/* when the secret gate is on. HttpOnly + SameSite=Strict:
-// the browser sends it automatically, client code never sees the value.
-app.use((req, res, next) => {
-  if (HAS_PROXY_SECRET && req.method === 'GET' && !req.path.startsWith('/api/')) {
-    res.cookie('thoth-proxy', THOTH_PROXY_SECRET, { httpOnly: true, sameSite: 'strict', path: '/' });
+/** The proxy secret sent as `x-thoth-proxy-secret` or `Authorization: Bearer`. */
+function presentedSecretMatches(req: Request): boolean {
+  const headerSecret = req.headers['x-thoth-proxy-secret'];
+  const authHeader = req.headers.authorization;
+  const bearer =
+    typeof authHeader === 'string' && authHeader.startsWith('Bearer ') ? authHeader.slice('Bearer '.length) : null;
+  const presented = typeof headerSecret === 'string' ? headerSecret : bearer;
+  return typeof presented === 'string' && secretsEqual(presented, THOTH_PROXY_SECRET);
+}
+
+// No cookie on page loads. The session cookie is issued only by
+// POST /api/session, after the proxy secret itself was presented (header
+// or Bearer) from this site's Origin. The cookie carries a signed,
+// expiring token, never the secret: Secure, HttpOnly, SameSite=Strict,
+// Path=/api. Rate-limited like every /api route.
+app.use('/api/', proxyRateLimiter);
+app.post('/api/session', (req: Request, res: Response) => {
+  if (checkOrigin(req.method, req.headers.origin, req.headers.host) !== 'ok') {
+    res.status(403).json({ error: 'Cross-origin requests are not allowed.' });
+    return;
   }
-  next();
+  if (!HAS_PROXY_SECRET) {
+    res.status(404).json({ error: 'Not found' });
+    return;
+  }
+  if (!presentedSecretMatches(req)) {
+    res.status(401).json({ error: 'Proxy authentication required.' });
+    return;
+  }
+  res.cookie(SESSION_COOKIE, issueSessionToken(THOTH_PROXY_SECRET), SESSION_COOKIE_OPTIONS);
+  res.status(204).send();
+});
+app.post('/api/session/end', (req: Request, res: Response) => {
+  if (checkOrigin(req.method, req.headers.origin, req.headers.host) !== 'ok') {
+    res.status(403).json({ error: 'Cross-origin requests are not allowed.' });
+    return;
+  }
+  res.clearCookie(SESSION_COOKIE, { ...SESSION_COOKIE_OPTIONS, maxAge: undefined });
+  res.status(204).send();
 });
 
-app.use('/api/', proxyRateLimiter);
 app.use('/api/', (req, res, next) => {
   if (proxyGate(req, res)) next();
 });
@@ -248,7 +272,7 @@ You are Thoth, a Faithful Servant for exporters.
 Your goal is to help any exporter, small or large, reach and talk to buyers.
 
 CRITICAL RULES & INTEGRITY CHARTER:
-1. Speak the user's language (Hindi, Chinese / Mandarin, Marathi, Gujarati, Tamil, Bengali, Telugu, Punjabi, English, etc.). Detect and respond warmly in their language.
+1. Speak the user's language (Hindi, Chinese / Mandarin, Marathi, Gujarati, Tamil, Bengali, Telugu, Punjabi, Arabic, English, etc.). Detect and respond warmly in their language.
 2. When creating messages for buyers, reply in clear, professional English.
 3. Keep answers short, friendly, and structured one step at a time.
 4. When helping an exporter pitch: ask what they sell, quantity (MOQ/capacity), price, and where they ship from (origin port).
@@ -314,7 +338,7 @@ async function generateWithFallback(params: {
       if (isAuthError(err)) {
         throw err;
       }
-      console.warn(`Model ${model} request error, trying fallback...`, err instanceof Error ? err.message : err);
+      logRedacted('warn', `Model ${model} request error, trying fallback...`, err);
       lastError = err;
     }
   }
@@ -377,11 +401,11 @@ Remember: Keep answers short, friendly, and address one step at a time!`;
         res.status(authStatus).json(providerAuthErrorBody(authStatus));
         return;
       }
-      console.warn('Model call failed; returning a labelled error:', modelErr);
+      logRedacted('warn', 'Model call failed; returning a labelled error:', modelErr);
       res.status(502).json({ error: GENERIC_FAILURE });
     }
   } catch (error: unknown) {
-    console.error('Chat error:', error);
+    logRedacted('error', 'Chat error:', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -468,7 +492,7 @@ Return a JSON response with:
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    console.error('Pitch error:', error);
+    logRedacted('error', 'Pitch error:', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -559,7 +583,7 @@ STRICT RULES:
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    console.error('Translation error:', error);
+    logRedacted('error', 'Translation error:', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -601,7 +625,7 @@ STRICT MANDATORY RULES:
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    console.error('Import guide error:', error);
+    logRedacted('error', 'Import guide error:', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -669,7 +693,7 @@ app.post('/api/tts', async (req: Request, res: Response) => {
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    console.warn('TTS error (will fallback to browser Web Speech):', error instanceof Error ? error.message : error);
+    logRedacted('warn', 'TTS error (will fallback to browser Web Speech):', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
