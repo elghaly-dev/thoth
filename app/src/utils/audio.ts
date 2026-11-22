@@ -1,133 +1,41 @@
 import { SupportedLanguage } from '../types';
-import { postJson, ApiError, isAuthErrorStatus } from './api';
-import { getRuntime } from './runtime';
-
-let currentAudio: HTMLAudioElement | null = null;
-// The in-flight /api/tts request; stopAudio() aborts it so a reply that
-// arrives after Stop, a tab change or an unmount is never played.
-let ttsController: AbortController | null = null;
+import { pickOfflineVoice } from '../ondevice/speak';
 
 /**
- * Play audio from base64 WAV or fallback to browser Web Speech API.
- * On a provider auth failure (401/403) the error is surfaced via onError
- * and NOT hidden behind the browser fallback — the model did not answer.
+ * Read text aloud with a voice installed on this phone (localService) only.
+ * No text is sent to a server: there is no server speech call, and a voice that
+ * is not marked localService (which may send the text to a server) is never
+ * used. With no offline voice for the language, nothing is spoken.
+ * onError is kept in the signature for callers; it is not called.
  */
 export async function playTextToSpeech(
   text: string,
   lang: SupportedLanguage,
   onStart?: () => void,
   onEnd?: () => void,
-  onError?: (err: Error) => void
+  _onError?: (err: Error) => void
 ): Promise<void> {
-  // Stop existing audio
   stopAudio();
-
-  const ctrl = new AbortController();
-  ttsController = ctrl;
-
-  onStart?.();
-
-  // Static / GitHub Pages mode has no TTS proxy. Use the browser voice
-  // so a missing /api/tts is not treated as a provider failure, and so
-  // a user-supplied key is never sent to a path that does not exist.
-  const rt = getRuntime();
-  const canUseServerTts = rt.mode === 'server' && rt.serverHasKey;
-
-  try {
-    if (!canUseServerTts) {
-      throw new Error('server-tts-unavailable');
-    }
-    // 1. Try Gemini TTS backend first
-    const data = await postJson<{ audioData?: string }>(
-      '/api/tts',
-      {
-        text: text.slice(0, 450), // keep within single utterance
-        voiceName: lang.code === 'en' ? 'Puck' : 'Kore',
-      },
-      ctrl.signal
-    );
-    if (ctrl.signal.aborted) return;
-    ttsController = null;
-
-    if (data.audioData) {
-      const audio = new Audio(`data:audio/wav;base64,${data.audioData}`);
-      currentAudio = audio;
-      audio.onended = () => {
-        currentAudio = null;
-        onEnd?.();
-      };
-      audio.onerror = () => {
-        fallbackSpeechSynthesis(text, lang, onEnd);
-      };
-      await audio.play();
-      return;
-    }
-  } catch (err) {
-    // Stopped (Stop, tab change, unmount): play nothing, not even the fallback.
-    if (ctrl.signal.aborted) return;
-    ttsController = null;
-    // Auth failure: surface it visibly instead of silently falling back
-    // to local speech and pretending the provider answered.
-    if (err instanceof ApiError && isAuthErrorStatus(err.status)) {
-      onError?.(err);
-      onEnd?.();
-      return;
-    }
-    if (!(err instanceof Error && err.message === 'server-tts-unavailable')) {
-      console.warn('Backend TTS failed, using browser synthesis', err);
-    }
-  }
-
-  // 2. Fallback to Browser SpeechSynthesis
-  fallbackSpeechSynthesis(text, lang, onEnd);
-}
-
-function fallbackSpeechSynthesis(
-  text: string,
-  lang: SupportedLanguage,
-  onEnd?: () => void
-) {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
     onEnd?.();
     return;
   }
-
-  window.speechSynthesis.cancel();
+  const voice = pickOfflineVoice(window.speechSynthesis.getVoices(), lang.speechCode || lang.code);
+  if (!voice) {
+    onEnd?.();
+    return;
+  }
+  onStart?.();
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = lang.speechCode || 'en-US';
+  utterance.voice = voice;
+  utterance.lang = voice.lang;
   utterance.rate = 0.95;
   utterance.onend = () => onEnd?.();
   utterance.onerror = () => onEnd?.();
-
-  // Try to find a matching voice if available
-  const voices = window.speechSynthesis.getVoices();
-  // Prefer an exact locale match (e.g. zh-CN over zh-TW / zh-HK), then
-  // fall back to any voice for the base language.
-  const wanted = (lang.speechCode || '').toLowerCase().replace('_', '-');
-  const matchedVoice =
-    voices.find((v) => v.lang.toLowerCase().replace('_', '-') === wanted) ||
-    voices.find((v) => v.lang.toLowerCase().startsWith(lang.code));
-  if (matchedVoice) {
-    utterance.voice = matchedVoice;
-  }
-
   window.speechSynthesis.speak(utterance);
 }
 
 export function stopAudio() {
-  if (ttsController) {
-    ttsController.abort();
-    ttsController = null;
-  }
-  if (currentAudio) {
-    try {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-    } catch {
-      // ignore
-    }
-    currentAudio = null;
-  }
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
     window.speechSynthesis.cancel();
   }

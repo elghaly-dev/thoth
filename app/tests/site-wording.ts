@@ -56,7 +56,7 @@ const metaTexts = (html: string) => {
 };
 const read = (rel: string) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
 
-const pages = ['index.html', '404.html', 'use/index.html', 'agent/index.html', 'app/index.html'];
+const pages = ['index.html', '404.html', 'use/index.html', 'agent/index.html', 'app/index.html', 'privacy/index.html', 'ar/privacy/index.html'];
 for (const rel of pages) {
   const html = read(rel);
   const text = noCredits(stripUrls(visible(html)));
@@ -84,7 +84,7 @@ for (const rel of pages) {
 // https://elghaly.dev) under the title, inside <main>/<header>, and
 // "Wyndham Heaven" at the bottom, after the main content.
 const TOP_LINK = new RegExp(`<a href="${TOP_URL.replace(/\./g, '\\.')}"[^>]*>${TOP}</a>`);
-for (const rel of ['index.html', '404.html', 'agent/index.html']) {
+for (const rel of ['index.html', '404.html', 'agent/index.html', 'privacy/index.html', 'ar/privacy/index.html']) {
   const html = read(rel);
   const body = html.slice(html.indexOf('<body'));
   const h1 = body.indexOf('<h1');

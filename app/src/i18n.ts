@@ -20,6 +20,7 @@ const EN = {
   'app.footerBroker': 'Always check with a licensed customs broker for final decisions.',
   'app.footerPrivacy': 'Privacy & Trust Policy',
   'app.footerNoPasswords': 'No passwords or bank details ever requested',
+  'app.privacyPage': 'Privacy policy',
 
   // ---- Header ----
   'header.openToAll': 'Open to every exporter',
@@ -438,6 +439,7 @@ const ZH: Record<StringKey, string> = {
   'app.footerBroker': '最终决定请务必咨询持牌报关行。',
   'app.footerPrivacy': '隐私与信任政策',
   'app.footerNoPasswords': '绝不索取密码或银行信息',
+  'app.privacyPage': '隐私政策', /* [VERIFY] */
 
   // ---- Header ----
   'header.openToAll': '面向每一位出口商',
