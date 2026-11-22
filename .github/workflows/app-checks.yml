@@ -21,6 +21,9 @@ jobs:
           cache: npm
           cache-dependency-path: app/package-lock.json
       - run: npm ci
+      - name: Dependency audit (production dependencies)
+        run: npm audit --omit=dev --audit-level=high
+      - run: npm run test:licences   # public/licences.txt matches the shipped packages
       - run: npm run lint
       - run: npm run build
       - run: npm run test:smoke
@@ -31,6 +34,7 @@ jobs:
       - run: npm run test:server
       - run: npm run test:auth
       - run: npm run test:mic
+      - run: npm run test:ondevice   # on-device model: manifest, sha256 download checks, CSP, prompts (mock model)
       - run: npm run test:a11y
       - run: npm run test:byok   # agent runtime never persists a visitor's key
       - run: npm test            # smoke, idle session, no-secrets, pages redirect
@@ -44,6 +48,8 @@ jobs:
       - run: npm run test:site   # no "free", no "elghaly" credit, no "AI" on any served page
       - name: Playwright core (no browser download; uses the runner's Chrome)
         run: npm install --no-save --no-package-lock playwright-core@1.49.1
+      - name: No request leaves the site (real browser on the built use/), no source maps, no telemetry
+        run: CHROME_PATH="$(command -v google-chrome)" npm run test:network
       - name: Arabic in a real browser (phone language, RTL, typing and paste, Arabic font)
         working-directory: .
         run: CHROME_PATH="$(command -v google-chrome)" NODE_PATH=app/node_modules node tools/check-arabic-browser.mjs
