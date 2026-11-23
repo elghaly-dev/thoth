@@ -10,8 +10,8 @@
  * - unknown /api paths answer a JSON 404, not the SPA page;
  * - the SPA fallback still serves index.html for app routes;
  * - generateWithFallback clears its timeout;
- * - security headers (CSP + frame-ancestors, nosniff, Referrer-Policy,
- *   X-Frame-Options, HSTS) on pages, API 404s and API errors;
+ * - security headers (CSP + frame-ancestors limited to the AI Studio preview, nosniff,
+ *   Referrer-Policy, HSTS; no X-Frame-Options) on pages, API 404s and API errors;
  * - <html lang/dir> on the SPA shell follows Accept-Language.
  * Session cookie, Origin and log redaction: tests/server-auth.ts.
  * Needs `npm run build` first (dist/). Run: npm run test:server
@@ -145,19 +145,21 @@ try {
   check(spa.status === 200 && spaText.includes('<div id="root">'), 'SPA fallback still serves index.html');
 
   // Security headers on a page, an API 404 and an API error.
+  const FA = 'frame-ancestors https://aistudio.google.com https://ai.studio';
   for (const [label, r] of [['page', spa], ['api 404', nf]] as const) {
     const h = r.headers;
     check(h.get('x-content-type-options') === 'nosniff', `${label}: X-Content-Type-Options nosniff`);
     check(h.get('referrer-policy') === 'strict-origin-when-cross-origin', `${label}: Referrer-Policy`);
-    check(h.get('x-frame-options') === 'DENY', `${label}: X-Frame-Options DENY`);
-    check(!h.get('content-security-policy'), `${label}: no new enforced CSP header (Report-Only first)`);
+    check(!h.get('x-frame-options'), `${label}: no X-Frame-Options (frame-ancestors decides)`);
+    check(h.get('content-security-policy') === FA, `${label}: the enforced CSP is frame-ancestors alone, AI Studio origins (got ${h.get('content-security-policy')})`);
     const csp = h.get('content-security-policy-report-only') || '';
-    check(csp.includes("frame-ancestors 'none'") && csp.includes("script-src 'self'") && csp.includes("object-src 'none'"), `${label}: CSP with frame-ancestors 'none' (got ${csp.slice(0, 80)})`);
+    check(csp.includes(FA) && csp.includes("script-src 'self'") && csp.includes("object-src 'none'"), `${label}: Report-Only CSP with the same frame-ancestors (got ${csp.slice(0, 80)})`);
+    check(!/frame-ancestors[^;]*\*/.test(csp + ';' + (h.get('content-security-policy') || '')), `${label}: no '*' in frame-ancestors`);
     check((h.get('strict-transport-security') || '') === 'max-age=604800', `${label}: HSTS 1 week, no includeSubDomains`);
     check(!h.get('x-powered-by'), `${label}: no X-Powered-By`);
   }
   const errR = await fetch(base(P1) + '/api/pitch', { method: 'POST', headers: { 'content-type': 'application/json', origin: base(P1) }, body: '{"product":"brass"}' });
-  check(errR.headers.get('x-content-type-options') === 'nosniff' && (errR.headers.get('content-security-policy-report-only') || '').includes("frame-ancestors 'none'"), 'api error: security headers present');
+  check(errR.headers.get('x-content-type-options') === 'nosniff' && errR.headers.get('content-security-policy') === FA && (errR.headers.get('content-security-policy-report-only') || '').includes(FA), 'api error: security headers present');
 
   // Device language: <html lang/dir> from Accept-Language on the SPA shell.
   const arPage = await fetch(base(P1) + '/', { headers: { 'accept-language': 'ar-EG,ar;q=0.9,en;q=0.8' } });

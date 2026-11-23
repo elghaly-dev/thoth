@@ -50,10 +50,15 @@ const TRUST_PROXY_HOPS = (() => {
 app.set('trust proxy', TRUST_PROXY_HOPS);
 app.disable('x-powered-by');
 
+// Who may frame the app: AI Studio's preview, on its two hosts, and nobody else (never '*').
+// It is sent as its own enforced CSP header on every response, dev and production, because
+// X-Frame-Options cannot allow a single origin. If the AI Studio preview console names another
+// AI Studio ancestor ("violates ... frame-ancestors"), add that exact origin here.
+const FRAME_ANCESTORS = 'frame-ancestors https://aistudio.google.com https://ai.studio';
+
 // Security headers on every response. The CSP matches the Pages
-// build (vite.config.ts PAGES_CSP) and adds frame-ancestors 'none', which only a header can
+// build (vite.config.ts PAGES_CSP) and adds frame-ancestors, which only a header can
 // set; it is sent in production only, because the Vite dev server injects inline scripts.
-// frame-ancestors 'none' also refuses the AI Studio preview frame: open the app in its own tab.
 // Report-Only first: violations are reported in the browser console, nothing is blocked,
 // until a real-browser pass shows no violations. The enforced policy already in main
 // (the Pages meta CSP in vite.config.ts) is unchanged. No wss: or worklet blob: source is
@@ -70,12 +75,12 @@ const SERVER_CSP = [
   "object-src 'none'",
   "base-uri 'none'",
   "form-action 'self'",
-  "frame-ancestors 'none'",
+  FRAME_ANCESTORS,
 ].join('; ');
 app.use((_req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Strict-Transport-Security', 'max-age=604800');
   res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Content-Security-Policy', FRAME_ANCESTORS);
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'microphone=(self), camera=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
