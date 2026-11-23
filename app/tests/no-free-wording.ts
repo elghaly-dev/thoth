@@ -102,7 +102,12 @@ for (const k of ['app.tabAssistant', 'voice.title', 'orb.thinking', 'voice.thoth
 for (const [code, text] of Object.entries(GREETINGS)) {
   if (/Thoth|Namaste/.test(text) && (code === 'en' || code === 'ar')) hits.push(`greeting:${code} [no Namaste/Thoth]: ${text}`);
 }
-if (!/^السلام عليكم/.test(GREETINGS.ar)) hits.push('greeting:ar should open with «السلام عليكم»');
+if (!/^نهارك سعيد/.test(GREETINGS.ar)) hits.push('greeting:ar should open with «نهارك سعيد»');
+if (!/^Good day/.test(GREETINGS.en)) hits.push('greeting:en should open with "Good day"');
+// Trade app, no religion: no religious greetings in any locale or app string.
+const RELIGIOUS = /السلام عليكم|ورحمة الله|بسم الله|Namaste|नमस्ते|नमस्कार|નમસ્તે|নমস্কার|నమస్కారం|வணக்கம்|ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ|Assalam|As-salam|Salaam|Peace be upon|Shalom/i;
+for (const [code, text] of Object.entries(GREETINGS)) if (RELIGIOUS.test(text)) hits.push(`greeting:${code} [religious greeting]: ${text}`);
+for (const lang of SUPPORTED_LANGUAGES) for (const k of keys) { const v = t(lang.code, k); if (RELIGIOUS.test(v)) hits.push(`${lang.code}:${k} [religious greeting]: ${v}`); }
 
 // 4. metadata.json.
 const meta = JSON.parse(readFileSync(join(root, 'metadata.json'), 'utf8')) as Record<string, unknown>;

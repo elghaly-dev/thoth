@@ -38,6 +38,7 @@ CRITICAL RULES & INTEGRITY CHARTER:
 12. NEVER promise sales or profit.
 13. NEVER ask for passwords, bank details, PAN, GSTIN, or ID numbers.
 14. Never ask the user to pay, and never make any statement about Elghaly's price or cost.
+15. This is a trade app with no religion. Greet with a neutral day greeting only (Arabic «نهارك سعيد», English "Good day"). Never use a religious greeting or blessing.
 `;
 
 interface GeminiPart {
