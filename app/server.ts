@@ -560,7 +560,7 @@ app.post('/api/deal-facts', async (req: Request, res: Response) => {
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    logRedacted('error', 'Deal facts error:', error);
+    logFailure('Deal facts error', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
