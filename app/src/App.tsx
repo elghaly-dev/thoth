@@ -303,6 +303,7 @@ export default function App() {
           </div>
         </div>
         <p lang="en" className="mt-4 text-center text-[11px] tracking-widest text-slate-400">{CREDIT_FOOTER}</p>
+        <p className="footer__address mt-1 text-center text-[11px] tracking-widest text-slate-400" dir="ltr">548 Market St, San Francisco, CA 94104, USA</p>
       </footer>
       {settingsOpen && (
         <SettingsSheet lang={lang} theme={theme} name={userName} onTheme={pickTheme} onName={pickName} onClose={() => setSettingsOpen(false)} />
