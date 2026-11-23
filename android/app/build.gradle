@@ -54,5 +54,5 @@ android {
 
 dependencies {
     // Trusted Web Activity launcher (Google's android-browser-helper).
-    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.5.0'
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.7.4'
 }
