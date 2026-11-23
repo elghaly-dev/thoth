@@ -70,15 +70,15 @@ export const Welcome: React.FC<WelcomeProps> = ({ currentLang, theme, onTheme, o
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={ts(lang, 'namePh')}
-                className="w-full rounded-2xl bg-slate-900 border border-slate-700 px-5 py-4 text-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full rounded-2xl bg-slate-900 border border-slate-700 px-5 py-4 text-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-violet-500"
               />
             </label>
             <div className="flex flex-wrap items-center gap-3">
-              <button type="button" onClick={() => setStep(1)} className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-5 py-3 text-slate-200 hover:border-amber-500 cursor-pointer">
+              <button type="button" onClick={() => setStep(1)} className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-5 py-3 text-slate-200 hover:border-violet-500 cursor-pointer">
                 <Back className="w-4 h-4" aria-hidden="true" />
                 {ts(lang, 'back')}
               </button>
-              <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-6 py-3 font-semibold text-slate-950 hover:bg-amber-400 cursor-pointer">
+              <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-violet-500 px-6 py-3 font-semibold text-slate-950 hover:bg-violet-400 cursor-pointer">
                 {ts(lang, 'next')}
                 <Next className="w-4 h-4" aria-hidden="true" />
               </button>
@@ -102,21 +102,21 @@ export const Welcome: React.FC<WelcomeProps> = ({ currentLang, theme, onTheme, o
                     aria-pressed={on}
                     onClick={() => onLanguage(l)}
                     className={`flex items-center justify-between gap-2 rounded-2xl border px-4 py-4 text-lg cursor-pointer transition-colors ${
-                      on ? 'border-amber-500 bg-amber-950 text-white' : 'border-slate-700 bg-slate-900 text-slate-200 hover:border-amber-500'
+                      on ? 'border-violet-500 bg-violet-950 text-white' : 'border-slate-700 bg-slate-900 text-slate-200 hover:border-violet-500'
                     }`}
                   >
                     <span>{l.nativeName}</span>
-                    {on && <Check className="w-4 h-4 text-amber-300" aria-hidden="true" />}
+                    {on && <Check className="w-4 h-4 text-violet-300" aria-hidden="true" />}
                   </button>
                 );
               })}
             </div>
             <div className="flex flex-wrap items-center gap-3">
-              <button type="button" onClick={() => setStep(2)} className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-5 py-3 text-slate-200 hover:border-amber-500 cursor-pointer">
+              <button type="button" onClick={() => setStep(2)} className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-5 py-3 text-slate-200 hover:border-violet-500 cursor-pointer">
                 <Back className="w-4 h-4" aria-hidden="true" />
                 {ts(lang, 'back')}
               </button>
-              <button type="button" onClick={onDone} className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-6 py-3 font-semibold text-slate-950 hover:bg-amber-400 cursor-pointer">
+              <button type="button" onClick={onDone} className="inline-flex items-center gap-2 rounded-full bg-violet-500 px-6 py-3 font-semibold text-slate-950 hover:bg-violet-400 cursor-pointer">
                 {ts(lang, 'start')}
                 <Next className="w-4 h-4" aria-hidden="true" />
               </button>

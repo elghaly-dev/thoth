@@ -68,17 +68,17 @@ export const ApiKeyBar: React.FC<ApiKeyBarProps> = ({ lang }) => {
   return (
     <section
       aria-label={tx(lang, 'key.title')}
-      className="rounded-2xl border border-amber-800/50 bg-amber-950/30 px-4 py-4 text-sm text-slate-100 space-y-3"
+      className="rounded-2xl border border-violet-800/50 bg-violet-950/30 px-4 py-4 text-sm text-slate-100 space-y-3"
     >
       <div>
-        <h2 className="font-semibold text-amber-200">{tx(lang, 'key.title')}</h2>
+        <h2 className="font-semibold text-violet-200">{tx(lang, 'key.title')}</h2>
         <p className="mt-1 text-slate-300 leading-relaxed">{tx(lang, 'key.body')}</p>
         <p className="mt-1 text-slate-400">
           <a
             href={KEY_HELP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-amber-300 underline underline-offset-2 hover:text-amber-200"
+            className="text-violet-300 underline underline-offset-2 hover:text-violet-200"
           >
             {tx(lang, 'key.whereToGet')}
           </a>
@@ -111,12 +111,12 @@ export const ApiKeyBar: React.FC<ApiKeyBarProps> = ({ lang }) => {
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               placeholder={tx(lang, 'key.placeholder')}
-              className="mt-1 w-full min-h-11 rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="mt-1 w-full min-h-11 rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-sm text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
             />
           </label>
           <button
             type="submit"
-            className="min-h-11 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold cursor-pointer"
+            className="min-h-11 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-semibold cursor-pointer"
           >
             {tx(lang, 'key.save')}
           </button>
@@ -124,18 +124,18 @@ export const ApiKeyBar: React.FC<ApiKeyBarProps> = ({ lang }) => {
       )}
 
       {runtime.rejected && (
-        <p role="status" className="text-amber-200">
+        <p role="status" className="text-violet-200">
           {tx(lang, 'key.invalid')}
         </p>
       )}
       {messageKey && !runtime.userKeyPresent && !runtime.rejected && messageKey !== 'key.saved' && (
-        <p role="status" className="text-amber-200">
+        <p role="status" className="text-violet-200">
           {tx(lang, messageKey)}
         </p>
       )}
       {/* getUserKey is read only to assert presence after save; the value is never rendered. */}
       {runtime.userKeyPresent && getUserKey().length === 0 ? (
-        <p role="status" className="text-amber-200">
+        <p role="status" className="text-violet-200">
           {tx(lang, 'key.needed')}
         </p>
       ) : null}

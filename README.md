@@ -14,7 +14,7 @@ The app lives in `app/`.
 
 1. `cd app && npm install`
 2. Copy `.env.example` to `.env` and set `GEMINI_API_KEY` to your Gemini API key.
-   The server reads `.env` only. Never commit a real key.
+   The server reads `.env`, nothing else. Never commit a real key.
 3. `npm run dev`
 
 The Gemini key stays on the server. The browser never sees it.
@@ -24,7 +24,7 @@ The Gemini key stays on the server. The browser never sees it.
 The public site cannot run the Node proxy. The built app is in `use/`
 and is produced by `cd app && npm run build:pages`. On the public site,
 the exporter pastes their own Gemini API key. It stays in this browser
-tab (sessionStorage only) and is sent only to Google. Thoth never stores
+tab (sessionStorage) and goes to Google alone. Thoth never stores
 it on its servers.
 
 Needs your own sign-up: Google AI Studio

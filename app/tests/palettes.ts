@@ -29,7 +29,7 @@ for (const p of PALETTES) {
     'slate-800/60': over('slate-800', 0.6),
     'slate-950/60 on card': mix(p.surface, c('slate-950'), 0.6),
   };
-  for (const fam of ['emerald', 'amber', 'cyan', 'indigo', 'rose', 'teal', 'purple']) {
+  for (const fam of ['emerald', 'amber', 'cyan', 'indigo', 'rose', 'teal', 'purple', 'violet']) {
     backgrounds[`${fam}-500/10`] = over(`${fam}-500`, 0.1);
     backgrounds[`${fam}-500/20`] = over(`${fam}-500`, 0.2);
     backgrounds[`${fam}-950/40`] = over(`${fam}-950`, 0.4);
@@ -38,7 +38,7 @@ for (const p of PALETTES) {
 
   // Text colours used on those backgrounds.
   const texts = ['white', 'slate-100', 'slate-200', 'slate-300', 'slate-400', 'slate-500'];
-  for (const fam of ['emerald', 'amber', 'cyan', 'indigo', 'rose', 'teal', 'purple', 'orange']) {
+  for (const fam of ['emerald', 'amber', 'cyan', 'indigo', 'rose', 'teal', 'purple', 'violet']) {
     for (const s of [200, 300, 400]) texts.push(`${fam}-${s}`);
   }
   for (const t of texts) {
@@ -50,7 +50,7 @@ for (const p of PALETTES) {
   }
 
   // Filled buttons: ink (text-white) on soft tints, page colour (text-slate-950) on deep fills.
-  for (const fam of ['emerald', 'amber', 'cyan', 'indigo', 'rose', 'teal', 'purple', 'orange']) {
+  for (const fam of ['emerald', 'amber', 'cyan', 'indigo', 'rose', 'teal', 'purple', 'violet']) {
     for (const s of [600, 700, 800]) {
       checks++;
       const r = contrast(c('white'), c(`${fam}-${s}`));

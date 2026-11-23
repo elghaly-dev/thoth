@@ -8,7 +8,7 @@
  *  - slate 950/900 are the page and card colours; slate 50..500 are text,
  *    from ink to the muted tone; 600..800 are hairlines and soft fills.
  *  - white is the ink colour; black is the page colour.
- *  - warm accents (amber, orange, yellow) take the palette's first accent;
+ *  - warm-family colour variables (a legacy of the original design) take the palette's first accent;
  *    cool accents (emerald, green, teal, cyan, sky, blue, indigo, violet,
  *    purple, fuchsia) take the second; rose, red and pink take the
  *    palette's warning colour. Shades 50..500 are the deep accent (text,
@@ -17,7 +17,7 @@
  * Every pair the app uses is checked for WCAG AA in tests/palettes.ts.
  */
 
-export type PaletteId = 'ivory-gold' | 'pearl-sage' | 'sand-rose' | 'sky-silver' | 'cream-teal' | 'mist-grey';
+export type PaletteId = 'navy-lilac' | 'pearl-sage' | 'sand-rose' | 'sky-silver' | 'cream-teal' | 'mist-grey';
 
 export interface Palette {
   id: PaletteId;
@@ -32,15 +32,15 @@ export interface Palette {
 }
 
 export const PALETTES: Palette[] = [
-  { id: 'ivory-gold', paper: '#FBF8F1', surface: '#FFFDF8', ink: '#1F1B16', muted: '#5C5347', hair: '#D8C48F', a: '#755610', b: '#3F5B4B', warn: '#9B2C3C' },
-  { id: 'pearl-sage', paper: '#F5F6F2', surface: '#FFFFFF', ink: '#1C2420', muted: '#515C55', hair: '#C2CFBF', a: '#425F49', b: '#695734', warn: '#9B2C3C' },
-  { id: 'sand-rose', paper: '#F8F0E8', surface: '#FFFAF5', ink: '#2A1D1B', muted: '#66524D', hair: '#DFBFB3', a: '#88404D', b: '#6C5233', warn: '#9B2C2C' },
+  { id: 'navy-lilac', paper: '#0B1020', surface: '#121A33', ink: '#F1ECFA', muted: '#B4B0C8', hair: '#3E3670', a: '#C4A1EC', b: '#B3B8F5', warn: '#F5A3B6' },
+  { id: 'pearl-sage', paper: '#F5F6F2', surface: '#FFFFFF', ink: '#1C2420', muted: '#515C55', hair: '#C2CFBF', a: '#425F49', b: '#4B4F8C', warn: '#9B2C3C' },
+  { id: 'sand-rose', paper: '#F8F0E8', surface: '#FFFAF5', ink: '#2A1D1B', muted: '#66524D', hair: '#DFBFB3', a: '#88404D', b: '#5A4B8C', warn: '#9B2C2C' },
   { id: 'sky-silver', paper: '#F2F5F9', surface: '#FFFFFF', ink: '#17202B', muted: '#4E5A67', hair: '#C2CDD9', a: '#2C5A83', b: '#4F5A66', warn: '#9B2C3C' },
-  { id: 'cream-teal', paper: '#FAF5EA', surface: '#FFFCF3', ink: '#1C2422', muted: '#525C58', hair: '#BCD5CE', a: '#1B645E', b: '#6D5622', warn: '#9B2C3C' },
-  { id: 'mist-grey', paper: '#F1F1F0', surface: '#FBFBFA', ink: '#1D1E20', muted: '#53565B', hair: '#CBCBC6', a: '#474C55', b: '#625541', warn: '#9B2C3C' },
+  { id: 'cream-teal', paper: '#FAF5EA', surface: '#FFFCF3', ink: '#1C2422', muted: '#525C58', hair: '#BCD5CE', a: '#1B645E', b: '#4B4F8C', warn: '#9B2C3C' },
+  { id: 'mist-grey', paper: '#F1F1F0', surface: '#FBFBFA', ink: '#1D1E20', muted: '#53565B', hair: '#CBCBC6', a: '#474C55', b: '#55507A', warn: '#9B2C3C' },
 ];
 
-export const DEFAULT_PALETTE: PaletteId = 'ivory-gold';
+export const DEFAULT_PALETTE: PaletteId = 'navy-lilac';
 export const paletteById = (id: string | null | undefined): Palette =>
   PALETTES.find((p) => p.id === id) ?? PALETTES[0];
 

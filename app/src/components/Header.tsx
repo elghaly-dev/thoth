@@ -27,7 +27,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40">
       {/* Top micro-bar: who it is for, by whom, and trust */}
-      <div className="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-amber-950/60 border-b border-slate-800/80 px-4 py-1.5 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
+      <div className="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-violet-950/60 border-b border-slate-800/80 px-4 py-1.5 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="font-semibold text-emerald-400">{tx(lang, 'header.openToAll')}</span>
@@ -40,9 +40,9 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center gap-3">
           <button
             onClick={onOpenSafetyModal}
-            className="flex items-center gap-1.5 text-amber-300 hover:text-amber-200 transition-colors text-xs font-medium cursor-pointer"
+            className="flex items-center gap-1.5 text-violet-300 hover:text-violet-200 transition-colors text-xs font-medium cursor-pointer"
           >
-            <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+            <ShieldCheck className="w-3.5 h-3.5 text-violet-400" />
             <span>{tx(lang, 'header.safetyPolicy')}</span>
           </button>
           <span className="text-slate-600" aria-hidden="true">|</span>
@@ -56,8 +56,8 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
         {/* Brand */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-11 h-11 rounded-full border border-amber-500 bg-slate-900">
-            <span className="thoth-display text-xl text-amber-300" aria-hidden="true">Θ</span>
+          <div className="flex items-center justify-center w-11 h-11 rounded-full border border-violet-500 bg-slate-900">
+            <span className="thoth-display text-xl text-violet-300" aria-hidden="true">Θ</span>
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -72,7 +72,7 @@ export const Header: React.FC<HeaderProps> = ({
               {tx(lang, 'header.bridge')}
             </p>
             <p className="text-xs">
-              <a href={CREDIT_URL} lang="en" className="text-amber-300 hover:text-amber-200 hover:underline">{CREDIT_TOP}</a>
+              <a href={CREDIT_URL} lang="en" className="text-violet-300 hover:text-violet-200 hover:underline">{CREDIT_TOP}</a>
             </p>
           </div>
         </div>
@@ -121,16 +121,16 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={onOpenSettings}
             aria-label={ts(lang, 'settings')}
             title={ts(lang, 'settings')}
-            className="p-2 rounded-xl border border-slate-700 text-slate-300 hover:border-amber-500 transition-colors cursor-pointer"
+            className="p-2 rounded-xl border border-slate-700 text-slate-300 hover:border-violet-500 transition-colors cursor-pointer"
           >
             <Settings className="w-4 h-4" aria-hidden="true" />
           </button>
-          {/* Safe Export guarantee */}
+          {/* Export guarantee */}
           <button
             onClick={onOpenSafetyModal}
             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs text-slate-300 hover:border-slate-600 transition-colors cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <Sparkles className="w-3.5 h-3.5 text-violet-400" />
             <span>{tx(lang, 'header.openTool')}</span>
           </button>
         </div>

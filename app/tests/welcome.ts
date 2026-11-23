@@ -106,7 +106,7 @@ try {
   check((await p2.evaluate(() => document.documentElement.dir)) === 'rtl', 'Arabic first launch is right-to-left');
   const arText = await d2.innerText();
   check(!/Choose|Step|Ivory/.test(arText), 'Arabic first launch has no English text');
-  await d2.getByRole('button', { name: new RegExp(THEME_TABLES.ar['ivory-gold']) }).click();
+  await d2.getByRole('button', { name: new RegExp(THEME_TABLES.ar['navy-lilac']) }).click();
   await d2.getByRole('button', { name: THEME_TABLES.ar.skip }).click();
   await d2.getByRole('button', { name: THEME_TABLES.ar.start }).click();
   await p2.getByText(THEME_TABLES.ar.welcomeAnon, { exact: true }).waitFor();

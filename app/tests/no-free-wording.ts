@@ -1,7 +1,7 @@
 /**
  * Fails (exit 1) if banned wording appears in any user-visible string, in any
  * interface language: "free", "safe" (also safety/safely/unsafe), the word
- * "AI", and their Arabic equivalents (مجاني, آمن/أمان, ذكاء اصطناعي). The
+ * "AI", "only", "%", "Lillah", «فقط», and their Arabic equivalents (مجاني, آمن/أمان, ذكاء اصطناعي). The
  * product term is "Faithful Servant" / «الخادم الأمين» (الأمين is allowed).
  *
  * Checked (values only; keys and code identifiers are never scanned):
@@ -23,6 +23,10 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { t, EN_ALL, GREETINGS, type StringKey } from '../src/i18n';
 import { SUPPORTED_LANGUAGES } from '../src/types/index';
+import { DEAL_TABLES } from '../src/deal/strings';
+import { RFQ_TABLES } from '../src/deal/rfq-strings';
+import { renderRfq, RFQ_LANGS } from '../src/deal/rfq';
+import { renderQuote, QUOTE_LANGS } from '../src/deal/deal';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PATTERNS: { name: string; re: RegExp }[] = [
@@ -40,6 +44,10 @@ const PATTERNS: { name: string; re: RegExp }[] = [
   { name: 'safe', re: /safe/i },
   { name: 'AI', re: /\bA\.?I\b\.?/ },
   { name: 'آمن', re: /آمن|(^|[^\p{L}])(?:ال|ب|و)?أمان(?![\p{L}])/u },
+  { name: 'only', re: /\bonly\b/i },
+  { name: 'فقط', re: /فقط/ },
+  { name: 'Lillah', re: /\blillah\b|(^|[\s«"(])لله([\s»".,،:)]|$)/iu },
+  { name: '%', re: /%|٪/ },
   { name: 'ذكاء اصطناعي', re: /ذكاء\s*(ال)?اصطناعي|人工智能/ },
 ];
 
@@ -63,10 +71,18 @@ const title = html.match(/<title>([\s\S]*?)<\/title>/)?.[1] ?? '';
 check('index.html:<title>', title);
 for (const m of html.matchAll(/\bcontent="([^"]*)"/g)) check('index.html:meta content', m[1]);
 
+// 2b. Deal in a Minute and RFQ strings, and the fixed quote / RFQ templates.
+for (const [tag, tables] of [['deal', DEAL_TABLES], ['rfq', RFQ_TABLES]] as const) {
+  for (const [code, tbl] of Object.entries(tables)) for (const [k, v] of Object.entries(tbl)) check(`${tag}:${code}:${k}`, v as string);
+}
+const sample = { product: 'Brass lamps', quantity: '500', unit: 'pieces', moq: '100', price: '12', currency: 'USD', priceUnit: 'per piece', incoterm: 'FOB', port: 'Mumbai', leadTimeDays: '30', payment: 'advance', validityDays: '15' };
+for (const l of QUOTE_LANGS) check(`quote template:${l}`, renderQuote(sample as never, l));
+for (const l of RFQ_LANGS) check(`rfq template:${l}`, renderRfq(sample as never, l));
+
 // 3b. Static pages users see: visible text and attribute values that render
 // (title, alt, aria-label, content, placeholder).
 const repo = join(root, '..');
-for (const rel of ['index.html', '404.html', 'agent/index.html']) {
+for (const rel of ['index.html', 'ar/index.html', '404.html', 'agent/index.html', 'privacy/index.html', 'ar/privacy/index.html']) {
   const page = readFileSync(join(repo, rel), 'utf8').replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '');
   for (const m of page.matchAll(/\b(?:content|alt|aria-label|title|placeholder)="([^"]*)"/g)) check(`${rel}:attr`, m[1]);
   page.replace(/<[^>]+>/g, '\n').split('\n').map((x) => x.trim()).filter(Boolean).forEach((line) => check(`${rel}:text`, line));
@@ -75,6 +91,18 @@ for (const rel of ['manifest.webmanifest', 'app/public/site.webmanifest']) {
   const mf = JSON.parse(readFileSync(join(repo, rel), 'utf8')) as Record<string, unknown>;
   for (const f of ['name', 'short_name', 'description']) if (typeof mf[f] === 'string') check(`${rel}:${f}`, mf[f] as string);
 }
+
+// 3c. The assistant is Elghaly (EN) / «الغالي» (AR), never "Thoth".
+for (const k of ['app.tabAssistant', 'voice.title', 'orb.thinking', 'voice.thothServant', 'guide.askBtn'] as StringKey[]) {
+  const en = t('en', k), ar = t('ar', k);
+  checked += 2;
+  if (/Thoth/.test(en) || !/Elghaly/.test(en)) hits.push(`en:${k} [assistant name must be Elghaly]: ${en}`);
+  if (/Thoth/.test(ar) || !/الغالي/.test(ar)) hits.push(`ar:${k} [assistant name must be «الغالي»]: ${ar}`);
+}
+for (const [code, text] of Object.entries(GREETINGS)) {
+  if (/Thoth|Namaste/.test(text) && (code === 'en' || code === 'ar')) hits.push(`greeting:${code} [no Namaste/Thoth]: ${text}`);
+}
+if (!/^السلام عليكم/.test(GREETINGS.ar)) hits.push('greeting:ar should open with «السلام عليكم»');
 
 // 4. metadata.json.
 const meta = JSON.parse(readFileSync(join(root, 'metadata.json'), 'utf8')) as Record<string, unknown>;

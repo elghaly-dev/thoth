@@ -6,7 +6,7 @@ Wrapper for https://thoth.elghaly.dev as a Trusted Web Activity.
 - app name: Thoth, launcher name Thoth, language `hi`
 - display: standalone, start_url `/use/` (matches `manifest.webmanifest`), theme and background `#0b0c10`
 - icons: `/icon-512.png`, maskable `/icon-maskable-512.png`, web manifest `/manifest.webmanifest`
-- compileSdk/targetSdk 35, minSdk 23 (`android/app/build.gradle`); printed by CI from the merged release manifest.
+- compileSdk/targetSdk 36, minSdk 23 (`android/app/build.gradle`); printed by CI from the merged release manifest.
 - `app/public/site.webmanifest` (served at `/use/site.webmanifest`): Hindi, standalone, 192 and 512 ("any maskable") icons, name with "by Elghaly LLC".
 
 ## Build

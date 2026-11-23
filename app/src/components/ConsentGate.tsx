@@ -28,9 +28,9 @@ export const ConsentGate: React.FC<ConsentGateProps> = ({ lang, accepted, onAcce
   }
 
   return (
-    <div className="bg-slate-900/90 border border-amber-500/40 rounded-2xl p-4 shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+    <div className="bg-slate-900/90 border border-violet-500/40 rounded-2xl p-4 shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
       <div className="flex items-start gap-2.5">
-        <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+        <ShieldCheck className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
         <div className="text-slate-300 leading-relaxed">
           <strong className="text-white">{tx(lang, 'consent.title')}</strong>{/* i18n consent.title; body copy names Gemini */}
           <span className="block mt-0.5">{tx(lang, 'consent.body')}</span>{/* i18n consent.body: text is sent to Gemini */}

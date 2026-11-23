@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-2IbDayCQrllu9zmqnXQRefV2P72jsm4hYnnQJNzqVVM='; img-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-YkZJH8H9DOM4jLKaoLEaI75YUKJkhyCkryW149IFxnA='; img-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
   <title>Thoth · Privacy</title>
   <meta name="description" content="How Thoth, the Faithful Servant for exporters, handles your data. by Elghaly LLC">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -12,16 +12,16 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.webmanifest">
   <style>
-    body { margin:0; background:#0b0c10; color:#e8e6e1; font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans Arabic", sans-serif; line-height:1.65; }
+    body { margin:0; background:#0b1020; color:#f1ecfa; font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans Arabic", sans-serif; line-height:1.65; }
     main { max-width:42rem; margin:0 auto; padding:32px 18px 24px; }
     h1 { font-family: Georgia, serif; font-weight:500; letter-spacing:.04em; margin:0 0 4px; }
-    h2 { font-size:1.1rem; margin:28px 0 6px; color:#c9a227; }
-    a { color:#c9a227; }
+    h2 { font-size:1.1rem; margin:28px 0 6px; color:#c4a1ec; }
+    a { color:#c4a1ec; }
     .by { margin:0 0 20px; }
     .by a { text-decoration:none; }
-    .small { color:#9a958c; font-size:.85rem; }
+    .small { color:#b4b0c8; font-size:.85rem; }
     nav { margin:0 0 18px; font-size:.9rem; }
-    footer { max-width:42rem; margin:0 auto; padding:24px 18px 40px; color:#9a958c; font-size:.8rem; letter-spacing:.12em; text-align:center; }
+    footer { max-width:42rem; margin:0 auto; padding:24px 18px 40px; color:#b4b0c8; font-size:.8rem; letter-spacing:.12em; text-align:center; }
 </style>
 </head>
 <body>
@@ -36,13 +36,13 @@
 
     <h2>How the Faithful Servant answers</h2>
     <p><strong>On this phone.</strong> The first time you choose it, Thoth downloads its model files (about 291 MB) from models.elghaly.dev, checks each one, and keeps them on this device. Like any web server, that server sees your IP address and which files were requested. After the download, what you type stays on this device.</p>
-    <p><strong>With your own Gemini key.</strong> If you paste your own Gemini key, your messages and the key go directly from your browser to Google's Gemini service, under Google's terms. In the app, the key is kept only in this page's memory: it is cleared when you close the tab (and also when you reload the page), and it is never sent to us. The separate assistant page at /agent/ keeps the key in this tab's session storage until you close the tab.</p>
+    <p><strong>With your own Gemini key.</strong> If you paste your own Gemini key, your messages and the key go directly from your browser to Google's Gemini service, under Google's terms. In the app, the key stays in this page's memory: it is cleared when you close the tab (and also when you reload the page), and it is never sent to us. The separate assistant page at /agent/ keeps the key in this tab's session storage until you close the tab.</p>
 
     <h2>Voice</h2>
-    <p>The microphone is used only after you tap it and allow it. Turning speech into text uses your browser's speech service; in Chrome on Android, that audio is processed by Google. Reading answers aloud uses voices installed on your phone.</p>
+    <p>The microphone is used after you tap it and allow it, never before. Turning speech into text uses your browser's speech service; in Chrome on Android, that audio is processed by Google. Reading answers aloud uses voices installed on your phone.</p>
 
     <h2>What stays on your device</h2>
-    <p>Your language choice (a short language code, kept in your browser and in a small cookie so the page opens in your language), the look you chose and the name you typed for the greeting (kept only in your browser, never sent anywhere), and the model files if you download them. Clear this site's data in your browser and they are gone. Uninstalling the app does not necessarily clear data kept by your browser.</p>
+    <p>Your language choice (a short language code, kept in your browser and in a small cookie so the page opens in your language), the look you chose and the name you typed for the greeting (kept in your browser, never sent anywhere), and the model files if you download them. Clear this site's data in your browser and they are gone. Uninstalling the app does not necessarily clear data kept by your browser.</p>
 
     <h2>This website</h2>
     <p>GitHub Pages serves this site. Like any host, it receives your IP address and the pages you request, under GitHub's privacy statement. We add no tracking of our own.</p>

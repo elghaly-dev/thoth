@@ -90,10 +90,10 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-900/90 to-amber-950/40 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-slate-900 via-slate-900/90 to-violet-950/40 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-violet-500/10 text-violet-400 border border-violet-500/20">
               {tx(lang, 'guide.badge')}
             </span>
             <span className="text-xs text-slate-400">{tx(lang, 'guide.badgeSub')}</span>
@@ -107,8 +107,8 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
         </div>
 
         {/* Customs Broker Mandatory Disclaimer */}
-        <div className="bg-amber-950/40 border border-amber-500/40 rounded-xl p-3 text-xs text-amber-300 flex items-start gap-2 max-w-sm shrink-0">
-          <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+        <div className="bg-violet-950/40 border border-violet-500/40 rounded-xl p-3 text-xs text-violet-300 flex items-start gap-2 max-w-sm shrink-0">
+          <ShieldAlert className="w-5 h-5 text-violet-400 shrink-0 mt-0.5" />
           <div className="text-[11px] leading-snug">
             <strong>{tx(lang, 'guide.brokerTitle')}</strong> {tx(lang, 'guide.brokerBody')}
           </div>
@@ -219,12 +219,12 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
       {/* Visual Guide Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {/* 1. HS / HTS Codes (Fix 2: Candidate, verify - never state as fact) */}
-        <div className="bg-slate-900/80 border border-amber-500/40 rounded-2xl p-5 shadow-lg space-y-3">
-          <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+        <div className="bg-slate-900/80 border border-violet-500/40 rounded-2xl p-5 shadow-lg space-y-3">
+          <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400">
             <BookOpen className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 block mb-0.5">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-violet-400 block mb-0.5">
               {tx(lang, 'guide.card1Tag')}
             </span>
             <h4 className="text-sm font-bold text-white">{tx(lang, 'guide.card1Title')}</h4>
@@ -301,15 +301,15 @@ export const ImportGuideTab: React.FC<ImportGuideTabProps> = ({ currentLang }) =
         </div>
 
         {/* 6. Why Customs Brokers Matter */}
-        <div className="bg-slate-900/80 border border-amber-900/50 rounded-2xl p-5 shadow-lg space-y-3">
-          <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+        <div className="bg-slate-900/80 border border-violet-900/50 rounded-2xl p-5 shadow-lg space-y-3">
+          <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400">
             <Users className="w-5 h-5" />
           </div>
           <h4 className="text-sm font-bold text-white">{tx(lang, 'guide.card6Title')}</h4>
           <p className="text-xs text-slate-300 leading-relaxed">
             {tx(lang, 'guide.card6Body')}
           </p>
-          <div className="bg-amber-950/30 p-3 rounded-xl border border-amber-500/30 text-[11px] text-amber-200">
+          <div className="bg-violet-950/30 p-3 rounded-xl border border-violet-500/30 text-[11px] text-violet-200">
             <strong>{tx(lang, 'guide.card6Golden')}</strong> {tx(lang, 'guide.card6GoldenBody')}
           </div>
         </div>

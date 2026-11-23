@@ -6,6 +6,9 @@
   <title>थोथ — निर्यातकों के लिए वफ़ादार सेवक</title>
   <meta name="description" content="थोथ आवाज़ से चलने वाला बहुभाषी वफ़ादार सेवक है, जो निर्यातकों को विदेश के खरीदारों से उनकी अपनी भाषा में बात करने में मदद करता है। by Elghaly LLC">
   <link rel="canonical" href="https://thoth.elghaly.dev/">
+  <link rel="alternate" hreflang="hi" href="https://thoth.elghaly.dev/">
+  <link rel="alternate" hreflang="ar" href="https://thoth.elghaly.dev/ar/">
+  <link rel="alternate" hreflang="x-default" href="https://thoth.elghaly.dev/">
   <meta property="og:title" content="थोथ — निर्यातकों के लिए वफ़ादार सेवक">
   <meta property="og:description" content="थोथ आवाज़ से चलने वाला बहुभाषी वफ़ादार सेवक है, जो निर्यातकों को विदेश के खरीदारों से उनकी अपनी भाषा में बात करने में मदद करता है। by Elghaly LLC">
   <meta property="og:url" content="https://thoth.elghaly.dev/">
@@ -20,13 +23,13 @@
   <link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.webmanifest">
-  <meta name="theme-color" content="#0b0c10">
+  <meta name="theme-color" content="#0b1020">
   <style>
     :root {
-      --bg: #0b0c10;
-      --text: #e8e6e1;
-      --muted: #9a958c;
-      --gold: #c9a227;
+      --bg: #0b1020;
+      --text: #f1ecfa;
+      --muted: #b4b0c8;
+      --lilac: #c4a1ec;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
@@ -38,8 +41,8 @@
       display: flex;
       flex-direction: column;
       background-image:
-        radial-gradient(ellipse at 50% 0%, rgba(201, 162, 39, 0.12), transparent 55%),
-        radial-gradient(ellipse at 80% 100%, rgba(201, 162, 39, 0.05), transparent 45%);
+        radial-gradient(ellipse at 50% 0%, rgba(196, 161, 236, 0.12), transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(196, 161, 236, 0.05), transparent 45%);
     }
     main {
       flex: 1;
@@ -56,7 +59,7 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       font-size: 0.72rem;
-      color: var(--gold);
+      color: var(--lilac);
       margin-bottom: 28px;
       font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     }
@@ -80,7 +83,7 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--text);
-      border: 1px solid rgba(201, 162, 39, 0.45);
+      border: 1px solid rgba(196, 161, 236, 0.45);
       border-radius: 999px;
       padding: 8px 18px;
       margin-bottom: 40px;
@@ -92,18 +95,20 @@
       font-size: 0.95rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #0b0c10;
-      background: var(--gold);
+      color: #0b1020;
+      background: var(--lilac);
       text-decoration: none;
       border-radius: 999px;
       padding: 12px 28px;
       min-height: 44px;
       line-height: 20px;
     }
-    .cta:hover, .cta:focus { outline: 2px solid #e8e6e1; outline-offset: 3px; }
+    .cta:hover, .cta:focus { outline: 2px solid #f1ecfa; outline-offset: 3px; }
     .by { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 0.9rem; letter-spacing: 0.06em; margin: -20px 0 32px; }
-    .by a { color: var(--gold); text-decoration: none; }
+    .by a { color: var(--lilac); text-decoration: none; }
     .by a:hover, .by a:focus { text-decoration: underline; }
+    main a:not(.cta) { color: var(--lilac); }
+    main a:visited:not(.cta) { color: #d9c6f5; }
     footer { text-align: center; padding: 20px 16px 28px; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 0.8rem; letter-spacing: 0.12em; color: var(--muted); }
   </style>
 </head>
@@ -116,7 +121,7 @@
     <p class="badge">छोटे-बड़े हर निर्यातक के लिए</p>
     <p class="cta-wrap"><a class="cta" href="/use/">थोथ खोलें</a></p>
       <!-- [VERIFY] Hindi link text: native review pending. -->
-      <p><a href="/privacy/">गोपनीयता नीति</a></p>
+      <p><a href="/privacy/">गोपनीयता नीति</a> · <a href="/ar/" lang="ar" hreflang="ar">العربية</a></p>
   </main>
   <footer lang="en">Wyndham Heaven</footer>
 </body>

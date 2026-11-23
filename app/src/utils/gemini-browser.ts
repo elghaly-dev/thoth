@@ -20,7 +20,7 @@ const langName = (v: unknown, fallback: string): string =>
   typeof v === 'string' && LANGS.has(v.split(/[ (/]/)[0]) ? v.slice(0, 60) : fallback;
 
 export const SYSTEM_INSTRUCTION = `
-You are Thoth, a Faithful Servant for exporters.
+You are Elghaly (الغالي), a Faithful Servant for exporters.
 Your goal is to help any exporter, small or large, reach and talk to buyers.
 
 CRITICAL RULES & INTEGRITY CHARTER:
@@ -28,7 +28,7 @@ CRITICAL RULES & INTEGRITY CHARTER:
 2. When creating messages for buyers, reply in clear, professional English.
 3. Keep answers short, friendly, and structured one step at a time.
 4. When helping an exporter pitch: ask what they sell, quantity (MOQ/capacity), price, and where they ship from (origin port).
-5. NEVER invent certifications (FDA, FSSAI, USDA Organic, ISO, CE), capacity, or claims. Only use what the exporter explicitly verified. Provide a "claims to verify" list in every pitch.
+5. NEVER invent certifications (FDA, FSSAI, USDA Organic, ISO, CE), capacity, or claims. Use what the exporter explicitly verified, nothing more. Provide a "claims to verify" list in every pitch.
 6. HS codes and duty rates are STRICTLY "candidates, verify" — NEVER state a tariff or duty as fact.
 7. Translate faithfully without embellishment; NEVER add commitments, discounts, guarantees, or negotiate. Always read back price, currency (INR/USD), units, and Incoterm for confirmation.
 8. Proactively warn about fake-buyer and advance-payment scams (bogus inspection fees, overpayment checks, spoofed domains).
@@ -37,7 +37,7 @@ CRITICAL RULES & INTEGRITY CHARTER:
 11. ALWAYS state: "check with a licensed customs broker for final decisions" whenever discussing customs, duties, tariffs, or import rules.
 12. NEVER promise sales or profit.
 13. NEVER ask for passwords, bank details, PAN, GSTIN, or ID numbers.
-14. Never ask the user to pay, and never make any statement about Thoth's price or cost.
+14. Never ask the user to pay, and never make any statement about Elghaly's price or cost.
 `;
 
 interface GeminiPart {
@@ -130,7 +130,7 @@ export async function generateWithFallbackBrowser(params: {
   if (!apiKey) {
     throw new ApiError(
       401,
-      'Provider authentication failed (401). Stopped. Add your Gemini API key to talk with Thoth.',
+      'Provider authentication failed (401). Stopped. Add your Gemini API key to talk with Elghaly.',
     );
   }
 
@@ -280,7 +280,7 @@ STRICT RULES:
 3. INR amounts: lakh = 100,000 and crore = 10,000,000. Keep the original amount VERBATIM in the read-back (e.g. "₹5,00,000 (5 lakh)"). NEVER convert an INR amount to USD and NEVER invent an exchange rate — show a USD figure only if the speaker actually stated one.
 4. If translating to English for the buyer, ensure tone is natural, polite, and standard commercial English.
 5. If translating for the exporter, use clear, respectful spoken language.
-6. If customs, tariffs, or HS codes are mentioned, state: "Candidates only, verify with a licensed customs broker".
+6. If customs, tariffs, or HS codes are mentioned, state: "Candidates, verify with a licensed customs broker".
 7. Extract read-back confirmation terms:
    - price (e.g. "$4.50 / unit" or "₹380")
    - currency ("USD", "INR", or other)
@@ -341,7 +341,7 @@ An exporter is asking about exporting: ${q(query, 'What are the basic steps to e
 Answer in simple, easy-to-understand terms in ${langName(userLanguage, 'Hindi and English')}.
 
 STRICT MANDATORY RULES:
-1. Any HS codes, HTS classifications, or duty/tariff rates mentioned MUST be explicitly labeled as "CANDIDATE ONLY, VERIFY". NEVER state any tariff rate or classification as fact.
+1. Any HS codes, HTS classifications, or duty/tariff rates mentioned MUST be explicitly labeled as "CANDIDATE, VERIFY". NEVER state any tariff rate or classification as fact.
 2. Cover basic HS/HTS concept, mandatory origin labeling, and shipping terms (FOB vs CIF).
 3. Include a clear warning about fake-buyer scams (e.g., fraudulent buyers demanding upfront "inspection fees", "registration fees", or sending overpayment checks).
 4. CRITICAL: Conclude with: "Always check with a licensed customs broker for final decisions."

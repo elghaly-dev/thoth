@@ -16,6 +16,7 @@
     "test:server": "tsx tests/server-hardening.ts",
     "test:auth": "tsx tests/server-auth.ts",
     "test:locales": "tsx tests/locale-parity.ts",
+    "test:rfq": "tsx tests/rfq.ts",
     "test:langpref": "tsx tests/lang-pref.ts",
     "test:mic": "tsx tests/mic-blocked.ts",
     "build:pages": "THOTH_BASE=/use/ vite build --outDir ../use --emptyOutDir",
