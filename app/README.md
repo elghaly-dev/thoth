@@ -1,6 +1,6 @@
-# Thoth — Faithful Servant for exporters
+# Thoth — «الغالي» for exporters
 
-Thoth is a Faithful Servant that helps
+Thoth and its assistant «الغالي» help
 exporters reach and talk to buyers: voice help, honest buyer pitches,
 translation, and import basics.
 

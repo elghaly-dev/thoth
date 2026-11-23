@@ -13,7 +13,8 @@
  *    every page's meta description carries "by Elghaly LLC";
  *  - any other "elghaly" / "Wyndham" wording (only those two exact credits,
  *    in Latin letters, are allowed; URLs are addresses, not text);
- *  - the word "AI" in visible app strings (use "Faithful Servant");
+ *  - the word "AI" in visible app strings (the assistant is «الغالي»);
+ *  - the assistant's old names (Elghaly, Faithful Servant, transliterations) in the built app;
  * and enforces the Hindi site (owner decision): <html lang="hi"> on the
  * landing and 404 pages (the app shell defaults to English and follows the
  * device language); landing/404/meta text in Devanagari only;
@@ -32,9 +33,8 @@ const APP = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const ROOT = path.dirname(APP);
 const FREE = /\bfree\b|免费|निःशुल्क|मुफ़्त|मुफ्त|मोफत|મફત|இலவச|বিনামূল্যে|ఉచిత|ਮੁਫ਼ਤ|ਮੁਫਤ/i;
 const CREDIT = /elghaly/i;
-// The in-app assistant is named Elghaly (EN) / «الغالي» (AR): the bare name is allowed inside the
-// app's own strings and bundle, but "Elghaly LLC" and "by Elghaly" stay reserved for the credit.
-const ASSISTANT_OK = (v: string) => v.replace(/\bElghaly\b(?!\s+LLC)/g, '').replace(/\bby\s+(?=\s)/g, 'by ');
+// The in-app assistant is «الغالي» in every language, so "Elghaly" appears in the credit alone.
+const OLD_ASSISTANT = /Elghaly(?!\s+LLC)|Faithful Servant|الخادم الأمين|वफ़ादार सेवक|एल्घाली|એલ્ઘાલી|এলঘালি|எல்கலி|ఎల్ఘాలీ|ਐਲਘਾਲੀ/;
 const CREDIT_STRICT = /by\s+elghaly|elghaly\s+llc|elghaly\.dev/i;
 const TOP = 'by Elghaly LLC';
 const TOP_URL = 'https://elghaly.dev';
@@ -121,7 +121,8 @@ const bundle = assets.map((f) => read(path.join('use', 'assets', f))).join('\n')
 check(bundle.includes(TOP) && bundle.includes(TOP_URL) && bundle.includes(FOOT), `use/ bundle: REQUIRED "${TOP}", ${TOP_URL} and "${FOOT}"`);
 for (const f of assets) {
   const js = noCredits(stripUrls(read(path.join('use', 'assets', f))));
-  check(!/\bfree Faithful Servant|100% Free|Free tool|elghaly|Wyndham/i.test(ASSISTANT_OK(js)), `use/assets/${f}: free wording or a credit other than the two exact ones`);
+  check(!/\b100% Free|Free tool|elghaly|Wyndham/i.test(js), `use/assets/${f}: free wording or a credit other than the two exact ones`);
+  check(!OLD_ASSISTANT.test(read(path.join('use', 'assets', f))), `use/assets/${f}: an old assistant name`);
 }
 
 // The Pages build never probes the (absent) server: no 404 console error.
@@ -144,12 +145,12 @@ for (const lang of SUPPORTED_LANGUAGES.map((l) => l.code)) {
   for (const key of Object.keys(EN_ALL) as StringKey[]) {
     const v = tx(lang, key);
     check(!FREE.test(v), `${lang}.${key}: "free" wording`);
-    check(!CREDIT.test(ASSISTANT_OK(v)) && !/by\s+elghaly/i.test(v), `${lang}.${key}: "elghaly" credit`);
+    check(!CREDIT.test(v) && !/by\s+elghaly/i.test(v), `${lang}.${key}: "elghaly" credit`);
     // "Google AI Studio" is a product name (where to get a key), not our wording.
     check(!AI.test(v.replace(/Google AI Studio/g, '')), `${lang}.${key}: "AI"`);
   }
   const g = GREETINGS[lang];
-  check(!FREE.test(g) && !CREDIT.test(ASSISTANT_OK(g)), `${lang} greeting: free/credit wording`);
+  check(!FREE.test(g) && !CREDIT.test(g), `${lang} greeting: free/credit wording`);
 }
 
 // The English Translator example is English (no Devanagari in EN strings).
@@ -162,7 +163,7 @@ for (const rel of ['app/server.ts', 'app/src/utils/gemini-browser.ts']) {
   const s = read(rel);
   const prompt = (/SYSTEM_INSTRUCTION = `([\s\S]*?)`/.exec(s) || [])[1] || '';
   check(prompt.length > 0, `${rel}: system prompt found`);
-  check(!FREE.test(prompt) && !CREDIT.test(ASSISTANT_OK(prompt)), `${rel}: free/credit wording in the system prompt`);
+  check(!FREE.test(prompt) && !CREDIT.test(prompt), `${rel}: free/credit wording in the system prompt`);
 }
 
 // ---- Hindi site (owner decision) ----

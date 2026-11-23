@@ -8,7 +8,7 @@ import type { LanguageCode } from '../types';
 const EN = {
   tab: 'Deal in a Minute',
   title: 'Deal in a Minute',
-  intro: 'Say your product facts once. Elghaly drafts the same quote in Arabic, Hindi and Chinese, using what you said, nothing added.',
+  intro: 'Say your product facts once. الغالي drafts the same quote in Arabic, Hindi and Chinese, using what you said, nothing added.',
   speak: 'Speak the facts',
   listening: 'Listening… say product, quantity, price, port, delivery time and payment.',
   noMic: 'Voice is not available in this browser. Type the facts instead.',
@@ -37,7 +37,7 @@ type Strings = typeof EN;
 const HI: Strings = {
   tab: 'एक मिनट में सौदा',
   title: 'एक मिनट में सौदा',
-  intro: 'अपने उत्पाद की जानकारी एक बार बोलें। एल्घाली वही कोटेशन अरबी, हिंदी और चीनी में बनाता है, सिर्फ़ आपकी बताई बातों से।',
+  intro: 'अपने उत्पाद की जानकारी एक बार बोलें। الغالي वही कोटेशन अरबी, हिंदी और चीनी में बनाता है, सिर्फ़ आपकी बताई बातों से।',
   speak: 'जानकारी बोलें',
   listening: 'सुन रहा है… उत्पाद, मात्रा, कीमत, बंदरगाह, तैयारी का समय और भुगतान बताएं।',
   noMic: 'इस ब्राउज़र में आवाज़ उपलब्ध नहीं है। जानकारी टाइप करें।',
@@ -93,7 +93,7 @@ const AR: Strings = {
 const ZH: Strings = {
   tab: '一分钟成交',
   title: '一分钟成交',
-  intro: '把产品信息说一遍。Elghaly 只根据您说的内容，同时写出阿拉伯语、印地语和中文的同一份报价。',
+  intro: '把产品信息说一遍。الغالي 只根据您说的内容，同时写出阿拉伯语、印地语和中文的同一份报价。',
   speak: '说出信息',
   listening: '正在听…请说产品、数量、价格、港口、备货期和付款方式。',
   noMic: '此浏览器不支持语音。请输入信息。',

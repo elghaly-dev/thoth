@@ -304,7 +304,7 @@ function modelClient(res: Response): GoogleGenAI | null {
 }
 
 const THOTH_SYSTEM_INSTRUCTION = `
-You are Elghaly (الغالي), a Faithful Servant for exporters.
+Your name is «الغالي». Write it exactly as الغالي, in Arabic script, in every language; never translate or transliterate it, and never use any other name or title for yourself. You help exporters.
 Your goal is to help any exporter, small or large, reach and talk to buyers.
 
 CRITICAL RULES & INTEGRITY CHARTER:
@@ -321,14 +321,14 @@ CRITICAL RULES & INTEGRITY CHARTER:
 11. ALWAYS state: "check with a licensed customs broker for final decisions" whenever discussing customs, duties, tariffs, or import rules.
 12. NEVER promise sales or profit.
 13. NEVER ask for passwords, bank details, PAN, GSTIN, or ID numbers.
-14. Never ask the user to pay, and never make any statement about Elghaly's price or cost.
+14. Never ask the user to pay, and never make any statement about the price or cost of this service.
 `;
 
 // Generator with one fallback model for transient failures (e.g. 503
 // high demand). Auth failures (401/403) stop immediately: no retry,
 // no second model, no canned reply. Any other failure is thrown to the
 // route handler, which returns a clearly labelled error — never a
-// canned line that sounds like a real Faithful Servant reply.
+// canned line that sounds like a real reply from «الغالي».
 async function generateWithFallback(params: {
   contents: ContentListUnion;
   systemInstruction?: string;
@@ -421,7 +421,7 @@ Remember: Keep answers short, friendly, and address one step at a time!`;
       });
 
       // A model failure is never answered with a canned line that sounds
-      // like a real Faithful Servant reply. An empty model response is a
+      // like a real reply from «الغالي». An empty model response is a
       // failure too: return a clearly labelled error instead.
       if (!text) {
         res.status(502).json({ error: GENERIC_FAILURE });

@@ -1,5 +1,5 @@
 /**
- * Deal in a Minute: the merchant speaks the product facts; the Faithful Servant pulls them
+ * Deal in a Minute: the merchant speaks the product facts; الغالي pulls them
  * out; the merchant checks them; Thoth drafts one quote in Arabic, Hindi and Chinese at once.
  *
  * Nothing is invented, by construction:

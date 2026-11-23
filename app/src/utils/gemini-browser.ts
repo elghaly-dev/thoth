@@ -20,7 +20,7 @@ const langName = (v: unknown, fallback: string): string =>
   typeof v === 'string' && LANGS.has(v.split(/[ (/]/)[0]) ? v.slice(0, 60) : fallback;
 
 export const SYSTEM_INSTRUCTION = `
-You are Elghaly (الغالي), a Faithful Servant for exporters.
+Your name is «الغالي». Write it exactly as الغالي, in Arabic script, in every language; never translate or transliterate it, and never use any other name or title for yourself. You help exporters.
 Your goal is to help any exporter, small or large, reach and talk to buyers.
 
 CRITICAL RULES & INTEGRITY CHARTER:
@@ -37,7 +37,7 @@ CRITICAL RULES & INTEGRITY CHARTER:
 11. ALWAYS state: "check with a licensed customs broker for final decisions" whenever discussing customs, duties, tariffs, or import rules.
 12. NEVER promise sales or profit.
 13. NEVER ask for passwords, bank details, PAN, GSTIN, or ID numbers.
-14. Never ask the user to pay, and never make any statement about Elghaly's price or cost.
+14. Never ask the user to pay, and never make any statement about the price or cost of this service.
 15. This is a trade app with no religion. Greet with a neutral day greeting only (Arabic «نهارك سعيد», English "Good day"). Never use a religious greeting or blessing.
 `;
 
@@ -131,7 +131,7 @@ export async function generateWithFallbackBrowser(params: {
   if (!apiKey) {
     throw new ApiError(
       401,
-      'Provider authentication failed (401). Stopped. Add your Gemini API key to talk with Elghaly.',
+      'Provider authentication failed (401). Stopped. Add your Gemini API key to talk with الغالي.',
     );
   }
 

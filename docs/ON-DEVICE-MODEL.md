@@ -1,4 +1,4 @@
-# On-device Faithful Servant (Thoth)
+# On-device الغالي (Thoth)
 
 Translate and explain trade messages in Hindi, Arabic, Chinese and English on
 the phone itself. No server, no key, nothing the user types leaves the phone.
@@ -92,7 +92,7 @@ it in size and sha256. The values in this repository come from our own
 download and hash; the published manifest is the second source.
 CORS answers only `https://thoth.elghaly.dev`.
 
-Before a manifest is `ready`, the tab says the on-device Faithful Servant is
+Before a manifest is `ready`, the tab says الغالي on the device is
 being prepared and points to the bring-your-own-key option. CI tests the
 manifest rules, the download checks (fake network and storage), the prompts,
 the WebGPU check, the offline-voice choice, the strings (Hindi, Chinese,

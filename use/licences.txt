@@ -5,7 +5,7 @@ Thoth uses these open models and open-source packages. Their licences ask for th
 
 ========================================================================
 
-Qwen2.5-0.5B-Instruct (on-device Faithful Servant model)
+Qwen2.5-0.5B-Instruct (on-device model for الغالي)
 Licence: Apache-2.0
 Copyright 2024 Alibaba Cloud (Qwen team). MLC build mlc-ai/Qwen2.5-0.5B-Instruct-q4f16_1-MLC, revision 32ff081f.
 The full Apache License 2.0 text is included below with @mlc-ai/web-llm.

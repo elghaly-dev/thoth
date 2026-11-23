@@ -25,7 +25,7 @@ check(!renderRfq({ ...f, incoterm: 'XYZ' }, 'en').includes('XYZ'), 'unknown deli
 check(!renderRfq({ ...f, currency: 'BTC' }, 'en').includes('BTC'), 'unknown currency dropped');
 const keys = Object.keys(RFQ_TABLES.en).sort().join();
 for (const [c, t] of Object.entries(RFQ_TABLES)) check(Object.keys(t).sort().join() === keys, `${c}: same keys as English`);
-check(/الغالي/.test(RFQ_TABLES.ar.intro) && /Elghaly/.test(RFQ_TABLES.en.intro), 'assistant name in intro');
+for (const [c, tb] of Object.entries(RFQ_TABLES)) check(/الغالي/.test(tb.intro) && !/Elghaly(?!\s+LLC)|Faithful Servant|الخادم الأمين|वफ़ादार सेवक|एल्घाली|એલ્ઘાલી|এলঘালি|எல்கலி|ఎల్ఘాలీ|ਐਲਘਾਲੀ/.test(tb.intro), `${c}: assistant name «الغالي» in intro`);
 
 console.log(`rfq: ${checks} checks`);
 if (fails.length) { console.error('rfq: FAIL\n  ' + fails.join('\n  ')); process.exit(1); }

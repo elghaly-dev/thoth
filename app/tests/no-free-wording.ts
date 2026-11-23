@@ -2,7 +2,7 @@
  * Fails (exit 1) if banned wording appears in any user-visible string, in any
  * interface language: "free", "safe" (also safety/safely/unsafe), the word
  * "AI", "only", "%", "Lillah", «فقط», and their Arabic equivalents (مجاني, آمن/أمان, ذكاء اصطناعي). The
- * product term is "Faithful Servant" / «الخادم الأمين» (الأمين is allowed).
+ * assistant is «الغالي» in every language; its old names fail the check (section 3c).
  *
  * Checked (values only; keys and code identifiers are never scanned):
  * - every StringKey through t(lang, key) for every SUPPORTED_LANGUAGES locale
@@ -92,12 +92,19 @@ for (const rel of ['manifest.webmanifest', 'app/public/site.webmanifest']) {
   for (const f of ['name', 'short_name', 'description']) if (typeof mf[f] === 'string') check(`${rel}:${f}`, mf[f] as string);
 }
 
-// 3c. The assistant is Elghaly (EN) / «الغالي» (AR), never "Thoth".
+// 3c. The assistant is «الغالي» in every language: never "Thoth", never a transliteration,
+// never its old names (Elghaly, Faithful Servant, «الخادم الأمين», «वफ़ादार सेवक»).
+const OLD_NAME = /Elghaly(?!\s+LLC)|Faithful Servant|الخادم الأمين|वफ़ादार सेवक|एल्घाली|એલ્ઘાલી|এলঘালি|எல்கலி|ఎల్ఘాలీ|ਐਲਘਾਲੀ/;
 for (const k of ['app.tabAssistant', 'voice.title', 'orb.thinking', 'voice.thothServant', 'guide.askBtn'] as StringKey[]) {
-  const en = t('en', k), ar = t('ar', k);
-  checked += 2;
-  if (/Thoth/.test(en) || !/Elghaly/.test(en)) hits.push(`en:${k} [assistant name must be Elghaly]: ${en}`);
-  if (/Thoth/.test(ar) || !/الغالي/.test(ar)) hits.push(`ar:${k} [assistant name must be «الغالي»]: ${ar}`);
+  for (const lang of SUPPORTED_LANGUAGES) {
+    const v = t(lang.code, k);
+    checked++;
+    if (/Thoth/.test(v) || !/الغالي/.test(v)) hits.push(`${lang.code}:${k} [assistant name must be «الغالي»]: ${v}`);
+  }
+}
+for (const lang of SUPPORTED_LANGUAGES) for (const k of keys) { const v = t(lang.code, k); if (OLD_NAME.test(v)) hits.push(`${lang.code}:${k} [old assistant name]: ${v}`); }
+for (const [code, text] of Object.entries(GREETINGS)) {
+  if (OLD_NAME.test(text) || !text.includes('الغالي')) hits.push(`greeting:${code} [assistant name must be «الغالي»]: ${text}`);
 }
 for (const [code, text] of Object.entries(GREETINGS)) {
   if (/Thoth|Namaste/.test(text) && (code === 'en' || code === 'ar')) hits.push(`greeting:${code} [no Namaste/Thoth]: ${text}`);

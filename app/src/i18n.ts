@@ -10,12 +10,12 @@ import { LOCALE_TABLES } from './i18n-locales';
  */
 const EN = {
   // ---- App shell ----
-  'app.tabAssistant': 'Talk with Elghaly (Voice)',
+  'app.tabAssistant': 'Talk with الغالي (Voice)',
   'app.tabPitch': 'Buyer Pitch Studio',
   'app.tabTranslate': 'Trade Translator',
   'app.tabGuide': 'Import Basics',
   'app.speakingIn': 'Speaking in {native} ({name})',
-  'app.footerTagline': 'Faithful Servant for exporters',
+  'app.footerTagline': 'الغالي for exporters',
   'app.footerBadge': 'For all exporters, small & large',
   'app.footerBroker': 'Always check with a licensed customs broker for final decisions.',
   'app.footerPrivacy': 'Privacy & Trust Policy',
@@ -29,14 +29,14 @@ const EN = {
   'header.safetyPolicy': 'Trust & Care Policy',
   'header.madeWith': 'Made with',
   'header.forMakers': 'for makers',
-  'header.voiceAssistant': 'Faithful Servant',
+  'header.voiceAssistant': 'الغالي',
   'header.bridge': 'Exporter ⇄ Buyer Trade Bridge',
   'header.selectLanguage': 'Select preferred language',
   'header.muted': 'Muted',
   'header.voiceOn': 'Voice On',
   'header.mutedTitle': 'Voice muted (click to unmute)',
   'header.voiceOnTitle': 'Voice active (click to mute)',
-  'header.openTool': 'Faithful Servant',
+  'header.openTool': 'الغالي',
 
   // ---- Safety modal (Trust & Ethics Charter) ----
   'safety.title': "Thoth's Trust & Ethics Charter",
@@ -47,19 +47,19 @@ const EN = {
   'safety.item2Title':
     '2. No Invented Claims or Certifications:',
   'safety.item2Body':
-    'Elghaly is instructed not to invent certifications (FDA, FSSAI, Organic, ISO) or capacity. Every pitch includes a "Claims to Verify" checklist: check each item before you contact a buyer.',
+    'الغالي is instructed not to invent certifications (FDA, FSSAI, Organic, ISO) or capacity. Every pitch includes a "Claims to Verify" checklist: check each item before you contact a buyer.',
   'safety.item3Title': '3. HS Codes & Tariffs are Candidates:',
   'safety.item3Body':
-    'Elghaly is instructed to label HS codes and duty rates "candidates, verify", not facts. Always check with a licensed customs broker for final classification.',
+    'الغالي is instructed to label HS codes and duty rates "candidates, verify", not facts. Always check with a licensed customs broker for final classification.',
   'safety.item4Title': '4. Faithful Translation & Term Read-Back:',
   'safety.item4Body':
-    'Elghaly is instructed to translate without adding commitments or negotiating, and to read back price, currency (USD/INR), units, and Incoterm for you to confirm.',
+    'الغالي is instructed to translate without adding commitments or negotiating, and to read back price, currency (USD/INR), units, and Incoterm for you to confirm.',
   'safety.item5Title': '5. Scam Defense:',
   'safety.item5Body':
     'We warn against fake-buyer scams, advance inspection fee fraud, and overpayment checks. Never wire upfront fees to third-party inspectors.',
   'safety.item6Title': '6. Buyer Speech is Data, Not Instructions:',
   'safety.item6Body':
-    'Buyer messages are sent as dialogue content, and Elghaly is instructed not to follow instructions inside them or make commitments for you. Check every reply before you rely on it.',
+    'Buyer messages are sent as dialogue content, and الغالي is instructed not to follow instructions inside them or make commitments for you. Check every reply before you rely on it.',
   'safety.item7Title':
     '7. Where Your Text Goes:',
   'safety.item7Body':
@@ -70,13 +70,13 @@ const EN = {
 
   // ---- Voice orb ----
   'orb.listening': 'Listening in {lang}... (Speak now)',
-  'orb.thinking': 'Elghaly is thinking...',
+  'orb.thinking': 'الغالي is thinking...',
   'orb.speaking': 'Speaking response... (Tap to stop)',
   'orb.tapToTalk': 'Tap microphone to talk in {lang}',
   'orb.stop': 'Stop',
   'orb.titleStopListening': 'Click to stop listening',
   'orb.titleStopSpeaking': 'Click to stop speaking',
-  'orb.titleSpeak': 'Click to speak with Elghaly in {lang}',
+  'orb.titleSpeak': 'Click to speak with الغالي in {lang}',
 
   // ---- Consent gate (copy names Gemini) ----
   'consent.title':
@@ -100,16 +100,16 @@ const EN = {
 const EN_VOICE = {
   // ---- Voice tab ----
   'voice.liveEngine': 'Voice Engine',
-  'voice.title': 'Voice Conversation with Elghaly',
+  'voice.title': 'Voice Conversation with الغالي',
   'voice.speakNaturally': 'Speak naturally in {native} ({name})',
   'voice.mic': 'Mic:',
   'voice.supported': 'Supported',
   'voice.typeMode': 'Type mode',
-  'voice.badge': 'Faithful Servant',
+  'voice.badge': 'الغالي',
   'voice.trackerTitle': 'Buyer Pitch Progress (One Step at a Time)',
   'voice.captured': '{n}/4 Captured',
   'voice.step1Title': 'What You Sell (Product)',
-  'voice.step1Hint': 'Tell Elghaly what item you manufacture or export',
+  'voice.step1Hint': 'Tell الغالي what item you manufacture or export',
   'voice.step2Title': 'Quantity / MOQ Capacity',
   'voice.step2Hint': 'e.g. 500 pcs MOQ, 1x20ft container/month',
   'voice.step3Title': 'Target Price (₹ or $)',
@@ -122,17 +122,17 @@ const EN_VOICE = {
   'voice.newChat': 'New Chat',
   'voice.newChatTitle': 'Start new conversation',
   'voice.safetyRule':
-    'Important: Check with a licensed customs broker for final import/tariff decisions. Elghaly never asks for passwords or bank info.',
+    'Important: Check with a licensed customs broker for final import/tariff decisions. الغالي never asks for passwords or bank info.',
   'voice.youExporter': 'You (Exporter)',
-  'voice.thothServant': 'Elghaly (Faithful Servant)',
-  'voice.thinking': 'Elghaly is crafting a short, friendly response...',
+  'voice.thothServant': 'الغالي',
+  'voice.thinking': 'الغالي is crafting a short, friendly response...',
   'voice.listen': 'Listen',
   'voice.copyTitle': 'Copy text',
   'voice.stopRecording': 'Stop recording',
   'voice.speakMessage': 'Speak message',
   'voice.typePlaceholder':
     'Type in {lang} or English... (e.g. We make cotton rugs, 500 pcs)',
-  'voice.badgeFooter': 'Faithful Servant • Never asks for card or bank details',
+  'voice.badgeFooter': 'الغالي • Never asks for card or bank details',
   'voice.oneStep': 'One step at a time',
   'voice.connectionError':
     'Sorry, there was a momentary connection issue. Please check with a licensed customs broker for final decisions. Could you please repeat that?',
@@ -157,10 +157,10 @@ const EN_VOICE = {
 const EN_PITCH = {
   // ---- Pitch studio tab ----
   'pitch.badge': 'Honest Buyer Pitch Studio',
-  'pitch.servant': 'Faithful Servant',
+  'pitch.servant': 'الغالي',
   'pitch.title': 'Transform craft & manufacturing into compelling buyer pitches',
   'pitch.subtitle':
-    'Buyers want brevity, exact quantities, honest specs, and clear FOB terms. Elghaly writes clean, no-hype pitches tailored to sourcing standards.',
+    'Buyers want brevity, exact quantities, honest specs, and clear FOB terms. الغالي writes clean, no-hype pitches tailored to sourcing standards.',
   'pitch.customsRule': 'Customs Rule:',
   'pitch.customsRuleBody':
     'Always check with a licensed customs broker for final import/tariff decisions.',
@@ -179,7 +179,7 @@ const EN_PITCH = {
   'pitch.pricePh': 'e.g. $6.50 / piece FOB or ₹550 / pc',
   'pitch.shipFrom': 'Where do you ship from? (Port / City)',
   'pitch.shipFromPh': 'e.g. your origin port',
-  'pitch.writing': 'Elghaly is writing an honest overseas pitch...',
+  'pitch.writing': 'الغالي is writing an honest overseas pitch...',
   'pitch.create': 'Create Buyer Pitch',
   'pitch.emptyTitle': 'Your Buyer Pitch Package will appear here',
   'pitch.emptyBody':
@@ -234,7 +234,7 @@ const EN_TRANS = {
   'trans.titleExporter': 'Exporter',
   'trans.titleBuyer': 'Buyer',
   'trans.subtitle':
-    'Use during Zoom calls or phone negotiations. Elghaly translates faithfully without adding commitments or negotiating. Read-backs confirm all price and Incoterm details.',
+    'Use during Zoom calls or phone negotiations. الغالي translates faithfully without adding commitments or negotiating. Read-backs confirm all price and Incoterm details.',
   'trans.ruleTitle': 'Rule:',
   'trans.ruleBody':
     'Tariffs are candidates, verify. Always check with a licensed customs broker for final decisions.',
@@ -245,7 +245,7 @@ const EN_TRANS = {
   'trans.buyerBtn': 'Buyer',
   'trans.safetyGuardTitle': 'Scam Guard:',
   'trans.safetyGuardBody':
-    'Buyer speech is treated as dialogue data, not binding instructions. Elghaly translates faithfully without accepting unauthorized commitments.',
+    'Buyer speech is treated as dialogue data, not binding instructions. الغالي translates faithfully without accepting unauthorized commitments.',
   'trans.phExporter': 'Speak or type in {native} ({name}) e.g. We can supply 1,000 units at $3.20 FOB...',
   'trans.phBuyer':
     'Speak or type in English e.g. Can you supply 2,000 units with FOB terms by August 15th?',
@@ -296,13 +296,13 @@ const EN_GUIDE = {
   'guide.brokerTitle': 'Customs Broker Rule:',
   'guide.brokerBody':
     'Customs regulations are enforced by the destination customs authority. Always check with a licensed customs broker for final tariff classifications and entry decisions.',
-  'guide.askTitle': 'Ask Elghaly Any Import Question ({lang})',
+  'guide.askTitle': 'Ask الغالي Any Import Question ({lang})',
   'guide.plainWords': 'Plain words, zero jargon',
   'guide.askPh':
     'Ask in {native} or English (e.g. How do I label cotton shirts for customs?)',
-  'guide.askBtn': 'Ask Elghaly',
+  'guide.askBtn': 'Ask الغالي',
   'guide.explaining': 'Explaining...',
-  'guide.answerTitle': "Elghaly's Plain-Language Explanation:",
+  'guide.answerTitle': 'Plain-Language Explanation from الغالي:',
   'guide.listen': 'Listen',
   'guide.stopVoice': 'Stop Voice',
   'guide.sampleQ1': 'What is the difference between FOB and CIF for buyers?',
@@ -343,7 +343,7 @@ const EN_GUIDE = {
     'A licensed customs broker is licensed to file import entries (generally form 7501) and handle bonds — confirm the current form and requirements with your broker.',
   'guide.card6Golden': 'Golden rule:',
   'guide.card6GoldenBody':
-    'Elghaly gives you education and pitch tools; check with a licensed customs broker for final decisions before container booking.',
+    'الغالي gives you education and pitch tools; check with a licensed customs broker for final decisions before container booking.',
   'guide.card7Title': '7. Scam Guide: Guard Against Fake-Buyer & Advance-Payment Scams',
   'guide.card7Sub1Title': '1. Upfront "Inspection Fee" Fraud:',
   'guide.card7Sub1Body':
@@ -404,13 +404,13 @@ const EN_EXTRA = {
 // Static-site (Pages) key bar, idle voice notices, skip link, send notices.
 const EN_PAGES = {
   "key.title": "Your Gemini API key",
-  "key.body": "This public site has no server key. Paste your own Gemini API key to talk with Elghaly. It stays in this page's memory (reloading forgets it) and goes to Google alone; Google's handling is outside this app.",
+  "key.body": "This public site has no server key. Paste your own Gemini API key to talk with الغالي. It stays in this page's memory (reloading forgets it) and goes to Google alone; Google's handling is outside this app.",
   "key.label": "Gemini API key",
   "key.placeholder": "Paste your key here",
   "key.save": "Use for this visit",
   "key.clear": "Remove key",
   "key.saved": "Key kept in this page's memory; reloading the page forgets it. It goes to Google alone.",
-  "key.needed": "Add your Gemini API key above to talk with Elghaly.",
+  "key.needed": "Add your Gemini API key above to talk with الغالي.",
   "key.invalid": "That key was refused. Check it and try again.",
   "key.serverReady": "This session uses a server-side key. You do not need to paste one.",
   "key.whereToGet": "Get a Gemini API key from Google (it needs your own Google sign-in).",
@@ -429,12 +429,12 @@ export type StringKey = keyof typeof EN_ALL;
 
 const ZH: Record<StringKey, string> = {
   // ---- App shell ----
-  'app.tabAssistant': '与 Elghaly 对话（语音）',
+  'app.tabAssistant': '与 الغالي 对话（语音）',
   'app.tabPitch': '海外买家推介工作室',
   'app.tabTranslate': '贸易翻译',
   'app.tabGuide': '海外市场进口基础知识',
   'app.speakingIn': '当前语言：{native}（{name}）',
-  'app.footerTagline': '为出口商打造的 Faithful Servant',
+  'app.footerTagline': '为出口商打造的 الغالي',
   'app.footerBadge': '面向所有出口商，无论企业大小',
   'app.footerBroker': '最终决定请务必咨询持牌报关行。',
   'app.footerPrivacy': '隐私与信任政策',
@@ -448,14 +448,14 @@ const ZH: Record<StringKey, string> = {
   'header.safetyPolicy': '信任与保障政策',
   'header.madeWith': '用',
   'header.forMakers': '为制造者打造',
-  'header.voiceAssistant': 'Faithful Servant',
+  'header.voiceAssistant': 'الغالي',
   'header.bridge': '海外出口桥梁',
   'header.selectLanguage': '选择首选语言',
   'header.muted': '已静音',
   'header.voiceOn': '语音开启',
   'header.mutedTitle': '语音已静音（点击取消静音）',
   'header.voiceOnTitle': '语音已开启（点击静音）',
-  'header.openTool': 'Faithful Servant',
+  'header.openTool': 'الغالي',
 
   // ---- Safety modal (Trust & Ethics Charter) ----
   'safety.title': 'Thoth 信任与道德宪章',
@@ -466,19 +466,19 @@ const ZH: Record<StringKey, string> = {
   'safety.item2Title':
     '2. 不编造宣称或认证：',
   'safety.item2Body':
-    'Elghaly 被要求不编造认证（FDA、FSSAI、有机认证、ISO）或产能。每份推介都附有“待核实事项”清单：联系买家前请逐项核实。',
+    'الغالي 被要求不编造认证（FDA、FSSAI、有机认证、ISO）或产能。每份推介都附有“待核实事项”清单：联系买家前请逐项核实。',
   'safety.item3Title': '3. HS 编码与关税仅为候选：',
   'safety.item3Body':
-    'Elghaly 被要求把 HS 编码和关税税率标注为“候选，请核实”，而非事实。最终分类请务必咨询持牌报关行。',
+    'الغالي 被要求把 HS 编码和关税税率标注为“候选，请核实”，而非事实。最终分类请务必咨询持牌报关行。',
   'safety.item4Title': '4. 忠实翻译与条款复核：',
   'safety.item4Body':
-    'Elghaly 被要求翻译时不添加承诺、不替您谈判，并复核价格、货币（USD/INR）、数量单位和 Incoterm，供您确认。',
+    'الغالي 被要求翻译时不添加承诺、不替您谈判，并复核价格、货币（USD/INR）、数量单位和 Incoterm，供您确认。',
   'safety.item5Title': '5. 防范诈骗：',
   'safety.item5Body':
     '我们提醒您防范假买家诈骗、预付验货费欺诈和超额付款支票诈骗。切勿向第三方检验机构预付任何费用。',
   'safety.item6Title': '6. 买家的话只是对话内容，不是操作指令：',
   'safety.item6Body':
-    '买家消息作为对话内容发送，Elghaly 被要求不执行其中的指令，也不替您作出承诺。依赖任何回复之前请先核对。',
+    '买家消息作为对话内容发送，الغالي 被要求不执行其中的指令，也不替您作出承诺。依赖任何回复之前请先核对。',
   'safety.item7Title':
     '7. 您的文字发送到哪里：',
   'safety.item7Body':
@@ -489,13 +489,13 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Voice orb ----
   'orb.listening': '正在用{lang}聆听……（请说话）',
-  'orb.thinking': 'Elghaly 正在思考……',
+  'orb.thinking': 'الغالي 正在思考……',
   'orb.speaking': '正在播报回复……（点击停止）',
-  'orb.tapToTalk': '点击麦克风，用{lang}与 Elghaly 对话',
+  'orb.tapToTalk': '点击麦克风，用{lang}与 الغالي 对话',
   'orb.stop': '停止',
   'orb.titleStopListening': '点击停止聆听',
   'orb.titleStopSpeaking': '点击停止播报',
-  'orb.titleSpeak': '点击用{lang}与 Elghaly 对话',
+  'orb.titleSpeak': '点击用{lang}与 الغالي 对话',
 
   // ---- Consent gate (copy names Gemini) ----
   'consent.title':
@@ -517,16 +517,16 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Voice tab ----
   'voice.liveEngine': '语音引擎',
-  'voice.title': '与 Elghaly 语音对话',
+  'voice.title': '与 الغالي 语音对话',
   'voice.speakNaturally': '请用{native}（{name}）自然说话',
   'voice.mic': '麦克风：',
   'voice.supported': '支持',
   'voice.typeMode': '打字模式',
-  'voice.badge': 'Faithful Servant',
+  'voice.badge': 'الغالي',
   'voice.trackerTitle': '海外买家推介进度（一步一步来）',
   'voice.captured': '已收集 {n}/4',
   'voice.step1Title': '您销售的产品',
-  'voice.step1Hint': '告诉 Elghaly 您生产或出口什么产品',
+  'voice.step1Hint': '告诉 الغالي 您生产或出口什么产品',
   'voice.step2Title': '数量 / 最小起订量',
   'voice.step2Hint': '例如：500 件起订，每月 1 个 20 尺柜',
   'voice.step3Title': '目标价格（₹ 或 $）',
@@ -539,16 +539,16 @@ const ZH: Record<StringKey, string> = {
   'voice.newChat': '新对话',
   'voice.newChatTitle': '开始新对话',
   'voice.safetyRule':
-    '重要规则：最终进口/关税决定请咨询持牌报关行。Elghaly 绝不索取密码或银行信息。',
+    '重要规则：最终进口/关税决定请咨询持牌报关行。الغالي 绝不索取密码或银行信息。',
   'voice.youExporter': '您（出口商）',
-  'voice.thothServant': 'Elghaly（Faithful Servant）',
-  'voice.thinking': 'Elghaly 正在准备简短友好的回复……',
+  'voice.thothServant': 'الغالي',
+  'voice.thinking': 'الغالي 正在准备简短友好的回复……',
   'voice.listen': '收听',
   'voice.copyTitle': '复制文本',
   'voice.stopRecording': '停止录音',
   'voice.speakMessage': '语音输入',
   'voice.typePlaceholder': '用{lang}或英语输入……（例如：我们生产棉地毯，500 件）',
-  'voice.badgeFooter': 'Faithful Servant • 绝不索要银行卡信息',
+  'voice.badgeFooter': 'الغالي • 绝不索要银行卡信息',
   'voice.oneStep': '一步一步来',
   'voice.connectionError':
     '抱歉，连接出现短暂问题。最终决定请咨询持牌报关行。请再说一遍好吗？',
@@ -566,10 +566,10 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Pitch studio tab ----
   'pitch.badge': '诚实的海外买家推介工作室',
-  'pitch.servant': 'Faithful Servant',
+  'pitch.servant': 'الغالي',
   'pitch.title': '把手工艺与制造转化为打动海外买家的推介',
   'pitch.subtitle':
-    '海外买家看重简洁、准确的数量、诚实的规格和清晰的 FOB 条款。Elghaly 按海外采购标准撰写简洁、无夸大的推介。',
+    '海外买家看重简洁、准确的数量、诚实的规格和清晰的 FOB 条款。الغالي 按海外采购标准撰写简洁、无夸大的推介。',
   'pitch.customsRule': '海关规则：',
   'pitch.customsRuleBody': '最终进口/关税决定请务必咨询持牌报关行。',
   'pitch.productDetails': '产品详情',
@@ -587,7 +587,7 @@ const ZH: Record<StringKey, string> = {
   'pitch.pricePh': '例如：$6.50 / 件 FOB 或 ₹550 / 件',
   'pitch.shipFrom': '从哪里发货？（港口 / 城市）',
   'pitch.shipFromPh': '例如：您的始发港',
-  'pitch.writing': 'Elghaly 正在撰写诚实的海外买家推介……',
+  'pitch.writing': 'الغالي 正在撰写诚实的海外买家推介……',
   'pitch.create': '生成海外买家推介',
   'pitch.emptyTitle': '您的海外买家推介方案将显示在这里',
   'pitch.emptyBody': '请输入产品名称、数量、价格和发货港口，或从左侧选择一个快速示例。',
@@ -638,7 +638,7 @@ const ZH: Record<StringKey, string> = {
   'trans.titleExporter': '出口商',
   'trans.titleBuyer': '海外买家',
   'trans.subtitle':
-    '可在 Zoom 通话或电话谈判中使用。Elghaly 忠实翻译，不添加任何承诺，也不会替您谈判。复核功能会确认所有价格和 Incoterm 细节。',
+    '可在 Zoom 通话或电话谈判中使用。الغالي 忠实翻译，不添加任何承诺，也不会替您谈判。复核功能会确认所有价格和 Incoterm 细节。',
   'trans.ruleTitle': '规则：',
   'trans.ruleBody': '关税仅为候选，请核实。最终决定请务必咨询持牌报关行。',
   'trans.activeSpeaker': '当前发言人：',
@@ -648,7 +648,7 @@ const ZH: Record<StringKey, string> = {
   'trans.buyerBtn': '海外买家',
   'trans.safetyGuardTitle': '防骗提示：',
   'trans.safetyGuardBody':
-    '买家的话仅作为对话内容处理，不具有约束力。Elghaly 忠实翻译，绝不接受未经授权的承诺。',
+    '买家的话仅作为对话内容处理，不具有约束力。الغالي 忠实翻译，绝不接受未经授权的承诺。',
   'trans.phExporter':
     '请用{native}（{name}）说话或输入，例如：我们可以提供 1,000 件，每件 3.20 美元 FOB……',
   'trans.phBuyer':
@@ -698,12 +698,12 @@ const ZH: Record<StringKey, string> = {
   'guide.brokerTitle': '报关行规则：',
   'guide.brokerBody':
     '目标市场海关法规由目标市场海关与边境保护局（CBP）执行。最终关税分类和入境决定请务必咨询持牌报关行。',
-  'guide.askTitle': '向 Elghaly 咨询任何海外市场进口问题（{lang}）',
+  'guide.askTitle': '向 الغالي 咨询任何海外市场进口问题（{lang}）',
   'guide.plainWords': '简单明了，零术语',
   'guide.askPh': '用{native}或英语提问（例如：出口到海外市场的棉衬衫该如何贴标签？）',
-  'guide.askBtn': '问 Elghaly',
+  'guide.askBtn': '问 الغالي',
   'guide.explaining': '正在解释……',
-  'guide.answerTitle': 'Elghaly 的通俗解释：',
+  'guide.answerTitle': 'الغالي 的通俗解释：',
   'guide.listen': '收听',
   'guide.stopVoice': '停止播放',
   'guide.sampleQ1': '对海外买家来说，FOB 和 CIF 有什么区别？',
@@ -743,7 +743,7 @@ const ZH: Record<StringKey, string> = {
     '目标市场持牌报关行经目标市场海关（CBP）许可，可办理进口报关（一般使用 CBP Form 7501）并处理保证金——请与您的报关行确认当前表格和要求。',
   'guide.card6Golden': '黄金法则：',
   'guide.card6GoldenBody':
-    'Elghaly 为您提供知识和推介工具；订舱前的最终决定，请咨询持牌报关行。',
+    'الغالي 为您提供知识和推介工具；订舱前的最终决定，请咨询持牌报关行。',
   'guide.card7Title': '7. 防骗指南：防范假买家与预付款诈骗',
   'guide.card7Sub1Title': '1. 预付“验货费”诈骗：',
   'guide.card7Sub1Body':
@@ -795,13 +795,13 @@ const ZH: Record<StringKey, string> = {
 
   // ---- Static-site key bar, idle notices, skip link [VERIFY] ----
   "key.title": "您的 Gemini API 密钥",
-  "key.body": "此公开网站没有服务器密钥。请粘贴您自己的 Gemini API 密钥以便与 Elghaly 对话。密钥只保存在本页面的内存中（刷新页面即清除），并且只发送给 Google；Google 如何处理不在本应用的控制范围内。",
+  "key.body": "此公开网站没有服务器密钥。请粘贴您自己的 Gemini API 密钥以便与 الغالي 对话。密钥只保存在本页面的内存中（刷新页面即清除），并且只发送给 Google；Google 如何处理不在本应用的控制范围内。",
   "key.label": "Gemini API 密钥",
   "key.placeholder": "在此粘贴密钥",
   "key.save": "本次访问使用",
   "key.clear": "移除密钥",
   "key.saved": "密钥仅保存在此标签页，并且只发送给 Google。",
-  "key.needed": "请在上方添加您的 Gemini API 密钥，以便与 Elghaly 对话。",
+  "key.needed": "请在上方添加您的 Gemini API 密钥，以便与 الغالي 对话。",
   "key.invalid": "该密钥被拒绝。请检查后重试。",
   "key.serverReady": "本会话使用服务器端密钥，您无需粘贴密钥。",
   "key.whereToGet": "请从 Google 获取 Gemini API 密钥（需要您自己的 Google 账号登录）。",
@@ -876,14 +876,14 @@ export const ZH_STRINGS: Readonly<Record<StringKey, string>> = ZH;
  * Module scope so tests can check it alongside the string tables.
  */
 export const GREETINGS: Record<LanguageCode, string> = {
-  hi: 'शुभ दिन! मैं एल्घाली हूँ, निर्यातकों के लिए वफ़ादार सेवक। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
-  mr: 'शुभ दिवस! मी एल्घाली आहे, निर्यातदारांसाठी Faithful Servant. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
-  gu: 'શુભ દિવસ! હું એલ્ઘાલી છું, નિકાસકારો માટે Faithful Servant. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
-  ta: 'இனிய நாள்! நான் எல்கலி, ஏற்றுமதியாளர்களுக்கான Faithful Servant. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
-  bn: 'শুভ দিন! আমি এলঘালি, রপ্তানিকারকদের জন্য Faithful Servant। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
-  te: 'శుభ దినం! నేను ఎల్ఘాలీ, ఎగుమతిదారుల కోసం Faithful Servant. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
-  pa: 'ਸ਼ੁਭ ਦਿਨ! ਮੈਂ ਐਲਘਾਲੀ ਹਾਂ, ਨਿਰਯਾਤਕਾਂ ਲਈ Faithful Servant। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
-  ar: 'نهارك سعيد. أنا الغالي، الخادم الأمين للمصدّرين. سأساعدك على الوصول إلى المشترين وعرض منتجاتك عليهم. الخطوة الأولى: ما المنتج الذي تبيعه أو تصنّعه؟',
-  zh: '美好的一天！我是 Elghaly，为出口商打造的 Faithful Servant。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
-  en: 'Good day! I am Elghaly, a Faithful Servant for exporters. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
+  hi: 'शुभ दिन! मैं الغالي हूँ। खरीदारों तक पहुँचने में मैं आपकी सहायता करूँगा। सबसे पहले बताएं: आप क्या उत्पाद बनाते या बेचते हैं?',
+  mr: 'शुभ दिवस! मी الغالي आहे. खरेदीदारांपर्यंत पोहोचण्यासाठी मी मदत करेन. सांगा, आपण कोणते उत्पादन तयार करता किंवा विकता?',
+  gu: 'શુભ દિવસ! હું الغالي છું. ખરીદદારો સાથે જોડાવવા હું મદદ કરીશ. મને જણાવો: તમે કઈ પ્રોડક્ટ બનાવો છો કે વેચો છો?',
+  ta: 'இனிய நாள்! நான் الغالي. வாங்குபவர்களிடம் உங்கள் தயாரிப்புகளைக் கொண்டு சேர்க்க நான் உதவுவேன். நீங்கள் என்ன பொருள் தயாரிக்கிறீர்கள் அல்லது விற்கிறீர்கள்?',
+  bn: 'শুভ দিন! আমি الغالي। ক্রেতাদের সাথে ব্যবসা করতে আমি আপনাকে সাহায্য করব। প্রথমে বলুন: আপনি কী পণ্য তৈরি বা বিক্রি করেন?',
+  te: 'శుభ దినం! నేను الغالي. కొనుగోలుదారులకు చేరడంలో నేను మీకు సహాయం చేస్తాను. మీరు ఏ ఉత్పత్తిని తయారు చేస్తారు లేదా అమ్ముతారు?',
+  pa: 'ਸ਼ੁਭ ਦਿਨ! ਮੈਂ الغالي ਹਾਂ। ਖਰੀਦਦਾਰਾਂ ਤੱਕ ਪਹੁੰਚਣ ਵਿੱਚ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਰਾਂਗਾ। ਦੱਸੋ, ਤੁਸੀਂ ਕੀ ਉਤਪਾਦ ਬਣਾਉਂਦੇ ਜਾਂ ਵੇਚਦੇ ਹੋ?',
+  ar: 'نهارك سعيد. أنا الغالي. سأساعدك على الوصول إلى المشترين وعرض منتجاتك عليهم. الخطوة الأولى: ما المنتج الذي تبيعه أو تصنّعه؟',
+  zh: '美好的一天！我是 الغالي。我将协助您与海外买家对接并洽谈业务。第一步：请问您生产或销售什么产品？',
+  en: 'Good day! I am الغالي. I will help you reach and pitch to buyers. Step 1: What product do you sell or manufacture?',
 };

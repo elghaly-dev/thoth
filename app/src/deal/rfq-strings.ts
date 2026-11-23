@@ -4,7 +4,7 @@ import type { LanguageCode } from '../types';
 const EN = {
   tab: 'Request a quote',
   title: 'Request a quote (RFQ)',
-  intro: 'Fill in what you want to buy. Elghaly turns it into the same request in English, Arabic, Hindi and Chinese. Nothing is added to your words.',
+  intro: 'Fill in what you want to buy. الغالي turns it into the same request in English, Arabic, Hindi and Chinese. Nothing is added to your words.',
   note: 'The request is a text you copy and send yourself. Nothing is sent from here.',
   draft: 'Write the request',
   quotesTitle: 'Your request',
@@ -39,7 +39,7 @@ const AR: Strings = {
 const HI: Strings = {
   tab: 'कोटेशन माँगें',
   title: 'कोटेशन माँगें (RFQ)',
-  intro: 'जो खरीदना है वह भरें। एल्घाली वही अनुरोध अंग्रेज़ी, अरबी, हिंदी और चीनी में बनाता है। आपके शब्दों में कुछ जोड़ा नहीं जाता।',
+  intro: 'जो खरीदना है वह भरें। الغالي वही अनुरोध अंग्रेज़ी, अरबी, हिंदी और चीनी में बनाता है। आपके शब्दों में कुछ जोड़ा नहीं जाता।',
   note: 'अनुरोध एक पाठ है जिसे आप ख़ुद कॉपी करके भेजते हैं। यहाँ से कुछ नहीं भेजा जाता।',
   draft: 'अनुरोध लिखें',
   quotesTitle: 'आपका अनुरोध',
@@ -56,7 +56,7 @@ const HI: Strings = {
 const ZH: Strings = {
   tab: '发起询价',
   title: '发起询价（RFQ）',
-  intro: '填写您想采购的内容。एल्घाली 会把它写成英语、阿拉伯语、印地语和中文的同一份询价，不会添加任何内容。',
+  intro: '填写您想采购的内容。الغالي 会把它写成英语、阿拉伯语、印地语和中文的同一份询价，不会添加任何内容。',
   note: '询价是一段文字，由您自己复制并发送。这里不会发送任何内容。',
   draft: '生成询价',
   quotesTitle: '您的询价',

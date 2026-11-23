@@ -1,12 +1,12 @@
-# Thoth — Faithful Servant for exporters
+# Thoth — «الغالي» for exporters
 
-Thoth is a Faithful Servant that helps
+Thoth and its assistant «الغالي» help
 exporters reach and talk to buyers: voice help, honest buyer pitches,
 translation, and import basics.
 
 - Site: [thoth.elghaly.dev](https://thoth.elghaly.dev)
 - Use Thoth: [thoth.elghaly.dev/use/](https://thoth.elghaly.dev/use/)
-- الخادم الأمين · Faithful Servant
+- The assistant is «الغالي» in every language.
 
 ## Run locally (server key)
 

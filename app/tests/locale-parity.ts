@@ -6,6 +6,8 @@
  * - is in the wrong script (e.g. a Devanagari letter in Bengali text; the
  *   danda "।" / "॥" is shared punctuation and allowed);
  * - leaves the English text unchanged for a translated key.
+ * The assistant's name «الغالي» is written in Arabic script in every language (owner rule), so it is
+ * the one foreign-script word allowed in any table, and a label that is the name alone counts as translated.
  * Also checks every greeting, that <html lang> and <html dir> follow the UI
  * language, and that the set of locales is an explicit allowlist (ar included
  * on purpose: Arabic is a full RTL table, [VERIFY] by a native speaker).
@@ -47,6 +49,8 @@ const RTL_ALLOWLIST = new Set<string>(['ar']);
 // Letters of every non-Latin script the tables use (Indic + Arabic), so a
 // letter from the wrong script is caught in any table.
 const ALL_INDIC = /[ऀ-ॣ०-ൿ؀-ۿݐ-ݿࢠ-ࣿ]/g;
+const NAME = 'الغالي';
+const withoutName = (s: string) => s.split(NAME).join('');
 const placeholders = (s: string) => (s.match(/\{[a-z]+\}/gi) || []).sort().join(',');
 
 function wrongScript(code: string, text: string): string[] {
@@ -88,13 +92,13 @@ for (const [code, own] of Object.entries(SCRIPTS)) {
     // the doubled English name) but may never invent one.
     const enPh = new Set(placeholders(en).split(',').filter(Boolean));
     check(placeholders(value as string).split(',').filter(Boolean).every((p) => enPh.has(p)), `${code}.${key}: placeholders are a subset of EN (${placeholders(en)})`);
-    const bad = wrongScript(code, value as string);
+    const bad = wrongScript(code, withoutName(value as string));
     check(bad.length === 0, `${code}.${key}: only ${code} script letters (found ${bad.join('')})`);
-    check(own.test(value as string) || /^[A-Za-z ]+$/.test(en), `${code}.${key}: written in ${code} script`);
-    check(value !== en || /^[A-Za-z ]+$/.test(en), `${code}.${key}: not left in English`);
+    check(own.test(value as string) || /^[A-Za-z ]+$/.test(en) || value === NAME, `${code}.${key}: written in ${code} script`);
+    check(value !== en || /^[A-Za-z ]+$/.test(en) || value === NAME, `${code}.${key}: not left in English`);
   }
   const g = GREETINGS[code as LanguageCode];
-  const badG = wrongScript(code, g);
+  const badG = wrongScript(code, withoutName(g));
   check(own.test(g) && badG.length === 0, `${code}: greeting in ${code} script only (found ${badG.join('')})`);
 
   // tx uses the table, and falls back to English for keys it lacks
