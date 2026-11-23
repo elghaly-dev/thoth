@@ -1,0 +1,91 @@
+# Security checks: full-history secret scan, personal-data scan, CI supply-chain check
+# and dependency audit. Every job fails on a hit; nothing here may be skipped or
+# softened to go green. Read-only token, no secrets but the scan fingerprints.
+name: security
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Branches present (fetch-depth 0 fetches every branch)
+        run: git branch -r | wc -l
+      - name: Install gitleaks 8.28.0 (pinned by sha256)
+        run: |
+          curl -sSfL -o /tmp/gitleaks.tgz https://github.com/gitleaks/gitleaks/releases/download/v8.28.0/gitleaks_8.28.0_linux_x64.tar.gz
+          echo "a65b5253807a68ac0cafa4414031fd740aeb55f54fb7e55f386acb52e6a840eb  /tmp/gitleaks.tgz" | sha256sum -c -
+          tar -xzf /tmp/gitleaks.tgz -C /tmp gitleaks
+      - name: gitleaks over all history on all branches (redacted)
+        run: /tmp/gitleaks git . --log-opts="--all" --redact --no-banner --exit-code 1
+
+  personal-data-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Branches present (fetch-depth 0 fetches every branch)
+        run: git branch -r | wc -l
+      - name: Legal name and personal e-mail scan (tree and full history)
+        env:
+          PERSONAL_SCAN_FINGERPRINTS: ${{ secrets.PERSONAL_SCAN_FINGERPRINTS }}
+        run: python3 .github/security/personal_scan.py
+
+  workflow-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - name: Actions pinned to SHAs, least permissions, no PR-target trigger
+        run: python3 .github/security/check_workflows.py
+      - name: Scanner self-test
+        run: python3 .github/security/test_scanners.py
+  dependency-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+      - name: Every dependency pinned to an exact version
+        run: |
+          node -e '
+            const p = require("./package.json"); const bad = [];
+            for (const k of ["dependencies", "devDependencies", "optionalDependencies", "overrides"])
+              for (const [n, v] of Object.entries(p[k] || {}))
+                if (typeof v === "string" && !/^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$/.test(v)) bad.push(k + ": " + n + " " + v);
+            if (bad.length) { bad.forEach((b) => console.log("FAIL not exact: " + b)); process.exit(1); }
+            console.log("PASS: every dependency is an exact version");'
+      - name: Lockfile matches package.json
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: npm audit (any severity fails)
+        run: npm audit --audit-level=low

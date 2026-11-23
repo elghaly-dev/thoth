@@ -1,0 +1,5 @@
+{
+ "note": "Thoth is public: the name fingerprints come from the PERSONAL_SCAN_FINGERPRINTS Actions secret, never from this file.",
+ "email_allow_paths": ["agent/runtime/generated/agent-runner.bundle.js"],
+ "email_allow_note": "Third-party library author credit inside a generated bundle."
+}

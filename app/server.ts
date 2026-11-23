@@ -11,7 +11,6 @@ import {
   checkOrigin,
   issueSessionToken,
   readCookie,
-  redact,
   secretsEqual,
   verifySessionToken,
 } from './server-security';
@@ -51,10 +50,15 @@ const TRUST_PROXY_HOPS = (() => {
 app.set('trust proxy', TRUST_PROXY_HOPS);
 app.disable('x-powered-by');
 
+// Who may frame the app: AI Studio's preview, on its two hosts, and nobody else (never '*').
+// It is sent as its own enforced CSP header on every response, dev and production, because
+// X-Frame-Options cannot allow a single origin. If the AI Studio preview console names another
+// AI Studio ancestor ("violates ... frame-ancestors"), add that exact origin here.
+const FRAME_ANCESTORS = 'frame-ancestors https://aistudio.google.com https://ai.studio';
+
 // Security headers on every response. The CSP matches the Pages
-// build (vite.config.ts PAGES_CSP) and adds frame-ancestors 'none', which only a header can
+// build (vite.config.ts PAGES_CSP) and adds frame-ancestors, which only a header can
 // set; it is sent in production only, because the Vite dev server injects inline scripts.
-// frame-ancestors 'none' also refuses the AI Studio preview frame: open the app in its own tab.
 // Report-Only first: violations are reported in the browser console, nothing is blocked,
 // until a real-browser pass shows no violations. The enforced policy already in main
 // (the Pages meta CSP in vite.config.ts) is unchanged. No wss: or worklet blob: source is
@@ -71,12 +75,12 @@ const SERVER_CSP = [
   "object-src 'none'",
   "base-uri 'none'",
   "form-action 'self'",
-  "frame-ancestors 'none'",
+  FRAME_ANCESTORS,
 ].join('; ');
 app.use((_req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Strict-Transport-Security', 'max-age=604800');
   res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Content-Security-Policy', FRAME_ANCESTORS);
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'microphone=(self), camera=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
@@ -85,6 +89,15 @@ app.use((_req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use(express.json({ limit: '100kb' }));
+
+// Logs only the error's class and HTTP status: never its message, the request body, a key
+// or a token (a provider message can echo the request).
+function logFailure(label: string, err: unknown): void {
+  const e = err as { name?: unknown; status?: unknown; code?: unknown } | null;
+  const name = e && typeof e.name === 'string' ? e.name : typeof err;
+  const status = e && (typeof e.status === 'number' || typeof e.status === 'string') ? ` status=${e.status}` : '';
+  console.warn(`${label}: ${name}${status}`);
+}
 
 // Liveness for the browser runtime detector. Never includes the key or
 // the proxy secret — only whether a key is configured on this server.
@@ -133,12 +146,6 @@ if (!HAS_PROXY_SECRET) {
   );
 }
 
-// Every server log line goes through redact(): the Gemini key, the proxy
-// secret, Bearer/session tokens and key=/token= fields never reach logs.
-function logRedacted(level: 'warn' | 'error', label: string, err?: unknown): void {
-  const line = err === undefined ? label : `${label} ${redact(err, [GEMINI_API_KEY, THOTH_PROXY_SECRET])}`;
-  console[level](redact(line, [GEMINI_API_KEY, THOTH_PROXY_SECRET]));
-}
 
 const PROXY_RATE_LIMIT_PER_MINUTE = 20;
 const proxyRateLimiter = rateLimit({
@@ -374,7 +381,7 @@ async function generateWithFallback(params: {
       if (isAuthError(err)) {
         throw err;
       }
-      logRedacted('warn', `Model ${model} request error, trying fallback...`, err);
+      logFailure(`Model ${model} request failed, trying fallback`, err);
       lastError = err;
     }
   }
@@ -437,11 +444,11 @@ Remember: Keep answers short, friendly, and address one step at a time!`;
         res.status(authStatus).json(providerAuthErrorBody(authStatus));
         return;
       }
-      logRedacted('warn', 'Model call failed; returning a labelled error:', modelErr);
+      logFailure('Model call failed; returning a labelled error', modelErr);
       res.status(502).json({ error: GENERIC_FAILURE });
     }
   } catch (error: unknown) {
-    logRedacted('error', 'Chat error:', error);
+    logFailure('Chat error', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -528,7 +535,7 @@ Return a JSON response with:
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    logRedacted('error', 'Pitch error:', error);
+    logFailure('Pitch error', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -558,7 +565,7 @@ app.post('/api/deal-facts', async (req: Request, res: Response) => {
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    logRedacted('error', 'Deal facts error:', error);
+    logFailure('Deal facts error', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -649,7 +656,7 @@ STRICT RULES:
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    logRedacted('error', 'Translation error:', error);
+    logFailure('Translation error', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -691,7 +698,7 @@ STRICT MANDATORY RULES:
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    logRedacted('error', 'Import guide error:', error);
+    logFailure('Import guide error', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });
@@ -759,7 +766,7 @@ app.post('/api/tts', async (req: Request, res: Response) => {
       res.status(authStatus).json(providerAuthErrorBody(authStatus));
       return;
     }
-    logRedacted('warn', 'TTS error (will fallback to browser Web Speech):', error);
+    logFailure('TTS error (browser speech takes over)', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });

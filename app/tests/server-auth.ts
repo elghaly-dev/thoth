@@ -168,7 +168,8 @@ try {
   const fail = await req('/api/pitch', { headers: { origin: base, cookie }, body: JSON.stringify({ product: 'brass lamps' }) });
   check(fail.status >= 500 && !fail.text.includes(KEY), `provider failure -> generic error (got ${fail.status})`);
   await new Promise((r) => setTimeout(r, 300));
-  check(log.includes('[REDACTED]'), 'the echoed key was logged only as [REDACTED]');
+  // Logs keep only the error's type and HTTP status, never its message (stricter than redaction).
+  check(/Pitch error: \w+/.test(log) && !/upstream saw/.test(log), 'the failure was logged as its type only, never the provider message');
   check(!log.includes(KEY), 'server log never contains the Gemini key');
   check(!log.includes(SECRET), 'server log never contains the proxy secret');
 } finally {
