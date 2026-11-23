@@ -5,6 +5,8 @@ import { VoiceAssistantTab } from './components/VoiceAssistantTab';
 import { PitchStudioTab } from './components/PitchStudioTab';
 import { LiveTranslatorTab } from './components/LiveTranslatorTab';
 import { ImportGuideTab } from './components/ImportGuideTab';
+import { DealMinuteTab } from './components/DealMinuteTab';
+import { ds } from './deal/strings';
 import { SafetyModal } from './components/SafetyModal';
 import { ApiKeyBar } from './components/ApiKeyBar';
 import { OnDeviceTab } from './components/OnDeviceTab';
@@ -14,11 +16,17 @@ import { dt } from './ondevice/strings';
 import { tx, langDisplayName } from './i18n';
 import { CREDIT_FOOTER } from './credit';
 import { initialLanguage, saveLanguage, dirFor } from './utils/lang-pref';
+import { Welcome } from './components/Welcome';
+import { SettingsSheet } from './components/SettingsSheet';
+import { applyTheme, savedTheme, saveTheme, savedName, saveName, hasWelcomed, markWelcomed } from './theme/prefs';
+import type { PaletteId } from './theme/palettes';
+import { ts } from './theme/strings';
 import {
   Mic,
   Sparkles,
   ArrowRightLeft,
   BookOpen,
+  Timer,
   ShieldCheck,
   ShieldAlert,
   Heart,
@@ -30,7 +38,7 @@ export default function App() {
   // ?lang=, then the saved manual pick (localStorage, code only), then the
   // device language, then English.
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>(() => initialLanguage());
-  const [activeTab, setActiveTab] = useState<'device' | 'assistant' | 'pitch' | 'translate' | 'guide'>('assistant');
+  const [activeTab, setActiveTab] = useState<'device' | 'assistant' | 'pitch' | 'deal' | 'translate' | 'guide'>('assistant');
   // The on-device Faithful Servant is the default where the phone has WebGPU;
   // the bring-your-own-key cloud tabs stay available either way.
   const [gpu, setGpu] = useState<GpuCheck | null>(null);
@@ -46,6 +54,13 @@ export default function App() {
     };
   }, []);
   const [isMuted, setIsMuted] = useState(false);
+  // Look and name: on this device only (see theme/prefs.ts).
+  const [theme, setTheme] = useState<PaletteId>(() => savedTheme());
+  const [userName, setUserName] = useState(() => savedName());
+  const [welcomed, setWelcomed] = useState(() => hasWelcomed());
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const pickTheme = (id: PaletteId) => { applyTheme(id); saveTheme(id); setTheme(id); };
+  const pickName = (n: string) => { saveName(n); setUserName(n); };
   const [isSafetyModalOpen, setIsSafetyModalOpen] = useState(false);
   const [licencesOpen, setLicencesOpen] = useState(false);
 
@@ -103,10 +118,14 @@ export default function App() {
         isMuted={isMuted}
         onToggleMute={() => setIsMuted(!isMuted)}
         onOpenSafetyModal={() => setIsSafetyModalOpen(true)}
+        onOpenSettings={() => setSettingsOpen(true)}
       />
 
       {/* Main Content Area */}
       <main id="thoth-main" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+        <p className="thoth-display text-3xl sm:text-4xl text-white pt-2">
+          {userName ? ts(lang, 'welcome').replace('{name}', userName) : ts(lang, 'welcomeAnon')}
+        </p>
         <ApiKeyBar lang={lang} />
         {/* Navigation Tabs Bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
@@ -188,6 +207,21 @@ export default function App() {
               <BookOpen className="w-4 h-4 text-indigo-300" />
               <span>{tx(lang, 'app.tabGuide')}</span>
             </button>
+
+            {/* Tab 5: Deal in a Minute */}
+            <button
+              type="button"
+              aria-current={activeTab === 'deal' ? 'page' : undefined}
+              onClick={() => setActiveTab('deal')}
+              className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === 'deal'
+                  ? 'bg-gradient-to-r from-amber-600 to-rose-600 text-white shadow-md shadow-amber-950/60'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              }`}
+            >
+              <Timer className="w-4 h-4 text-amber-300" />
+              <span>{ds(lang, 'tab')}</span>
+            </button>
           </div>
 
           {/* Language context quick notice */}
@@ -223,6 +257,10 @@ export default function App() {
 
         {activeTab === 'guide' && (
           <ImportGuideTab currentLang={currentLang} />
+        )}
+
+        {activeTab === 'deal' && (
+          <DealMinuteTab currentLang={currentLang} />
         )}
       </main>
 
@@ -266,6 +304,19 @@ export default function App() {
         </div>
         <p lang="en" className="mt-4 text-center text-[11px] tracking-widest text-slate-400">{CREDIT_FOOTER}</p>
       </footer>
+      {settingsOpen && (
+        <SettingsSheet lang={lang} theme={theme} name={userName} onTheme={pickTheme} onName={pickName} onClose={() => setSettingsOpen(false)} />
+      )}
+      {!welcomed && (
+        <Welcome
+          currentLang={currentLang}
+          theme={theme}
+          onTheme={pickTheme}
+          onName={pickName}
+          onLanguage={pickLanguage}
+          onDone={() => { markWelcomed(); setWelcomed(true); }}
+        />
+      )}
       {licencesOpen && <LicencesModal lang={lang} onClose={() => setLicencesOpen(false)} />}
 
       {/* Safety & Charter Modal */}

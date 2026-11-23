@@ -38,7 +38,7 @@ export const ConsentGate: React.FC<ConsentGateProps> = ({ lang, accepted, onAcce
       </div>
       <button
         onClick={onAccept}
-        className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition-colors cursor-pointer shrink-0"
+        className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-colors cursor-pointer shrink-0"
       >
         {tx(lang, 'consent.accept')}{/* i18n consent.accept; body copy names Gemini */}
       </button>

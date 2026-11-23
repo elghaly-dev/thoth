@@ -10,6 +10,7 @@
 import { detectRuntime, getRuntime, getUserKey, rejectUserKey } from './runtime';
 import {
   browserChat,
+  browserDealFacts,
   browserImportGuide,
   browserPitch,
   browserTranslate,
@@ -109,6 +110,10 @@ export async function postModel<T>(path: string, body: unknown, signal?: AbortSi
     case '/api/import-guide': {
       const b = body as { query: string; userLanguage: string };
       return (await browserImportGuide(key, b.query, b.userLanguage, signal)) as T;
+    }
+    case '/api/deal-facts': {
+      const b = body as { transcript: string };
+      return (await browserDealFacts(key, b.transcript, signal)) as T;
     }
     default:
       throw new Error(`No static-mode handler for ${path}`);

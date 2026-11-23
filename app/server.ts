@@ -15,6 +15,7 @@ import {
   verifySessionToken,
 } from './server-security';
 import { localizeHtmlShell, LANG_COOKIE } from './src/utils/lang-pref';
+import { EXTRACT_INSTRUCTION, MAX_TRANSCRIPT } from './src/deal/deal';
 
 dotenv.config();
 
@@ -530,6 +531,36 @@ Return a JSON response with:
       return;
     }
     logFailure('Pitch error', error);
+    res.status(500).json({ error: GENERIC_FAILURE });
+  }
+});
+
+// Deal in a Minute: extract the facts the merchant said. The model only extracts; the client
+// keeps a value only if it is found in the transcript, and the quotes are fixed templates.
+app.post('/api/deal-facts', async (req: Request, res: Response) => {
+  try {
+    if (!modelClient(res)) return;
+    let transcript: string | undefined;
+    try {
+      const body = bodyOf(req, ['transcript']);
+      transcript = str(body, 'transcript', MAX_TRANSCRIPT, true);
+    } catch (e) {
+      if (e instanceof InputError) { badRequest(res); return; }
+      throw e;
+    }
+    const raw = await generateWithFallback({
+      contents: [{ role: 'user', parts: [{ text: transcript as string }] }],
+      systemInstruction: EXTRACT_INSTRUCTION,
+      responseMimeType: 'application/json',
+    });
+    res.json({ raw: typeof raw === 'string' ? raw : '' });
+  } catch (error: unknown) {
+    const authStatus = authStatusOf(error);
+    if (authStatus) {
+      res.status(authStatus).json(providerAuthErrorBody(authStatus));
+      return;
+    }
+    logRedacted('error', 'Deal facts error:', error);
     res.status(500).json({ error: GENERIC_FAILURE });
   }
 });

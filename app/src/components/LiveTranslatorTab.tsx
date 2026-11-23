@@ -18,6 +18,8 @@ import {
   CheckCircle,
   FileCheck2,
   AlertTriangle,
+  X,
+  ArrowRight,
 } from 'lucide-react';
 import {
   playTextToSpeech,
@@ -318,7 +320,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
             className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
             aria-label={tx(lang, 'common.dismiss')}
           >
-            ✕
+            <X className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
       )}
@@ -330,7 +332,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
             className="text-rose-300 hover:text-white shrink-0 cursor-pointer"
             aria-label={tx(lang, 'common.dismiss')}
           >
-            ✕
+            <X className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
       )}
@@ -552,7 +554,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                     {isExporter ? tx(lang, 'trans.exporterLabel') : tx(lang, 'trans.buyerLabel')}
                   </span>
                   <span className="text-[11px] text-slate-400">
-                    {langDisplayName(lang, record.sourceLang)} ➔ {langDisplayName(lang, record.targetLang)}
+                    {langDisplayName(lang, record.sourceLang)} <ArrowRight className="inline w-3 h-3 mx-0.5 rtl:-scale-x-100" aria-hidden="true" /> {langDisplayName(lang, record.targetLang)}
                   </span>
                 </div>
                 <span className="text-[10px] text-slate-400">
