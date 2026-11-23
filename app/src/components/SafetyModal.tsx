@@ -60,7 +60,7 @@ export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose, lang 
         </button>
 
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+          <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div>
@@ -89,7 +89,7 @@ export const SafetyModal: React.FC<SafetyModalProps> = ({ isOpen, onClose, lang 
           </div>
 
           <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 flex items-start gap-3">
-            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+            <AlertTriangle className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
             <div>
               <strong className="text-white">{tx(lang, 'safety.item3Title')}</strong> {tx(lang, 'safety.item3Body')}
             </div>

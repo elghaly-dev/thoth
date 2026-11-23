@@ -306,7 +306,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
       <ConsentGate lang={lang} accepted={hasConsented} onAccept={() => setHasConsented(true)} />
 
       {idleClosed && (
-        <div role="status" className="bg-amber-950/40 border border-amber-800/50 rounded-2xl p-3.5 text-xs text-amber-100">
+        <div role="status" className="bg-violet-950/40 border border-violet-800/50 rounded-2xl p-3.5 text-xs text-violet-100">
           {tx(lang, 'trans.idleClosed')}
         </div>
       )}
@@ -355,8 +355,8 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
         </div>
 
         {/* Customs broker notice */}
-        <div className="bg-slate-950/70 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-300 flex items-start gap-2 max-w-xs shrink-0">
-          <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+        <div className="bg-slate-950/70 border border-violet-500/30 rounded-xl p-3 text-xs text-violet-300 flex items-start gap-2 max-w-xs shrink-0">
+          <ShieldAlert className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
           <div className="text-[11px] leading-snug">
             <strong>{tx(lang, 'trans.ruleTitle')}</strong> {tx(lang, 'trans.ruleBody')}
           </div>
@@ -648,13 +648,13 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
               {record.keyTerms && record.keyTerms.length > 0 && (
                 <div className="mt-3 pt-2.5 border-t border-slate-800/60 flex flex-wrap items-center gap-2 text-xs">
                   <span className="text-[11px] text-slate-400 flex items-center gap-1">
-                    <Tag className="w-3 h-3 text-amber-400" />
+                    <Tag className="w-3 h-3 text-violet-400" />
                     {tx(lang, 'trans.exactTerms')}
                   </span>
                   {record.keyTerms.map((term, i) => (
                     <span
                       key={i}
-                      className="px-2 py-0.5 rounded-md bg-slate-800 text-amber-300 border border-slate-700 text-[11px] font-mono"
+                      className="px-2 py-0.5 rounded-md bg-slate-800 text-violet-300 border border-slate-700 text-[11px] font-mono"
                     >
                       {term}
                     </span>
@@ -663,10 +663,10 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
               )}
 
               {/* Fix 3: Read back price, currency (INR/USD), units, and Incoterm for confirmation */}
-              <div className="mt-3 p-3 rounded-xl bg-slate-950 border border-amber-500/30 text-xs">
+              <div className="mt-3 p-3 rounded-xl bg-slate-950 border border-violet-500/30 text-xs">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-bold text-amber-300 flex items-center gap-1.5 text-xs">
-                    <FileCheck2 className="w-3.5 h-3.5 text-amber-400" />
+                  <span className="font-bold text-violet-300 flex items-center gap-1.5 text-xs">
+                    <FileCheck2 className="w-3.5 h-3.5 text-violet-400" />
                     {tx(lang, 'trans.readbackTitle')}
                   </span>
                   <button
@@ -703,7 +703,7 @@ export const LiveTranslatorTab: React.FC<LiveTranslatorTabProps> = ({ currentLan
                   </div>
                   <div className="bg-slate-900 p-2 rounded-lg border border-slate-800">
                     <span className="text-slate-400 block text-[10px] uppercase">{tx(lang, 'trans.units')}</span>
-                    <span className="font-semibold text-amber-300">
+                    <span className="font-semibold text-violet-300">
                       {record.confirmationReadback?.units || record.keyTerms?.find(t => t.toLowerCase().includes('pcs') || t.toLowerCase().includes('piece') || t.toLowerCase().includes('kg') || t.toLowerCase().includes('ton') || t.toLowerCase().includes('pallet')) || tx(lang, 'trans.verifyUnits')}
                     </span>
                   </div>

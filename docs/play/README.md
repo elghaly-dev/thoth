@@ -1,6 +1,6 @@
 # Thoth on Google Play: owner pack (draft, nothing submitted)
 
-Prepared for review only. Nothing has been sent to Google Play. The Android app is the Trusted
+Prepared for review. Nothing has been sent to Google Play. The Android app is the Trusted
 Web Activity in `android/` (package `dev.elghaly.thoth`, now compile and target SDK 36, the
 current Play target level). It opens `https://thoth.elghaly.dev/use/`.
 
@@ -31,7 +31,7 @@ Suggested note for the reviewer:
 > No login is needed. Every screen opens without an account. To see answers, either use
 > "Faithful Servant on this phone" (a one-time download of about 291 MB on a phone with WebGPU)
 > or paste your own Gemini key in the key box at the top; the key stays in the page's memory
-> only and is sent only to Google.
+> and goes to Google alone.
 
 ## Play data-disclosure form (proposed answers; owner confirms)
 
@@ -39,12 +39,12 @@ These match what the app does today (checked in the code at main c544ba0):
 
 | Data | Proposed answer | What the app does |
 |---|---|---|
-| Messages / other user-generated content (what the exporter types) | Collected: yes, only when the person uses their own Gemini key. Shared: no (sent only to the service the person chose, at their request). Processed ephemerally: yes. Optional: yes. Purpose: app functionality | With the person's own key, the text goes from the browser straight to Google's Gemini service. With the on-device Faithful Servant, nothing leaves the phone. Elghaly LLC never receives it |
-| Audio (voice) | Not collected by the app | The microphone is used only after a tap; speech-to-text is the browser's own speech service (in Chrome on Android, Google processes the audio). Stated on the privacy page |
+| Messages / other user-generated content (what the exporter types) | Collected: yes, when the person uses their own Gemini key. Shared: no (sent to the service the person chose, at their request, and to no one else). Processed ephemerally: yes. Optional: yes. Purpose: app functionality | With the person's own key, the text goes from the browser straight to Google's Gemini service. With the on-device Faithful Servant, nothing leaves the phone. Elghaly LLC never receives it |
+| Audio (voice) | Not collected by the app | The microphone is used after a tap, never before; speech-to-text is the browser's own speech service (in Chrome on Android, Google processes the audio). Stated on the privacy page |
 | Personal info, financial info, location, contacts, photos, files, health, device IDs | Not collected | None of these is requested or sent |
 | App activity, app info and performance (analytics, crash logs) | Not collected | No analytics, no crash reporting, no telemetry (checked by `test:network`) |
-| Encrypted in transit | Yes | HTTPS only; the Android wrapper turns cleartext off |
-| Deletion | Nothing is held by Elghaly LLC; clearing site data or uninstalling removes everything on the phone | The only stored items are the language code (browser storage + a small `lang` cookie) and the model files if downloaded |
+| Encrypted in transit | Yes | HTTPS; the Android wrapper turns cleartext off |
+| Deletion | Nothing is held by Elghaly LLC; clearing site data or uninstalling removes everything on the phone | The stored items are the language code (browser storage + a small `lang` cookie), the look and the name chosen at first launch (`localStorage`, never sent anywhere) and the model files if downloaded |
 
 Note for the owner: models.elghaly.dev and GitHub Pages see IP addresses as any web host does;
 the privacy page says so.
@@ -75,14 +75,14 @@ Full description (EN):
 >   back word for word, so nothing changes in translation.
 > - Import Basics: plain answers on FOB, CIF, documents and first steps. HS codes and duty rates
 >   are shown as candidates to check with a licensed customs broker, never as final.
-> - Talk with Thoth: ask by voice, hear the answer.
+> - Talk with Elghaly: ask by voice, hear the answer.
 > - Faithful Servant on this phone: after a one-time download of about 291 MB, it explains and
 >   translates trade messages on the phone itself. Needs a phone with WebGPU.
 > - Ten languages: Hindi, Marathi, Gujarati, Bengali, Tamil, Telugu, Punjabi, Arabic, Chinese
 >   and English. Opens in your phone's language.
 >
 > No account and no sign-in. Thoth collects nothing about you: no ads, no analytics. You can
-> also use your own Gemini key; it stays in the page's memory and goes only to Google.
+> also use your own Gemini key; it stays in the page's memory and goes to Google alone.
 >
 > Privacy policy: thoth.elghaly.dev/privacy/
 
@@ -96,14 +96,14 @@ Full description (AR) [VERIFY: native Arabic review before submission]:
 >   يتغير شيء في الترجمة.
 > - أساسيات الاستيراد: إجابات واضحة عن FOB وCIF والمستندات والخطوات الأولى. تظهر رموز HS
 >   والرسوم الجمركية كاحتمالات يجب التحقق منها مع مخلّص جمركي مرخّص، وليست نهائية.
-> - تحدّث مع Thoth: اسأل بصوتك واسمع الإجابة.
+> - تحدّث مع الغالي: اسأل بصوتك واسمع الإجابة.
 > - الخادم الأمين على هذا الهاتف: بعد تنزيل لمرة واحدة بحجم نحو ٢٩١ ميغابايت، يشرح الرسائل
 >   التجارية ويترجمها على الهاتف نفسه. يحتاج هاتفًا يدعم WebGPU.
 > - عشر لغات: الهندية والماراثية والغوجاراتية والبنغالية والتاميلية والتيلوغوية والبنجابية
 >   والعربية والصينية والإنجليزية. يفتح بلغة هاتفك.
 >
 > لا حساب ولا تسجيل دخول. لا يجمع Thoth أي شيء عنك: لا إعلانات ولا تحليلات. ويمكنك أيضًا
-> استخدام مفتاح Gemini الخاص بك؛ يبقى في ذاكرة الصفحة ويذهب إلى Google فقط.
+> استخدام مفتاح Gemini الخاص بك؛ يبقى في ذاكرة الصفحة ويذهب إلى Google وحده.
 >
 > سياسة الخصوصية: thoth.elghaly.dev/ar/privacy/
 

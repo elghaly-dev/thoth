@@ -37,7 +37,7 @@ node /tmp/agentic-web/skills/agentify-website/scripts/serve_site.mjs agent --por
 Open http://127.0.0.1:8080/, open **⚙ AI model settings**, add a key **with a spending limit**, and try the five sample queries. The last one ("Find me a buyer…") must be declined.
 
 ## LLM provider
-The default router is hosted Otari (the challenge's partner; registrants get free credits) with `alibaba/qwen3.8-flash`. OpenAI and OpenRouter also work from the browser. Using Gemini through its OpenAI-compatible endpoint is **UNSURE**: test that it allows browser calls (CORS) and tool calls before relying on it.
+The default router is hosted Otari (the challenge's partner; registrants get credits) with `alibaba/qwen3.8-flash`. OpenAI and OpenRouter also work from the browser. Using Gemini through its OpenAI-compatible endpoint is **UNSURE**: test that it allows browser calls (CORS) and tool calls before relying on it.
 
 ## Limits
 - Static page. The network file and its instructions are public.

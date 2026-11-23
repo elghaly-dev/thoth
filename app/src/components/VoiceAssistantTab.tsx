@@ -335,7 +335,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         <ConsentGate lang={lang} accepted={hasConsented} onAccept={() => setHasConsented(true)} />{/* i18n consent copy names Gemini */}
 
         {idleClosed && (
-          <div role="status" className="bg-amber-950/40 border border-amber-800/50 rounded-2xl p-3.5 text-xs text-amber-100">
+          <div role="status" className="bg-violet-950/40 border border-violet-800/50 rounded-2xl p-3.5 text-xs text-violet-100">
             {tx(lang, 'voice.idleClosed')}
           </div>
         )}
@@ -395,7 +395,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-lg">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-              <Layers className="w-4 h-4 text-amber-400" />
+              <Layers className="w-4 h-4 text-violet-400" />
               {tx(lang, 'voice.trackerTitle')}
             </h3>
             <span className="text-[11px] text-slate-400">
@@ -422,7 +422,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
               </div>
               <div className="flex-1 min-w-0">
                 <div className="font-semibold text-slate-200 flex items-center gap-1.5">
-                  <Package className="w-3.5 h-3.5 text-amber-400" />
+                  <Package className="w-3.5 h-3.5 text-violet-400" />
                   {tx(lang, 'voice.step1Title')}
                 </div>
                 <div className="text-[11px] truncate">
@@ -526,9 +526,9 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
                 shippingOrigin: details.shippingOrigin || 'Origin port',
               })
             }
-            className="mt-4 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-emerald-600 to-teal-600 hover:from-amber-400 hover:to-teal-500 text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/50 transition-all cursor-pointer"
+            className="mt-4 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-violet-500 via-emerald-600 to-teal-600 hover:from-violet-400 hover:to-teal-500 text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/50 transition-all cursor-pointer"
           >
-            <Sparkles className="w-4 h-4 text-amber-200" />
+            <Sparkles className="w-4 h-4 text-violet-200" />
             <span>{tx(lang, 'voice.generatePitch')}</span>
             <ArrowRight className="w-3.5 h-3.5 rtl:-scale-x-100" aria-hidden="true" />
           </button>
@@ -574,8 +574,8 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
         </div>
 
         {/* Customs Broker Notice */}
-        <div className="bg-amber-950/30 border-b border-amber-900/40 px-4 py-2 flex items-center gap-2 text-[11px] text-amber-300">
-          <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0" />
+        <div className="bg-violet-950/30 border-b border-violet-900/40 px-4 py-2 flex items-center gap-2 text-[11px] text-violet-300">
+          <ShieldAlert className="w-4 h-4 text-violet-400 shrink-0" />
           <span>
             {tx(lang, 'voice.safetyRule')}
           </span>
@@ -648,8 +648,8 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
           {isThinking && (
             <div className="flex flex-col items-start">
               <div className="text-[10px] text-slate-400 mb-1 px-1">{tx(lang, 'voice.thothServant')}</div>
-              <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl rounded-ss-none p-3.5 text-xs text-amber-300 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+              <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl rounded-ss-none p-3.5 text-xs text-violet-300 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-violet-400 animate-ping" />
                 <span>{tx(lang, 'voice.thinking')}</span>
               </div>
             </div>

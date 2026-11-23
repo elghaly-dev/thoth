@@ -6,6 +6,8 @@ import { PitchStudioTab } from './components/PitchStudioTab';
 import { LiveTranslatorTab } from './components/LiveTranslatorTab';
 import { ImportGuideTab } from './components/ImportGuideTab';
 import { DealMinuteTab } from './components/DealMinuteTab';
+import { RfqTab } from './components/RfqTab';
+import { rs } from './deal/rfq-strings';
 import { ds } from './deal/strings';
 import { SafetyModal } from './components/SafetyModal';
 import { ApiKeyBar } from './components/ApiKeyBar';
@@ -32,13 +34,14 @@ import {
   Heart,
   Globe,
   Cpu,
+  FileText,
 } from 'lucide-react';
 
 export default function App() {
   // ?lang=, then the saved manual pick (localStorage, code only), then the
   // device language, then English.
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>(() => initialLanguage());
-  const [activeTab, setActiveTab] = useState<'device' | 'assistant' | 'pitch' | 'deal' | 'translate' | 'guide'>('assistant');
+  const [activeTab, setActiveTab] = useState<'device' | 'assistant' | 'pitch' | 'deal' | 'translate' | 'guide' | 'rfq'>('assistant');
   // The on-device Faithful Servant is the default where the phone has WebGPU;
   // the bring-your-own-key cloud tabs stay available either way.
   const [gpu, setGpu] = useState<GpuCheck | null>(null);
@@ -107,7 +110,7 @@ export default function App() {
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-emerald-500/30 selection:text-white">
       <a
         href="#thoth-main"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:rounded-lg focus:bg-amber-500 focus:text-slate-950 focus:font-semibold"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:rounded-lg focus:bg-violet-500 focus:text-slate-950 focus:font-semibold"
       >
         {tx(lang, 'a11y.skipToMain')}
       </a>
@@ -170,11 +173,11 @@ export default function App() {
               onClick={() => setActiveTab('pitch')}
               className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'pitch'
-                  ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-md shadow-amber-950/60'
+                  ? 'bg-gradient-to-r from-violet-600 to-violet-600 text-white shadow-md shadow-violet-950/60'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
               }`}
             >
-              <Sparkles className="w-4 h-4 text-amber-300" />
+              <Sparkles className="w-4 h-4 text-violet-300" />
               <span>{tx(lang, 'app.tabPitch')}</span>
             </button>
 
@@ -215,12 +218,27 @@ export default function App() {
               onClick={() => setActiveTab('deal')}
               className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'deal'
-                  ? 'bg-gradient-to-r from-amber-600 to-rose-600 text-white shadow-md shadow-amber-950/60'
+                  ? 'bg-gradient-to-r from-violet-600 to-rose-600 text-white shadow-md shadow-violet-950/60'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
               }`}
             >
-              <Timer className="w-4 h-4 text-amber-300" />
+              <Timer className="w-4 h-4 text-violet-300" />
               <span>{ds(lang, 'tab')}</span>
+            </button>
+
+            {/* Tab 6: Request a quote (RFQ) */}
+            <button
+              type="button"
+              aria-current={activeTab === 'rfq' ? 'page' : undefined}
+              onClick={() => setActiveTab('rfq')}
+              className={`flex items-center gap-2 min-h-11 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === 'rfq'
+                  ? 'bg-gradient-to-r from-violet-600 to-rose-600 text-white shadow-md shadow-violet-950/60'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+              }`}
+            >
+              <FileText className="w-4 h-4 text-violet-300" />
+              <span>{rs(lang, 'tab')}</span>
             </button>
           </div>
 
@@ -262,6 +280,10 @@ export default function App() {
         {activeTab === 'deal' && (
           <DealMinuteTab currentLang={currentLang} />
         )}
+
+        {activeTab === 'rfq' && (
+          <RfqTab currentLang={currentLang} />
+        )}
       </main>
 
       {/* Trust & Compliance Footer */}
@@ -278,8 +300,8 @@ export default function App() {
           </div>
 
           {/* Prominent broker disclaimer */}
-          <div className="flex items-center gap-2 text-amber-300 bg-amber-950/20 border border-amber-900/30 px-3 py-1.5 rounded-lg text-center">
-            <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0" />
+          <div className="flex items-center gap-2 text-violet-300 bg-violet-950/20 border border-violet-900/30 px-3 py-1.5 rounded-lg text-center">
+            <ShieldAlert className="w-4 h-4 text-violet-400 shrink-0" />
             <span>{tx(lang, 'app.footerBroker')}</span>
           </div>
 

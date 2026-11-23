@@ -22,7 +22,7 @@ export const ThemeTile: React.FC<ThemeTileProps> = ({ palette, lang, selected, c
     onClick={onPick}
     aria-pressed={selected}
     className={`group text-start rounded-3xl p-2 transition-all cursor-pointer border ${
-      selected ? 'border-amber-500 bg-amber-950' : 'border-slate-700 hover:border-amber-500'
+      selected ? 'border-violet-500 bg-violet-950' : 'border-slate-700 hover:border-violet-500'
     }`}
   >
     <div
@@ -37,14 +37,14 @@ export const ThemeTile: React.FC<ThemeTileProps> = ({ palette, lang, selected, c
       <span className="block h-px w-full bg-slate-700" />
       <span className="block h-2 w-3/4 rounded-full bg-slate-800" />
       <span className="block h-2 w-1/2 rounded-full bg-slate-800" />
-      <span className={`self-start rounded-full bg-amber-700 text-white ${compact ? 'px-2.5 py-0.5 text-[11px]' : 'px-3 py-1 text-xs'} font-semibold`}>
+      <span className={`self-start rounded-full bg-violet-700 text-white ${compact ? 'px-2.5 py-0.5 text-[11px]' : 'px-3 py-1 text-xs'} font-semibold`}>
         Aa
       </span>
     </div>
     <span className="flex items-center justify-between gap-2 px-1.5 pt-2 pb-1">
       <span className={`font-semibold text-slate-100 ${compact ? 'text-sm' : 'text-base'}`}>{ts(lang, palette.id)}</span>
       {selected && (
-        <span className="inline-flex items-center gap-1 text-xs text-amber-300">
+        <span className="inline-flex items-center gap-1 text-xs text-violet-300">
           <Check className="w-4 h-4" aria-hidden="true" />
           <span className="sr-only">{ts(lang, 'selected')}</span>
         </span>

@@ -147,7 +147,7 @@ const T: Record<QuoteLang, { title: string; lines: Line[]; footer: string }> = {
       (f) => (has(f.payment) ? `شروط الدفع: ${f.payment}` : null),
       (f) => (has(f.validityDays) ? `صلاحية العرض: ${f.validityDays} يومًا` : null),
     ],
-    footer: 'هذا العرض مبني فقط على المعلومات التي قدّمها البائع.',
+    footer: 'هذا العرض مبني على المعلومات التي قدّمها البائع دون زيادة.',
   },
   hi: {
     title: 'कोटेशन',

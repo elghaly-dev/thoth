@@ -89,7 +89,7 @@ export const DealMinuteTab: React.FC<DealMinuteTabProps> = ({ currentLang }) => 
 
   const field = (k: keyof DealFacts) => {
     const label = t(`f_${k}` as DealKey);
-    const common = 'w-full rounded-xl bg-slate-950/60 border border-slate-700 px-3 py-2 text-slate-100 focus:outline-none focus:border-amber-400';
+    const common = 'w-full rounded-xl bg-slate-950/60 border border-slate-700 px-3 py-2 text-slate-100 focus:outline-none focus:border-violet-400';
     if (k === 'currency' || k === 'incoterm') {
       const opts = k === 'currency' ? CURRENCIES : INCOTERMS;
       return (
@@ -136,7 +136,7 @@ export const DealMinuteTab: React.FC<DealMinuteTabProps> = ({ currentLang }) => 
         <label className="block text-sm text-slate-300">
           {t('transcriptLabel')}
           <textarea
-            className="mt-1 w-full min-h-[110px] rounded-xl bg-slate-950/60 border border-slate-700 px-3 py-2 text-slate-100 focus:outline-none focus:border-amber-400"
+            className="mt-1 w-full min-h-[110px] rounded-xl bg-slate-950/60 border border-slate-700 px-3 py-2 text-slate-100 focus:outline-none focus:border-violet-400"
             dir="auto"
             maxLength={MAX_TRANSCRIPT}
             placeholder={t('transcriptPh')}
@@ -149,13 +149,13 @@ export const DealMinuteTab: React.FC<DealMinuteTabProps> = ({ currentLang }) => 
           type="button"
           onClick={extract}
           disabled={busy || !transcript.trim()}
-          className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold bg-violet-500 text-slate-950 hover:bg-violet-400 disabled:opacity-50"
         >
           {busy ? <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" /> : <Wand2 className="w-5 h-5" aria-hidden="true" />}
           {busy ? t('extracting') : t('extract')}
         </button>
 
-        {note && <p role="status" className="text-amber-300 text-sm">{note}</p>}
+        {note && <p role="status" className="text-violet-300 text-sm">{note}</p>}
       </section>
 
       <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 space-y-4">
@@ -175,7 +175,7 @@ export const DealMinuteTab: React.FC<DealMinuteTabProps> = ({ currentLang }) => 
       {quotes && (
         <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 space-y-4" aria-live="polite">
           <h3 className="text-xl font-bold text-white">{t('quotesTitle')}</h3>
-          <p className="flex items-start gap-2 text-amber-300 text-sm">
+          <p className="flex items-start gap-2 text-violet-300 text-sm">
             <ShieldAlert className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
             {t('verify')}
           </p>
@@ -183,11 +183,11 @@ export const DealMinuteTab: React.FC<DealMinuteTabProps> = ({ currentLang }) => 
             {QUOTE_LANGS.map((l) => (
               <article key={l} className="rounded-2xl border border-slate-700 bg-slate-950/60 p-4 flex flex-col gap-3">
                 <div className="flex items-center justify-between gap-2">
-                  <h4 className="font-semibold text-amber-300">{t(`lang_${l}` as DealKey)}</h4>
+                  <h4 className="font-semibold text-violet-300">{t(`lang_${l}` as DealKey)}</h4>
                   <button
                     type="button"
                     onClick={() => copy(l)}
-                    className="inline-flex items-center gap-1 rounded-full border border-slate-700 px-3 py-1 text-sm text-slate-200 hover:border-amber-400"
+                    className="inline-flex items-center gap-1 rounded-full border border-slate-700 px-3 py-1 text-sm text-slate-200 hover:border-violet-400"
                   >
                     {copied === l ? <Check className="w-4 h-4" aria-hidden="true" /> : <Copy className="w-4 h-4" aria-hidden="true" />}
                     {copied === l ? t('copied') : t('copy')}

@@ -37,7 +37,7 @@ export const SettingsSheet: React.FC<SettingsSheetProps> = ({ lang, theme, name,
       >
         <div className="flex items-center justify-between gap-4">
           <h2 id="thoth-settings-title" className="thoth-display text-3xl text-white">{ts(lang, 'settingsTitle')}</h2>
-          <button ref={closeRef} type="button" onClick={onClose} aria-label={ts(lang, 'close')} className="rounded-full border border-slate-700 p-2 text-slate-300 hover:border-amber-500 cursor-pointer">
+          <button ref={closeRef} type="button" onClick={onClose} aria-label={ts(lang, 'close')} className="rounded-full border border-slate-700 p-2 text-slate-300 hover:border-violet-500 cursor-pointer">
             <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
@@ -66,9 +66,9 @@ export const SettingsSheet: React.FC<SettingsSheetProps> = ({ lang, theme, name,
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               placeholder={ts(lang, 'namePh')}
-              className="flex-1 min-w-0 rounded-2xl bg-slate-950 border border-slate-700 px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-500"
+              className="flex-1 min-w-0 rounded-2xl bg-slate-950 border border-slate-700 px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-violet-500"
             />
-            <button type="submit" className="rounded-full bg-amber-500 px-6 py-3 font-semibold text-slate-950 hover:bg-amber-400 cursor-pointer">
+            <button type="submit" className="rounded-full bg-violet-500 px-6 py-3 font-semibold text-slate-950 hover:bg-violet-400 cursor-pointer">
               {ts(lang, 'save')}
             </button>
           </div>

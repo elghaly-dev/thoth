@@ -33,7 +33,7 @@ export const VoiceOrb: React.FC<VoiceOrbProps> = ({
             isListening
               ? 'w-44 h-44 bg-emerald-500/25 blur-2xl animate-pulse scale-110'
               : isThinking
-              ? 'w-44 h-44 bg-amber-500/25 blur-2xl animate-pulse'
+              ? 'w-44 h-44 bg-violet-500/25 blur-2xl animate-pulse'
               : isSpeaking
               ? 'w-44 h-44 bg-cyan-500/25 blur-2xl animate-pulse'
               : 'w-36 h-36 bg-slate-800/40 blur-xl'
@@ -67,7 +67,7 @@ export const VoiceOrb: React.FC<VoiceOrbProps> = ({
               : isListening
               ? 'bg-gradient-to-br from-emerald-500 to-teal-700 text-white shadow-emerald-500/50 ring-4 ring-emerald-400/50 scale-105'
               : isThinking
-              ? 'bg-gradient-to-br from-amber-500 to-orange-700 text-white shadow-amber-500/50 ring-4 ring-amber-400/40'
+              ? 'bg-gradient-to-br from-violet-500 to-violet-700 text-white shadow-violet-500/50 ring-4 ring-violet-400/40'
               : isSpeaking
               ? 'bg-gradient-to-br from-cyan-600 to-indigo-700 text-white shadow-cyan-500/50 ring-4 ring-cyan-400/50'
               : 'bg-gradient-to-br from-slate-800 to-slate-900 text-slate-100 hover:from-slate-700 hover:to-slate-800 shadow-slate-950/80 border border-slate-700/80 hover:border-emerald-500/50'
@@ -109,8 +109,8 @@ export const VoiceOrb: React.FC<VoiceOrbProps> = ({
             </>
           ) : isThinking ? (
             <>
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-              <span className="text-amber-400">{tx(lang, 'orb.thinking')}</span>
+              <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
+              <span className="text-violet-400">{tx(lang, 'orb.thinking')}</span>
             </>
           ) : isSpeaking ? (
             <>

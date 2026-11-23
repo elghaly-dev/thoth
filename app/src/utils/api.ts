@@ -57,7 +57,7 @@ function requireUserKey(): string {
   if (!key) {
     throw new ApiError(
       401,
-      'Add your Gemini API key to talk with Thoth. It is kept in page memory only and sent only to Google.',
+      'Add your Gemini API key to talk with Elghaly. It stays in page memory and goes to Google alone.',
     );
   }
   return key;

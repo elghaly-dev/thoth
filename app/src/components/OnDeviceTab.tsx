@@ -139,8 +139,8 @@ export function OnDeviceTab({ lang, gpu }: Props) {
         <p className="text-sm text-slate-400 max-w-prose">{dt(lang, 'intro')}</p>
       </header>
 
-      {phase === 'unsupported' && <p className="text-sm text-amber-300">{dt(lang, 'noGpu')}</p>}
-      {phase === 'pending' && <p className="text-sm text-amber-300">{dt(lang, 'notYet')}</p>}
+      {phase === 'unsupported' && <p className="text-sm text-violet-300">{dt(lang, 'noGpu')}</p>}
+      {phase === 'pending' && <p className="text-sm text-violet-300">{dt(lang, 'notYet')}</p>}
 
       {phase === 'need-download' && (
         <div className="space-y-3">
@@ -254,7 +254,7 @@ export function OnDeviceTab({ lang, gpu }: Props) {
       )}
 
       {note && (
-        <p className="text-sm text-amber-300" role="status">
+        <p className="text-sm text-violet-300" role="status">
           {note}
         </p>
       )}

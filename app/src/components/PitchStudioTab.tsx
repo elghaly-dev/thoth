@@ -215,7 +215,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
       <div className="bg-gradient-to-r from-slate-900 via-slate-900/90 to-emerald-950/40 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-violet-500/10 text-violet-400 border border-violet-500/20">
               {tx(lang, 'pitch.badge')}
             </span>
             <span className="text-xs text-slate-400">{tx(lang, 'pitch.servant')}</span>
@@ -229,8 +229,8 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
         </div>
 
         {/* Customs Broker Badge */}
-        <div className="bg-slate-950/70 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-300 flex items-start gap-2 max-w-xs shrink-0">
-          <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+        <div className="bg-slate-950/70 border border-violet-500/30 rounded-xl p-3 text-xs text-violet-300 flex items-start gap-2 max-w-xs shrink-0">
+          <ShieldAlert className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
           <div className="text-[11px] leading-snug">
             <strong>{tx(lang, 'pitch.customsRule')}</strong> {tx(lang, 'pitch.customsRuleBody')}
           </div>
@@ -243,7 +243,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
           <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-xl">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
+                <Sparkles className="w-4 h-4 text-violet-400" />
                 {tx(lang, 'pitch.productDetails')}
               </h3>
               <span className="text-[11px] text-slate-400">{tx(lang, 'pitch.stepByStep')}</span>
@@ -278,7 +278,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
               {/* Product */}
               <div>
                 <label htmlFor="pitch-product" className="block text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-                  <Package className="w-3.5 h-3.5 text-amber-400" aria-hidden="true" />
+                  <Package className="w-3.5 h-3.5 text-violet-400" aria-hidden="true" />
                   {tx(lang, 'pitch.whatSell')}
                 </label>
                 <input
@@ -352,7 +352,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-4 h-4 text-amber-300" />
+                    <Sparkles className="w-4 h-4 text-violet-300" />
                     <span>{tx(lang, 'pitch.create')}</span>
                   </>
                 )}
@@ -380,7 +380,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
           )}
           {!pitchResult && !isGenerating && (
             <div className="bg-slate-900/40 border border-dashed border-slate-800 rounded-2xl p-10 text-center flex flex-col items-center justify-center min-h-[400px]">
-              <div className="w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center justify-center mb-3 text-amber-400">
+              <div className="w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center justify-center mb-3 text-violet-400">
                 <Mail className="w-7 h-7" />
               </div>
               <h4 className="text-sm font-semibold text-slate-200 mb-1">
@@ -514,7 +514,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
                   </div>
                   <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
                     <div className="text-[10px] text-slate-400 uppercase font-semibold">{tx(lang, 'pitch.specMoq')}</div>
-                    <div className="text-xs font-bold text-amber-300 truncate mt-0.5">
+                    <div className="text-xs font-bold text-violet-300 truncate mt-0.5">
                       {pitchResult.specCard.moq}
                     </div>
                   </div>
@@ -534,15 +534,15 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
               )}
 
               {/* 4. Claims to Verify Checklist (Fix 1) */}
-              <div className="bg-slate-900/90 border border-amber-500/30 rounded-2xl p-5 shadow-lg space-y-3">
+              <div className="bg-slate-900/90 border border-violet-500/30 rounded-2xl p-5 shadow-lg space-y-3">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
                   <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-amber-400" />
+                    <ShieldCheck className="w-4 h-4 text-violet-400" />
                     <h4 className="text-xs font-bold uppercase tracking-wider text-white">
                       {tx(lang, 'pitch.claimsTitle')}
                     </h4>
                   </div>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-300 border border-violet-500/20">
                     {tx(lang, 'pitch.claimsBadge')}
                   </span>
                 </div>
@@ -610,7 +610,7 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
               {pitchResult.exporterSummary && (
                 <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4">
                   <div className="text-xs font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <Sparkles className="w-3.5 h-3.5 text-violet-400" />
                     {tx(lang, 'pitch.adviceIn', { native: currentLang.nativeName, name: langDisplayName(lang, currentLang.name) })}
                   </div>
                   <p className="text-xs text-slate-400 leading-relaxed">
@@ -620,8 +620,8 @@ ${pitchResult.customsNote || L('dl.customsFallback')}
               )}
 
               {/* Mandatory Customs Rule Reminder */}
-              <div className="bg-amber-950/20 border border-amber-900/40 rounded-xl p-3 flex items-start gap-2.5 text-xs text-amber-300">
-                <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+              <div className="bg-violet-950/20 border border-violet-900/40 rounded-xl p-3 flex items-start gap-2.5 text-xs text-violet-300">
+                <ShieldAlert className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
                 <div>
                   <strong>{tx(lang, 'pitch.important')}</strong> {tx(lang, 'pitch.importantBody')}
                 </div>

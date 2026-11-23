@@ -28,7 +28,7 @@ const lang = (code: string, speechCode: string) => ({ code, speechCode } as neve
 let ended = 0;
 await playTextToSpeech('مرحبا', lang('ar', 'ar-SA'), undefined, () => ended++);
 check(spoken.length === 1 && spoken[0].voice === 'Phone Arabic', 'Arabic is read with the phone\'s own Arabic voice');
-await playTextToSpeech('नमस्ते', lang('hi', 'hi-IN'), undefined, () => ended++);
+await playTextToSpeech('शुभ दिन', lang('hi', 'hi-IN'), undefined, () => ended++);
 check(spoken.length === 1, 'a network-only Hindi voice is never used');
 await playTextToSpeech('hello', lang('en', 'en-US'), undefined, () => ended++);
 check(spoken.length === 1, 'a network-only English voice is never used');
