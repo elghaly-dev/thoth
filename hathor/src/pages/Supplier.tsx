@@ -4,6 +4,7 @@ import { PRODUCTS, SUPPLIERS, byId } from '../data/sample';
 import { fmtDate } from '../lib/format';
 import { ProductCard } from '../components/Cards';
 import { ButtonLink, Glass, PremiumBadge, SampleBadge, SectionTitle, VerifiedBadge } from '../components/ui';
+import { ReportButton } from '../components/Report';
 import { NotFound } from './NotFound';
 
 export function SupplierPage({ id }: { id: string }) {
@@ -31,6 +32,7 @@ export function SupplierPage({ id }: { id: string }) {
           <div className="flex gap-3 md:flex-col">
             <ButtonLink to="/rfq/new">{t('cta.requestQuote')}</ButtonLink>
             <ButtonLink to="/messages/t1" variant="secondary"><MessageSquare className="h-4 w-4" />{t('nav.messages')}</ButtonLink>
+            <ReportButton target={{ kind: 'supplier', id: s.id, label: s.name[lang] }} className="justify-center" />
           </div>
         </div>
       </Glass>
