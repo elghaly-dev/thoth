@@ -11,6 +11,7 @@ import { MessagesPage } from './pages/Messages';
 import { RegisterPage } from './pages/Register';
 import { PricingPage } from './pages/Pricing';
 import { BuyerDashboard, SupplierDashboard } from './pages/Dashboard';
+import { AdminReportsPage } from './pages/AdminReports';
 import { NotFound } from './pages/NotFound';
 
 function Routes() {
@@ -29,6 +30,7 @@ function Routes() {
   if (path === '/pricing') return <PricingPage />;
   if (path === '/dashboard') return <BuyerDashboard />;
   if (path === '/dashboard/supplier') return <SupplierDashboard />;
+  if (path === '/admin/reports') return <AdminReportsPage />;
   return <NotFound />;
 }
 

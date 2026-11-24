@@ -9,6 +9,7 @@ import { ProductArt } from '../components/ProductArt';
 import { ProductCard } from '../components/Cards';
 import { AssistantGlyph } from '../components/Brand';
 import { Button, ButtonLink, EstimateTag, Glass, Num, PremiumBadge, SampleBadge, SectionTitle, VerifiedBadge } from '../components/ui';
+import { ReportButton } from '../components/Report';
 import { NotFound } from './NotFound';
 
 export function ProductPage({ id }: { id: string }) {
@@ -110,6 +111,7 @@ export function ProductPage({ id }: { id: string }) {
             <ButtonLink to="/messages/t1" variant="secondary" size="lg"><MessageSquare className="h-4 w-4" />{t('product.message')}</ButtonLink>
             <Button variant="secondary" size="lg" onClick={() => toggleSaved(p.id)} aria-pressed={isSaved} aria-label={t('product.save')}><Heart className={`h-4 w-4 ${isSaved ? 'fill-lilac-400' : ''}`} /></Button>
           </div>
+          <div className="flex justify-end"><ReportButton target={{ kind: 'product', id: p.id, label: p.title[lang] }} /></div>
           <button type="button" onClick={() => openAssistant({ kind: 'product', id: p.id, label: p.title[lang] }, 'write')} className="flex w-full items-center gap-3 rounded-[14px] border border-lilac-400/30 bg-lilac-400/5 p-3 text-start text-sm text-lilac-200 hover:border-lilac-400 hover:bg-lilac-400/10">
             <AssistantGlyph className="h-6 w-6" /> <span className="flex-1">{t('assistant.ask')}</span><span className="text-xs text-ink-3">{t('assistant.s.write')}</span>
           </button>

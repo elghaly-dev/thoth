@@ -8,10 +8,11 @@ import { SUPPLIERS, THREADS, byId, type Msg } from '../data/sample';
 import { maskContacts } from '../lib/mask';
 import { numbersMatch } from '../lib/numberlock';
 import { Button, MaskedText, SampleBadge, ScamCheckTag, VerifiedBadge } from '../components/ui';
+import { ReportButton } from '../components/Report';
 
 type Local = Msg & { status?: 'pending' | 'delivered' };
 
-function Bubble({ m }: { m: Local }) {
+function Bubble({ m, threadId, who }: { m: Local; threadId: string; who: string }) {
   const { t, lang } = useI18n();
   const mine = m.from === 'me';
   const canTranslate = !!m.translation && m.lang !== lang;
@@ -31,6 +32,7 @@ function Bubble({ m }: { m: Local }) {
           {canTranslate && ok && (
             <button type="button" onClick={() => setShowT((v) => !v)} className="inline-flex items-center gap-1 text-lilac-400 hover:text-lilac-200"><Languages className="h-3 w-3" />{showT ? t('msg.original') : t('msg.translated')}</button>
           )}
+          {!mine && <ReportButton variant="chip" target={{ kind: 'message', id: `${threadId}/${m.id}`, label: who, threadId, quote: m.text }} />}
           {mine && m.status === 'pending' && <span className="inline-flex items-center gap-1"><Check className="h-3 w-3" />{t('msg.pending')}</span>}
           {mine && m.status !== 'pending' && <span className="inline-flex items-center gap-1 text-lilac-400"><CheckCheck className="h-3.5 w-3.5" />{t('msg.delivered')}</span>}
         </div>
@@ -119,12 +121,13 @@ export function MessagesPage({ id }: { id?: string }) {
                   <VerifiedBadge level={byId(SUPPLIERS, active.supplierId)!.level} short />
                 </div>
                 <Link to={active.context.to} className="chip hidden max-w-[50%] truncate hover:border-lilac-400 sm:inline-flex">{t('msg.context')}: {active.context.label[lang]}</Link>
+                <ReportButton variant="icon" target={{ kind: 'thread', id: active.id, label: `${byId(SUPPLIERS, active.supplierId)!.name[lang]} · ${active.context.label[lang]}` }} />
               </div>
               {active.flagged === 'dangerous' && (
                 <div className="flex items-start gap-2 border-b border-danger/30 bg-danger/10 px-4 py-3 text-sm"><ShieldAlert className="h-4 w-4 shrink-0 text-danger" />{t('pay.outside')}</div>
               )}
               <div className="flex-1 space-y-3 overflow-y-auto p-4 md:p-6">
-                {msgs.map((m) => <Bubble key={m.id} m={m} />)}
+                {msgs.map((m) => <Bubble key={m.id} m={m} threadId={active.id} who={byId(SUPPLIERS, active.supplierId)!.name[lang]} />)}
                 <div ref={endRef} />
               </div>
               <div className="border-t border-lilac-400/15 p-3 md:p-4">
