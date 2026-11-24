@@ -10,6 +10,7 @@ import { ProductCard } from '../components/Cards';
 import { AssistantGlyph } from '../components/Brand';
 import { Button, ButtonLink, Glass, Num, PremiumBadge, SampleBadge, SectionTitle, VerifiedBadge } from '../components/ui';
 import { LandedCost } from '../components/LandedCost';
+import { dutyOrigin } from '../lib/listing';
 import { ReportButton } from '../components/Report';
 import { NotFound } from './NotFound';
 
@@ -68,6 +69,12 @@ export function ProductPage({ id }: { id: string }) {
             </div>
           </div>
 
+          {p.ownFactory ? (
+            <div className="glass flex items-center gap-4 p-4">
+              <div className="wordmark grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-lilac-400/40 bg-night-800 text-sm font-bold text-lilac-200"><BadgeCheck className="h-5 w-5" /></div>
+              <div><div className="font-semibold">{t('seller.hathor')}</div><div className="mt-1 text-xs text-ink-2">{t('seller.hathor.d')}</div></div>
+            </div>
+          ) : (
           <Link to={`/supplier/${s.id}`} className="glass glass-hover flex items-center gap-4 p-4">
             <div className="wordmark grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-lilac-400/40 bg-night-800 text-sm font-bold text-lilac-200" dir="ltr">{s.name.en.split(' ').map((w) => w[0]).slice(0, 2).join('')}</div>
             <div className="min-w-0 flex-1">
@@ -82,6 +89,7 @@ export function ProductPage({ id }: { id: string }) {
               </div>
             </div>
           </Link>
+          )}
 
           <Glass className="p-5">
             <dl className="mb-4 grid grid-cols-2 gap-3 text-sm">
@@ -125,7 +133,7 @@ export function ProductPage({ id }: { id: string }) {
       </div>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-        <LandedCost value={goods} currency={p.currency} origin={byId(SUPPLIERS, p.supplierId)?.countryCode === 'SA' ? 'SA' : 'AE'} rateId={p.category === 'packaging' ? 'packaging' : p.category === 'dates' || p.category === 'fertilisers' ? 'food-agri' : 'other'} key={goods} />
+        <LandedCost value={goods} currency={p.currency} origin={dutyOrigin(p.origin.en)} rateId={p.category === 'packaging' ? 'packaging' : p.category === 'dates' || p.category === 'fertilisers' ? 'food-agri' : 'other'} key={goods} />
         <div className="space-y-6">
           <Glass className="p-6">
             <h2 className="mb-3 text-2xl">{t('product.specs')}</h2>

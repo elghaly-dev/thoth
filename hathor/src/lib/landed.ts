@@ -6,11 +6,12 @@
 // Origin decides the duty basis:
 //   UAE: India–UAE CEPA preferential rate (needs a CEPA certificate of origin).
 //   Saudi Arabia: standard MFN rate (India has no FTA with Saudi Arabia).
+//   Any other origin: standard MFN rate here; check any other trade deal with the broker.
 // BCD (basic customs duty) and IGST are shown separately. IGST is charged on
 // assessable value plus BCD plus the social welfare surcharge on BCD.
 import type { BuyerIncoterm } from './rfq';
 
-export type Origin = 'AE' | 'SA';
+export type Origin = 'AE' | 'SA' | 'OTHER';
 export type RateRow = {
   id: string;
   label: { ar: string; en: string };

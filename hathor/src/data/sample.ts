@@ -122,6 +122,9 @@ export type Product = {
   tiers: Tier[];
   // Retail: price for a single unit, when the supplier sells retail. Wholesale is the tiers from the MOQ.
   retailPrice?: number;
+  // Made in Hathor's own factory. Hathor (Elghaly LLC) is the seller of record and the UI shows
+  // Hathor as the seller. The true origin stays in `origin` for duty and documents.
+  ownFactory?: boolean;
   incoterm: string;
   port: L10n;
   hs: string;

@@ -39,7 +39,7 @@ export function LandedCost({ value: initValue = 0, currency, origin: initOrigin 
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="text-sm"><span className={label}>{t('lc.value')} ({currency})</span><input inputMode="decimal" dir="ltr" className="field num" value={value} onChange={(e) => setValue(e.target.value)} /></label>
         <label className="text-sm"><span className={label}>{t('lc.hs')}</span><select className="field" value={rid} onChange={(e) => setRid(e.target.value)}>{rates.map((r) => <option key={r.id} value={r.id}>{r.label[lang]}</option>)}</select></label>
-        <label className="text-sm"><span className={label}>{t('lc.origin')}</span><select className="field" value={origin} onChange={(e) => setOrigin(e.target.value as Origin)}><option value="AE">{t('lc.origin.AE')}</option><option value="SA">{t('lc.origin.SA')}</option></select></label>
+        <label className="text-sm"><span className={label}>{t('lc.origin')}</span><select className="field" value={origin} onChange={(e) => setOrigin(e.target.value as Origin)}><option value="AE">{t('lc.origin.AE')}</option><option value="SA">{t('lc.origin.SA')}</option><option value="OTHER">{t('lc.origin.OTHER')}</option></select></label>
         <label className="text-sm"><span className={label}>{t('lc.incoterm')}</span><select className="field" value={inc} onChange={(e) => setInc(e.target.value as BuyerIncoterm)}>{BUYER_INCOTERMS.map((i) => <option key={i}>{i}</option>)}</select></label>
         {inc === 'FOB' && <>
           <label className="text-sm"><span className={label}>{t('lc.freight')}</span><input inputMode="decimal" dir="ltr" className="field num" value={freight} onChange={(e) => setFreight(e.target.value)} /></label>

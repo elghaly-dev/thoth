@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Clock, Heart, MapPin, Package2, Star } from 'lucide-react';
+import { BadgeCheck, Clock, Heart, MapPin, Package2, Star } from 'lucide-react';
 import { useI18n } from '../i18n';
 import { Link } from '../lib/router';
 import { useStore } from '../lib/store';
@@ -37,8 +37,12 @@ export function ProductCard({ p }: { p: Product }) {
       <div className="flex flex-1 flex-col gap-2 p-4">
         <h3 className="text-[1.02rem] font-semibold leading-snug text-ink-1" style={{ fontFamily: 'inherit' }}><bdi>{p.title[lang]}</bdi></h3>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-2">
-          <span className="truncate"><bdi>{s.name[lang]}</bdi></span>
-          <VerifiedBadge level={s.level} short />
+          {p.ownFactory ? (
+            <span className="inline-flex items-center gap-1 font-semibold text-lilac-200"><BadgeCheck className="h-3.5 w-3.5" aria-hidden="true" />{t('seller.hathor')}</span>
+          ) : (<>
+            <span className="truncate"><bdi>{s.name[lang]}</bdi></span>
+            <VerifiedBadge level={s.level} short />
+          </>)}
         </div>
         <div className="mt-auto pt-2">
           <div className="text-xs text-ink-3">{t('product.from')}</div>
