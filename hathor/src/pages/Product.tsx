@@ -4,7 +4,7 @@ import { useI18n } from '../i18n';
 import { Link, useRouter } from '../lib/router';
 import { useStore } from '../lib/store';
 import { CATEGORIES, PRODUCTS, SUPPLIERS, byId } from '../data/sample';
-import { fmtMoney, fmtNumber } from '../lib/format';
+import { fmtMoney, fmtNumber, retailLabel } from '../lib/format';
 import { ProductArt } from '../components/ProductArt';
 import { ProductCard } from '../components/Cards';
 import { AssistantGlyph } from '../components/Brand';
@@ -84,6 +84,12 @@ export function ProductPage({ id }: { id: string }) {
           </Link>
 
           <Glass className="p-5">
+            <dl className="mb-4 grid grid-cols-2 gap-3 text-sm">
+              <div className="rounded-[12px] border border-lilac-400/15 p-3"><dt className="text-xs text-ink-3">{t('product.retail')} · {t('product.retail.d')}</dt>
+                <dd className="mt-1 font-semibold">{retailLabel(p.retailPrice, p.currency, lang) ?? <span className="font-normal italic text-ink-3">{t('product.retail.none')}</span>}</dd></div>
+              <div className="rounded-[12px] border border-lilac-400/15 p-3"><dt className="text-xs text-ink-3">{t('product.wholesale')} · {t('product.wholesale.d', { n: fmtNumber(p.moq, lang), unit: p.unit[lang] })}</dt>
+                <dd className="mt-1 font-semibold text-lilac-200"><Num>{fmtMoney(Math.min(...p.tiers.map((x) => x.price)), p.currency, lang)}</Num> <span className="text-xs font-normal text-ink-3">/ {p.unit[lang]}</span></dd></div>
+            </dl>
             <h2 className="mb-3 text-xl">{t('product.tiers')}</h2>
             <table className="w-full text-sm">
               <thead><tr className="text-xs text-ink-3"><th className="pb-2 text-start font-medium">{t('product.qty')}</th><th className="pb-2 text-end font-medium">{t('product.unitPrice')}</th></tr></thead>
@@ -157,3 +163,4 @@ export function ProductPage({ id }: { id: string }) {
     </div>
   );
 }
+

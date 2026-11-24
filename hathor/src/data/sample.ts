@@ -120,6 +120,8 @@ export type Product = {
   currency: string;
   unit: L10n;
   tiers: Tier[];
+  // Retail: price for a single unit, when the supplier sells retail. Wholesale is the tiers from the MOQ.
+  retailPrice?: number;
   incoterm: string;
   port: L10n;
   hs: string;
