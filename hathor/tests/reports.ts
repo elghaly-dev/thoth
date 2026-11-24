@@ -94,7 +94,15 @@ check('note is capped', long.ok && long.report.note.length === NOTE_MAX);
   check('supplier page has the button', /<ReportButton[^>]*kind: 'supplier'/.test(src('pages/Supplier.tsx')));
   check('chat header has the button', /<ReportButton[^>]*kind: 'thread'/.test(src('pages/Messages.tsx')));
   check('each received message has the button', /<ReportButton[^>]*kind: 'message'/.test(src('pages/Messages.tsx')));
-  check('review screen routed', src('App.tsx').includes("'/admin/reports'"));
+  check('review screen routed in dev builds', /import\.meta\.env\.DEV && path === '\/admin\/reports'/.test(src('App.tsx')));
+  check('review screen not routed for every visitor', !/if \(path === '\/admin\/reports'\)/.test(src('App.tsx')));
+
+  // Done screen: the team-review headline shows when the server took the report; otherwise "Saved on this device".
+  const dlg = src('components/Report.tsx');
+  check('done screen branches on sent.server', /sent\.server \? \([\s\S]*'report\.done\.t'[\s\S]*'report\.done\.d'[\s\S]*\) : \([\s\S]*'report\.saved\.t'/.test(dlg));
+  check('unsent report names the reason', dlg.includes("reportsEndpoint() ? 'report.sendFailed' : 'report.notConnected'"));
+  check('saved headline says device', strings['report.saved.t'].en === 'Saved on this device');
+  check('unsent text does not promise a later send', !/until it is|حتى يتصل/.test(strings['report.notConnected'].en + strings['report.notConnected'].ar));
 
   done('reports');
 })();

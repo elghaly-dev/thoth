@@ -28,7 +28,7 @@ export function AdminReportsPage() {
   return (
     <div>
       <PageHeader title={t('admin.reports.title')} sub={t('admin.reports.sub')} />
-      {!reportsEndpoint() && <p className="mb-6 flex items-start gap-2 rounded-[14px] border border-lilac-400/20 bg-lilac-400/5 p-4 text-sm text-ink-2"><Info className="h-4 w-4 shrink-0 text-lilac-400" />{t('report.notConnected')}</p>}
+      {!reportsEndpoint() && <p className="mb-6 flex items-start gap-2 rounded-[14px] border border-lilac-400/20 bg-lilac-400/5 p-4 text-sm text-ink-2"><Info className="h-4 w-4 shrink-0 text-lilac-400" />{t('admin.reports.notConnected')}</p>}
       <div className="mb-5 flex flex-wrap items-center gap-2" role="group" aria-label={t('admin.reports.filter')}>
         {(['all', ...STATUSES] as const).map((s) => (
           <button key={s} type="button" aria-pressed={filter === s} onClick={() => setFilter(s)} className={`chip ${filter === s ? '!border-lilac-400 !bg-lilac-400/15 text-lilac-200' : 'hover:border-lilac-400'}`}>
