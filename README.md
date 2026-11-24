@@ -8,6 +8,24 @@ translation, and import basics.
 - Use Thoth: [thoth.elghaly.dev/use/](https://thoth.elghaly.dev/use/)
 - الخادم الأمين · Faithful Servant
 
+## مسؤولية المستخدم ودور المنصة · User responsibility & platform role
+
+حتحور (Hathor) تديرها Elghaly LLC، وهي شركة أمريكية.
+
+- حتحور خدمة تربط المورّدين بالمشترين. حتحور ليست البائع ولا المشتري، ولا تملك البضائع ولا تحتفظ بها.
+- كل مستخدم مسؤول عن بضاعته، وعن بلد المنشأ الحقيقي لها، وعن الجمارك والرسوم وتراخيص الاستيراد والتصدير، وعن الالتزام بالقانون في بلده.
+- ممنوع على حتحور تغيير بلد المنشأ أو إخفاؤه، أو تمرير البضائع عبر بلد آخر للتهرّب من الرسوم الجمركية (تحويل الشحنة).
+- يستطيع أي مستخدم الإبلاغ عن أي عرض أو حساب من زر «بلّغ».
+- يحق لحتحور مراجعة البلاغات، وإيقاف أو إغلاق الحسابات التي تخالف هذه القواعد، والتعاون مع السلطات عندما يُلزمها القانون بذلك.
+
+Hathor (حتحور) is operated by Elghaly LLC, a US company.
+
+- Hathor is a service that connects suppliers and buyers. Hathor is not the seller or the buyer, and it does not own or hold the goods.
+- Each user is responsible for their own goods, their true country of origin, customs, tariffs, import and export licences, and following the law in their own country.
+- Changing or hiding the country of origin, or routing goods through another country to avoid duties (transshipment), is forbidden on Hathor.
+- Any user can report a listing or an account with the «بلّغ» (Report) button.
+- Hathor may review reports, suspend or close accounts that break these rules, and cooperate with authorities when the law requires it.
+
 ## Run locally (server key)
 
 The app lives in `app/`.
