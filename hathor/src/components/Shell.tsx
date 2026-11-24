@@ -147,6 +147,7 @@ function Footer() {
         <div className="flex flex-wrap gap-4 text-sm text-ink-2">
           <Link to="/pricing" className="hover:text-lilac-200">{t('nav.pricing')}</Link>
           <Link to="/register" className="hover:text-lilac-200">{t('nav.register')}</Link>
+          <Link to="/verify" className="hover:text-lilac-200">{t('vfy.link')}</Link>
           <Link to="/dashboard" className="hover:text-lilac-200">{t('nav.dashboard')}</Link>
           <Link to="/dashboard/supplier" className="hover:text-lilac-200">{t('nav.supplierDashboard')}</Link>
         </div>

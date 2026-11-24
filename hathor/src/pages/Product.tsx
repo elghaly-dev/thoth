@@ -3,12 +3,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { useI18n } from '../i18n';
 import { Link, useRouter } from '../lib/router';
 import { useStore } from '../lib/store';
-import { CATEGORIES, PORTS, PRODUCTS, SUPPLIERS, byId } from '../data/sample';
+import { CATEGORIES, PRODUCTS, SUPPLIERS, byId } from '../data/sample';
 import { fmtMoney, fmtNumber } from '../lib/format';
 import { ProductArt } from '../components/ProductArt';
 import { ProductCard } from '../components/Cards';
 import { AssistantGlyph } from '../components/Brand';
-import { Button, ButtonLink, EstimateTag, Glass, Num, PremiumBadge, SampleBadge, SectionTitle, VerifiedBadge } from '../components/ui';
+import { Button, ButtonLink, Glass, Num, PremiumBadge, SampleBadge, SectionTitle, VerifiedBadge } from '../components/ui';
+import { LandedCost } from '../components/LandedCost';
 import { ReportButton } from '../components/Report';
 import { NotFound } from './NotFound';
 
@@ -17,8 +18,7 @@ export function ProductPage({ id }: { id: string }) {
   const { navigate } = useRouter();
   const { saved, toggleSaved, openAssistant, setAssistantCtx } = useStore();
   const p = byId(PRODUCTS, id);
-  const [qty, setQty] = useState(p ? p.tiers[0].minQty : 0);
-  const [port, setPort] = useState(0);
+  const qty = p ? p.tiers[0].minQty : 0;
   const [view, setView] = useState(0);
   useEffect(() => { if (p) setAssistantCtx({ kind: 'product', id: p.id, label: p.title[lang] }); }, [p, lang, setAssistantCtx]);
   const unitPrice = useMemo(() => {
@@ -119,28 +119,7 @@ export function ProductPage({ id }: { id: string }) {
       </div>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-        <Glass className="p-6">
-          <div className="mb-4 flex items-center justify-between gap-2"><h2 className="text-2xl">{t('product.landed')}</h2><EstimateTag /></div>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <label className="text-sm">
-              <span className="mb-1 block text-xs text-ink-3">{t('product.qty')} ({p.unit[lang]})</span>
-              <input type="number" min={p.moq} value={qty} onChange={(e) => setQty(Math.max(0, Number(e.target.value)))} className="field num" dir="ltr" />
-            </label>
-            <label className="text-sm">
-              <span className="mb-1 block text-xs text-ink-3">{t('product.landed.port')}</span>
-              <select value={port} onChange={(e) => setPort(Number(e.target.value))} className="field">{PORTS.map((pp, i) => <option key={i} value={i}>{pp[lang]}</option>)}</select>
-            </label>
-          </div>
-          <dl className="mt-5 divide-y divide-lilac-400/10 text-sm">
-            <div className="flex items-center justify-between py-2.5"><dt>{t('product.landed.goods')}</dt><dd className="font-semibold text-lilac-200"><Num>{fmtMoney(goods, p.currency, lang)}</Num></dd></div>
-            {(['product.landed.freight', 'product.landed.insurance', 'product.landed.duty', 'product.landed.tax'] as const).map((k) => (
-              <div key={k} className="flex items-center justify-between py-2.5"><dt className="text-ink-2">{t(k)}</dt><dd className="text-ink-3">{t('estimate.missing')}</dd></div>
-            ))}
-            <div className="flex items-center justify-between py-3"><dt className="font-semibold">{t('product.landed.total')}</dt><dd className="text-lg font-semibold text-lilac-200"><Num>{fmtMoney(goods, p.currency, lang)}</Num></dd></div>
-          </dl>
-          <p className="mt-2 text-xs text-ink-3">{t('product.landed.source')} · {t('estimate.ratesNote')}</p>
-          <p className="mt-1 text-xs text-warning">{t('estimate.broker')}</p>
-        </Glass>
+        <LandedCost value={goods} currency={p.currency} origin={byId(SUPPLIERS, p.supplierId)?.countryCode === 'SA' ? 'SA' : 'AE'} rateId={p.category === 'packaging' ? 'packaging' : p.category === 'dates' || p.category === 'fertilisers' ? 'food-agri' : 'other'} key={goods} />
         <div className="space-y-6">
           <Glass className="p-6">
             <h2 className="mb-3 text-2xl">{t('product.specs')}</h2>

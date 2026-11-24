@@ -17,6 +17,9 @@ export const CATEGORIES: Category[] = [
   { id: 'recycled', name: { ar: 'المواد المعاد تدويرها', en: 'Recycled materials' }, icon: 'Recycle', hue: 170 },
 ];
 
+// Focus categories for the start: packaging, and food and agri.
+export const FOCUS_CATEGORIES: CategoryId[] = ['packaging', 'dates'];
+
 export type VerifyLevel = 0 | 1 | 2 | 3;
 
 export type Supplier = {
