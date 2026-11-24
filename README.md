@@ -15,6 +15,7 @@ translation, and import basics.
 - حتحور خدمة تربط المورّدين بالمشترين. حتحور ليست البائع ولا المشتري، ولا تملك البضائع ولا تحتفظ بها.
 - كل مستخدم مسؤول عن بضاعته، وعن بلد المنشأ الحقيقي لها، وعن الجمارك والرسوم وتراخيص الاستيراد والتصدير، وعن الالتزام بالقانون في بلده.
 - ممنوع على حتحور تغيير بلد المنشأ أو إخفاؤه، أو تمرير البضائع عبر بلد آخر للتهرّب من الرسوم الجمركية (تحويل الشحنة).
+- الرسوم الجمركية والشحن ومستندات الجمارك (مثل شهادة المنشأ) يدفعها ويتولاها البائع و/أو المشتري حسب اتفاقهما؛ حتحور هي السوق.
 - يستطيع أي مستخدم الإبلاغ عن أي عرض أو حساب من زر «بلّغ».
 - يحق لحتحور مراجعة البلاغات، وإيقاف أو إغلاق الحسابات التي تخالف هذه القواعد، والتعاون مع السلطات عندما يُلزمها القانون بذلك.
 
@@ -23,6 +24,7 @@ Hathor (حتحور) is operated by Elghaly LLC, a US company.
 - Hathor is a service that connects suppliers and buyers. Hathor is not the seller or the buyer, and it does not own or hold the goods.
 - Each user is responsible for their own goods, their true country of origin, customs, tariffs, import and export licences, and following the law in their own country.
 - Changing or hiding the country of origin, or routing goods through another country to avoid duties (transshipment), is forbidden on Hathor.
+- Duties, shipping and customs documents (such as the certificate of origin) are paid and handled by the seller and/or buyer as they agree; Hathor is the marketplace.
 - Any user can report a listing or an account with the «بلّغ» (Report) button.
 - Hathor may review reports, suspend or close accounts that break these rules, and cooperate with authorities when the law requires it.
 

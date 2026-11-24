@@ -575,6 +575,7 @@ export const strings = {
   'lc.bcdMfn': { ar: 'BCD عادي', en: 'BCD MFN' },
   'lc.bcdCepa': { ar: 'BCD مع CEPA', en: 'BCD CEPA' },
   'lc.hsNote': { ar: 'المعدل الحقيقي يتحدد برمز ITC-HS من 8 أرقام. المعدلات هنا فارغة حتى يؤكدها مخلّص جمركي.', en: 'The real rate depends on the 8-digit ITC-HS code. Rates here stay blank until a customs broker confirms them.' },
+  'lc.whoPays': { ar: 'الرسوم الجمركية والشحن ومستندات الجمارك يدفعها ويتولاها البائع و/أو المشتري حسب اتفاقهما؛ حتحور هي السوق.', en: 'Duties, shipping and customs documents are paid and handled by the seller and/or buyer as they agree; Hathor is the marketplace.' },
   'lc.cepaNote': { ar: 'سعر CEPA يحتاج شهادة منشأ CEPA.', en: 'The CEPA rate needs a CEPA certificate of origin.' },
   // Focus categories and price reference
   'home.focus': { ar: 'فئات البداية', en: 'Focus categories' },

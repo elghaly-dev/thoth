@@ -76,6 +76,7 @@ export function LandedCost({ value: initValue = 0, currency, origin: initOrigin 
       <p className="mt-3 text-xs text-ink-3">{t('lc.hsNote')}</p>
       {origin === 'AE' && <p className="mt-1 text-xs text-ink-3">{t('lc.cepaNote')}</p>}
       <p className="mt-1 text-xs text-warning">{t('estimate.broker')}</p>
+      <p className="mt-2 text-xs text-ink-2">{t('lc.whoPays')}</p>
     </Glass>
   );
 }
