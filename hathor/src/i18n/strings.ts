@@ -103,8 +103,6 @@ export const strings = {
   'product.sample': { ar: 'عيّنة متاحة', en: 'Sample available' },
   'product.hs': { ar: 'رمز HS', en: 'HS code' },
   'product.origin': { ar: 'بلد المنشأ', en: 'Origin' },
-  'seller.hathor': { ar: 'حتحور', en: 'Hathor' },
-  'seller.hathor.d': { ar: 'البائع: حتحور (Elghaly LLC)', en: 'Sold by Hathor (Elghaly LLC)' },
   'product.retail': { ar: 'تجزئة', en: 'Retail' },
   'product.retail.d': { ar: 'قطعة واحدة', en: 'single unit' },
   'product.retail.none': { ar: 'لا يبيع المورّد بالتجزئة', en: 'Not sold retail' },

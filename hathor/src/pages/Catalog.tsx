@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useI18n } from '../i18n';
 import { useRouter } from '../lib/router';
 import { CATEGORIES, FOCUS_CATEGORIES, PRODUCTS, SUPPLIERS, byId, type CategoryId } from '../data/sample';
-import { directFirst, PRICE_REFERENCE, sellerRank } from '../lib/listing';
+import { directFirst, PRICE_REFERENCE } from '../lib/listing';
 import { ProductCard } from '../components/Cards';
 import { Button, ButtonLink, PageHeader, Rise, SampleBadge, Stagger } from '../components/ui';
 import { GlowLine } from '../components/GlowLine';
@@ -67,8 +67,7 @@ export function Catalog() {
     const needle = q.trim().toLowerCase();
     let r = PRODUCTS.filter((p) => {
       const s = byId(SUPPLIERS, p.supplierId)!;
-      const seller = p.ownFactory ? 'حتحور Hathor' : `${s.name.ar} ${s.name.en}`;
-      if (needle && !`${p.title.ar} ${p.title.en} ${p.hs} ${seller}`.toLowerCase().includes(needle)) return false;
+      if (needle && !`${p.title.ar} ${p.title.en} ${p.hs} ${s.name.ar} ${s.name.en}`.toLowerCase().includes(needle)) return false;
       if (cats.size && !cats.has(p.category)) return false;
       if (countries.size && !countries.has(s.countryCode)) return false;
       if (level && s.level < level) return false;
@@ -79,7 +78,7 @@ export function Catalog() {
     if (sort === 'reply') r = [...r].sort((a, b) => byId(SUPPLIERS, a.supplierId)!.replyHours - byId(SUPPLIERS, b.supplierId)!.replyHours);
     if (sort === 'price') r = [...r].sort((a, b) => a.currency.localeCompare(b.currency) || Math.min(...a.tiers.map((x) => x.price)) - Math.min(...b.tiers.map((x) => x.price)));
     // Verified direct suppliers come first; the chosen sort orders within each level.
-    r = directFirst(r, (p) => sellerRank(p, byId(SUPPLIERS, p.supplierId)!.level));
+    r = directFirst(r, (p) => byId(SUPPLIERS, p.supplierId)!.level);
     return r;
   }, [q, cats, countries, level, samples, sort]);
 

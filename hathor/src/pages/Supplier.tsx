@@ -81,7 +81,7 @@ export function SupplierPage({ id }: { id: string }) {
       <section>
         <SectionTitle title={t('supplier.products')} />
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {PRODUCTS.filter((p) => p.supplierId === s.id && !p.ownFactory).map((p) => <ProductCard key={p.id} p={p} />)}
+          {PRODUCTS.filter((p) => p.supplierId === s.id).map((p) => <ProductCard key={p.id} p={p} />)}
         </div>
       </section>
     </div>
