@@ -30,7 +30,9 @@ function Routes() {
   if (path === '/pricing') return <PricingPage />;
   if (path === '/dashboard') return <BuyerDashboard />;
   if (path === '/dashboard/supplier') return <SupplierDashboard />;
-  if (path === '/admin/reports') return <AdminReportsPage />;
+  // The review screen lets any visitor mark a report reviewed or dismissed, so public builds leave it out
+  // until owner sign-in exists on a server. Dev builds (npm run dev) keep it for testing.
+  if (import.meta.env.DEV && path === '/admin/reports') return <AdminReportsPage />;
   return <NotFound />;
 }
 

@@ -80,9 +80,17 @@ export function ReportDialog({ target, onClose }: { target: ReportTarget; onClos
         {sent ? (
           <div className="text-center">
             <CheckCircle2 className="mx-auto h-10 w-10 text-lilac-400" aria-hidden="true" />
-            <h2 id={titleId} className="mt-3 text-xl">{t('report.done.t')}</h2>
-            <p className="mt-2 text-sm text-ink-2">{t('report.done.d')}</p>
-            {!sent.server && !reportsEndpoint() && <p className="mt-3 flex items-start gap-2 rounded-[12px] border border-lilac-400/20 bg-lilac-400/5 p-3 text-start text-xs text-ink-2"><Info className="h-4 w-4 shrink-0 text-lilac-400" />{t('report.notConnected')}</p>}
+            {sent.server ? (
+              <>
+                <h2 id={titleId} className="mt-3 text-xl">{t('report.done.t')}</h2>
+                <p className="mt-2 text-sm text-ink-2">{t('report.done.d')}</p>
+              </>
+            ) : (
+              <>
+                <h2 id={titleId} className="mt-3 text-xl">{t('report.saved.t')}</h2>
+                <p className="mt-3 flex items-start gap-2 rounded-[12px] border border-lilac-400/20 bg-lilac-400/5 p-3 text-start text-xs text-ink-2"><Info className="h-4 w-4 shrink-0 text-lilac-400" />{t(reportsEndpoint() ? 'report.sendFailed' : 'report.notConnected')}</p>
+              </>
+            )}
             <Button className="mt-6 w-full" onClick={onClose}>{t('report.close')}</Button>
           </div>
         ) : (
