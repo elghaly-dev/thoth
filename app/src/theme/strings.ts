@@ -27,7 +27,7 @@ const EN = {
   welcome: 'Welcome, {name}',
   welcomeAnon: 'Welcome',
   selected: 'Selected',
-  'ivory-gold': 'Ivory & Gold', 'pearl-sage': 'Pearl & Sage', 'sand-rose': 'Sand & Rose',
+  'night-lapis': 'Night & Lapis', 'ivory-gold': 'Ivory & Gold', 'pearl-sage': 'Pearl & Sage', 'sand-rose': 'Sand & Rose',
   'sky-silver': 'Sky & Silver', 'cream-teal': 'Cream & Teal', 'mist-grey': 'Mist & Grey',
 };
 type Strings = typeof EN;
@@ -54,7 +54,7 @@ const AR: Strings = {
   welcome: 'أهلًا بك، {name}',
   welcomeAnon: 'أهلًا بك',
   selected: 'مُختار',
-  'ivory-gold': 'عاجي وذهبي', 'pearl-sage': 'لؤلؤي وأخضر هادئ', 'sand-rose': 'رملي ووردي',
+  'night-lapis': 'ليلي ولازوردي', 'ivory-gold': 'عاجي وذهبي', 'pearl-sage': 'لؤلؤي وأخضر هادئ', 'sand-rose': 'رملي ووردي',
   'sky-silver': 'سماوي وفضي', 'cream-teal': 'كريمي وفيروزي', 'mist-grey': 'ضبابي ورمادي',
 };
 
@@ -80,7 +80,7 @@ const HI: Strings = {
   welcome: 'स्वागत है, {name}',
   welcomeAnon: 'स्वागत है',
   selected: 'चुना गया',
-  'ivory-gold': 'हाथीदांत और सुनहरा', 'pearl-sage': 'मोती और हल्का हरा', 'sand-rose': 'रेत और गुलाबी',
+  'night-lapis': 'रात और लाजवर्द', 'ivory-gold': 'हाथीदांत और सुनहरा', 'pearl-sage': 'मोती और हल्का हरा', 'sand-rose': 'रेत और गुलाबी',
   'sky-silver': 'आसमानी और चाँदी', 'cream-teal': 'क्रीम और हरा-नीला', 'mist-grey': 'धुंध और स्लेटी',
 };
 
@@ -106,7 +106,7 @@ const MR: Strings = {
   welcome: 'स्वागत आहे, {name}',
   welcomeAnon: 'स्वागत आहे',
   selected: 'निवडले',
-  'ivory-gold': 'हस्तिदंती आणि सोनेरी', 'pearl-sage': 'मोती आणि फिकट हिरवा', 'sand-rose': 'वाळू आणि गुलाबी',
+  'night-lapis': 'रात्र आणि लाजवर्द', 'ivory-gold': 'हस्तिदंती आणि सोनेरी', 'pearl-sage': 'मोती आणि फिकट हिरवा', 'sand-rose': 'वाळू आणि गुलाबी',
   'sky-silver': 'आकाशी आणि चंदेरी', 'cream-teal': 'क्रीम आणि निळसर हिरवा', 'mist-grey': 'धुके आणि राखाडी',
 };
 
@@ -132,7 +132,7 @@ const GU: Strings = {
   welcome: 'સ્વાગત છે, {name}',
   welcomeAnon: 'સ્વાગત છે',
   selected: 'પસંદ કરેલું',
-  'ivory-gold': 'હાથીદાંત અને સોનેરી', 'pearl-sage': 'મોતી અને આછો લીલો', 'sand-rose': 'રેતી અને ગુલાબી',
+  'night-lapis': 'રાત અને લાજવર્દ', 'ivory-gold': 'હાથીદાંત અને સોનેરી', 'pearl-sage': 'મોતી અને આછો લીલો', 'sand-rose': 'રેતી અને ગુલાબી',
   'sky-silver': 'આસમાની અને ચાંદી', 'cream-teal': 'ક્રીમ અને વાદળી-લીલો', 'mist-grey': 'ધુમ્મસ અને રાખોડી',
 };
 
@@ -158,7 +158,7 @@ const TA: Strings = {
   welcome: 'வரவேற்கிறோம், {name}',
   welcomeAnon: 'வரவேற்கிறோம்',
   selected: 'தேர்ந்தெடுக்கப்பட்டது',
-  'ivory-gold': 'தந்தம் & தங்கம்', 'pearl-sage': 'முத்து & இளம்பச்சை', 'sand-rose': 'மணல் & ரோஜா',
+  'night-lapis': 'இரவு & நீலமணி', 'ivory-gold': 'தந்தம் & தங்கம்', 'pearl-sage': 'முத்து & இளம்பச்சை', 'sand-rose': 'மணல் & ரோஜா',
   'sky-silver': 'வானம் & வெள்ளி', 'cream-teal': 'கிரீம் & நீலப்பச்சை', 'mist-grey': 'பனிமூட்டம் & சாம்பல்',
 };
 
@@ -184,7 +184,7 @@ const BN: Strings = {
   welcome: 'স্বাগতম, {name}',
   welcomeAnon: 'স্বাগতম',
   selected: 'বেছে নেওয়া',
-  'ivory-gold': 'হাতির দাঁত ও সোনালি', 'pearl-sage': 'মুক্তা ও হালকা সবুজ', 'sand-rose': 'বালি ও গোলাপি',
+  'night-lapis': 'রাত ও লাজবর্দ', 'ivory-gold': 'হাতির দাঁত ও সোনালি', 'pearl-sage': 'মুক্তা ও হালকা সবুজ', 'sand-rose': 'বালি ও গোলাপি',
   'sky-silver': 'আকাশি ও রুপালি', 'cream-teal': 'ক্রিম ও নীলচে সবুজ', 'mist-grey': 'কুয়াশা ও ধূসর',
 };
 
@@ -210,7 +210,7 @@ const TE: Strings = {
   welcome: 'స్వాగతం, {name}',
   welcomeAnon: 'స్వాగతం',
   selected: 'ఎంచుకున్నది',
-  'ivory-gold': 'దంతం & బంగారం', 'pearl-sage': 'ముత్యం & లేత ఆకుపచ్చ', 'sand-rose': 'ఇసుక & గులాబీ',
+  'night-lapis': 'రాత్రి & నీలమణి', 'ivory-gold': 'దంతం & బంగారం', 'pearl-sage': 'ముత్యం & లేత ఆకుపచ్చ', 'sand-rose': 'ఇసుక & గులాబీ',
   'sky-silver': 'ఆకాశం & వెండి', 'cream-teal': 'క్రీమ్ & నీలి ఆకుపచ్చ', 'mist-grey': 'పొగమంచు & బూడిద',
 };
 
@@ -236,7 +236,7 @@ const PA: Strings = {
   welcome: 'ਜੀ ਆਇਆਂ ਨੂੰ, {name}',
   welcomeAnon: 'ਜੀ ਆਇਆਂ ਨੂੰ',
   selected: 'ਚੁਣਿਆ',
-  'ivory-gold': 'ਹਾਥੀ ਦੰਦ ਤੇ ਸੁਨਹਿਰੀ', 'pearl-sage': 'ਮੋਤੀ ਤੇ ਹਲਕਾ ਹਰਾ', 'sand-rose': 'ਰੇਤ ਤੇ ਗੁਲਾਬੀ',
+  'night-lapis': 'ਰਾਤ ਤੇ ਲਾਜਵਰਦ', 'ivory-gold': 'ਹਾਥੀ ਦੰਦ ਤੇ ਸੁਨਹਿਰੀ', 'pearl-sage': 'ਮੋਤੀ ਤੇ ਹਲਕਾ ਹਰਾ', 'sand-rose': 'ਰੇਤ ਤੇ ਗੁਲਾਬੀ',
   'sky-silver': 'ਅਸਮਾਨੀ ਤੇ ਚਾਂਦੀ', 'cream-teal': 'ਕਰੀਮ ਤੇ ਨੀਲਾ-ਹਰਾ', 'mist-grey': 'ਧੁੰਦ ਤੇ ਸਲੇਟੀ',
 };
 
@@ -262,7 +262,7 @@ const ZH: Strings = {
   welcome: '欢迎，{name}',
   welcomeAnon: '欢迎',
   selected: '已选择',
-  'ivory-gold': '象牙金', 'pearl-sage': '珍珠灰绿', 'sand-rose': '沙色玫瑰',
+  'night-lapis': '夜色青金', 'ivory-gold': '象牙金', 'pearl-sage': '珍珠灰绿', 'sand-rose': '沙色玫瑰',
   'sky-silver': '天蓝银', 'cream-teal': '奶油青绿', 'mist-grey': '雾灰',
 };
 

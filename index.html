@@ -2,7 +2,7 @@
 <html lang="hi">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-DCwE5bCOxC43HSAlMbVlQZov07HbkpSCCq0R5QtTsVk='; img-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-Aakk0jvUL1YMe6bVaAPW0K09M/gHfWE2AocqZQSTCto='; img-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>थोथ — निर्यातकों के लिए वफ़ादार सेवक</title>
   <meta name="description" content="थोथ आवाज़ से चलने वाला बहुभाषी वफ़ादार सेवक है, जो निर्यातकों को विदेश के खरीदारों से उनकी अपनी भाषा में बात करने में मदद करता है। by Elghaly LLC">
@@ -21,10 +21,10 @@
   <link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.webmanifest">
-  <meta name="theme-color" content="#0b0c10">
+  <meta name="theme-color" content="#07080c">
   <style>
     :root {
-      --bg: #0b0c10;
+      --bg: #07080c; /* page night, as elghaly.dev */
       --text: #e8e6e1;
       --muted: #9a958c;
       --gold: #c9a227;
@@ -38,9 +38,10 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      /* the elghaly.dev page background: night with a lapis glow on top */
       background-image:
-        radial-gradient(ellipse at 50% 0%, rgba(201, 162, 39, 0.12), transparent 55%),
-        radial-gradient(ellipse at 80% 100%, rgba(201, 162, 39, 0.05), transparent 45%);
+        radial-gradient(120% 60% at 50% -10%, rgba(42, 76, 179, .30), transparent 60%),
+        radial-gradient(80% 50% at 50% 110%, rgba(196, 161, 236, .10), transparent 70%);
     }
     main {
       flex: 1;
