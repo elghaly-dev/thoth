@@ -33,3 +33,9 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
+      # thoth.elghaly.dev serves hathor/ as it is: the built page and files there must match a fresh build.
+      - name: Published build in hathor/ matches a fresh one
+        run: |
+          npm run publish
+          git status --porcelain -- . ':!node_modules'
+          test -z "$(git status --porcelain -- . ':!node_modules')"

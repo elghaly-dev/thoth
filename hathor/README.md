@@ -29,7 +29,7 @@ Escrow, verification partners and freight rates are not connected yet; the scree
 
 ```
 npm install
-npm run dev        # http://localhost:5173
+npm run dev        # http://localhost:5173/app.html (the source page)
 npm run lint       # TypeScript
 npm test           # wording, i18n parity, contact masking, fees, number lock
 npm run build && npm run preview
@@ -38,3 +38,11 @@ python3 scripts/shots.py http://localhost:4173 shots   # screenshots, plus an on
 
 Fee settings live in `src/lib/fees.ts` (`FEE_CONFIG`). While the commission rate and the
 Premium price are unset, the UI shows «Plans coming» and never shows a made-up number.
+
+## Publishing to thoth.elghaly.dev/hathor/
+
+The site serves this folder as it is; nothing is built on the host. The source page is `app.html`.
+`npm run publish` builds it for `/hathor/` and writes the built page (`index.html`), `assets/` and the
+shell files (`sw.js`, `manifest.webmanifest`, icons) here. Run it after any change under `src/`,
+`public/` or `app.html`, and commit what it writes. `hathor-checks` builds again and fails when the
+committed files differ.
