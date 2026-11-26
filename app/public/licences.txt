@@ -12,7 +12,7 @@ The full Apache License 2.0 text is included below with @mlc-ai/web-llm.
 
 ========================================================================
 
-@mlc-ai/web-llm 0.2.87
+@mlc-ai/web-llm 0.2.89
 Licence: Apache-2.0
 
 Apache License
