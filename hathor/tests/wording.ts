@@ -45,8 +45,8 @@ function walk(path: string, v: unknown) {
 for (const [k, v] of Object.entries(sample)) if (typeof v !== 'function') walk(k, v);
 
 // 3. Page metadata and manifest.
-const html = readFileSync(join(root, 'index.html'), 'utf8');
-for (const m of html.matchAll(/<title>([^<]*)<\/title>|content="([^"]*)"/g)) scan('index.html', m[1] ?? m[2]);
+const html = readFileSync(join(root, 'app.html'), 'utf8');
+for (const m of html.matchAll(/<title>([^<]*)<\/title>|content="([^"]*)"/g)) scan('app.html', m[1] ?? m[2]);
 const manifest = JSON.parse(readFileSync(join(root, 'public/manifest.webmanifest'), 'utf8'));
 scan('manifest.name', manifest.name); scan('manifest.short_name', manifest.short_name); scan('manifest.description', manifest.description);
 
@@ -58,7 +58,7 @@ function files(dir: string): string[] {
     return statSync(p).isDirectory() ? files(p) : [p];
   });
 }
-const sources = [...files(join(root, 'src')), ...files(join(root, 'tests')), ...files(join(root, 'scripts')), join(root, 'public/sw.js'), join(root, 'vite.config.ts'), join(root, 'index.html')]
+const sources = [...files(join(root, 'src')), ...files(join(root, 'tests')), ...files(join(root, 'scripts')), join(root, 'public/sw.js'), join(root, 'vite.config.ts'), join(root, 'app.html')]
   .filter((p) => /\.(tsx?|jsx?|mjs|py|css|html)$/.test(p));
 let comments = 0;
 for (const p of sources) {

@@ -1,7 +1,9 @@
 // Hathor offline shell. Caches the app shell on install and serves it when the
 // network is down. Requests to other hosts are never touched.
-const CACHE = 'hathor-shell-v1';
-const SHELL = ['/', '/index.html', '/manifest.webmanifest', '/icon.svg'];
+// Paths are relative to this file, so the shell is the one in the folder it is served from
+// (thoth.elghaly.dev/hathor/), never the site's own root page.
+const CACHE = 'hathor-shell-v2';
+const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -17,7 +19,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   if (event.request.method !== 'GET' || url.origin !== self.location.origin) return;
   if (event.request.mode === 'navigate') {
-    event.respondWith(fetch(event.request).catch(() => caches.match('/index.html')));
+    event.respondWith(fetch(event.request).catch(() => caches.match(new URL('./index.html', self.location).href)));
     return;
   }
   event.respondWith(
