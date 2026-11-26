@@ -1,5 +1,6 @@
-// Verified-business request. Business documents go to manual review; the
-// status here is read from the review queue and never set by this page.
+// Verified-business request (preview). The number is format-checked here and the
+// device keeps its last 4 characters; review needs the Hathor server. The status
+// is read from the device and never set to "verified" by this page.
 import { useState } from 'react';
 import { BadgeCheck, CircleHelp, Hourglass } from 'lucide-react';
 import { useI18n, type StringKey } from '../i18n';
@@ -23,7 +24,7 @@ export function VerifyPage() {
   const [docs, setDocs] = useState<Partial<Record<DocType, DocUpload>>>({});
   const [errors, setErrors] = useState<VerifyError[]>([]);
   const [list, setList] = useState(() => loadRequests(browserKV()));
-  const status = statusFor(list, party);
+  const status = statusFor(list, party, { localVerified: import.meta.env.DEV });
   const label = 'mb-1.5 block text-sm text-ink-2';
   const setDoc = (type: DocType, patch: Partial<DocUpload>) => setDocs((d) => ({ ...d, [type]: { type, number: '', fileName: '', ...d[type], ...patch } }));
   const err = (field: string) => { const e = errors.find((x) => x.field === field); return e ? <span role="alert" className="mt-1 block text-xs text-danger">{t(`vfy.err.${e.code}` as StringKey)}</span> : null; };
@@ -38,6 +39,7 @@ export function VerifyPage() {
     <div className="mx-auto max-w-3xl">
       <PageHeader title={t('vfy.title')} sub={t('vfy.sub')}><VerifyStatusChip status={status} /></PageHeader>
       <Glass className="space-y-5 p-6 md:p-8">
+        <p className="rounded-[14px] border border-warning/30 bg-warning/5 p-3 text-sm text-ink-2">{t('vfy.preview')}</p>
         <fieldset><legend className={label}>{t('vfy.party')}</legend>
           <div className="flex flex-wrap gap-2">{PARTIES.map((p) => <button key={p} type="button" aria-pressed={party === p} onClick={() => { setParty(p); setErrors([]); }} className={`chip h-11 !px-4 ${party === p ? '!border-lilac-400 !bg-lilac-400/25' : ''}`}>{t(`vfy.party.${p}` as StringKey)}</button>)}</div>
         </fieldset>
@@ -48,7 +50,7 @@ export function VerifyPage() {
           <div key={d.type} className="rounded-[14px] border border-lilac-400/15 p-4">
             <div className="mb-3 flex items-center justify-between gap-2"><span className="font-semibold">{t(`vfy.doc.${d.type}` as StringKey)}</span><span className="text-xs text-ink-3">{t(`vfy.need.${d.need}` as StringKey)}</span></div>
             <div className="grid gap-3 md:grid-cols-2">
-              <label className="block"><span className={label}>{t('vfy.number')}</span><input dir="ltr" className="field num" value={docs[d.type]?.number ?? ''} onChange={(e) => setDoc(d.type, { number: e.target.value })} /></label>
+              <label className="block"><span className={label}>{t('vfy.number')}</span><input dir="ltr" className="field num" autoComplete="off" value={docs[d.type]?.number ?? ''} onChange={(e) => setDoc(d.type, { number: e.target.value })} /><span className="mt-1 block text-xs text-ink-3">{t('vfy.numberNote')}</span></label>
               <label className="block"><span className={label}>{t('vfy.file')}</span><input type="file" accept=".pdf,.png,.jpg,.jpeg" className="field !h-auto py-2" onChange={(e) => setDoc(d.type, { fileName: e.target.files?.[0]?.name ?? '' })} /></label>
             </div>
             {err(d.type)}

@@ -1,5 +1,6 @@
-// Manual review of verification requests. This screen is the one place a
-// request becomes verified.
+// Review of verification requests: a preview in dev builds alone (App.tsx).
+// The device keeps the last 4 characters of each number and a masked file
+// name, not the document, so a real review needs the Hathor server.
 import { useState } from 'react';
 import { useI18n, type StringKey } from '../i18n';
 import { loadRequests, reviewRequest } from '../lib/verification';
@@ -28,7 +29,7 @@ export function AdminVerifyPage() {
               </div>
               <div className="mt-3 font-semibold"><bdi>{r.company}</bdi></div>
               <ul className="mt-2 space-y-1 text-sm">
-                {r.docs.map((d) => <li key={d.type} className="flex flex-wrap justify-between gap-2"><span className="text-ink-2">{t(`vfy.doc.${d.type}` as StringKey)}</span><span className="num" dir="ltr">{d.number} · {d.fileName}</span></li>)}
+                {r.docs.map((d) => <li key={d.type} className="flex flex-wrap justify-between gap-2"><span className="text-ink-2">{t(`vfy.doc.${d.type}` as StringKey)}</span><span className="num" dir="ltr">•••• {d.last4} · <bdi>{d.fileName}</bdi></span></li>)}
               </ul>
               {r.status === 'pending' ? (
                 <div className="mt-4 flex flex-wrap items-center gap-2">
