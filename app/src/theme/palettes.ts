@@ -1,5 +1,5 @@
 /**
- * Thoth's light palettes. Design only: each palette sets Tailwind's own colour
+ * Thoth's palettes: the elghaly.dev night (the default) and six light ones. Look, not logic: each palette sets Tailwind's own colour
  * variables (--color-slate-*, --color-emerald-*, ...) so every existing
  * component takes the new look without any change to its logic.
  *
@@ -17,7 +17,7 @@
  * Every pair the app uses is checked for WCAG AA in tests/palettes.ts.
  */
 
-export type PaletteId = 'ivory-gold' | 'pearl-sage' | 'sand-rose' | 'sky-silver' | 'cream-teal' | 'mist-grey';
+export type PaletteId = 'night-lapis' | 'ivory-gold' | 'pearl-sage' | 'sand-rose' | 'sky-silver' | 'cream-teal' | 'mist-grey';
 
 export interface Palette {
   id: PaletteId;
@@ -32,6 +32,8 @@ export interface Palette {
 }
 
 export const PALETTES: Palette[] = [
+  // The elghaly.dev page night (#07080c, tile #10131f, ivory text, lilac and turquoise).
+  { id: 'night-lapis', paper: '#07080C', surface: '#10131F', ink: '#EFE8D8', muted: '#A39B88', hair: '#312A3D', a: '#C4A1EC', b: '#34B8AC', warn: '#FF8FA8' },
   { id: 'ivory-gold', paper: '#FBF8F1', surface: '#FFFDF8', ink: '#1F1B16', muted: '#5C5347', hair: '#D8C48F', a: '#755610', b: '#3F5B4B', warn: '#9B2C3C' },
   { id: 'pearl-sage', paper: '#F5F6F2', surface: '#FFFFFF', ink: '#1C2420', muted: '#515C55', hair: '#C2CFBF', a: '#425F49', b: '#695734', warn: '#9B2C3C' },
   { id: 'sand-rose', paper: '#F8F0E8', surface: '#FFFAF5', ink: '#2A1D1B', muted: '#66524D', hair: '#DFBFB3', a: '#88404D', b: '#6C5233', warn: '#9B2C2C' },
@@ -40,7 +42,7 @@ export const PALETTES: Palette[] = [
   { id: 'mist-grey', paper: '#F1F1F0', surface: '#FBFBFA', ink: '#1D1E20', muted: '#53565B', hair: '#CBCBC6', a: '#474C55', b: '#625541', warn: '#9B2C3C' },
 ];
 
-export const DEFAULT_PALETTE: PaletteId = 'ivory-gold';
+export const DEFAULT_PALETTE: PaletteId = 'night-lapis';
 export const paletteById = (id: string | null | undefined): Palette =>
   PALETTES.find((p) => p.id === id) ?? PALETTES[0];
 

@@ -3,8 +3,8 @@
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', 'Noto Sans Arabic', 'Noto Sans Devanagari', 'Noto Sans Gujarati', 'Noto Sans Tamil', 'Noto Sans Bengali', 'Noto Sans Telugu', 'Noto Sans Gurmukhi', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: var(--thoth-paper, #fbf8f1);
-    color: var(--thoth-ink, #1f1b16);
+    background-color: var(--thoth-paper, #07080c);
+    color: var(--thoth-ink, #efe8d8);
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, .thoth-display {
@@ -18,6 +18,28 @@
     letter-spacing: 0;
     line-height: 1.5;
   }
+}
+
+/* The night palette carries the elghaly.dev page background: night with a
+   lapis glow on top (same values as elghaly.dev). */
+html[data-theme="night-lapis"] body {
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(42, 76, 179, .30), transparent 60%),
+    radial-gradient(80% 50% at 50% 110%, rgba(196, 161, 236, .10), transparent 70%),
+    var(--thoth-paper);
+}
+/* The app shell lets the page glow through; the first-launch sheet carries it itself. */
+html[data-theme="night-lapis"] #root > .min-h-screen.bg-slate-950 {
+  background-color: transparent;
+}
+html[data-theme="night-lapis"] [role="dialog"][aria-labelledby="thoth-welcome-title"] {
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(42, 76, 179, .30), transparent 60%),
+    radial-gradient(80% 50% at 50% 110%, rgba(196, 161, 236, .10), transparent 70%),
+    var(--thoth-paper);
+}
+html[data-theme="night-lapis"] header.sticky {
+  background-color: rgba(13, 17, 32, .7);
 }
 
 /* Luxury look (design only). Thin hairlines in the palette's matching tone,
