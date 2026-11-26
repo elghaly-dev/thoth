@@ -70,7 +70,7 @@ export function ReportDialog({ target, onClose }: { target: ReportTarget; onClos
     setBusy(true);
     const r = await fileReport(target, reason, note);
     setBusy(false);
-    if (!r.ok) { setError(r.error === 'noteRequired' ? 'report.err.note' : 'report.err.reason'); return; }
+    if (!r.ok) { setError(r.error === 'noteRequired' ? 'report.err.note' : r.error === 'target' ? 'report.err.target' : 'report.err.reason'); return; }
     setSent({ server: r.report.sent });
   };
 

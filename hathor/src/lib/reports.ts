@@ -74,12 +74,24 @@ export function targetKey(t: Pick<ReportTarget, 'kind' | 'id'>): string {
   return `${t.kind}:${t.id}`;
 }
 
+const KINDS: readonly string[] = ['supplier', 'product', 'thread', 'message'];
+const STATUSES: readonly string[] = ['pending', 'reviewed', 'dismissed'];
+// A stored entry must have the shape the review screen renders; anything else
+// (a hand-edited entry, an older build's data) is left out.
+function isStoredReport(r: unknown): r is Report {
+  const x = r as Partial<Report> | null;
+  return !!x && typeof x.id === 'string' && isReason(x.reason) && STATUSES.includes(x.status as string)
+    && typeof x.createdAt === 'string' && !Number.isNaN(Date.parse(x.createdAt))
+    && !!x.target && KINDS.includes(x.target.kind) && typeof x.target.id === 'string' && typeof x.target.label === 'string'
+    && typeof x.note === 'string' && typeof x.sent === 'boolean';
+}
+
 export function loadReports(kv: KV | null): Report[] {
   if (!kv) return [];
   try {
     const raw = kv.getItem(STORAGE_KEY);
     const list = raw ? JSON.parse(raw) : [];
-    return Array.isArray(list) ? list.filter((r) => r && typeof r.id === 'string' && isReason(r.reason)) : [];
+    return Array.isArray(list) ? list.filter(isStoredReport) : [];
   } catch {
     return [];
   }
