@@ -57,4 +57,19 @@ const b = bestOf(loadQuotes(kv, rfq.id));
 check('best price and lead picked', b.price.join() === 'Q-2' && b.lead.join() === q1.id);
 check('no best price across currencies', bestOf([q1, { ...q2, currency: 'AED' }]).price.length === 0);
 
+// Muse LOW 14, 15, 21: real calendar days, plain decimals, masked file names.
+check('an impossible date is refused (2027-02-30)', (() => { const r = buildRfq({ ...base, deliverBy: '2027-02-30' }, now); return !r.ok && r.errors.some((e) => e.field === 'deliverBy'); })());
+check('a quote valid-until of 2026-11-31 is refused', (() => { const r = buildQuote({ ...q, validUntil: '2026-11-31' }, rfq, now); return !r.ok && r.errors.some((e) => e.field === 'validUntil'); })());
+check('a real leap day is accepted (2028-02-29)', buildQuote({ ...q, validUntil: '2028-02-29' }, rfq, now).ok);
+for (const bad of ['1e3', '0x10', 'Infinity', '1.2.3', '+5']) {
+  const r = buildQuote({ ...q, unitPrice: bad }, rfq, now);
+  check(`price ${bad} is refused`, !r.ok && r.errors.some((e) => e.field === 'unitPrice'), JSON.stringify(r));
+}
+check('quantity 1e3 is refused', (() => { const r = buildRfq({ ...base, quantity: '1e3' }, now); return !r.ok && r.errors.some((e) => e.field === 'quantity'); })());
+check('a price with thousands separators is read', (() => { const r = buildQuote({ ...q, unitPrice: '1,250.50' }, rfq, now); return r.ok && r.quote.unitPrice === 1250.5; })());
+const named = buildRfq({ ...base, attachments: ['call me 971501234567.pdf'] }, now);
+check('an attachment name with a phone number is masked', named.ok && !named.rfq.attachments[0].includes('971501234567') && named.rfq.attachments[0].includes(MASK_TOKEN), JSON.stringify(named));
+const sheetQ = buildQuote({ ...q, datasheet: 'telegram 971501234567.pdf' }, rfq, now);
+check('a datasheet name with a phone number is masked', sheetQ.ok && !!sheetQ.quote.datasheet && !sheetQ.quote.datasheet.includes('971501234567'), JSON.stringify(sheetQ));
+
 done('rfq');

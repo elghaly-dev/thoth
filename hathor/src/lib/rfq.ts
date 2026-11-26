@@ -119,12 +119,21 @@ export const QUOTE_KEY = 'hathor.quotes';
 const TEXT_MAX = 500;
 
 const mask = (s: string) => maskContacts(s.trim()).text.slice(0, TEXT_MAX);
+// Plain decimals alone: 1,250.50 yes; 1e3, 0x10, Infinity no.
 const num = (s: string | undefined) => {
   if (s === undefined || !s.trim()) return NaN;
-  const n = Number(s.replace(/,/g, '').trim());
-  return Number.isFinite(n) ? n : NaN;
+  const v = s.replace(/,/g, '').trim();
+  return /^\d+(?:\.\d+)?$/.test(v) ? Number(v) : NaN;
 };
-const isDate = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(`${s}T00:00:00Z`));
+// A real calendar day: 2026-02-30 is refused (Date.parse would roll it to 2 March).
+const isDate = (s: string) => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  if (!m) return false;
+  const d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+  return d.getUTCFullYear() === +m[1] && d.getUTCMonth() === +m[2] - 1 && d.getUTCDate() === +m[3];
+};
+// File names are shown to other people, so they get the same mask as typed text.
+const maskName = (s: string) => maskContacts(s.trim()).text.slice(0, 120);
 const has = <T extends string>(list: readonly T[], v: string): v is T => (list as readonly string[]).includes(v);
 const newId = (p: string, now: Date, rand: () => number) => `${p}-${now.getTime().toString(36)}${Math.floor(rand() * 1e6).toString(36)}`.toUpperCase();
 
@@ -160,7 +169,7 @@ export function buildRfq(i: RfqInput, now = new Date(), rand = Math.random): { o
     ok: true,
     rfq: {
       id: newId('R', now, rand), title: mask(i.title), category: i.category, specs,
-      attachments: i.attachments.map((a) => a.trim()).filter(Boolean).slice(0, 10),
+      attachments: i.attachments.map((a) => a.trim()).filter(Boolean).slice(0, 10).map(maskName),
       quantity: qty, unit: mask(i.unit), destination: i.destination as DestinationId, incoterm: i.incoterm as BuyerIncoterm,
       deliverBy: i.deliverBy, quoteDeadline: i.quoteDeadline, target, sampleNeeded: !!i.sampleNeeded, certs,
       createdAt: now.toISOString(),
@@ -184,7 +193,7 @@ export function buildQuote(i: QuoteInput, rfq: StoredRfq, now = new Date(), rand
   if (!isDate(i.validUntil)) e.push({ field: 'validUntil', code: i.validUntil ? 'date' : 'required' });
   let freight: number | null = null;
   if (i.freight && i.freight.trim()) { freight = num(i.freight); if (!(freight >= 0)) e.push({ field: 'freight', code: 'number' }); }
-  const sheet = i.datasheet?.trim() || null;
+  const sheet = i.datasheet?.trim() ? maskName(i.datasheet) : null;
   if (sheet && !/\.pdf$/i.test(sheet)) e.push({ field: 'datasheet', code: 'pdf' });
   if (e.length) return { ok: false, errors: e };
   return {

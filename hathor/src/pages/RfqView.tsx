@@ -22,6 +22,10 @@ export function RfqView({ id }: { id: string }) {
   const dest = DESTINATIONS.find((d) => d.id === rfq.destination);
   const cat = CATEGORIES.find((c) => c.id === rfq.category);
   const sameCur = quotes.every((q) => q.currency === quotes[0]?.currency);
+  // The estimate starts from the lowest-priced quote. With mixed currencies no
+  // lowest price is marked, so it starts from the first quote and says so.
+  const basis = quotes.find((q) => best.price.includes(q.id)) ?? quotes[0];
+  const basisName = basis ? (byId(SUPPLIERS, basis.supplierId)?.name[lang] ?? basis.supplierId) : '';
   const yes = (b: boolean) => (b ? t('compare.yes') : t('compare.no'));
   const missing = <span className="italic text-ink-3">{t('compare.missing')}</span>;
 
@@ -86,7 +90,8 @@ export function RfqView({ id }: { id: string }) {
           </table>
         </div>
       )}
-      <LandedCost currency={quotes[0]?.currency ?? 'USD'} value={quotes[0]?.total ?? 0} incoterm={rfq.incoterm} rateId={rfq.category === 'packaging' ? 'packaging' : rfq.category === 'dates' || rfq.category === 'fertilisers' ? 'food-agri' : 'other'} />
+      {basis && <p className="mb-3 text-xs text-ink-3"><bdi>{t(sameCur ? 'rfq.estimateLowest' : 'rfq.estimateFirst', { name: basisName })}</bdi></p>}
+      <LandedCost key={basis?.id ?? 'none'} currency={basis?.currency ?? 'USD'} value={basis?.total ?? 0} incoterm={rfq.incoterm} rateId={rfq.category === 'packaging' ? 'packaging' : rfq.category === 'dates' || rfq.category === 'fertilisers' ? 'food-agri' : 'other'} />
     </div>
   );
 }

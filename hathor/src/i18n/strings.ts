@@ -185,6 +185,8 @@ export const strings = {
   'rfq.post': { ar: 'انشر الطلب', en: 'Post request' },
   'rfq.saved': { ar: 'حُفظت المسودة', en: 'Draft saved' },
   'rfq.posted': { ar: 'حُفظ طلبك على هذا الجهاز.', en: 'Your request is saved on this device.' },
+  'rfq.estimateLowest': { ar: 'يبدأ التقدير أدناه من أقل عرض سعرًا ({name}). يمكنك تغيير القيمة.', en: 'The estimate below starts from the lowest-priced quote ({name}). You can change the value.' },
+  'rfq.estimateFirst': { ar: 'العروض بعملات مختلفة، لذلك يبدأ التقدير أدناه من أول عرض ({name}). يمكنك تغيير القيمة.', en: 'Quotes use different currencies, so the estimate below starts from the first quote ({name}). You can change the value.' },
   'rfq.posted.sample': { ar: 'نسخة العرض: لم يُرسل شيء إلى أي مورّد.', en: 'Preview: nothing was sent to any supplier.' },
   'rfq.view': { ar: 'اعرض العروض', en: 'View quotes' },
   'rfq.readBack': { ar: 'كل رقم كما كتبته تمامًا', en: 'Every number exactly as you typed it' },
