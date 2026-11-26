@@ -1,4 +1,5 @@
-@import "tailwindcss";
+/* Classes are read from src/ alone, never from the published build next to it (assets/, index.html). */
+@import "tailwindcss" source(".");
 
 /* Hathor design tokens (elghaly.dev look). One dark theme: deep navy with a
    lilac accent. No cream, no gold. */

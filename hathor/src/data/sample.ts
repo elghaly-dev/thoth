@@ -395,7 +395,7 @@ export const THREADS: Thread[] = [
     messages: [
       { id: 'm1', from: 'me', lang: 'en', text: 'Hello, can you confirm 6,000 kg in 5 kg cartons, CFR Nhava Sheva?', at: '2026-11-22T09:10:00', translation: 'مرحبًا، هل تؤكّدون 6,000 كغ في كراتين 5 كغ، CFR نافا شيفا؟' },
       { id: 'm2', from: 'them', lang: 'ar', text: 'وعليكم السلام. نعم، 6,000 كغ جاهزة خلال 12 يومًا، والسعر 9.2 دولار للكغ.', at: '2026-11-22T09:42:00', check: 'clear', translation: 'Peace be upon you. Yes, 6,000 kg ready within 12 days, and the price is 9.2 dollars per kg.' },
-      { id: 'm3', from: 'them', lang: 'ar', text: 'للتواصل أسرع كلمني واتساب على 0501234567', at: '2026-11-22T09:44:00', check: 'unknown', translation: 'For faster contact message me on WhatsApp at 0501234567' },
+      { id: 'm3', from: 'them', lang: 'ar', text: 'للتواصل أسرع راسلني هنا في محادثة حتحور، وأرد عليك خلال ساعة.', at: '2026-11-22T09:44:00', check: 'clear', translation: 'For faster contact, message me here in the Hathor chat; I reply within the hour.' },
       { id: 'm4', from: 'them', lang: 'ar', text: 'رفعت الفاتورة المبدئية في غرفة الصفقة، الإجمالي 55,200 دولار.', at: '2026-11-23T11:05:00', check: 'clear', translation: 'I uploaded the proforma invoice to the deal room, the total is 55,200 dollars.' },
     ],
   },
