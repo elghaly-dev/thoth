@@ -1,6 +1,6 @@
 # Hathor (حتحور) — marketplace front end
 
-A B2B marketplace between Gulf and Egyptian suppliers and business buyers.
+A B2B marketplace between Gulf, UAE, Saudi, India and China suppliers and business buyers.
 Arabic first (right to left), English second. The in-app assistant is «الغالي».
 
 This folder is a standalone Vite app. It does not touch the Thoth app in `app/`.

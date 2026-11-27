@@ -30,7 +30,7 @@ export const strings = {
 
   // Home
   'hero.kicker': { ar: 'موردون موثّقون · عروض أسعار · صفقات بلغتك', en: 'Verified suppliers · Quotes · Deals in your language' },
-  'hero.title': { ar: 'من موردي الخليج ومصر إلى مشتريك، بثقة', en: 'From Gulf and Egyptian suppliers to your buyers, with trust' },
+  'hero.title': { ar: 'من موردي الخليج والإمارات والسعودية والهند والصين إلى مشتريك، بثقة', en: 'From Gulf, UAE, Saudi, India and China suppliers to your buyers, with trust' },
   'hero.tagline': {
     ar: 'اطلب عرض سعر مرة واحدة، وقارن عروض موردين موثّقين جنبًا إلى جنب، وأدر الصفقة كلها في مكان واحد.',
     en: 'Post one request, compare quotes from verified suppliers side by side, and run the whole deal in one place.',
@@ -348,6 +348,11 @@ export const strings = {
   'pricing.premium.f5': { ar: 'دور أسرع في التوثيق عبر الشريك', en: 'A faster verification queue through the partner' },
   'pricing.premium.f6': { ar: 'شارة «بريميوم» على صفحة المورّد', en: 'A “Premium” badge on your profile' },
   'plans.coming': { ar: 'الباقات قريبًا', en: 'Plans coming' },
+  'feature.comingSoon': { ar: 'قريبًا', en: 'Coming soon' },
+  'feature.shipOpts.t': { ar: 'ثلاث خيارات مسعّرة لكل طلب', en: 'Three priced options per order' },
+  'feature.shipOpts.d': { ar: 'قارن عروض الشحن داخل الطلب قبل أن تختار.', en: 'Compare shipping quotes inside the request before you choose.' },
+  'feature.flatFee.t': { ar: 'رسوم خدمة ثابتة لكل طلب', en: 'Flat service fee per order' },
+  'feature.flatFee.d': { ar: 'مبلغ خدمة واحد يظهر قبل تأكيد الطلب.', en: 'One service amount appears before you confirm the order.' },
   'pricing.faq': { ar: 'أسئلة شائعة', en: 'Questions' },
   'pricing.q1': { ar: 'متى تبدأ العمولة؟', en: 'When does the commission start?' },
   'pricing.a1': { ar: 'بعد 3 أشهر من فتح الحساب، وعلى الصفقات المكتملة وحدها.', en: 'Three months after your account opens, and on completed deals alone.' },
