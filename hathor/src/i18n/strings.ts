@@ -350,7 +350,7 @@ export const strings = {
   'plans.coming': { ar: 'الباقات قريبًا', en: 'Plans coming' },
   'feature.comingSoon': { ar: 'قريبًا', en: 'Coming soon' },
   'feature.shipOpts.t': { ar: 'ثلاث خيارات مسعّرة لكل طلب', en: 'Three priced options per order' },
-  'feature.shipOpts.d': { ar: 'اعرض ثلاث خيارات مورّد لكل طلب (الهند، الإمارات/السعودية، الصين) مع إظهار بلد المنشأ.', en: 'See three supplier options per order (India, UAE/Saudi, China) with origin shown.' },
+  'feature.shipOpts.d': { ar: 'اعرض ثلاثة خيارات مورّد لكل طلب (الهند، الإمارات/السعودية، الصين) مع إظهار بلد المنشأ.', en: 'See three supplier options per order (India, UAE/Saudi, China) with origin shown.' },
   'feature.flatFee.t': { ar: 'رسوم خدمة ثابتة لكل طلب', en: 'Flat service fee per order' },
   'feature.flatFee.d': { ar: 'مبلغ خدمة واحد يظهر قبل تأكيد الطلب.', en: 'One service amount appears before you confirm the order.' },
   'pricing.faq': { ar: 'أسئلة شائعة', en: 'Questions' },
