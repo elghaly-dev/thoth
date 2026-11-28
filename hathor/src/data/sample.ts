@@ -57,12 +57,12 @@ export const SUPPLIERS: Supplier[] = [
     about: { ar: 'توزيع حبيبات البولي إيثيلين والبولي بروبيلين من مستودعات جمركية في جبل علي.', en: 'Polyethylene and polypropylene granules from bonded warehouses in Jebel Ali.' },
   },
   {
-    id: 'nile-steel', sample: true,
-    name: { ar: 'النيل للصلب', en: 'Nile Steel Works' },
-    city: { ar: 'العين السخنة', en: 'Ain Sokhna' }, country: { ar: 'مصر', en: 'Egypt' }, countryCode: 'EG',
-    since: '2026-05-20', languages: ['العربية', 'English'], level: 1, verifiedOn: '2026-10-05', premium: false,
+    id: 'jebel-steel', sample: true,
+    name: { ar: 'جبل علي للصلب', en: 'Jebel Ali Steel Works' },
+    city: { ar: 'جبل علي', en: 'Jebel Ali' }, country: { ar: 'الإمارات', en: 'UAE' }, countryCode: 'AE',
+    since: '2026-05-20', languages: ['العربية', 'English', 'हिन्दी'], level: 1, verifiedOn: '2026-10-05', premium: false,
     deals: 6, onTime: [6, 6], disputes: 0, replyHours: 8, categories: ['metals', 'building'],
-    about: { ar: 'حديد تسليح ولفائف مدرفلة على الساخن قرب ميناء السخنة.', en: 'Rebar and hot-rolled coil near Sokhna port.' },
+    about: { ar: 'حديد تسليح ولفائف مدرفلة على الساخن من مستودعات جبل علي.', en: 'Rebar and hot-rolled coil from bonded warehouses in Jebel Ali.' },
   },
   {
     id: 'oman-agri', sample: true,
@@ -89,12 +89,12 @@ export const SUPPLIERS: Supplier[] = [
     about: { ar: 'تمور إماراتية بتعبئة للتصدير وغرف تبريد.', en: 'Emirati dates with export packing and cold rooms.' },
   },
   {
-    id: 'siwa-farms', sample: true,
-    name: { ar: 'مزارع سيوة', en: 'Siwa Farms' },
-    city: { ar: 'سيوة', en: 'Siwa' }, country: { ar: 'مصر', en: 'Egypt' }, countryCode: 'EG',
-    since: '2026-08-09', languages: ['العربية', 'English'], level: 1, verifiedOn: '2026-10-19', premium: false,
+    id: 'gujarat-dates', sample: true,
+    name: { ar: 'غوجارات للتمور', en: 'Gujarat Date Co.' },
+    city: { ar: 'أحمد آباد', en: 'Ahmedabad' }, country: { ar: 'الهند', en: 'India' }, countryCode: 'IN',
+    since: '2026-08-09', languages: ['English', 'हिन्दी', 'العربية'], level: 1, verifiedOn: '2026-10-19', premium: false,
     deals: 3, onTime: [3, 3], disputes: 0, replyHours: 12, categories: ['dates'],
-    about: { ar: 'تمور سيوي ومجدول من واحة سيوة.', en: 'Siwi and Medjool dates from the Siwa oasis.' },
+    about: { ar: 'تمور مجدول وتعبئة للتصدير من ولاية غوجارات.', en: 'Medjool dates and export packing from Gujarat state.' },
   },
   {
     id: 'cycle-arabia', sample: true,
@@ -167,9 +167,9 @@ export const PRODUCTS: Product[] = [
   {
     id: 'rebar-b500', sample: true, featured: true,
     title: { ar: 'حديد تسليح B500B، 12 مم', en: 'Rebar B500B, 12 mm' },
-    category: 'metals', supplierId: 'nile-steel', currency: 'USD', unit: mt,
+    category: 'metals', supplierId: 'jebel-steel', currency: 'USD', unit: mt,
     tiers: [{ minQty: 50, price: 640 }, { minQty: 250, price: 620 }],
-    incoterm: 'FOB', port: { ar: 'السخنة', en: 'Sokhna' }, hs: '7214.20', origin: { ar: 'مصر', en: 'Egypt' },
+    incoterm: 'FOB', port: { ar: 'جبل علي', en: 'Jebel Ali' }, hs: '7214.20', origin: { ar: 'الإمارات', en: 'UAE' },
     moq: 50, leadDays: 21, sampleAvailable: false,
     specs: [
       { k: { ar: 'الطول', en: 'Length' }, v: { ar: '12 م', en: '12 m' } },
@@ -236,9 +236,9 @@ export const PRODUCTS: Product[] = [
   {
     id: 'hr-coil', sample: true,
     title: { ar: 'لفائف مدرفلة على الساخن', en: 'Hot-rolled steel coil' },
-    category: 'metals', supplierId: 'nile-steel', currency: 'USD', unit: mt,
+    category: 'metals', supplierId: 'jebel-steel', currency: 'USD', unit: mt,
     tiers: [{ minQty: 100, price: 610 }],
-    incoterm: 'FOB', port: { ar: 'السخنة', en: 'Sokhna' }, hs: '7208.39', origin: { ar: 'مصر', en: 'Egypt' },
+    incoterm: 'FOB', port: { ar: 'جبل علي', en: 'Jebel Ali' }, hs: '7208.39', origin: { ar: 'الإمارات', en: 'UAE' },
     moq: 100, leadDays: 25, sampleAvailable: false,
     specs: [{ k: { ar: 'السماكة', en: 'Thickness' }, v: { ar: '2 إلى 6 مم', en: '2 to 6 mm' } }],
     certs: ['EN 10025'],
@@ -325,7 +325,7 @@ export const RFQS: Rfq[] = [
     quotes: [
       { id: 'Q-A', sample: true, supplierId: 'nakheel-alwaha', unitPrice: 9.2, currency: 'USD', incoterm: 'CFR', port: PORTS[0], moq: 2000, leadDays: 12, payment: { ar: '30 من كل 100 مقدمًا، والباقي عند الشحن', en: '30 in every 100 upfront, balance at shipment' }, validUntil: '2026-12-15' },
       { id: 'Q-B', sample: true, supplierId: 'liwa-dates', unitPrice: 8.75, currency: 'USD', incoterm: 'CFR', port: PORTS[0], moq: 5000, leadDays: 20, payment: { ar: 'اعتماد مستندي', en: 'Letter of credit' }, validUntil: '2026-12-08' },
-      { id: 'Q-C', sample: true, supplierId: 'siwa-farms', unitPrice: 9.6, currency: 'USD', incoterm: 'CFR', port: PORTS[0], moq: 1000, leadDays: 8, payment: null, validUntil: null },
+      { id: 'Q-C', sample: true, supplierId: 'gujarat-dates', unitPrice: 9.6, currency: 'USD', incoterm: 'CFR', port: PORTS[0], moq: 1000, leadDays: 8, payment: null, validUntil: null },
     ],
   },
   {
@@ -395,12 +395,12 @@ export const THREADS: Thread[] = [
     messages: [
       { id: 'm1', from: 'me', lang: 'en', text: 'Hello, can you confirm 6,000 kg in 5 kg cartons, CFR Nhava Sheva?', at: '2026-11-22T09:10:00', translation: 'مرحبًا، هل تؤكّدون 6,000 كغ في كراتين 5 كغ، CFR نافا شيفا؟' },
       { id: 'm2', from: 'them', lang: 'ar', text: 'وعليكم السلام. نعم، 6,000 كغ جاهزة خلال 12 يومًا، والسعر 9.2 دولار للكغ.', at: '2026-11-22T09:42:00', check: 'clear', translation: 'Peace be upon you. Yes, 6,000 kg ready within 12 days, and the price is 9.2 dollars per kg.' },
-      { id: 'm3', from: 'them', lang: 'ar', text: 'للتواصل أسرع كلمني واتساب على 0501234567', at: '2026-11-22T09:44:00', check: 'unknown', translation: 'For faster contact message me on WhatsApp at 0501234567' },
+      { id: 'm3', from: 'them', lang: 'ar', text: 'للتواصل أسرع راسلني هنا في محادثة حتحور، وأرد عليك خلال ساعة.', at: '2026-11-22T09:44:00', check: 'clear', translation: 'For faster contact, message me here in the Hathor chat; I reply within the hour.' },
       { id: 'm4', from: 'them', lang: 'ar', text: 'رفعت الفاتورة المبدئية في غرفة الصفقة، الإجمالي 55,200 دولار.', at: '2026-11-23T11:05:00', check: 'clear', translation: 'I uploaded the proforma invoice to the deal room, the total is 55,200 dollars.' },
     ],
   },
   {
-    id: 't2', sample: true, supplierId: 'siwa-farms',
+    id: 't2', sample: true, supplierId: 'gujarat-dates',
     context: { kind: 'rfq', ref: 'R-2041', label: { ar: 'طلب R-2041', en: 'Request R-2041' }, to: '/rfq/R-2041' },
     unread: 0, flagged: 'dangerous',
     messages: [

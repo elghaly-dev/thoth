@@ -102,7 +102,7 @@ export function RfqNew() {
                 <label className="block"><span className={label}>{t('rfq.unit')}</span><input className="field" value={f.unit} onChange={(e) => set('unit', e.target.value)} /></label>
                 <label className="block"><span className={label}>{t('rfq.target')}</span><input inputMode="decimal" dir="ltr" className="field num" value={f.target} onChange={(e) => set('target', e.target.value)} /></label>
                 <label className="block"><span className={label}>{t('rfq.currency')}</span>
-                  <select className="field" value={f.currency} onChange={(e) => set('currency', e.target.value)}>{['USD', 'AED', 'SAR', 'OMR', 'QAR', 'EGP', 'INR'].map((c) => <option key={c}>{c}</option>)}</select>
+                  <select className="field" value={f.currency} onChange={(e) => set('currency', e.target.value)}>{['USD', 'AED', 'SAR', 'OMR', 'QAR', 'INR', 'CNY'].map((c) => <option key={c}>{c}</option>)}</select>
                 </label>
                 <label className="block md:col-span-2"><span className={label}>{t('rfq.payment')}</span><input className="field" value={f.payment} onChange={(e) => set('payment', e.target.value)} placeholder={t('rfq.payment.ph')} /></label>
               </div>

@@ -30,6 +30,18 @@ export function PricingPage() {
         ))}
       </Stagger>
 
+      <Stagger className="mt-8 grid gap-4 md:grid-cols-2">
+        {([['feature.shipOpts.t', 'feature.shipOpts.d'], ['feature.flatFee.t', 'feature.flatFee.d']] as const).map(([tk, dk]) => (
+          <Rise key={tk}>
+            <Glass className="relative h-full p-7">
+              <span className="chip absolute end-5 top-5 text-xs font-semibold text-lilac-200">{t('feature.comingSoon')}</span>
+              <h2 className="pe-28 text-2xl">{t(tk)}</h2>
+              <p className="mt-2 text-ink-2">{t(dk)}</p>
+            </Glass>
+          </Rise>
+        ))}
+      </Stagger>
+
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.3fr_1fr]">
         <div className="relative overflow-hidden rounded-[24px] border border-lilac-300/50 bg-gradient-to-br from-lilac-400/20 via-night-800 to-night-900 p-7 shadow-[0_0_50px_-12px_rgba(196,161,236,0.6)] md:p-9">
           <div className="pointer-events-none absolute -end-16 -top-16 h-56 w-56 rounded-full bg-lilac-400/20 blur-3xl" aria-hidden="true" />

@@ -57,7 +57,7 @@ export function RegisterPage() {
                 <div className="grid gap-4 md:grid-cols-2">
                   <label className="block md:col-span-2"><span className={label}>{t('reg.company')}</span><input className="field" autoComplete="organization" /></label>
                   <label className="block"><span className={label}>{t('reg.country')}</span>
-                    <select className="field">{(lang === 'ar' ? ['الإمارات', 'السعودية', 'مصر', 'عُمان', 'قطر', 'الكويت', 'البحرين', 'الهند'] : ['UAE', 'Saudi Arabia', 'Egypt', 'Oman', 'Qatar', 'Kuwait', 'Bahrain', 'India']).map((c) => <option key={c}>{c}</option>)}</select>
+                    <select className="field">{(lang === 'ar' ? ['الإمارات', 'السعودية', 'الهند', 'الصين', 'عُمان', 'قطر', 'الكويت', 'البحرين'] : ['UAE', 'Saudi Arabia', 'India', 'China', 'Oman', 'Qatar', 'Kuwait', 'Bahrain']).map((c) => <option key={c}>{c}</option>)}</select>
                   </label>
                   <label className="block"><span className={label}>{t('reg.crn')}</span><input className="field num" dir="ltr" /><span className="mt-1 block text-xs text-ink-3">{t('reg.crn.note')}</span></label>
                 </div>

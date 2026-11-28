@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "publish": "node scripts/publish.mjs",
     "preview": "vite preview --port 4173 --strictPort",
     "lint": "tsc --noEmit",
     "test": "tsx tests/run-all.ts",
