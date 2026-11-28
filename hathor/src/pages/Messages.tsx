@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowLeft, ArrowRight, Check, CheckCheck, EyeOff, Languages, Mic, Paperclip, Search, SendHorizontal, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, CheckCheck, EyeOff, Languages, Paperclip, Search, SendHorizontal, ShieldAlert } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useI18n } from '../i18n';
 import { Link, useRouter } from '../lib/router';
@@ -9,8 +9,9 @@ import { maskContacts } from '../lib/mask';
 import { numbersMatch } from '../lib/numberlock';
 import { Button, MaskedText, SampleBadge, ScamCheckTag, VerifiedBadge } from '../components/ui';
 import { ReportButton } from '../components/Report';
+import { VoiceRecorder, type VoiceClip } from '../components/VoiceNote';
 
-type Local = Msg & { status?: 'pending' | 'delivered' };
+type Local = Msg & { status?: 'pending' | 'delivered'; voice?: VoiceClip };
 
 function Bubble({ m, threadId, who }: { m: Local; threadId: string; who: string }) {
   const { t, lang } = useI18n();
@@ -24,7 +25,8 @@ function Bubble({ m, threadId, who }: { m: Local; threadId: string; who: string 
   return (
     <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className={`flex ${mine ? 'justify-end' : 'justify-start'}`}>
       <div className={`max-w-[82%] md:max-w-[70%] ${mine ? 'rounded-[18px] rounded-ee-md bg-lilac-400/20 border border-lilac-400/30' : 'glass !rounded-[18px] !rounded-es-md'} px-4 py-3`}>
-        <p className="text-[0.95rem] leading-relaxed text-ink-1" lang={showT && canTranslate && ok ? lang : m.lang}><MaskedText text={masked} /></p>
+        {m.voice && <div className="mb-1"><span className="sr-only">{t('msg.voice.note')}</span><audio controls preload="metadata" src={m.voice.url} className="h-10 max-w-full" /><span className="num ms-1 text-[0.72rem] text-ink-3">{m.voice.seconds}s</span></div>}
+        {masked && <p className="text-[0.95rem] leading-relaxed text-ink-1" lang={showT && canTranslate && ok ? lang : m.lang}><MaskedText text={masked} /></p>}
         {canTranslate && !ok && <p className="mt-1.5 flex items-center gap-1 text-xs text-warning"><EyeOff className="h-3 w-3" />{t('translate.hidden')}</p>}
         <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.72rem] text-ink-3">
           <span className="num">{time}</span>
@@ -62,12 +64,12 @@ export function MessagesPage({ id }: { id?: string }) {
     return !filter || `${s.name.ar} ${s.name.en} ${th.context.label.ar} ${th.context.label.en}`.toLowerCase().includes(filter.toLowerCase());
   });
 
-  const send = (text: string) => {
-    if (!active || !text.trim()) return;
+  const send = (text: string, voice?: VoiceClip) => {
+    if (!active || (!text.trim() && !voice)) return;
     const mid = `l${Date.now()}`;
-    const msg: Local = { id: mid, from: 'me', text, lang, at: new Date().toISOString(), status: 'pending' };
+    const msg: Local = { id: mid, from: 'me', text: maskContacts(text).text, lang, at: new Date().toISOString(), status: 'pending', ...(voice ? { voice } : {}) };
     setLocal((l) => ({ ...l, [active.id]: [...(l[active.id] ?? []), msg] }));
-    setDraft('');
+    if (!voice) setDraft('');
     setTimeout(() => setLocal((l) => ({ ...l, [active.id]: (l[active.id] ?? []).map((x) => (x.id === mid ? { ...x, status: 'delivered' } : x)) })), 900);
   };
   const trySend = () => {
@@ -137,7 +139,7 @@ export function MessagesPage({ id }: { id?: string }) {
                 <form className="flex items-center gap-2" onSubmit={(e) => { e.preventDefault(); trySend(); }}>
                   <button type="button" className="grid h-11 w-11 shrink-0 place-items-center rounded-xl text-ink-2 hover:text-lilac-200" aria-label={t('msg.attach')}><Paperclip className="h-5 w-5" /></button>
                   <input value={draft} onChange={(e) => setDraft(e.target.value)} className="field" placeholder={t('msg.placeholder')} aria-label={t('msg.placeholder')} />
-                  <button type="button" className="grid h-11 w-11 shrink-0 place-items-center rounded-xl text-ink-2 hover:text-lilac-200" aria-label={t('msg.voice')}><Mic className="h-5 w-5" /></button>
+                  <VoiceRecorder onDone={(clip) => send('', clip)} />
                   <button type="submit" className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-lilac-400 text-on-lilac hover:shadow-glow" aria-label={t('msg.send')}><SendHorizontal className="h-5 w-5 rtl:-scale-x-100" /></button>
                 </form>
               </div>

@@ -3,7 +3,8 @@ import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useI18n } from '../i18n';
 import { useRouter } from '../lib/router';
-import { CATEGORIES, PRODUCTS, SUPPLIERS, byId, type CategoryId } from '../data/sample';
+import { CATEGORIES, FOCUS_CATEGORIES, PRODUCTS, SUPPLIERS, byId, type CategoryId } from '../data/sample';
+import { directFirst, PRICE_REFERENCE } from '../lib/listing';
 import { ProductCard } from '../components/Cards';
 import { Button, ButtonLink, PageHeader, Rise, SampleBadge, Stagger } from '../components/ui';
 import { GlowLine } from '../components/GlowLine';
@@ -27,7 +28,7 @@ function Filters({ cats, setCats, countries, setCountries, level, setLevel, samp
       <fieldset>
         <legend className="mb-2 text-xs font-semibold text-lilac-400">{t('catalog.category')}</legend>
         {CATEGORIES.map((c) => (
-          <label key={c.id} className={box}><input type="checkbox" className={check} checked={cats.has(c.id)} onChange={() => toggle(cats, c.id, setCats)} />{c.name[lang]}</label>
+          <label key={c.id} className={box}><input type="checkbox" className={check} checked={cats.has(c.id)} onChange={() => toggle(cats, c.id, setCats)} />{c.name[lang]}{FOCUS_CATEGORIES.includes(c.id) && <span className="chip ms-auto !text-[0.65rem] text-lilac-200">{t('catalog.focus')}</span>}</label>
         ))}
       </fieldset>
       <fieldset>
@@ -76,6 +77,8 @@ export function Catalog() {
     if (sort === 'lead') r = [...r].sort((a, b) => a.leadDays - b.leadDays);
     if (sort === 'reply') r = [...r].sort((a, b) => byId(SUPPLIERS, a.supplierId)!.replyHours - byId(SUPPLIERS, b.supplierId)!.replyHours);
     if (sort === 'price') r = [...r].sort((a, b) => a.currency.localeCompare(b.currency) || Math.min(...a.tiers.map((x) => x.price)) - Math.min(...b.tiers.map((x) => x.price)));
+    // Verified direct suppliers come first; the chosen sort orders within each level.
+    r = directFirst(r, (p) => byId(SUPPLIERS, p.supplierId)!.level);
     return r;
   }, [q, cats, countries, level, samples, sort]);
 
@@ -132,9 +135,17 @@ export function Catalog() {
               ))}
             </div>
           ) : list.length ? (
-            <Stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {list.map((p) => <Rise key={p.id}><ProductCard p={p} /></Rise>)}
-            </Stagger>
+            <>
+              <h2 className="mb-3 text-sm font-semibold text-lilac-400">{t('catalog.direct')}</h2>
+              <Stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {list.map((p) => <Rise key={p.id}><ProductCard p={p} /></Rise>)}
+              </Stagger>
+              <section aria-labelledby="price-ref" className="mt-10 rounded-[18px] border border-dashed border-lilac-400/30 p-5">
+                <h2 id="price-ref" className="text-xl">{t('catalog.reference')}</h2>
+                <p className="mt-1 text-sm text-ink-3">{t('catalog.reference.d')}</p>
+                {PRICE_REFERENCE.length === 0 && <p className="mt-3 text-xs text-warning">{t('catalog.reference.none')}</p>}
+              </section>
+            </>
           ) : (
             <div className="glass mx-auto max-w-lg p-8 text-center">
               <div className="mx-auto w-24"><GlowLine nodes={[{ label: '', state: 'now' }]} compact /></div>

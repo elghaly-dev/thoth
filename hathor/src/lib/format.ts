@@ -16,3 +16,8 @@ export function fmtDate(iso: string, lang: Lang, opts: Intl.DateTimeFormatOption
   const locale = lang === 'ar' ? 'ar-EG-u-nu-latn' : 'en-GB';
   return new Intl.DateTimeFormat(locale, opts).format(new Date(iso));
 }
+
+// Retail price for one unit, or null when the supplier does not sell retail.
+export function retailLabel(price: number | undefined, currency: string, lang: Lang): string | null {
+  return typeof price === 'number' && price > 0 ? fmtMoney(price, currency, lang) : null;
+}

@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight, Calculator, Coins, EyeOff, Languages, Search, Sh
 import { useState } from 'react';
 import { useI18n } from '../i18n';
 import { Link, useRouter } from '../lib/router';
-import { CATEGORIES, PRODUCTS, SUPPLIERS } from '../data/sample';
+import { CATEGORIES, FOCUS_CATEGORIES, PRODUCTS, SUPPLIERS } from '../data/sample';
 import { GlowLine } from '../components/GlowLine';
 import { NamedIcon } from '../components/Icon';
 import { ProductCard, SupplierCard } from '../components/Cards';
@@ -131,10 +131,12 @@ export function Home() {
       {/* Categories */}
       <section aria-labelledby="cats">
         <SectionTitle title={t('home.categories')} action={<Link to="/catalog" className="inline-flex items-center gap-1 text-sm text-lilac-400 hover:text-lilac-200">{t('home.categories.all')} <Arrow className="h-4 w-4" /></Link>} />
+        <p className="-mt-2 mb-4 text-sm text-ink-2"><span className="font-semibold text-lilac-200">{t('home.focus')}:</span> {t('home.focus.d')}</p>
         <Stagger className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-          {CATEGORIES.map((c) => (
+          {[...CATEGORIES].sort((a, b) => Number(FOCUS_CATEGORIES.includes(b.id)) - Number(FOCUS_CATEGORIES.includes(a.id))).map((c) => (
             <Rise key={c.id}>
-              <Link to={`/catalog?cat=${c.id}`} className="glass glass-hover group flex h-full items-center gap-3 p-4 md:flex-col md:items-start md:gap-5 md:p-5">
+              <Link to={`/catalog?cat=${c.id}`} className={`glass glass-hover group relative flex h-full items-center gap-3 p-4 md:flex-col md:items-start md:gap-5 md:p-5 ${FOCUS_CATEGORIES.includes(c.id) ? '!border-lilac-400 shadow-glow' : ''}`}>
+                {FOCUS_CATEGORIES.includes(c.id) && <span className="chip absolute end-3 top-3 !text-[0.7rem] text-lilac-200">{t('catalog.focus')}</span>}
                 <span className="relative grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-lilac-400/30 bg-night-800">
                   <span className="absolute inset-0 rounded-2xl opacity-0 blur-md transition-opacity group-hover:opacity-100" style={{ background: `hsl(${c.hue} 70% 65% / 0.3)` }} />
                   <NamedIcon name={c.icon} className="relative h-6 w-6 text-lilac-200" />

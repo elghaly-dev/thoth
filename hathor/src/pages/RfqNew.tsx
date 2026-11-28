@@ -4,18 +4,19 @@ import { useEffect, useState } from 'react';
 import { useI18n, type StringKey } from '../i18n';
 import { useRouter } from '../lib/router';
 import { useStore } from '../lib/store';
-import { CATEGORIES, PORTS, PRODUCTS, byId, type CategoryId } from '../data/sample';
+import { CATEGORIES, PRODUCTS, byId, type CategoryId } from '../data/sample';
+import { BUYER_CURRENCIES, BUYER_INCOTERMS, CERTS, DESTINATIONS, buildRfq, saveRfq, type FieldError } from '../lib/rfq';
+import { browserKV } from '../lib/reports';
 import { GlowLine } from '../components/GlowLine';
 import { Button, ButtonLink, Glass, Num, PageHeader } from '../components/ui';
 import { AssistantGlyph } from '../components/Brand';
 
 type Form = {
   product: string; category: CategoryId; specs: { k: string; v: string }[];
-  quantity: string; unit: string; target: string; currency: string; payment: string;
-  incoterm: string; port: number; by: string; audience: 'all' | 'pick';
+  attachments: string[]; quantity: string; unit: string; target: string; currency: string;
+  sampleNeeded: boolean; certs: string[];
+  incoterm: string; destination: string; by: string; deadline: string; audience: 'all' | 'pick';
 };
-
-const INCOTERMS = ['EXW', 'FOB', 'CFR', 'CIF', 'DAP'] as const;
 
 export function RfqNew() {
   const { t, lang } = useI18n();
@@ -23,12 +24,13 @@ export function RfqNew() {
   const { openAssistant, toast } = useStore();
   const pre = byId(PRODUCTS, search.get('product') ?? '');
   const [step, setStep] = useState(0);
-  const [posted, setPosted] = useState(false);
+  const [posted, setPosted] = useState<string | null>(null);
+  const [errors, setErrors] = useState<FieldError[]>([]);
   const [savedAt, setSavedAt] = useState(false);
   const [f, setF] = useState<Form>({
     product: pre ? pre.title[lang] : '', category: pre?.category ?? 'dates', specs: pre ? pre.specs.slice(0, 2).map((s) => ({ k: s.k[lang], v: s.v[lang] })) : [{ k: '', v: '' }],
-    quantity: '', unit: pre ? pre.unit[lang] : (lang === 'ar' ? 'كغ' : 'kg'), target: '', currency: 'USD', payment: '',
-    incoterm: 'CFR', port: 0, by: '', audience: 'all',
+    attachments: [], quantity: '', unit: pre ? pre.unit[lang] : (lang === 'ar' ? 'كغ' : 'kg'), target: '', currency: 'USD',
+    sampleNeeded: false, certs: [], incoterm: 'CIF', destination: DESTINATIONS[0].id, by: '', deadline: '', audience: 'all',
   });
   const set = <K extends keyof Form>(k: K, v: Form[K]) => setF((x) => ({ ...x, [k]: v }));
   useEffect(() => { setSavedAt(false); const id = setTimeout(() => setSavedAt(true), 700); return () => clearTimeout(id); }, [f]);
@@ -36,6 +38,14 @@ export function RfqNew() {
   const steps: StringKey[] = ['rfq.step.what', 'rfq.step.qty', 'rfq.step.where', 'rfq.step.review'];
   const nodes = steps.map((k, i) => ({ label: t(k), state: (i < step ? 'done' : i === step ? 'now' : 'next') as 'done' | 'now' | 'next' }));
   const label = 'mb-1.5 block text-sm text-ink-2';
+  const err = (field: string) => { const e = errors.find((x) => x.field === field); return e ? <span role="alert" className="mt-1 block text-xs text-danger">{t(`rfq.err.${e.code}` as StringKey)}</span> : null; };
+  const stepOf: Record<string, number> = { title: 0, category: 0, specs: 0, quantity: 1, unit: 1, targetPrice: 1, targetCurrency: 1, destination: 2, incoterm: 2, deliverBy: 2, quoteDeadline: 2 };
+  const post = () => {
+    const r = buildRfq({ title: f.product, category: f.category, specs: f.specs, attachments: f.attachments, quantity: f.quantity, unit: f.unit, destination: f.destination, incoterm: f.incoterm, deliverBy: f.by, quoteDeadline: f.deadline, targetPrice: f.target, targetCurrency: f.currency, sampleNeeded: f.sampleNeeded, certs: f.certs });
+    if (!r.ok) { setErrors(r.errors); setStep(Math.min(...r.errors.map((e) => stepOf[e.field] ?? 3))); toast(t('rfq.errors')); return; }
+    setErrors([]); saveRfq(browserKV(), r.rfq); setPosted(r.rfq.id); toast(t('rfq.posted'));
+  };
+  const dest = DESTINATIONS.find((d) => d.id === f.destination);
 
   if (posted)
     return (
@@ -44,7 +54,7 @@ export function RfqNew() {
         <h1 className="title-gradient mt-6 text-3xl">{t('rfq.post')}</h1>
         <p className="mt-3 text-ink-1">{t('rfq.posted')}</p>
         <p className="mt-2 text-sm text-info">{t('rfq.posted.sample')}</p>
-        <div className="mt-8 flex justify-center gap-3"><ButtonLink to="/rfq/R-2041">{t('rfq.view')}</ButtonLink><ButtonLink to="/catalog" variant="secondary">{t('cta.browse')}</ButtonLink></div>
+        <div className="mt-8 flex justify-center gap-3"><ButtonLink to={`/rfq/${posted}`}>{t('rfq.view')}</ButtonLink><ButtonLink to="/catalog" variant="secondary">{t('cta.browse')}</ButtonLink></div>
       </Glass>
     );
 
@@ -52,10 +62,12 @@ export function RfqNew() {
     ['rfq.product', f.product || '—', 0],
     ['rfq.quantity', f.quantity ? `${f.quantity} ${f.unit}` : '—', 1],
     ['rfq.target', f.target ? `${f.currency} ${f.target}` : '—', 1],
-    ['rfq.payment', f.payment || '—', 1],
+    ['rfq.sampleNeeded', f.sampleNeeded ? t('compare.yes') : t('compare.no'), 1],
+    ['rfq.certs', f.certs.join(', ') || '—', 1],
     ['rfq.incoterm', f.incoterm, 2],
-    ['rfq.port', PORTS[f.port][lang], 2],
+    ['rfq.destination', dest ? dest[lang] : '—', 2],
     ['rfq.by', f.by || '—', 2],
+    ['rfq.deadline', f.deadline || '—', 2],
   ];
 
   return (
@@ -76,7 +88,7 @@ export function RfqNew() {
                   <AssistantGlyph className="h-6 w-6" />
                 </button>
                 <div className="grid gap-4 md:grid-cols-2">
-                  <label className="block"><span className={label}>{t('rfq.product')}</span><input className="field" value={f.product} onChange={(e) => set('product', e.target.value)} placeholder={t('rfq.product.ph')} /></label>
+                  <label className="block"><span className={label}>{t('rfq.product')}</span><input className="field" value={f.product} onChange={(e) => set('product', e.target.value)} placeholder={t('rfq.product.ph')} />{err('title')}</label>
                   <label className="block"><span className={label}>{t('catalog.category')}</span>
                     <select className="field" value={f.category} onChange={(e) => set('category', e.target.value as CategoryId)}>{CATEGORIES.map((c) => <option key={c.id} value={c.id}>{c.name[lang]}</option>)}</select>
                   </label>
@@ -93,18 +105,26 @@ export function RfqNew() {
                     ))}
                   </div>
                   <button type="button" onClick={() => set('specs', [...f.specs, { k: '', v: '' }])} className="mt-2 inline-flex h-11 items-center gap-1.5 text-sm text-lilac-400 hover:text-lilac-200"><Plus className="h-4 w-4" />{t('rfq.specs.add')}</button>
+                  {err('specs')}
                 </div>
+                <label className="block"><span className={label}>{t('rfq.attachments')}</span>
+                  <input type="file" multiple accept=".pdf,image/*,.dwg,.xlsx,.csv" className="field !h-auto py-2" onChange={(e) => set('attachments', Array.from(e.target.files ?? []).map((x) => x.name))} />
+                  <span className="mt-1 block text-xs text-ink-3">{f.attachments.length ? f.attachments.join(', ') : t('rfq.attachments.d')}</span>
+                </label>
               </div>
             )}
             {step === 1 && (
               <div className="grid gap-4 md:grid-cols-2">
-                <label className="block"><span className={label}>{t('rfq.quantity')}</span><input inputMode="decimal" dir="ltr" className="field num" value={f.quantity} onChange={(e) => set('quantity', e.target.value)} /></label>
+                <label className="block"><span className={label}>{t('rfq.quantity')}</span><input inputMode="decimal" dir="ltr" className="field num" value={f.quantity} onChange={(e) => set('quantity', e.target.value)} />{err('quantity')}</label>
                 <label className="block"><span className={label}>{t('rfq.unit')}</span><input className="field" value={f.unit} onChange={(e) => set('unit', e.target.value)} /></label>
-                <label className="block"><span className={label}>{t('rfq.target')}</span><input inputMode="decimal" dir="ltr" className="field num" value={f.target} onChange={(e) => set('target', e.target.value)} /></label>
-                <label className="block"><span className={label}>{t('rfq.currency')}</span>
-                  <select className="field" value={f.currency} onChange={(e) => set('currency', e.target.value)}>{['USD', 'AED', 'SAR', 'OMR', 'QAR', 'EGP', 'INR'].map((c) => <option key={c}>{c}</option>)}</select>
+                <label className="block"><span className={label}>{t('rfq.target')}</span><input inputMode="decimal" dir="ltr" className="field num" value={f.target} onChange={(e) => set('target', e.target.value)} />{err('targetPrice')}</label>
+                <label className="block"><span className={label}>{t('rfq.targetCur')}</span>
+                  <select className="field" value={f.currency} onChange={(e) => set('currency', e.target.value)}>{BUYER_CURRENCIES.map((c) => <option key={c}>{c}</option>)}</select>
                 </label>
-                <label className="block md:col-span-2"><span className={label}>{t('rfq.payment')}</span><input className="field" value={f.payment} onChange={(e) => set('payment', e.target.value)} placeholder={t('rfq.payment.ph')} /></label>
+                <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm md:col-span-2"><input type="checkbox" className="h-5 w-5 accent-[#c4a1ec]" checked={f.sampleNeeded} onChange={() => set('sampleNeeded', !f.sampleNeeded)} />{t('rfq.sampleNeeded')}</label>
+                <fieldset className="md:col-span-2"><legend className={label}>{t('rfq.certs')}</legend>
+                  <div className="flex flex-wrap gap-2">{CERTS.map((c) => <button key={c} type="button" aria-pressed={f.certs.includes(c)} onClick={() => set('certs', f.certs.includes(c) ? f.certs.filter((x) => x !== c) : [...f.certs, c])} className={`chip h-10 !px-3.5 ${f.certs.includes(c) ? '!border-lilac-400 !bg-lilac-400/25' : ''}`}>{c}</button>)}</div>
+                </fieldset>
               </div>
             )}
             {step === 2 && (
@@ -112,7 +132,7 @@ export function RfqNew() {
                 <fieldset>
                   <legend className={label}>{t('rfq.incoterm')}</legend>
                   <div className="grid gap-2 sm:grid-cols-2">
-                    {INCOTERMS.map((it) => (
+                    {BUYER_INCOTERMS.map((it) => (
                       <label key={it} className={`flex min-h-11 cursor-pointer items-start gap-3 rounded-[14px] border p-3 transition ${f.incoterm === it ? 'border-lilac-400 bg-lilac-400/10 shadow-glow' : 'border-lilac-400/20 hover:border-lilac-400/50'}`}>
                         <input type="radio" name="inc" className="mt-1 accent-[#c4a1ec]" checked={f.incoterm === it} onChange={() => set('incoterm', it)} />
                         <span><span className="num font-semibold text-lilac-200">{it}</span><span className="block text-xs text-ink-2">{t(`incoterm.${it}` as StringKey)}</span></span>
@@ -121,8 +141,9 @@ export function RfqNew() {
                   </div>
                 </fieldset>
                 <div className="grid gap-4 md:grid-cols-2">
-                  <label className="block"><span className={label}>{t('rfq.port')}</span><select className="field" value={f.port} onChange={(e) => set('port', Number(e.target.value))}>{PORTS.map((p, i) => <option key={i} value={i}>{p[lang]}</option>)}</select></label>
-                  <label className="block"><span className={label}>{t('rfq.by')}</span><input type="date" dir="ltr" className="field num" value={f.by} onChange={(e) => set('by', e.target.value)} /></label>
+                  <label className="block"><span className={label}>{t('rfq.destination')}</span><select className="field" value={f.destination} onChange={(e) => set('destination', e.target.value)}>{DESTINATIONS.map((d) => <option key={d.id} value={d.id}>{d[lang]}</option>)}</select>{err('destination')}</label>
+                  <label className="block"><span className={label}>{t('rfq.by')}</span><input type="date" dir="ltr" className="field num" value={f.by} onChange={(e) => set('by', e.target.value)} />{err('deliverBy')}</label>
+                  <label className="block md:col-span-2"><span className={label}>{t('rfq.deadline')}</span><input type="date" dir="ltr" className="field num" value={f.deadline} onChange={(e) => set('deadline', e.target.value)} /><span className="mt-1 block text-xs text-ink-3">{t('rfq.deadline.d')}</span>{err('quoteDeadline')}</label>
                 </div>
                 <fieldset>
                   <legend className={label}>{t('rfq.audience')}</legend>
@@ -157,7 +178,7 @@ export function RfqNew() {
         <div className="mt-8 flex items-center justify-between border-t border-lilac-400/10 pt-6">
           <Button variant="quiet" onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0}>{t('rfq.back')}</Button>
           <span className="num text-xs text-ink-3"><Num>{step + 1} / 4</Num></span>
-          {step < 3 ? <Button onClick={() => setStep((s) => s + 1)}>{t('rfq.next')}</Button> : <Button onClick={() => { setPosted(true); toast(t('rfq.posted')); }}>{t('rfq.post')}</Button>}
+          {step < 3 ? <Button onClick={() => setStep((s) => s + 1)}>{t('rfq.next')}</Button> : <Button onClick={post}>{t('rfq.post')}</Button>}
         </div>
       </Glass>
     </div>

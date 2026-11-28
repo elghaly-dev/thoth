@@ -88,6 +88,22 @@ check('note is capped', long.ok && long.report.note.length === NOTE_MAX);
   check('broken storage reads as empty', loadReports(bad).length === 0);
   check('no storage reads as empty', loadReports(null).length === 0);
 
+  // Muse #43 LOW 7: a hand-edited entry with a bad status, kind or date is left out.
+  {
+    const good = { id: 'r-ok', target: { kind: 'product', id: 'p1', label: 'P' }, reason: 'scam', note: '', createdAt: '2026-11-26T10:00:00.000Z', status: 'pending', sent: false };
+    const m = new Map<string, string>([[STORAGE_KEY, JSON.stringify([
+      good,
+      { ...good, id: 'r-status', status: 'approved' },
+      { ...good, id: 'r-kind', target: { ...good.target, kind: 'person' } },
+      { ...good, id: 'r-date', createdAt: 'yesterday' },
+      { ...good, id: 'r-target', target: null },
+      { ...good, id: 'r-sent', sent: 'yes' },
+    ])]]);
+    const kvT = { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v) };
+    const got = loadReports(kvT).map((r) => r.id).join(',');
+    check('tampered entries are left out, the good one stays', got === 'r-ok', got);
+  }
+
   // Wiring: the button is on listings, supplier pages and in chat.
   const src = (p: string) => readFileSync(new URL(`../src/${p}`, import.meta.url), 'utf8');
   check('product page has the button', /<ReportButton[^>]*kind: 'product'/.test(src('pages/Product.tsx')));
