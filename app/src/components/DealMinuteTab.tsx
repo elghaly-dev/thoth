@@ -19,7 +19,7 @@ interface DealMinuteTabProps {
 const DIR: Record<QuoteLang, 'rtl' | 'ltr'> = { ar: 'rtl', hi: 'ltr', zh: 'ltr' };
 
 /**
- * Deal in a Minute. The merchant speaks (or types) the facts once; the Faithful Servant pulls
+ * Deal in a Minute. The merchant speaks (or types) the facts once; الغالي pulls
  * them out (only values found in what was said are kept); the merchant checks them; Thoth fills
  * fixed Arabic, Hindi and Chinese quote templates with those facts only. No model writes a quote.
  */

@@ -1,5 +1,5 @@
 /**
- * Strings for the on-device Faithful Servant. English, Hindi, Chinese and
+ * Strings for الغالي on the device. English, Hindi, Chinese and
  * Arabic are complete ([VERIFY] Hindi, Chinese and Arabic: native review pending); other
  * UI languages fall back to English. Kept apart from the main tables so the
  * existing locale-parity tests stay as they are. {size}, {done}, {total} and
@@ -8,18 +8,18 @@
 import type { LanguageCode } from '../types';
 
 const EN = {
-  tab: 'Faithful Servant on this phone',
-  title: 'Faithful Servant on this phone',
+  tab: 'الغالي on this phone',
+  title: 'الغالي on this phone',
   intro: 'Translate and explain trade messages in Hindi, Arabic, Chinese and English. It all runs on this phone; nothing you type leaves it.',
   needDownload: 'First use needs a one-time download of {size}. Wi-Fi is recommended. After that it works with no internet.',
-  downloadBtn: 'Download the Faithful Servant ({size})',
+  downloadBtn: 'Download الغالي ({size})',
   downloading: 'Downloading and checking each file: {done} of {total}',
   stop: 'Stop',
   failHash: 'A file did not match its check, so it was not kept. Please try again later.',
   failNet: 'The download stopped. Please try again, ideally on Wi-Fi.',
-  notYet: 'The on-device Faithful Servant is being prepared. For now, use your own key above.',
-  noGpu: 'This phone cannot run the on-device Faithful Servant. You can use your own key above instead.',
-  start: 'Start the Faithful Servant',
+  notYet: 'الغالي on this phone is being prepared. For now, use your own key above.',
+  noGpu: 'This phone cannot run الغالي on the device. You can use your own key above instead.',
+  start: 'Start الغالي',
   loading: 'Starting on this phone: {pct}%',
   input: 'Paste or type the message',
   from: 'From',
@@ -33,7 +33,7 @@ const EN = {
   checkTerms: 'Check numbers, prices and terms with the other side before you agree.',
   remove: 'Remove from this phone ({size})',
   removed: 'Removed from this phone.',
-  failStart: 'The Faithful Servant could not start on this phone. You can use your own key above instead.',
+  failStart: 'الغالي could not start on this phone. You can use your own key above instead.',
   licences: 'Licences',
   close: 'Close',
 };
@@ -41,18 +41,18 @@ const EN = {
 export type DeviceStringKey = keyof typeof EN;
 
 const HI: Record<DeviceStringKey, string> = {
-  tab: 'इस फ़ोन पर वफ़ादार सेवक',
-  title: 'इस फ़ोन पर वफ़ादार सेवक',
+  tab: 'इस फ़ोन पर الغالي',
+  title: 'इस फ़ोन पर الغالي',
   intro: 'हिन्दी, अरबी, चीनी और अंग्रेज़ी में व्यापार संदेशों का अनुवाद करें और उन्हें समझें। सब कुछ इसी फ़ोन पर चलता है; आप जो लिखते हैं वह फ़ोन से बाहर नहीं जाता।',
   needDownload: 'पहली बार {size} का एक बार डाउनलोड चाहिए। वाई-फ़ाई बेहतर है। उसके बाद यह बिना इंटरनेट के चलता है।',
-  downloadBtn: 'वफ़ादार सेवक डाउनलोड करें ({size})',
+  downloadBtn: 'الغالي डाउनलोड करें ({size})',
   downloading: 'हर फ़ाइल डाउनलोड और जाँची जा रही है: {total} में से {done}',
   stop: 'रोकें',
   failHash: 'एक फ़ाइल अपनी जाँच से मेल नहीं खाई, इसलिए रखी नहीं गई। कृपया बाद में फिर कोशिश करें।',
   failNet: 'डाउनलोड रुक गया। कृपया फिर कोशिश करें, हो सके तो वाई-फ़ाई पर।',
-  notYet: 'फ़ोन पर चलने वाला वफ़ादार सेवक तैयार हो रहा है। अभी के लिए ऊपर अपनी कुंजी का उपयोग करें।',
-  noGpu: 'यह फ़ोन फ़ोन पर चलने वाला वफ़ादार सेवक नहीं चला सकता। आप ऊपर अपनी कुंजी का उपयोग कर सकते हैं।',
-  start: 'वफ़ादार सेवक शुरू करें',
+  notYet: 'फ़ोन पर चलने वाला الغالي तैयार हो रहा है। अभी के लिए ऊपर अपनी कुंजी का उपयोग करें।',
+  noGpu: 'यह फ़ोन फ़ोन पर चलने वाला الغالي नहीं चला सकता। आप ऊपर अपनी कुंजी का उपयोग कर सकते हैं।',
+  start: 'الغالي शुरू करें',
   loading: 'इस फ़ोन पर शुरू हो रहा है: {pct}%',
   input: 'संदेश चिपकाएँ या लिखें',
   from: 'किस भाषा से',
@@ -66,24 +66,24 @@ const HI: Record<DeviceStringKey, string> = {
   checkTerms: 'सहमत होने से पहले संख्याएँ, कीमतें और शर्तें दूसरे पक्ष से जाँच लें।',
   remove: 'इस फ़ोन से हटाएँ ({size})',
   removed: 'इस फ़ोन से हटा दिया गया।',
-  failStart: 'वफ़ादार सेवक इस फ़ोन पर शुरू नहीं हो सका। आप ऊपर अपनी कुंजी का उपयोग कर सकते हैं।',
+  failStart: 'الغالي इस फ़ोन पर शुरू नहीं हो सका। आप ऊपर अपनी कुंजी का उपयोग कर सकते हैं।',
   licences: 'लाइसेंस',
   close: 'बंद करें',
 };
 
 const ZH: Record<DeviceStringKey, string> = {
-  tab: '本机上的 Faithful Servant',
-  title: '本机上的 Faithful Servant',
+  tab: '本机上的 الغالي',
+  title: '本机上的 الغالي',
   intro: '用印地语、阿拉伯语、中文和英语翻译并解释贸易消息。全部在本机运行；你输入的内容不会离开手机。',
   needDownload: '首次使用需要一次性下载 {size}。建议使用 Wi-Fi。之后无需网络即可使用。',
-  downloadBtn: '下载 Faithful Servant（{size}）',
+  downloadBtn: '下载 الغالي（{size}）',
   downloading: '正在下载并核对每个文件：{done} / {total}',
   stop: '停止',
   failHash: '有一个文件没有通过核对，因此没有保留。请稍后再试。',
   failNet: '下载已中断。请重试，最好使用 Wi-Fi。',
-  notYet: '本机版 Faithful Servant 正在准备中。目前请使用上方你自己的密钥。',
-  noGpu: '这部手机无法运行本机版 Faithful Servant。你可以改用上方你自己的密钥。',
-  start: '启动 Faithful Servant',
+  notYet: '本机版 الغالي 正在准备中。目前请使用上方你自己的密钥。',
+  noGpu: '这部手机无法运行本机版 الغالي。你可以改用上方你自己的密钥。',
+  start: '启动 الغالي',
   loading: '正在本机启动：{pct}%',
   input: '粘贴或输入消息',
   from: '原文',
@@ -97,25 +97,25 @@ const ZH: Record<DeviceStringKey, string> = {
   checkTerms: '同意之前，请与对方核对数字、价格和条款。',
   remove: '从本机删除（{size}）',
   removed: '已从本机删除。',
-  failStart: 'Faithful Servant 无法在这部手机上启动。你可以改用上方你自己的密钥。',
+  failStart: 'الغالي 无法在这部手机上启动。你可以改用上方你自己的密钥。',
   licences: '许可证',
   close: '关闭',
 };
 
 // [VERIFY] Arabic: native review pending.
 const AR: Record<DeviceStringKey, string> = {
-  tab: 'الخادم الأمين على هذا الهاتف',
-  title: 'الخادم الأمين على هذا الهاتف',
+  tab: 'الغالي على هذا الهاتف',
+  title: 'الغالي على هذا الهاتف',
   intro: 'ترجمة رسائل التجارة وشرحها بالهندية والعربية والصينية والإنجليزية. يعمل كل شيء على هذا الهاتف، ولا يغادره شيء مما تكتبه.',
   needDownload: 'أول استخدام يحتاج إلى تنزيل لمرة واحدة بحجم {size}. يُفضَّل استخدام Wi-Fi. بعد ذلك يعمل دون إنترنت.',
-  downloadBtn: 'نزّل الخادم الأمين ({size})',
+  downloadBtn: 'نزّل الغالي ({size})',
   downloading: 'جارٍ التنزيل وفحص كل ملف: {done} من {total}',
   stop: 'إيقاف',
   failHash: 'لم يطابق أحد الملفات فحصه، لذلك لم يُحفظ. حاول مرة أخرى لاحقًا.',
   failNet: 'توقف التنزيل. حاول مرة أخرى، ويُفضَّل عبر Wi-Fi.',
-  notYet: 'الخادم الأمين على الجهاز قيد التجهيز. استخدم الآن مفتاحك الخاص في الأعلى.',
-  noGpu: 'لا يستطيع هذا الهاتف تشغيل الخادم الأمين على الجهاز. يمكنك استخدام مفتاحك الخاص في الأعلى بدلًا من ذلك.',
-  start: 'شغّل الخادم الأمين',
+  notYet: 'الغالي على الجهاز قيد التجهيز. استخدم الآن مفتاحك الخاص في الأعلى.',
+  noGpu: 'لا يستطيع هذا الهاتف تشغيل الغالي على الجهاز. يمكنك استخدام مفتاحك الخاص في الأعلى بدلًا من ذلك.',
+  start: 'شغّل الغالي',
   loading: 'جارٍ التشغيل على هذا الهاتف: {pct}٪',
   input: 'الصق الرسالة أو اكتبها',
   from: 'من',
@@ -129,7 +129,7 @@ const AR: Record<DeviceStringKey, string> = {
   checkTerms: 'راجع الأرقام والأسعار والشروط مع الطرف الآخر قبل أن توافق.',
   remove: 'احذفه من هذا الهاتف ({size})',
   removed: 'حُذف من هذا الهاتف.',
-  failStart: 'تعذّر تشغيل الخادم الأمين على هذا الهاتف. يمكنك استخدام مفتاحك الخاص في الأعلى بدلًا من ذلك.',
+  failStart: 'تعذّر تشغيل الغالي على هذا الهاتف. يمكنك استخدام مفتاحك الخاص في الأعلى بدلًا من ذلك.',
   licences: 'التراخيص',
   close: 'إغلاق',
 };

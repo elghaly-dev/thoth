@@ -1,5 +1,5 @@
 /**
- * The on-device Faithful Servant model, pinned file by file.
+ * الغالي on this phone model, pinned file by file.
  *
  * Every file the phone downloads is listed here with its exact size and
  * sha256. Files come from one host only (models.elghaly.dev, also the only

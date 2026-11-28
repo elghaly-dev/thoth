@@ -42,7 +42,7 @@ export default function App() {
   // device language, then English.
   const [currentLang, setCurrentLang] = useState<SupportedLanguage>(() => initialLanguage());
   const [activeTab, setActiveTab] = useState<'device' | 'assistant' | 'pitch' | 'deal' | 'translate' | 'guide' | 'rfq'>('assistant');
-  // The on-device Faithful Servant is the default where the phone has WebGPU;
+  // الغالي on this phone is the default where the phone has WebGPU;
   // the bring-your-own-key cloud tabs stay available either way.
   const [gpu, setGpu] = useState<GpuCheck | null>(null);
   useEffect(() => {
@@ -136,7 +136,7 @@ export default function App() {
             aria-label={tx(lang, 'a11y.primaryTabs')}
             className="flex flex-wrap items-center gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800"
           >
-            {/* Tab 0: Faithful Servant on this phone (on-device) */}
+            {/* Tab 0: الغالي on this phone (on-device) */}
             <button
               type="button"
               aria-current={activeTab === 'device' ? 'page' : undefined}

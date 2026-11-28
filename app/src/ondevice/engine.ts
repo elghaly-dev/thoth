@@ -2,7 +2,7 @@
  * The on-device engine: WebLLM in a Web Worker, loading only files that
  * download.ts has already verified against the pinned sha256 values.
  * WebLLM is imported on demand, so the page does not load it unless the
- * user starts the on-device Faithful Servant.
+ * user starts الغالي on the device.
  */
 import { allVerified } from './download';
 import { fileUrl, hexToSri, isReady, MANIFEST, type ModelManifest } from './manifest';

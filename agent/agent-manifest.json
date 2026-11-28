@@ -5,7 +5,7 @@
       "name": "thoth_assistant",
       "front_man": "thoth_front_desk",
       "hocon": "./thoth_assistant.network.json",
-      "description": "Ask Thoth, a Faithful Servant for exporters: honest buyer pitches, faithful trade translation, and export basics in plain words.",
+      "description": "Ask Thoth and its assistant الغالي, for exporters: honest buyer pitches, faithful trade translation, and export basics in plain words.",
       "tags": [
         "agentified-website",
         "exporters",

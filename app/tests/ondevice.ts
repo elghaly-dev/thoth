@@ -1,5 +1,5 @@
 /**
- * On-device Faithful Servant, without a real model or GPU:
+ * «الغالي» on the device, without a real model or GPU:
  * - the pinned manifest (shipped one is valid; bad host, base, hashes, paths are caught);
  * - download + sha256 check into WebLLM's caches (fake fetch and fake Cache Storage):
  *   good files stored in the right cache, a wrong hash or size stored nowhere,
@@ -214,7 +214,7 @@ for (const [code, table] of Object.entries(DEVICE_STRINGS)) {
 }
 check(/[ऀ-ॿ]/.test(DEVICE_STRINGS.hi!.title) && /[一-鿿]/.test(DEVICE_STRINGS.zh!.intro), 'Hindi and Chinese tables are in their scripts');
 eq(dt('mr', 'translate'), 'Translate', 'other UI languages fall back to English');
-eq(dt('hi', 'downloadBtn', { size: '1.2 GB' }), 'वफ़ादार सेवक डाउनलोड करें (1.2 GB)', 'placeholder filled');
+eq(dt('hi', 'downloadBtn', { size: '1.2 GB' }), 'الغالي डाउनलोड करें (1.2 GB)', 'placeholder filled');
 
 // ---- CSP in the build config ----
 const vite = fs.readFileSync(path.join(APP, 'vite.config.ts'), 'utf8');

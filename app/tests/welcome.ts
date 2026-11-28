@@ -112,15 +112,15 @@ try {
   await p2.getByText(THEME_TABLES.ar.welcomeAnon, { exact: true }).waitFor();
   check(true, 'Arabic: skipping the name shows the plain greeting');
   const tabs = await p2.locator('#thoth-main').innerText();
-  check(tabs.includes('الخادم الأمين على هذا الهاتف') && !tabs.includes('Faithful Servant on this phone'), 'Arabic: the on-device tab label is in Arabic');
-  await p2.getByRole('button', { name: 'الخادم الأمين على هذا الهاتف' }).click();
+  check(tabs.includes('الغالي على هذا الهاتف') && !tabs.includes('on this phone'), 'Arabic: the on-device tab label is in Arabic');
+  await p2.getByRole('button', { name: 'الغالي على هذا الهاتف' }).click();
   await p2.waitForTimeout(400);
   const ltr = await p2.evaluate(() => [...document.querySelectorAll('#thoth-main *')]
     .filter((el) => !el.closest('[dir="auto"]') && getComputedStyle(el).direction !== 'rtl')
     .map((el) => el.tagName + (el.id ? '#' + el.id : '')));
   check(ltr.length === 0, `Arabic: the whole on-device tab is right-to-left (left-to-right: ${ltr.slice(0, 5).join(', ')})`);
   const tabText = await p2.locator('#thoth-main').innerText();
-  check(!/Faithful Servant|Download the|Start the|this phone/.test(tabText), 'Arabic: no English on-device text in the tab');
+  check(!/Faithful Servant|Download|Start |this phone/.test(tabText), 'Arabic: no English on-device text in the tab');
   await ar.close();
 } finally {
   await browser.close();

@@ -31,7 +31,7 @@ interface Props {
   gpu: GpuCheck | null;
 }
 
-/** The on-device Faithful Servant: download once, then translate and explain offline. */
+/** الغالي on this phone: download once, then translate and explain offline. */
 export function OnDeviceTab({ lang, gpu }: Props) {
   const size = formatBytes(totalBytes());
   const [phase, setPhase] = useState<Phase>('checking');

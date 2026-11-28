@@ -22,14 +22,14 @@ Play launch; nothing below covers them.
 
 No account and no sign-in. A reviewer opens the app and can use every tab. Two ways to see
 answers:
-- On a phone with WebGPU: "Faithful Servant on this phone" downloads about 291 MB once and
+- On a phone with WebGPU: "الغالي on this phone" downloads about 291 MB once and
   then answers on the device.
 - Otherwise: paste a Gemini key (from Google's key page) in the key box ("Use for this visit").
 
 Suggested note for the reviewer:
 
 > No login is needed. Every screen opens without an account. To see answers, either use
-> "Faithful Servant on this phone" (a one-time download of about 291 MB on a phone with WebGPU)
+> "الغالي on this phone" (a one-time download of about 291 MB on a phone with WebGPU)
 > or paste your own Gemini key in the key box at the top; the key stays in the page's memory
 > and goes to Google alone.
 
@@ -39,7 +39,7 @@ These match what the app does today (checked in the code at main c544ba0):
 
 | Data | Proposed answer | What the app does |
 |---|---|---|
-| Messages / other user-generated content (what the exporter types) | Collected: yes, when the person uses their own Gemini key. Shared: no (sent to the service the person chose, at their request, and to no one else). Processed ephemerally: yes. Optional: yes. Purpose: app functionality | With the person's own key, the text goes from the browser straight to Google's Gemini service. With the on-device Faithful Servant, nothing leaves the phone. Elghaly LLC never receives it |
+| Messages / other user-generated content (what the exporter types) | Collected: yes, when the person uses their own Gemini key. Shared: no (sent to the service the person chose, at their request, and to no one else). Processed ephemerally: yes. Optional: yes. Purpose: app functionality | With the person's own key, the text goes from the browser straight to Google's Gemini service. With الغالي on the device, nothing leaves the phone. Elghaly LLC never receives it |
 | Audio (voice) | Not collected by the app | The microphone is used after a tap, never before; speech-to-text is the browser's own speech service (in Chrome on Android, Google processes the audio). Stated on the privacy page |
 | Personal info, financial info, location, contacts, photos, files, health, device IDs | Not collected | None of these is requested or sent |
 | App activity, app info and performance (analytics, crash logs) | Not collected | No analytics, no crash reporting, no telemetry (checked by `test:network`) |
@@ -60,14 +60,14 @@ businesses); not directed at children.
 App name: Thoth
 
 Short description (EN, 78 characters):
-The Faithful Servant for exporters: honest pitches, trade translation, basics.
+الغالي for exporters: honest pitches, trade translation, basics.
 
 Short description (AR) [VERIFY: native Arabic review before submission]:
-الخادم الأمين للمصدّرين: عروض صادقة، وترجمة تجارية، وأساسيات الاستيراد.
+الغالي للمصدّرين: عروض صادقة، وترجمة تجارية، وأساسيات الاستيراد.
 
 Full description (EN):
 
-> Thoth is the Faithful Servant for exporters, small and large. by Elghaly LLC.
+> Thoth and its assistant الغالي help exporters, small and large. by Elghaly LLC.
 >
 > - Buyer Pitch Studio: turn your own facts (product, quantity, price, port) into a short,
 >   honest pitch and spec sheet a buyer can read. It never invents facts.
@@ -75,8 +75,8 @@ Full description (EN):
 >   back word for word, so nothing changes in translation.
 > - Import Basics: plain answers on FOB, CIF, documents and first steps. HS codes and duty rates
 >   are shown as candidates to check with a licensed customs broker, never as final.
-> - Talk with Elghaly: ask by voice, hear the answer.
-> - Faithful Servant on this phone: after a one-time download of about 291 MB, it explains and
+> - Talk with الغالي: ask by voice, hear the answer.
+> - الغالي on this phone: after a one-time download of about 291 MB, it explains and
 >   translates trade messages on the phone itself. Needs a phone with WebGPU.
 > - Ten languages: Hindi, Marathi, Gujarati, Bengali, Tamil, Telugu, Punjabi, Arabic, Chinese
 >   and English. Opens in your phone's language.
@@ -88,7 +88,7 @@ Full description (EN):
 
 Full description (AR) [VERIFY: native Arabic review before submission]:
 
-> Thoth هو الخادم الأمين للمصدّرين، صغارًا وكبارًا. by Elghaly LLC.
+> Thoth ومساعده الغالي في خدمة المصدّرين، صغارًا وكبارًا. by Elghaly LLC.
 >
 > - استوديو عروض المشترين: حوّل حقائقك (المنتج، الكمية، السعر، الميناء) إلى عرض قصير وصادق
 >   وورقة مواصفات يقرؤها المشتري. لا يخترع أي معلومة.
@@ -97,7 +97,7 @@ Full description (AR) [VERIFY: native Arabic review before submission]:
 > - أساسيات الاستيراد: إجابات واضحة عن FOB وCIF والمستندات والخطوات الأولى. تظهر رموز HS
 >   والرسوم الجمركية كاحتمالات يجب التحقق منها مع مخلّص جمركي مرخّص، وليست نهائية.
 > - تحدّث مع الغالي: اسأل بصوتك واسمع الإجابة.
-> - الخادم الأمين على هذا الهاتف: بعد تنزيل لمرة واحدة بحجم نحو ٢٩١ ميغابايت، يشرح الرسائل
+> - الغالي على هذا الهاتف: بعد تنزيل لمرة واحدة بحجم نحو ٢٩١ ميغابايت، يشرح الرسائل
 >   التجارية ويترجمها على الهاتف نفسه. يحتاج هاتفًا يدعم WebGPU.
 > - عشر لغات: الهندية والماراثية والغوجاراتية والبنغالية والتاميلية والتيلوغوية والبنجابية
 >   والعربية والصينية والإنجليزية. يفتح بلغة هاتفك.
@@ -116,13 +116,13 @@ Full description (AR) [VERIFY: native Arabic review before submission]:
 
 The screens are rendered from the built app (`use/`) at main plus this PR, with no key and no
 model loaded, so they show the app as a new user first sees it. A shot of the on-device
-Faithful Servant answering needs a phone with WebGPU; take it on a real phone before
+الغالي answering needs a phone with WebGPU; take it on a real phone before
 submission.
 
 ## Risks
 
 - Play may ask about the microphone: it is requested by the browser on tap; the wrapper asks
   for no permission.
-- Phones without WebGPU cannot run the on-device Faithful Servant; the listing says so and the
+- Phones without WebGPU cannot run الغالي on the device; the listing says so and the
   own-key path still works.
 - HS codes and duty rates must stay worded as candidates in every language.

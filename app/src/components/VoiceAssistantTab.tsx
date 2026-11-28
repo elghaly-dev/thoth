@@ -221,7 +221,7 @@ export const VoiceAssistantTab: React.FC<VoiceAssistantTabProps> = ({
       if (!req.isCurrent()) return;
 
       // A missing reply is a failed model call, not a reason to show a
-      // canned line that sounds like a real Faithful Servant reply.
+      // canned line that sounds like a real reply from «الغالي».
       if (!data.reply) {
         throw new Error(tx(lang, 'voice.connectionError'));
       }

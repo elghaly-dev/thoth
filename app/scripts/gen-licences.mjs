@@ -19,7 +19,7 @@ const version = (name) => JSON.parse(fs.readFileSync(path.join(pkgDir(name), 'pa
 
 const MODELS = [
   {
-    title: 'Qwen2.5-0.5B-Instruct (on-device Faithful Servant model)',
+    title: 'Qwen2.5-0.5B-Instruct (on-device model for الغالي)',
     licence: 'Apache-2.0',
     notice: 'Copyright 2024 Alibaba Cloud (Qwen team). MLC build mlc-ai/Qwen2.5-0.5B-Instruct-q4f16_1-MLC, revision 32ff081f.',
   },
